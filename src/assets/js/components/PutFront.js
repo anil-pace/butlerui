@@ -28,7 +28,13 @@ var utils = require('../utils/utils.js');
 
 
 function getStateData(){
-  return mainstore.getScreenData();
+  var screenData = mainstore.getScreenData();
+  var splitPPSData = {
+        BinMapDetails: mainstore._getBinMapDetails(),
+        groupOrientation: mainstore._getBinMapOrientation()
+    }
+    
+    return Object.assign({}, screenData, splitPPSData);
 };
 
 var PutFront = React.createClass({
@@ -107,7 +113,7 @@ var PutFront = React.createClass({
           <div className='grid-container'>
             <Modal/>
           <div className='main-container'>
-          {this.state.MobileFlag?<SplitPPS groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
+          {this.state.MobileFlag?<SplitPPS orientation={this.state.groupOrientation} groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>:<Spinner />}
           </div>
           </div>
           );
@@ -134,7 +140,7 @@ var PutFront = React.createClass({
       this._component = (
         <div className='grid-container'>
         <Modal />
-        {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+        {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
         {binComponent}
         </div>
         );
@@ -160,7 +166,7 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
             <Modal />
-            {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+            {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
             <div className={"single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':'')+(this.state.SplitScreenFlag?'':' fix-top')}>
             <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
@@ -186,7 +192,7 @@ var PutFront = React.createClass({
             <div className='grid-container'>
               <Modal/>
             <div className='main-container'>
-            <SplitPPS  groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
+            <SplitPPS  orientation={this.state.groupOrientation} groupInfo = {this.state.BinMapDetails} undockAwaited = {this.state.UndockAwaited} docked = {this.state.DockedGroup}/>
             </div>
             </div>
             );
@@ -224,7 +230,7 @@ var PutFront = React.createClass({
         this._component = (
           <div className='grid-container'>
             <Modal/>
-          {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+          {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
         {selected_screen}
           </div>
           );
@@ -243,7 +249,7 @@ var PutFront = React.createClass({
         this._component = (
           <div className='grid-container'>
           <Modal />
-          {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+          {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
           {binComponent}
           </div>
           );
@@ -267,7 +273,7 @@ var PutFront = React.createClass({
         this._component = (
           <div className='grid-container'>
           <Modal />
-          {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+          {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
           {binComponent}
           </div>
           );
@@ -282,7 +288,7 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
             <Modal />
-            {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+            {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
             <div className={"single-bin"+(this.state.SplitScreenFlag?' gor-fixed-position':' fix-top')}>
             <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
@@ -304,7 +310,7 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
             <Modal />
-            {this.state.SplitScreenFlag && <BinMap mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
+            {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>}
             <div className={"single-bin"+(this.state.SplitScreenFlag?'':' fix-top')}>
             <Bins binsData={this.state.PutFrontCurrentBin} screenId = {this.state.PutFrontScreenId}/>
             <div className="text">{_("CURRENT BIN")}</div>
@@ -372,7 +378,7 @@ var PutFront = React.createClass({
             <div className='grid-container'>
               <Modal/>
             <div className='main-container'>
-            <SplitPPS  groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
+            <SplitPPS  orientation={this.state.groupOrientation} groupInfo = {this.state.BinMapDetails} wrongUndock={this.state.WrongUndock}/>
             </div>
             </div>
             );

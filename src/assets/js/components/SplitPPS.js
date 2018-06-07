@@ -82,11 +82,18 @@ var SplitPPS = React.createClass({
 	render:function(){		
 		
 		var mapStructure = this.processData();	
+		var orientation = Number(this.props.orientation || 0);
+		var transformStyle = {
+			transform: 'rotate('+((orientation+'deg)'))
+		}
+		var textTransform = {
+			transform: 'rotate('+(((orientation > 90 ? 180 : 0)+'deg)'))
+		}
 		
 		return (
-				<div className="splitPPSWrapper">
+				<div className="splitPPSWrapper" style={transformStyle}>
 					<div className="mapCont">
-					<div className="msuSpace">{_("MSU")}</div>
+					<div className="msuSpace"  style={textTransform}>{_("MSU")}</div>
 					<div className={"col1 three"}>
 					<ul>
 					{mapStructure.leftCol}

@@ -7,7 +7,8 @@ function getState() {
         dockedGroup: mainstore._getDockedGroup(),
         undockAwaited: mainstore._getUndockAwaitedGroup(),
         wrongUndock: mainstore._getWrongUndockGroup(),
-        groupInfo: mainstore._getBinMapDetails()
+        groupInfo: mainstore._getBinMapDetails(),
+        groupOrientation: mainstore._getBinMapOrientation()
     }
 }
 
@@ -33,7 +34,7 @@ var MobileSystemIdle = React.createClass({
 		return (
 			<div ref="myRef">
 					<SystemIdleHeader />
-					<SplitPPS groupInfo = {this.state.groupInfo} wrongUndock={this.state.wrongUndock} undockAwaited = {this.state.undockAwaited} docked = {this.state.dockedGroup}/>
+					<SplitPPS orientation={this.state.groupOrientation} groupInfo = {this.state.groupInfo} wrongUndock={this.state.wrongUndock} undockAwaited = {this.state.undockAwaited} docked = {this.state.dockedGroup}/>
 			</div>
 		)
 	}

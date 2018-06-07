@@ -35,7 +35,8 @@ var checkListOpen = false;
 function getStateData() {
     var screenData = mainstore.getScreenData();
     var splitPPSData = {
-        groupInfo: mainstore._getBinMapDetails()
+        groupInfo: mainstore._getBinMapDetails(),
+        groupOrientation: mainstore._getBinMapOrientation()
     }
     
     return Object.assign({}, screenData, splitPPSData);
@@ -264,7 +265,7 @@ var PickFront = React.createClass({
                    this._component = (
                         <div className='grid-container'>
                        <Modal/>
-                              {this.state.SplitScreenFlag && <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='putFrontFlow'/>}
 
                               <div className={"single-bin "+(this.state.SplitScreenFlag?' gor-fixed-position':'fix-top')}>
@@ -358,7 +359,7 @@ else {
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
 
                             {this.state.SplitScreenFlag &&
-                            <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='frontFlow'/>}
                             {binComponent}
                             <div className='actions'>
@@ -425,7 +426,7 @@ else {
 
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
                             {this.state.SplitScreenFlag &&
-                            <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='frontFlow'/>}
                             {binComponent}
                             <div className='actions'>
@@ -935,7 +936,7 @@ else {
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
                             <OrderDetails orderData={this.state.PickFrontBoxOrderDetails}/>
                             {this.state.SplitScreenFlag &&
-                            <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='frontFlow'/>}
                             {binComponent}
                             <div className='actions'>
@@ -1004,7 +1005,7 @@ else {
 
                             <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
                             {this.state.SplitScreenFlag &&
-                            <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='frontFlow'/>}
                             {binComponent}
 
@@ -1039,7 +1040,7 @@ else {
                         <div className='grid-container'>
                             <Modal />
                             {this.state.SplitScreenFlag &&
-                            <BinMap mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='putFrontFlow'/>}
                             {binComponent}
                             {reprintButton}

@@ -1835,6 +1835,9 @@ setCurrentSeat: function (data) {
     _getBinMapDetails: function () {
         return _seatData ? _seatData.group_info : null;
     },
+    _getBinMapOrientation:function(){
+        return _seatData ? (_seatData.operator_orientation || 0) : null;
+    },
     
     _getMtuDetails: function () {
         var nSlots, mtuList, currentSlotId, selectedSlotId;
@@ -2528,20 +2531,19 @@ setCurrentSeat: function (data) {
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["PutFrontScreenId"] = this.getScreenId();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["MobileFlag"] = this._getMobileFlag();
             data["DockedGroup"] = this._getDockedGroup();
             data["UndockAwaited"] = this._getUndockAwaitedGroup();
             data["PutFrontExceptionData"] = this.getExceptionData();
             data["PutFrontNotification"] = this.getNotificationData();
             data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+            
             break;
             case appConstants.PUT_FRONT_SCAN:
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["PutFrontScreenId"] = this.getScreenId();
             data["PutFrontBinData"] = this.getBinData();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontScanDetails"] = this.scanDetails();
@@ -2561,7 +2563,6 @@ setCurrentSeat: function (data) {
 
             data["isDrawer"] = this.getDrawerFlag();
             data["SlotType"] = this.getSlotType();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontScanDetails"] = this.scanDetails();
@@ -2576,7 +2577,6 @@ setCurrentSeat: function (data) {
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["PutFrontScreenId"] = this.getScreenId();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["DockedGroup"] = this._getDockedGroup();
             data["UndockAwaited"] = this._getUndockAwaitedGroup();
             data["PutFrontExceptionData"] = this.getExceptionData();
@@ -2587,7 +2587,6 @@ setCurrentSeat: function (data) {
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["PutFrontScreenId"] = this.getScreenId();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["DockedGroup"] = this._getDockedGroup();
             data["UndockAwaited"] = this._getUndockAwaitedGroup();
             data["WrongUndock"] = this._getWrongUndockGroup();
@@ -2600,7 +2599,6 @@ setCurrentSeat: function (data) {
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["PutFrontScreenId"] = this.getScreenId();
             data["PutFrontBinData"] = this.getBinData();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontExceptionData"] = this.getExceptionData();
@@ -2613,7 +2611,6 @@ setCurrentSeat: function (data) {
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["PutFrontScreenId"] = this.getScreenId();
             data["PutFrontBinData"] = this.getBinData();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontExceptionData"] = this.getExceptionData();
@@ -2628,7 +2625,6 @@ setCurrentSeat: function (data) {
             data["PutFrontRackDetails"] = this.getRackDetails();
             data["isDrawer"] = this.getDrawerFlag();
             data["SlotType"] = this.getSlotType();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontScanDetails"] = this.scanDetails();
@@ -2646,7 +2642,6 @@ setCurrentSeat: function (data) {
             data["PutFrontRackDetails"] = this.getRackDetails();
             data["isDrawer"] = this.getDrawerFlag();
             data["SlotType"] = this.getSlotType();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontScanDetails"] = this.scanDetails();
@@ -2672,7 +2667,6 @@ setCurrentSeat: function (data) {
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
-            data["BinMapDetails"] = this._getBinMapDetails();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PutFrontNotification"] = this.getNotificationData();
             data["GetIRTScanStatus"] = this.getIRTScanStatus();

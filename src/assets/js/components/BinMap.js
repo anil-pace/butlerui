@@ -17,8 +17,8 @@ var BinMap = React.createClass({
 			}
 		}
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
-		maxBlockHeight = 70/maxBlockCount;
-		maxWidth = ((maxBlockHeight/100)*160);
+		maxBlockHeight = 40/maxBlockCount;
+		maxWidth = ((maxBlockHeight/100)*150);
 		style = {
 			height:maxBlockHeight+"%",
 			width: maxWidth <= 38 ? maxWidth : 38
@@ -77,10 +77,12 @@ var BinMap = React.createClass({
 		}
 	},
 	render:function(){
-
+		var transformStyle = {
+			transform: 'rotate('+((Number(this.props.orientation || 0)+'deg)'))
+		}
 		var mapStructure = this.processData();
 		return (
-				<div className={"binMapWrapper "+this.props.screenClass}>
+				<div style={transformStyle} className={"binMapWrapper "+this.props.screenClass}>
 					<div className="mapCont">
 					<div className="msuSpace"></div>
 					<div className={"col1 "+mapStructure.leftColCount}>

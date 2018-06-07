@@ -145,6 +145,7 @@ var LoginPage = React.createClass({
                   <option value="zh-ZH">{"中文"}</option>
                   <option value="fr-FR">{"Français"}</option>
                   <option value="es-ES">{"Español"}</option>
+                  <option value="nl">{"Dutch"}</option>
               </select>
       );
     var display = this.state.flag === true ? 'block' : 'none';

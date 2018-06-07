@@ -11,6 +11,7 @@ var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
 var spanish = require('../serverMessages/spanish');
+var dutch = require('../serverMessages/dutch');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -1589,6 +1590,9 @@ setCurrentSeat: function (data) {
             break;
             case "es-ES":
             _.setTranslation(spanish);
+            break;
+            case "nl":
+            _.setTranslation(dutch);
             break;
             default:
             return true;

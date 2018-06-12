@@ -561,6 +561,7 @@ function server_messages_list() {
     _("Scan {0} {1} and place in Bin {2}");
     _("Place Tote in Bin {0} and Press PPTL");
     _("Tote in use at front seat");
+    _("Tote cannot be associated with bin of another seat");
     _("Waiting for Tote to be associated from back");
     _("Waiting for put_away to complete from front");
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 10:44+0000\n"
+"POT-Creation-Date: 2018-06-07 10:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2732,4 +2732,12 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:564
 msgid "Waiting for Tote to be associated from back"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:144
+msgid "{0} scan successful"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:565
+msgid "Waiting for put_away to complete from front"
 msgstr ""

@@ -2,9 +2,9 @@ const child_process = require('child_process');
 child_process.execSync("npm install gettext-parser --save-dev");
 const fs = require('fs');
 const path = require('path');
-const getTextParser = require('/home/jenkins/workspace/workspace/zanata-butlerui/node_modules/gettext-parser');
-const translationUtils = require('/home/jenkins/workspace/workspace/zanata-butlerui/translationUtils/parseJSON.js');
-const languageMap = require('/home/jenkins/workspace/workspace/zanata-butlerui/translationUtils/languageMap.js');
+const getTextParser = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/node_modules/gettext-parser');
+const translationUtils = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/translationUtils/parseJSON.js');
+const languageMap = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/translationUtils/languageMap.js');
 const fileLoc = "src/assets/js/utils/vendor/i18n/";
 fs.readdirSync(fileLoc).forEach(file => {
 
@@ -25,12 +25,3 @@ fs.readdirSync(fileLoc).forEach(file => {
 
     }
 })
-//git add src/assets/js/serverMessages/ &&
-
-    /*child_process.exec("git commit -m 'Commit from Jenkins Job' -- src/assets/js/serverMessages/",function(error, stdout, stderr){
-        console.log(error);
-    });*/
-
-
-
-//child_process.execSync("chmod +x gitCommit.sh && sh gitCommit.sh");

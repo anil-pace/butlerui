@@ -3,7 +3,7 @@ var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 var virtualkeyboard = require('virtual-keyboard');
-var jqueryPosition = require('jquery-ui/position');
+var jqueryPosition = require('jquery-ui/ui/position');
 var virtualKeyBoard_header = null;
 var appConstants = require('../constants/appConstants');
 

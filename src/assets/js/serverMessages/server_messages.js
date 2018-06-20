@@ -253,6 +253,7 @@ var serverMessages = {
     "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.E.008": "Tote already associated with bin {0}",
     "PkB.E.009": "Entity Scan not expected. Press PPTL",
+    "PkB.E.011" : "Tote cannot be associated with bin of another seat",
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",

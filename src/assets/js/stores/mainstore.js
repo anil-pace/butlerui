@@ -2781,7 +2781,8 @@ setCurrentSeat: function (data) {
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontBinData"] = this.getBinData();
-
+            data["PickFrontNotification"] = this.getNotificationData();
+            break;
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontNotification"] = this.getNotificationData();

@@ -2784,11 +2784,11 @@ setCurrentSeat: function (data) {
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontBinData"] = this.getBinData();
             data["PickFrontNotification"] = this.getNotificationData();
-            break;
+           
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontNotification"] = this.getNotificationData();
-            break;
+            
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
@@ -2807,7 +2807,7 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
             data["PickFrontBoxOrderDetails"] = this.getOrderID();
             data["PickFrontNotification"] = this.getNotificationData();
-            break;
+           
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
             case appConstants.PICK_FRONT_WORKING_TABLE:
             data["PickFrontNavData"] = this.getNavData();
@@ -2879,7 +2879,7 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             data["PickFrontNotification"] = this.getNotificationData();
-            break;
+           
             case appConstants.PICK_FRONT_PPTL_PRESS:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();

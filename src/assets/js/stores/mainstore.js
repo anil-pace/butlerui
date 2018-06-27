@@ -2783,9 +2783,12 @@ setCurrentSeat: function (data) {
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontBinData"] = this.getBinData();
-
+            data["PickFrontNotification"] = this.getNotificationData();
+            break;
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+            data["PickFrontNotification"] = this.getNotificationData();
+            break;
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
@@ -2803,7 +2806,8 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
             data["PickFrontBoxOrderDetails"] = this.getOrderID();
-
+            data["PickFrontNotification"] = this.getNotificationData();
+            break;
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
             case appConstants.PICK_FRONT_WORKING_TABLE:
             data["PickFrontNavData"] = this.getNavData();
@@ -2841,7 +2845,7 @@ setCurrentSeat: function (data) {
                 data["SplitScreenFlag"]=this._getSplitScreenFlag();
                 data["PrintCancelScan"] = this.cancelScanDetails();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-
+                data["PickFrontNotification"] = this.getNotificationData();
             break;
 
             case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
@@ -2874,6 +2878,8 @@ setCurrentSeat: function (data) {
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
             data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+            data["PickFrontNotification"] = this.getNotificationData();
+            break;
             case appConstants.PICK_FRONT_PPTL_PRESS:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();

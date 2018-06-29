@@ -366,8 +366,6 @@ var serverMessages = {
     "PtB.W.011" : "Tote scan successful.",
     "PtB.H.020":"Waiting for put away to complete from front"
 };
-
-
 module.exports = serverMessages;
 
 

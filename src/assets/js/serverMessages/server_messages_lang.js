@@ -563,7 +563,5 @@ function server_messages_list() {
     _("Tote in use at front seat");
     _("Waiting for Tote to be associated from back");
     _("Waiting for put away to complete from front");
-
-
 }
 

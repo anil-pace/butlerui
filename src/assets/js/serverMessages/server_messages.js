@@ -364,7 +364,7 @@ var serverMessages = {
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
     "PtB.W.011" : "Tote scan successful.",
-    "PtB.H.020":"Waiting for put away to complete from front"
+   
 };
 module.exports = serverMessages;
 

@@ -49,7 +49,7 @@ var Bin = React.createClass({
                     className={compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true") ? "pptl selected blink" : "pptl no-excess-item"}>{compData.ppsbin_id}</div>
             </div>);
         }
-        else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state == 'error') {
+        else if ((this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE  || this.props.screenId === appConstants.PUT_BACK_NO_SCAN_TOTE) && compData.ppsbin_state == 'error') {
             return (
                 <div className={"bin selected binError " + (compData['pps_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
@@ -188,7 +188,7 @@ var Bin = React.createClass({
                 </div>
             );
 
-        else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        else if (compData.ppsbin_count > 0 && (compData["selected_for_staging"] != undefined && compData["selected_for_staging"] == true ) && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE || this.props.screenId === appConstants.PUT_BACK_NO_SCAN_TOTE) && compData.ppsbin_state != 'error')
             return (
                 <div className={"bin use selected-staging " + (compData['pps_blink_state'] ? 'blink1' : '')}
                      onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
@@ -198,8 +198,6 @@ var Bin = React.createClass({
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
-
-
         else if ((this.props.screenId == appConstants.PICK_BACK_SCAN || this.props.screenId == appConstants.PICK_BACK_BIN ||this.props.screenId == appConstants.PICK_BACK_NO_SCAN) && ((compData["ppsbin_blink_state"] != undefined && (compData.ppsbin_blink_state == true || compData.ppsbin_blink_state == "true")) )) {
             var tote = '';
             var binClass = 'bin ';
@@ -368,19 +366,33 @@ var Bin = React.createClass({
                 </div>
             );
         }
-        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE) && compData.ppsbin_state != 'error')
-            return (
+        else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_STAGE || this.props.screenId == appConstants.PUT_BACK_SCAN_TOTE || this.props.screenId == appConstants.PUT_BACK_NO_SCAN_TOTE) && compData.ppsbin_state != 'error')
+        {
+        var placeHolder="";
+        if(this.props.screenId == appConstants.PUT_BACK_NO_SCAN_TOTE){
+            if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {
+                placeHolder = (<div className="tote">
+                    <span className="bin-icon tote-icon"></span>
+                </div>);
+            }
+           
+        }else{
+           placeHolder=<span className="glyphicon glyphicon-info-sign info-icon"
+           onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
+     </span> 
+        }
+        return (
                 <div className={"bin use " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      onClick={this._toggleBinSelection.bind(this, compData.ppsbin_id)}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
-                    <span className="glyphicon glyphicon-info-sign info-icon"
-                          onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
-                    </span>
+                    {placeHolder}
                     <div className="item-count">{compData.ppsbin_count<1?'-':compData.ppsbin_count}</div>
                     <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
+        }
+       
         else if ((compData.ppsbin_blue_state == true || compData.ppsbin_blue_state == "true") && (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING) && compData.ppsbin_state != 'error')
             return (
                 <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
@@ -391,6 +403,9 @@ var Bin = React.createClass({
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>
                 </div>
             );
+
+
+
         else if (compData.ppsbin_count > 0 && (this.props.screenId == appConstants.PUT_BACK_SCAN || this.props.screenId == appConstants.PUT_FRONT_SCAN || this.props.screenId == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK)) {
             var tote = '';
             if ((compData.totes_associated == true) || (compData.totes_associated == "true")) {

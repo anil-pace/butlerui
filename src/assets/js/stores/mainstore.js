@@ -2458,6 +2458,9 @@ setCurrentSeat: function (data) {
             data["PutBackExceptionData"] = this.getExceptionData();
             data["PutBackNotification"] = this.getNotificationData();
             data["PutBackExceptionStatus"] = this.getExceptionStatus();
+            data["StageButtonHideFlag"]=this.getStageButtonHideStatus();
+            data["StageActive"] = this.getStageActiveStatus();
+            data["StageAllActive"] = this.getStageAllActiveStatus();
             break;
 
             case appConstants.PUT_BACK_UNSCANNABLE:

@@ -563,7 +563,7 @@ function server_messages_list() {
     _("Tote in use at front seat");
     _("Tote cannot be associated with bin of another seat");
     _("Waiting for Tote to be associated from back");
-    _("Waiting for put_away to complete from front");
+    _("Waiting for put away to complete from front");
 
 
 }

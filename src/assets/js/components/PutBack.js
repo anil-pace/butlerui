@@ -270,7 +270,14 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_NO_SCAN_TOTE:
       if(this.state.PutBackExceptionStatus === false){
         this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        var stageButtonobj ="";
         var binComponent ="";
+        if(!this.state.StageButtonHideFlag){
+          stageButtonobj=<div className = 'staging-action' >
+          <Button1 disabled = {!this.state.StageActive} text = {_("Stage")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"}/>
+          <Button1 disabled = {!this.state.StageAllActive} text = {_("Stage All")} module ={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />  
+          </div>
+        }
         if (this.state.OrigBinUse){
           binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
         }else{
@@ -281,8 +288,10 @@ var PutBack = React.createClass({
         this._component = (
           <div className='grid-container'>
           {binComponent}
+          {stageButtonobj}
           </div>
           );
+
       }else{
         this._component = this.getExceptionComponent();
       }

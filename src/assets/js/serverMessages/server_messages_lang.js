@@ -141,7 +141,7 @@ function server_messages_list() {
     _("Pick complete. Waiting for next rack.");
     _("Location scan successful");
     _("Box scan successful");
-    _("Item scan successful");
+    _("{0} scan successful");
     _("Cancel scan successful");
     _("PPTL press successful");
     _("Expecting MSU release confirmation from GUI, got invalid event.");
@@ -561,6 +561,7 @@ function server_messages_list() {
     _("Scan {0} {1} and place in Bin {2}");
     _("Place Tote in Bin {0} and Press PPTL");
     _("Tote in use at front seat");
+    _("Tote cannot be associated with bin of another seat");
     _("Waiting for Tote to be associated from back");
     _("Waiting for put away to complete from front");
 }

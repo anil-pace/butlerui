@@ -11,6 +11,7 @@ var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
 var spanish = require('../serverMessages/spanish');
+var dutch = require('../serverMessages/dutch');
 var navConfig = require('../config/navConfig');
 var resourceConstants = require('../constants/resourceConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -237,7 +238,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             else if(_seatData.screen_id ===appConstants.PUT_BACK_PRESS_PPTL_TOTE)
                 _NavData = navConfig.putBack[4]; 
             else if(_seatData.screen_id ===appConstants.PUT_BACK_NO_SCAN_TOTE)
-                _NavData = navConfig.putBack[2];        
+                _NavData = navConfig.putBack[5];
                 else
                 _NavData = navConfig.putBack[1];
             break;
@@ -1590,6 +1591,9 @@ setCurrentSeat: function (data) {
             case "es-ES":
             _.setTranslation(spanish);
             break;
+            case "nl":
+            _.setTranslation(dutch);
+            break;
             default:
             return true;
         }
@@ -2786,9 +2790,12 @@ setCurrentSeat: function (data) {
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontBinData"] = this.getBinData();
-
+            data["PickFrontNotification"] = this.getNotificationData();
+           
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+            data["PickFrontNotification"] = this.getNotificationData();
+            
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
@@ -2806,7 +2813,8 @@ setCurrentSeat: function (data) {
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
             data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
             data["PickFrontBoxOrderDetails"] = this.getOrderID();
-
+            data["PickFrontNotification"] = this.getNotificationData();
+           
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
             case appConstants.PICK_FRONT_WORKING_TABLE:
             data["PickFrontNavData"] = this.getNavData();
@@ -2844,7 +2852,7 @@ setCurrentSeat: function (data) {
                 data["SplitScreenFlag"]=this._getSplitScreenFlag();
                 data["PrintCancelScan"] = this.cancelScanDetails();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-
+                data["PickFrontNotification"] = this.getNotificationData();
             break;
 
             case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
@@ -2877,6 +2885,8 @@ setCurrentSeat: function (data) {
             case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
             data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
             data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+            data["PickFrontNotification"] = this.getNotificationData();
+           
             case appConstants.PICK_FRONT_PPTL_PRESS:
             data["PickFrontNavData"] = this.getNavData();
             data["PickFrontServerNavData"] = this.getServerNavData();
@@ -3087,6 +3097,10 @@ setCurrentSeat: function (data) {
             data["AuditExceptionStatus"] = this.getExceptionStatus();
             data["AuditShowModal"] = this.getModalStatus();
             data["AuditSRStatus"]=this.getSRStatus();
+            data["AuditRackTypeMPU"]=this.getRackType();
+            data["AuditPickDirection"] = this.getDirectionDetails();
+            data["isDrawer"] = this.getDrawerFlag();
+            data["SlotType"] = this.getSlotType();
             break;
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:

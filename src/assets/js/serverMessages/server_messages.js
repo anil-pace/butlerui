@@ -220,7 +220,7 @@ var serverMessages = {
     "PkF.E.012" : "Data capture failed at item {0}",       
     "PkF.I.002" : "Location scan successful",
     "PkF.I.003" : "Box scan successful",
-    "PkF.I.004" : "Item scan successful",
+    "PkF.I.004" : "{0} scan successful",
     "PkF.I.005" : "Cancel scan successful",
     "PkF.I.006" : "PPTL press successful",
     "PkF.I.007" : "Data capture valid so far",
@@ -253,6 +253,7 @@ var serverMessages = {
     "PkB.E.007" : "Totes are anyway not required.Please proceed further", 
     "PkB.E.008": "Tote already associated with bin {0}",
     "PkB.E.009": "Entity Scan not expected. Press PPTL",
+    "PkB.E.011" : "Tote cannot be associated with bin of another seat",
     "PkB.I.001" : "Exception cancelled",
     "PkB.I.002" : "Tote scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
@@ -364,7 +365,7 @@ var serverMessages = {
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
     "PtB.W.011" : "Tote scan successful.",
-   
+    "PtB.H.020":"Waiting for put away to complete from front"
 };
 module.exports = serverMessages;
 

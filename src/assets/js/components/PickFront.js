@@ -195,7 +195,7 @@ var PickFront = React.createClass({
                     this._component = this.getExceptionComponent();
                 }
                 break;
-
+            case appConstants.PICK_FRONT_CONTAINER_BREAK:
             case appConstants.PICK_FRONT_ITEM_SCAN:
             var rackType="";
                 if (this.state.PickFrontExceptionStatus == false) {

@@ -131,6 +131,7 @@ var appConstants = {
 	PICK_FRONT_LOCATION_SCAN:"pick_front_location_scan",
 	PICK_FRONT_CONTAINER_SCAN:"pick_front_container_scan",
 	PICK_FRONT_ITEM_SCAN:"pick_front_item_scan",
+	PICK_FRONT_CONTAINER_BREAK:"pick_front_container_break",
 	PICK_FRONT_MORE_ITEM_SCAN:"pick_front_more_item_scan",
 	PICK_FRONT_PPTL_PRESS:"pick_front_pptl_press",
 	PICK_FRONT_NO_FREE_BIN : 'pick_front_no_free_bin',

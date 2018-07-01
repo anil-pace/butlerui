@@ -184,8 +184,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    
-
     getStageAllActiveStatus: function () {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -245,6 +243,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             case appConstants.PUT_FRONT:
             if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
                 _NavData = navConfig.putFront[0];
+            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_TOTE_SCAN){
+                _NavData = navConfig.putFront[9];
+            }
+            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_ENTITY_SCAN){
+                _NavData = navConfig.putFront[10];
+            }
+            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_BIN_SCAN){
+                 _NavData = navConfig.putFront[11];
+            }
+            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK){
+                _NavData = navConfig.putFront[12];
+            }
+             else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK){
+                _NavData = navConfig.putFront[13];
+            }
+            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_MISSING){
+                _NavData = navConfig.putFront[14];
+            }
+            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_UNEXPECTED){
+                _NavData = navConfig.putFront[15];
+            }
             else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
                 _NavData = navConfig.putFront[2];
             else if (_seatData.screen_id === appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL)
@@ -833,11 +852,30 @@ getOrderID: function () {
         var binData = {};
         binData["structure"] = [1, 1];
         binData["ppsbin_list"] = [];
+        if(_seatData.ppsbin_list){
         _seatData.ppsbin_list.map(function (value, index) {
             if (value.selected_state == true)
                 binData["ppsbin_list"].push(value);
         })
+    }
         return binData;
+    },
+    getPutFrontCurrentBinCount: function(){
+        var itemCount = null;
+        var currBin=null
+        if(_seatData.ppsbin_list){
+        _seatData.ppsbin_list.map(function (value, index) {
+            if (value.selected_state == true){
+                itemCount = parseInt(value.ppsbin_count || 0);
+                currBin = value.ppsbin_id || "--"
+                return true;
+            }
+        })
+    }
+        return {
+            count:itemCount,
+            currBin:currBin
+        };
     },
     tableCol: function (text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management) {
         this.text = text;
@@ -1231,28 +1269,7 @@ getReconcileLooseItemsData: function () {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c = c + 1;
         })
-        /*_seatData.Loose_sku_list.map(function(value, index) {
-         if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-         data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
-         new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
-         new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-         new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
-         ]);
-
-     });*/
-        /*if (data["tableRows"].length > 0)
-         data["tableRows"].push([new self.tableCol("Damaged Barcodes", "enabled", false, "large", false, true, true, false),
-         new self.tableCol(_seatData.loose_item_barcode_damage, "enabled", false, "large", true, false, true, false, true)
-         ]);*/
-        /*_seatData.extra_loose_sku_item_list.map(function(value, index) {
-         if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-         data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
-         new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
-         new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-         new self.tableCol(index==((c%2==0?c/2:((c+1)/2))-1)?_seatData.loose_item_barcode_damage:"", "enabled", false, "large", true, false, false, false, true,'','','','','','','',false)
-         ]);
-
-     });*/
+       
 
      _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function (value, index) {
         if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
@@ -2333,6 +2350,50 @@ setCurrentSeat: function (data) {
         if (_seatData.hasOwnProperty('auto_stage'))
         return _seatData.auto_stage;
     },
+    getUDPMapDetails:function(){
+        var groupInfo = {};
+        var leftBins=[];
+        var rightBins = [];
+        if(_seatData["ppsbin_list"]){
+        _seatData["ppsbin_list"].forEach(function(bin){
+            if(bin["direction"] === "left"){
+                leftBins.push(bin)
+            }
+            else if(bin["direction"] === "right"){
+                rightBins.push(bin)
+            }
+            
+        })
+        leftBins.sort(function(a,b){
+        return a["orig_coordinate"][1] - b["orig_coordinate"][1];
+      });
+        rightBins.sort(function(a,b){
+        return a["orig_coordinate"][1] - b["orig_coordinate"][1];
+      });
+        leftBins = leftBins.concat(rightBins);
+        leftBins.forEach(function(bin){
+            groupInfo[bin["ppsbin_id"]] = bin["direction"]
+        })
+        }
+        return groupInfo;
+    },
+    getMissingItemList: function(){
+        return _seatData["missing_items"] || [];
+    },
+    getPreviousPutDetails: function(){
+        return _seatData.previous_put_details || []
+    },
+    getSelectedTotes: function(){
+        var selectedTotes = [];
+        if(_seatData["ppsbin_list"]){
+            _seatData["ppsbin_list"].forEach(function(bin){
+                if(bin.totes_associated === "true"){
+                    selectedTotes.push(bin["ppsbin_id"])
+                }
+            })
+        }
+        return selectedTotes;
+    },
     getScreenData: function () {
         var data = {};
 
@@ -2561,6 +2622,9 @@ setCurrentSeat: function (data) {
             data["PutFrontItemUid"] = this.getItemUid();
             data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting();
             break;
+            case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
+            case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
+            case appConstants.UDP_PUT_FRONT_MISSING:
             case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();

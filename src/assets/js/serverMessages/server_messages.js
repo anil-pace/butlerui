@@ -159,6 +159,8 @@ var serverMessages = {
     "Common.009": "SKU not present in Database.",
     "Common.010": "Wrong Scan. Unrecognized barcode.",
     "Common.011": "Wrong Scan. IRT bin scan expected",
+    "Common.017": "Tote unexpected. Scanned tote does not exist.",
+    "Common.018":"Dock Cart",
     "AdF.I.003" : "Item scan successful",
     "AdF.I.004" : "Box Completed",
     "AdF.I.006" : "Extra Box",
@@ -367,7 +369,11 @@ var serverMessages = {
     "PkF.H.018":"Scan {0} {1} and place in Bin {2}",
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
-    "PtB.H.020":"Waiting for put away to complete from front"
+    "PtB.H.020":"Waiting for put_away to complete from front",
+    "UD.H.001":"Scan new putaway unit",
+    "UD.H.005": "Wait for MSU",
+    "UD.H.004" : "Put item in slot and scan slot to confirm"
+
 };
 
 

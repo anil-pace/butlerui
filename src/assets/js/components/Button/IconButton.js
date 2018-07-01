@@ -10,8 +10,6 @@ var IconButton = React.createClass({
             type:type
          });
          $('.modal').modal();
-        // alert("hiii");
-         //e.stopPropagation();
          return false;
      },
     performAction:function(module,action){
@@ -24,8 +22,6 @@ var IconButton = React.createClass({
             case appConstants.AUDIT:
                 switch(action){
                     case appConstants.FINISH_BOX:
-                         console.log("gggg");
-                         console.log(AuditStore.getCurrentBoxSerialData());
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "finish_box";
                         ActionCreators.postDataToInterface(data);

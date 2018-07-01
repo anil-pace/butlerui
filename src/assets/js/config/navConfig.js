@@ -101,6 +101,7 @@ var navData = {
 
     ],
     "putFront": [
+        
         [{
             "screen_id": "put_front_waiting_for_rack",
             "code": "Common.000",
@@ -187,7 +188,107 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
+        }],
+        [{
+            "screen_id": "ud_put_front_tote_scan",
+            "code": "Common.000",
+            "message": "Wait For MSU",
+            "showImage": true,
+            "level": 1,
+            "type": 'active'
+        },{
+            "screen_id": "",
+            "code": "Common.000",
+            "message": "Put and confirm",
+            "showImage": false,
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "",
+            "code": "Common.000",
+            "message": "Dock Cart",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "ud_put_front_entity_scan",
+            "code": "Common.000",
+            "message": "Put and confirm",
+            "showImage": true,
+            "level": 2,
+            "type": 'true'
+        }],
+        [{
+            "screen_id": "ud_put_front_bin_scan",
+            "code": "Common.000",
+            "message": "Scan PPS Bin Barcode",
+            "showImage": true,
+            "level": 1,
+            "type": 'active'
+        },{
+            "screen_id": "",
+            "code": "Common.000",
+            "message": "Put and confirm",
+            "showImage": false,
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "ud_put_front_waiting_for_rack",
+            "code": "UD.H.005",
+            "message": "Wait for MSU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "",
+            "code": "Common.018",
+            "message": "Dock Cart",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "ud_put_front_place_items_in_rack",
+            "code": "UD.H.004",
+            "message": "Put item in slot and scan slot to confirm",
+            "showImage": true,
+            "level": 2,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "",
+            "code": "Common.018",
+            "message": "Dock Cart",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "ud_put_front_missing",
+            "code": "UD.H.004",
+            "message": "Put item in slot and scan slot to confirm",
+            "showImage": true,
+            "level": 2,
+            "type": 'active'
+        }],
+        [{
+            "screen_id": "",
+            "code": "Common.018",
+            "message": "Dock Cart",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "ud_put_front_unexpected",
+            "code": "UD.H.004",
+            "message": "Put item in slot and scan slot to confirm",
+            "showImage": true,
+            "level": 2,
+            "type": 'active'
         }]
+
+
     ],
     "pickFront": [
         [{

@@ -49,6 +49,7 @@ var MsuRackFlex = React.createClass({
       var newBarcodes = []; // for storing post data manipulation
       var selectedSlotIds = "";
 
+      if(this.props.slotBarcodes){
       this.props.slotBarcodes.map(function(slotBarcodes,idx){
           var str = slotBarcodes,
           delimiter = '.',
@@ -59,6 +60,7 @@ var MsuRackFlex = React.createClass({
 
           newBarcodes.push(result);
       });
+    }
       selectedSlotIds = newBarcodes.join(', ');
     
 
@@ -187,11 +189,11 @@ var MsuRackFlex = React.createClass({
             /* END **********************************/
 
             if(i===selectedSlotIndex){
-              var setSlotBackground="#bbbbbb";
+              var setSlotBackground= "#bbbbbb";
               var drawALine=(<div id="selectedSlot"></div>);
             }
             else {
-              var setSlotBackground="#e8e8e8";
+              var setSlotBackground=vSlots[i].occupancy_color || "#e8e8e8";
             }
 
             /* Show hanger icon when slot-type is hanger */ 
@@ -261,10 +263,10 @@ var MsuRackFlex = React.createClass({
 
        </div>
         <div className="right-container">
-          <div id="slotDisplayArea" className="slotDisplayArea">
+          {this.state.selectedSlotIds && !this.props.hideSlotDetails && <div id="slotDisplayArea" className="slotDisplayArea">
               <img style={{paddingLeft:"5%"}} src='./assets/images/slot.png'></img>
               <span style={{marginLeft:"8%"}}>{"SLOT " + this.state.selectedSlotIds}</span>
-            </div>
+            </div>}
             {putDirection?(
                 <div className="specialContainer">
                 <img className={orientation} src={orientationClass}></img>   

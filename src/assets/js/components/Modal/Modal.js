@@ -16,6 +16,7 @@ var component,title;
 function getStateData(ths){
   var modalType = mainstore.getModalType();
   var modalData = mainstore.getModalContent();
+  //var ToteId= mainstore.getToteId()
   if(modalData){
   for( let i = 0;i < modalData.length ; i++){
     if(modalData[i].type!==undefined && modalData[i].product_sku!==undefined && modalData[i].serial!==undefined && modalData[i].quantity!==undefined){
@@ -100,6 +101,7 @@ function removeTextField(){
 }
 
 function loadComponent(modalType,modalData,ths){ 
+  
   switch(modalType){
     case "product-detail":
       component = [];

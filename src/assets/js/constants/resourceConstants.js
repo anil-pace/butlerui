@@ -7,6 +7,7 @@ var resourceConstants = {
 	UNDOCK_PUSH : 'Gently push roll cage away from the frame',
 	WRONG_UNDOCK : 'Dock roll cage back to proceed the operation',
 	CURR_SLOT: 'CURRENT SLOT',
+	CURR_BIN: 'CURRENT BIN',
 	VIEW_MORE: 'View More',
 	TBL_HEADER: 'Box Serial Numbers',
 	NO_RECONCILE: 'No Items To Reconcile',

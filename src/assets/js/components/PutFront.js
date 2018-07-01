@@ -15,6 +15,7 @@ var appConstants = require('../constants/appConstants');
 var allresourceConstants = require('../constants/resourceConstants');
 var Rack = require('./Rack/MsuRack.js');
 var Modal = require('./Modal/Modal');
+var ReactModal = require('./Modal/ReactModal');
 var mainstore = require('../stores/mainstore');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
@@ -25,25 +26,51 @@ var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 var utils = require('../utils/utils.js');
+var PreviousPutDetails = require('./PreviousPutDetails');
+var ProductDetUDP = require('./ProductDetails/ProductDetUDP');
+var ActionCreators = require('../actions/CommonActions');
+var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
+var CurrentBin = require('./CurrentBin');
 
 
-function getStateData(){
-  var screenData = mainstore.getScreenData();
-  var splitPPSData = {
-        BinMapDetails: mainstore._getBinMapDetails(),
-        groupOrientation: mainstore._getBinMapOrientation()
-    }
-    
-    return Object.assign({}, screenData, splitPPSData);
-};
+
 
 var PutFront = React.createClass({
   _notification:'',
   _component:'',
   _navigation:'',
+  _modalContent:'',
   getInitialState: function(){
-    return getStateData();
+    return this.getStateData();
   },
+  getStateData: function(){
+  var screenData = mainstore.getScreenData();
+  var splitPPSData = {
+        BinMapDetails: mainstore._getBinMapDetails(),
+        groupOrientation: mainstore._getBinMapOrientation(),
+        udpBinMapDetails: mainstore.getUDPMapDetails(),
+        PutFrontScreenId : mainstore.getScreenId(),
+        PutFrontExceptionStatus : mainstore.getExceptionStatus(),
+        PutFrontNavData : mainstore.getNavData(),
+        PutFrontServerNavData : mainstore.getServerNavData(),
+        MobileFlag : mainstore._getMobileFlag(),
+        BinMapGroupDetails : mainstore.getSelectedBinGroup(),
+        SplitScreenFlag : mainstore._getSplitScreenFlag(),
+        PutFrontScanDetails: mainstore.scanDetails(),
+        PutFrontProductDetails: mainstore.productDetails(),
+        selectedTotes: mainstore.getSelectedTotes(),
+        PutFrontNotification : mainstore.getNotificationData(),
+        PreviousPutDetails: mainstore.getPreviousPutDetails(),
+        PutFrontCurrentBin: mainstore.getCurrentSelectedBin(),
+        PutFrontCurrentBinCount: mainstore.getPutFrontCurrentBinCount(),
+        PutFrontRackDetails: mainstore.getRackDetails(),
+        missingItemList: mainstore.getMissingItemList(),
+        ToteId: mainstore.getToteId()
+    }
+
+    
+    return Object.assign({}, screenData, splitPPSData);
+},
   componentWillMount: function(){
     mainstore.addChangeListener(this.onChange);
   },
@@ -51,10 +78,8 @@ var PutFront = React.createClass({
     mainstore.removeChangeListener(this.onChange);
   },
   onChange: function(){
-    this.setState(getStateData());
+    this.setState(this.getStateData());
   },
-
-
   getNotificationComponent:function(){
     if(this.state.PutFrontNotification != undefined){
       this._notification = <Notification notification={this.state.PutFrontNotification} navMessagesJson={this.props.navMessagesJson} />
@@ -172,7 +197,7 @@ var PutFront = React.createClass({
             <div className="text">{_("CURRENT BIN")}</div>
             </div>
             <div className='main-container'>
-            <Rack isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
+            <Rack  isDrawer = {this.state.isDrawer} slotType={this.state.SlotType} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
             <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>
             <div className = 'cancel-scan'>
@@ -619,6 +644,180 @@ var PutFront = React.createClass({
             </div>
             );
           break;
+          case appConstants.UDP_PUT_FRONT_TOTE_SCAN:
+          if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          this._component = (
+            <div className='grid-container'>
+              <Modal/>
+            <div className='main-container udp-flow'>
+            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} docked = {this.state.selectedTotes}/>
+
+            </div>
+            </div>
+            );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+        case appConstants.UDP_PUT_FRONT_BIN_SCAN:
+        if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          this._component = (
+            <div className='grid-container'>
+              <Modal/>
+            <div className='main-container udp-flow'>
+            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} docked = {this.state.selectedTotes}/>
+
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN_UDP} barcode={this.state.PutFrontItemUid} color={"black"}/>
+            </div>
+            </div>
+            );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+
+        case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
+          if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          this._component = (
+            <div className='grid-container udp-flow'>
+              <Modal/>
+            <div className="single-bin udp-flow">
+            <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>
+            <CurrentBin details={this.state.PutFrontCurrentBinCount} />
+            <PreviousPutDetails previousPutDetails={this.state.PreviousPutDetails} />
+            </div>
+            <div className='main-container'>
+            <Rack hideSlotDetails={true} isDrawer = {false} slotType={null} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
+            <div className="msu-send-container">
+            <PrdtDetails productInfo={this.state.PutFrontProductDetails}/>
+            <div className="msu-send-button">
+            <Button1 disabled = {false} text = {_("Send MSU")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
+            </div>
+            </div>
+            </div>
+            </div>
+            );
+        }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+        case appConstants.UDP_PUT_FRONT_MISSING:
+        case appConstants.UDP_PUT_FRONT_UNEXPECTED:
+        case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
+        this._modalContent='';
+        if(this.state.PutFrontExceptionStatus == false){
+          this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          if(this.state.PutFrontScreenId === appConstants.UDP_PUT_FRONT_MISSING){
+          this._modalContent = (
+            <ReactModal title={_("Close Cart")}> 
+                 <div>
+                  <div className="row">
+                      <div className="col-md-12" >
+                      <p>{_("Are you sure that all the items in the cart were scanned?")}</p>
+                      <p>{(_("The following {0} items were found missing")).replace("{0}",this.state.missingItemList.length)}</p>
+                      <div className="missing-list">
+                      <section className="list-head">
+                        <span className="list-head-cell">
+                          {_("Product SKU")}
+                        </span>
+                        <span className="list-head-cell">
+                          {_("Barcode")}
+                        </span>
+                      </section>
+                      <div className="list-content">
+                      {this.state.missingItemList.map(function(tuple,idx){
+                        return(<section key={tuple.product_sku+idx} className="tuple-row">
+                          <span className="tuple-row-cell">{tuple.product_sku}</span>
+                          <span className="tuple-row-cell">{tuple.product_barcode}</span>
+                          </section>)
+                      })}
+                      </div>
+                      </div>
+                          
+                      </div>
+                  </div>
+                  <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Confirm")} color={"orange"} status={true} toteId={this.state.ToteId} module ={appConstants.PUT_FRONT} action={appConstants.CLOSE_TOTE}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} status={false} toteId={this.state.ToteId} module ={appConstants.PUT_FRONT} action={appConstants.CLOSE_TOTE}/></div>
+                </div>
+              </div>
+            </div>
+            </div>
+              
+            </ReactModal>)
+            }
+            else if(this.state.PutFrontScreenId === appConstants.UDP_PUT_FRONT_UNEXPECTED){
+                          this._modalContent = (
+            <ReactModal title={_("Unexpected Item")}> 
+                <div>
+                  <div className="row">
+                      <div className="col-md-12">
+                          <div className="title-textbox">{_("Unexpected item found. Put item in IRT bin and confirm")}</div>
+                      </div>
+                  </div>
+                  <div className="modal-footer removeBorder">
+                      <div className="buttonContainer center-block chklstButtonContainer">
+                          <div className="row removeBorder">
+                              <div className="unex-close-text col-md-4 col-md-offset-3"><Button1 disabled = {false} text ={_("Close")} color={"black"} module ={appConstants.PUT_FRONT} action={appConstants.CLOSE_UNEXPECTED_SCAN}/></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+            </ReactModal>)
+            }
+          this._component = (
+            <div className='grid-container'>
+              <Modal toteId={this.state.ToteId} />
+            <div className={"single-bin udp-flow"}>
+            
+             <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>
+            <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
+            <PreviousPutDetails previousPutDetails={this.state.PreviousPutDetails} />
+            
+            </div>
+            <div className='main-container udp-flow'>
+            <Rack hideSlotDetails={true} isDrawer = {false} slotType={null} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
+            <div className="msu-send-container">
+            <PrdtDetails productInfo={this.state.PutFrontProductDetails}/>
+            <div className="msu-send-button">
+            <Button1 disabled = {false} text = {_("Send MSU")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
+            </div>
+            </div>
+            </div>
+            <div className = 'cancel-scan'>
+            <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN_UDP} barcode={this.state.PutFrontItemUid} color={"black"}/>
+            </div>
+            </div>
+            );
+
+        }else{
+          this._component = this.getExceptionComponent();
+        }
+        break;
+        case appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK:
+      if(this.state.PutFrontExceptionStatus == false){
+        this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+        this._component = (
+          <div className='grid-container'>
+            <Modal/>
+          <div className='main-container'>
+            <Spinner />
+          </div>
+          </div>
+          );
+      }else{
+        this._component = this.getExceptionComponent();
+      }
+
+      break;
 
           default:
           return true;
@@ -626,6 +825,7 @@ var PutFront = React.createClass({
       },
 
       render: function(data){
+       
         this.getNotificationComponent();
         this.getScreenComponent(this.state.PutFrontScreenId);
         return (
@@ -633,6 +833,7 @@ var PutFront = React.createClass({
           <Header />
           {this._navigation}
           {this._component}
+          {this._modalContent}
           {this._notification}
           </div>
 

@@ -105,6 +105,7 @@ var appConstants = {
 	FINISH_CURRENT_AUDIT:"FINISH_CURRENT_AUDIT",
 	CHANGE_PICK_FRONT_EXCEPTION_SCREEN:"CHANGE_PICK_FRONT_EXCEPTION_SCREEN",
 	CANCEL_SCAN : 'CANCEL_SCAN',
+	CANCEL_SCAN_UDP: 'CANCEL_SCAN_UDP',
 	FINISH_BOX:"FINISH_BOX",
 	GENERATE_REPORT:"GENERATE_REPORT",
 	LOAD_MODAL:'load_modal',
@@ -284,7 +285,19 @@ var appConstants = {
 	PRESS_PPTL_TO_CLEAR_BIN:"press_pptl_to_clear_bin",
 	CANCEL_SCAN_TOTE:"CANCEL_SCAN_TOTE",
 	PICK_BACK_NO_SCAN:"pick_back_no_scan",
-	SET_CANCEL_BUTTON_STATUS:"SET_CANCEL_BUTTON_STATUS"
+	SET_CANCEL_BUTTON_STATUS:"SET_CANCEL_BUTTON_STATUS",
+	/*Constants for UDP*/
+	UDP_PUT_FRONT_TOTE_SCAN:"ud_put_front_tote_scan",
+	UDP_PUT_FRONT_ENTITY_SCAN:"ud_put_front_entity_scan",
+	UDP_PUT_FRONT_BIN_SCAN: "ud_put_front_bin_scan",
+	UDP_PUT_FRONT_WAITING_FOR_RACK: "ud_put_front_waiting_for_rack",
+	UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK: "ud_put_front_place_items_in_rack",
+	UDP_PUT_FRONT_MISSING:"ud_put_front_missing",
+	UDP_PUT_FRONT_UNEXPECTED: "ud_put_front_unexpected",
+	UDP_UNEXPECTED_ITEM:"ud_put_front_unexpected",
+	CLOSE_UNEXPECTED_SCAN:"CLOSE_UNEXPECTED_SCAN",
+	SEND_MSU:"send_msu",
+	CLOSE_CART:"close_cart"
 };
 
 module.exports = appConstants;

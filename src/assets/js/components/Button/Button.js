@@ -174,6 +174,11 @@ switch (module) {
                                 data["event_data"]["barcode"] = this.props.barcode;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                            case appConstants.CANCEL_SCAN_UDP:
+                                data["event_name"] = "cancel_barcode_scan";
+                                data["event_data"]["barcode"] = this.props.barcode;
+                                ActionCreators.postDataToInterface(data);
+                                break;
                              case appConstants.WAREHOUSEFULL_EXCEPTION:
                                 data["event_name"] = "put_front_exception";
                                 data["event_data"]["action"] ="confirm_quantity_update";
@@ -222,7 +227,25 @@ switch (module) {
 
                             case appConstants.CLOSE_CANCEL_EXCEPTION:
                                closeModalBox(); 
-                               break;                                                               
+                               break; 
+                            case appConstants.SEND_MSU: 
+                                data["event_name"] = "send_msu";
+                                ActionCreators.postDataToInterface(data);
+                                break; 
+                            case appConstants.CLOSE_UNEXPECTED_SCAN:
+                                data["event_name"] = "close_unexpected_scan";
+                                data["event_data"]["close_value"] = this.props.status;
+                                data["event_data"]["barcode"] = this.props.toteId;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;         
+                            case appConstants.CLOSE_TOTE:
+                                data["event_name"] = "confirm_close_tote";
+                                data["event_data"]["close_value"] = this.props.status;
+                                data["event_data"]["barcode"] = this.props.toteId;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;                                                           
                             default:
                                 return true;
                         }

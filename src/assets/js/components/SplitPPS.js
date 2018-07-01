@@ -7,8 +7,8 @@ var SplitPPS = React.createClass({
 		var data =  Object.assign({},(this.props.groupInfo || {}));
 		var leftCol = [],dockedGroup = this.props.docked||[],
 		undockAwaited = this.props.undockAwaited||[],
-		wrongUndock=this.props.wrongUndock||[]
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null;
+		wrongUndock=this.props.wrongUndock||[],
+		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=0;
 
 		for(var  key in data){
 			if(data[key] === allresourceConstants.BIN_GROUP_LEFT){
@@ -19,10 +19,17 @@ var SplitPPS = React.createClass({
 			}
 		}
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
-		maxBlockHeight = 70/maxBlockCount;
+		maxBlockHeight = 50/maxBlockCount;
+		maxWidth = (maxBlockHeight/100)*360;
 		style = {
 			height:maxBlockHeight+"%",
-			width:(maxBlockHeight/100)*360
+			width: (maxWidth <= 100 ? maxWidth : 100)+'px'
+		}
+		if(this.props.displayBinId){
+			style = Object.assign({},style,{padding: '10%',
+					    color: '#fff',
+					    'fontSize': ((50/28) * maxBlockHeight)+'px'
+					})
 		}
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
@@ -31,41 +38,41 @@ var SplitPPS = React.createClass({
 
 					if(dockedGroup.indexOf(k) >= 0){
 						leftCol.push(<li  key={k} style={style} className="dockedCont">
-							<span  className="docked"></span>
+							<span  className="docked">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
 						leftCol.push(<li key={k} style={style} className="undockedCont">
-							<span  className="undock left"></span>
+							<span  className="undock left">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else if(wrongUndock.indexOf(k) >= 0){
 						leftCol.push(<li key={k} style={style} className="wrongUndockCont">
-							<span   className="wrongUndock left"></span>
+							<span   className="wrongUndock left">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else{
-						leftCol.push(<li key={k} style={style} ></li>);
+						leftCol.push(<li key={k} style={style} ><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 					
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
 					if(dockedGroup.indexOf(k) >= 0){
 						rightCol.push(<li key={k} style={style} className="dockedCont">
-							<span className="docked"></span>
+							<span className="docked">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
 						rightCol.push(<li key={k} style={style} className="undockedCont">
-							<span className="undock right"></span>
+							<span className="undock right">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}else if(wrongUndock.indexOf(k) >= 0){
 						rightCol.push(<li key={k} style={style} className="wrongUndockCont">
-							<span  className="wrongUndock right"></span>
+							<span  className="wrongUndock right">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else{
-						rightCol.push(<li key={k} style={style} ></li>);
+						rightCol.push(<li key={k} style={style} ><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 					
 				}

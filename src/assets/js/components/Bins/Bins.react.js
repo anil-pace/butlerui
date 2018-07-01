@@ -4,7 +4,10 @@ var PutBackStore = require('../../stores/PutBackStore');
 
 var Bins = React.createClass({
     componentDidMount: function() {
-        this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+        if(this.props.binsData["structure"]){
+            this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+        }
+        
     },
     _findCoordinatesIndex:function(x,y){
         var i = 0;
@@ -17,7 +20,9 @@ var Bins = React.createClass({
         return i;
     },
     render: function() {
+        if(this.props.binsData["structure"]){
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
+    }
         var compData = this.props.binsData;
         var dataToDisassociateTote=this.props.dataToDisassociateTote
         var scrnId = this.props.screenId;

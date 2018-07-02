@@ -2843,6 +2843,7 @@ setCurrentSeat: function (data) {
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontPickDirection"] = this.getDirectionDetails();
             data["PickFrontRackTypeMPU"]=this.getRackType();
+            data["PickFrontCancelScan"] = this.cancelScanDetails();
 
             break;
             case appConstants.PICK_FRONT_PACKING_BOX:

@@ -76,7 +76,14 @@ var ProductInfo = React.createClass({
             }
           }
           if(data_locale.display_name == 'product_local_image_url' ){
-              image_url[data_locale.display_name] = imageKey;
+              if(imageKey === "outer_each" || imageKey === "inner_each" || imageKey === "outer_inner"){
+                image_url[data_locale.display_name] = "assets/images/" + imageKey + ".gif";
+              }
+              else if(imageKey === "outer" || imageKey === "inner"){
+                image_url[data_locale.display_name] = "assets/images/" + imageKey + ".png";
+              }
+              else
+                image_url[data_locale.display_name] = imageKey;
           }
         
         }

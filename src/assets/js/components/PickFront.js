@@ -196,8 +196,18 @@ var PickFront = React.createClass({
                 }
                 break;
             case appConstants.PICK_FRONT_CONTAINER_BREAK:
-            case appConstants.PICK_FRONT_ITEM_SCAN:
-            var rackType="";
+             case appConstants.PICK_FRONT_ITEM_SCAN:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelButton;
+                var rackType="";
+                if (cancelScanFlag) {
+                        cancelButton = (
+                            <div ><Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
+                                           action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
+                    }
+                    else {
+                        cancelButton = (<div ></div>);
+                    }
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
@@ -218,6 +228,9 @@ var PickFront = React.createClass({
                             <div className='main-container'>
                                {rackType}
                                 <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
+                            </div>
+                            <div className='actions'>
+                                {cancelButton}
                             </div>
                         </div>
                     );

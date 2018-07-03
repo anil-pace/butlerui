@@ -198,9 +198,7 @@ var PickFront = React.createClass({
             case appConstants.PICK_FRONT_CONTAINER_BREAK:
              case appConstants.PICK_FRONT_ITEM_SCAN:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
-                //var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 var cancelButton;
-                //var cancelClicked = mainstore.getCancelButtonStatus();
                 var rackType="";
                 if (cancelScanFlag) {
                         cancelButton = (

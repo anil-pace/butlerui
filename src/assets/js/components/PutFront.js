@@ -43,6 +43,9 @@ var PutFront = React.createClass({
   getInitialState: function(){
     return this.getStateData();
   },
+  componentWillReceiveProps: function(){
+    this.setState(this.getStateData());
+  },
   getStateData: function(){
   var screenData = mainstore.getScreenData();
   var splitPPSData = {
@@ -65,7 +68,8 @@ var PutFront = React.createClass({
         PutFrontCurrentBinCount: mainstore.getPutFrontCurrentBinCount(),
         PutFrontRackDetails: mainstore.getRackDetails(),
         missingItemList: mainstore.getMissingItemList(),
-        ToteId: mainstore.getToteId()
+        ToteId: mainstore.getToteId(),
+        selectedPPSBin: mainstore._getSelectedPpsBin()
     }
 
     
@@ -661,6 +665,7 @@ var PutFront = React.createClass({
         }
         break;
         case appConstants.UDP_PUT_FRONT_BIN_SCAN:
+        this._modalContent='';
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
           this._component = (
@@ -681,13 +686,15 @@ var PutFront = React.createClass({
         break;
 
         case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
+          this._modalContent='';
+          this._component='';
           if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
           this._component = (
             <div className='grid-container udp-flow'>
               <Modal/>
             <div className="single-bin udp-flow">
-            <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>
+            <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow'/>
             <CurrentBin details={this.state.PutFrontCurrentBinCount} />
             <PreviousPutDetails previousPutDetails={this.state.PreviousPutDetails} />
             </div>
@@ -710,6 +717,7 @@ var PutFront = React.createClass({
         case appConstants.UDP_PUT_FRONT_UNEXPECTED:
         case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
         this._modalContent='';
+        this._component='';
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
           if(this.state.PutFrontScreenId === appConstants.UDP_PUT_FRONT_MISSING){
@@ -778,7 +786,7 @@ var PutFront = React.createClass({
               <Modal toteId={this.state.ToteId} />
             <div className={"single-bin udp-flow"}>
             
-             <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow'/>
+             <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow'/>
             <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
             <PreviousPutDetails previousPutDetails={this.state.PreviousPutDetails} />
             
@@ -803,6 +811,8 @@ var PutFront = React.createClass({
         }
         break;
         case appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK:
+      this._modalContent='';
+      this._component='';
       if(this.state.PutFrontExceptionStatus == false){
         this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
         this._component = (

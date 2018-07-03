@@ -370,9 +370,25 @@ var serverMessages = {
     "PkF.H.021":"Put Pack list in trolley and press PPTL to confirm",
     "PkF.H.022":"Waiting for roll cage to be docked",
     "PtB.H.020":"Waiting for put_away to complete from front",
-    "UD.H.001":"Scan new putaway unit",
-    "UD.H.005": "Wait for MSU",
-    "UD.H.004" : "Put item in slot and scan slot to confirm"
+    "UdpF.I.001" : "Putaway unit scan successful",
+    "UdpF.I.002" : "Entity scan successful",
+    "UdpF.I.003" : "Cancel scan successful",
+    "UdpF.I.004" : "Tote Close Cancel",
+    "UdpF.I.005" :"Putaway unit docked successfully",
+    "UdpF.I.006" : "Slot scan successful",
+    "UdpF.I.007" : "Tote close successful",
+    "UdpF.E.001" : "Close current tote first",
+    "UdpF.E.002" : "Wrong entity scanned. Please scan tote",
+    "UdpF.E.003" : "PPS bin already docked",
+    "UdpF.E.004" : "Wrong entity scanned. Waiting for ppsbin scan",
+    "UdpF.E.005" : "Wrong entity scan.Please scan item",
+    "UdpF.E.006" : "Wrong entity scanned. Waiting for slot scan",
+    "UdpF.E.007" : "Wrong slot scanned",
+    "UdpF.H.001" : "Scan new putaway unit",
+    "UdpF.H.002" : "Scan PPS bin barcode",
+    "UdpF.H.003" : "Scan item or putaway unit",
+    "UdpF.H.004" : "Put item in slot and scan slot to confirm",
+    "UdpF.H.005" : "Wait for MSU"
 
 };
 

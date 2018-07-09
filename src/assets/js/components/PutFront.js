@@ -69,7 +69,8 @@ var PutFront = React.createClass({
         PutFrontRackDetails: mainstore.getRackDetails(),
         missingItemList: mainstore.getMissingItemList(),
         ToteId: mainstore.getToteId(),
-        selectedPPSBin: mainstore._getSelectedPpsBin()
+        selectedPPSBin: mainstore._getSelectedPpsBin(),
+        PutFrontItemUid: mainstore.getItemUid()
     }
 
     

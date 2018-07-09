@@ -284,7 +284,7 @@ componentDidMount(){
                     else{
                         self._qty=txtBoxVal;
                         CommonActions.updateKQQuantity(parseInt(self._qty));
-                        this.setState({
+                        self.setState({
                         value : self._qty
                             }
                         )

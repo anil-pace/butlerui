@@ -369,7 +369,7 @@ switch (module) {
                                 closeModalBox();
                             break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
-                                 ActionCreators.setCancelButtonStatus(false);
+                                 ActionCreators.setCancelButtonStatus(true);
                                  ActionCreators.validateAndSendDataToServer();
                             closeModalBox();
                             break; 

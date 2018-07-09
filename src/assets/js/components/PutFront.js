@@ -649,6 +649,7 @@ var PutFront = React.createClass({
             );
           break;
           case appConstants.UDP_PUT_FRONT_TOTE_SCAN:
+          this._modalContent='';
           if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
           this._component = (

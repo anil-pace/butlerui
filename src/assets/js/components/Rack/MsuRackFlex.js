@@ -6,7 +6,7 @@ var MsuRackFlex = React.createClass({
       return this._getMaxXMaxYCoords(this.props.rackDetails);
     },
     componentWillReceiveProps: function(nextProps) {
-      this._getMaxXMaxYCoords(nextProps.rackDetails);
+      this.setState(this._getMaxXMaxYCoords(nextProps.rackDetails))
     },
 
     componentDidUpdate:function(){

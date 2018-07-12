@@ -2365,10 +2365,10 @@ setCurrentSeat: function (data) {
             
         })
         leftBins.sort(function(a,b){
-        return a["orig_coordinate"][1] - b["orig_coordinate"][1];
+        return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
       });
         rightBins.sort(function(a,b){
-        return a["orig_coordinate"][1] - b["orig_coordinate"][1];
+        return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
       });
         leftBins = leftBins.concat(rightBins);
         leftBins.forEach(function(bin){

@@ -565,7 +565,7 @@ function server_messages_list() {
     _("Waiting for Tote to be associated from back");
     _("Waiting for put away to complete from front");
     //added during BSS-9407
-    _("Unexpected Entity In Tote");
+    _("Unexpected Entity In {0}");
     _("Scan a {0}");
     _("Scan a {0} or Press PPTL");
     _("Press PPTL to clear the Bin");
@@ -622,8 +622,8 @@ function server_messages_list() {
     _("Select Bin to disassociate {0}");
     _("Place {0} in Bin and scan the Bin barcode");
     _("Waiting for order to be completed from front");
-    _("Waiting for Tote to be associated from back");
-    _("Tote scan successful.");
+    _("Waiting for {0} to be associated from back");
+    _("{0} scan successful.");
     _("{0} close successful.");
     _("{0} not closed.");
     _("Excess item in {0} recorded. Now press PPTL");
@@ -687,7 +687,7 @@ function server_messages_list() {
     _("Override {0} Required");
     _("Scan {0}");
     _("Scan slot");
-    _("Scan Tote which has excess item");
+    _("Scan {0} which has excess item");
     _("Scan excess item");
     _("Scan or Enter the {0} barcode to reprint");
     _("{0} scan successful.");

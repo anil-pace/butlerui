@@ -20,9 +20,9 @@ var serverMessages = {
     "PtB.H.018" : "Scan a {0} or Press PPTL",
     "PtB.H.019" : "Press PPTL to clear the Bin",
     "PtB.H.020" : "Waiting for put_away to complete from front",
-    "PtB.H.021" : "Place {0} in Bin {1} and Press PPTL",  // need to test, updated variable positioning
-    "PtB.E.001" : "{0} already opened. Scan some other {1}", // Tote , tote
-    "PtB.E.002" : "{0} already closed. Scan some other {1}", // Tote , tote
+    "PtB.H.021" : "Place {0} in Bin {1} and Press PPTL",  
+    "PtB.E.001" : "{0} already opened. Scan some other {1}", 
+    "PtB.E.002" : "{0} already closed. Scan some other {1}", 
     "PtB.E.003" : "Close current {0} first",
     "PtB.E.004" : "Wrong entity scanned. Please scan {0}",
     "PtB.E.005" : "No entities added yet. Scan entities and then press PPTL",
@@ -51,15 +51,15 @@ var serverMessages = {
     "PtF.H.005" : "Enter Quantity",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PtF.H.007" : "Undock Roll Cage if no items remaining",
-    "PtF.H.008" : "Place the {0} back in bin {1} and press PPTL",             // need to test..updated variable positioning
+    "PtF.H.008" : "Place the {0} back in bin {1} and press PPTL",  
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan {0} which has excess item",
-    "PtF.H.011" : "Take out the {0} from bin {1} and scan entity",              // need to test..updated variable positioning
-    "PtF.H.012" : "Place {0} boxes from bin {2}",                             // need to test .....where is {1}
+    "PtF.H.011" : "Take out the {0} from bin {1} and scan entity",             
+    "PtF.H.012" : "Place {0} boxes from bin {2}",                             
     "PtF.H.013" : "Place {0} boxes with {1} items from bin {2}",
     "PtF.H.016" : "Warehouse Full",
     "PtF.H.017" : "Wrong Undock",
-    "PtF.H.018" : "Remove {0} from bin {1} & Press PPTL to confirm no Items Remaining", // need to test..updated variable positioning
+    "PtF.H.018" : "Remove {0} from bin {1} & Press PPTL to confirm no Items Remaining", 
     "PtF.H.019" : "Press PPTL to confirm no Items Remaining in Bin {0}",
     "PtF.H.020" : "Warehouse Full Remove all entities from bin & press PPTL",
     "PtF.H.021" : "Scan IRT Bin",

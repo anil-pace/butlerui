@@ -2,9 +2,9 @@ const child_process = require('child_process');
 child_process.execSync("npm install gettext-parser --save-dev");
 const fs = require('fs');
 const path = require('path');
-const getTextParser = require('/home/jenkins/workspace/workspace/ButlerUI-1.5-develop-build/node_modules/gettext-parser');
-const translationUtils = require('/home/jenkins/workspace/workspace/ButlerUI-1.5-develop-build/translationUtils/parseJSON.js');
-const languageMap = require('/home/jenkins/workspace/workspace/ButlerUI-1.5-develop-build/translationUtils/languageMap.js');
+const getTextParser = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/node_modules/gettext-parser');
+const translationUtils = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/translationUtils/parseJSON.js');
+const languageMap = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/translationUtils/languageMap.js');
 const fileLoc = "src/assets/js/utils/vendor/i18n/";
 fs.readdirSync(fileLoc).forEach(file => {
 

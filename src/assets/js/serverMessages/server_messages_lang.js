@@ -709,5 +709,9 @@ function server_messages_list() {
     _("Wrong entity scanned. Please scan {0}");
     _("Scan new {0}");
     _("Scan item or {0}");
+    _("Dis-associate Tote");
+    _("Scan Bin");
+    _("Tote Unscannable");
+    _("Unscannable Tote");
 }
 

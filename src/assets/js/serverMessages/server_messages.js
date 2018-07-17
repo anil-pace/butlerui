@@ -21,8 +21,8 @@ var serverMessages = {
     "PtB.H.019" : "Press PPTL to clear the Bin",
     "PtB.H.020" : "Waiting for put_away to complete from front",
     "PtB.H.021" : "Place {0} in Bin {1} and Press PPTL",  
-    "PtB.E.001" : "{0} already opened. Scan some other {1}",
-    "PtB.E.002" : "{0} already closed. Scan some other {1}",
+    "PtB.E.001" : "{0} already opened. Scan some other {1}", 
+    "PtB.E.002" : "{0} already closed. Scan some other {1}", 
     "PtB.E.003" : "Close current {0} first",
     "PtB.E.004" : "Wrong entity scanned. Please scan {0}",
     "PtB.E.005" : "No entities added yet. Scan entities and then press PPTL",
@@ -51,7 +51,7 @@ var serverMessages = {
     "PtF.H.005" : "Enter Quantity",
     "PtF.H.006" : "Put Back Entities in the PPS Bin",
     "PtF.H.007" : "Undock Roll Cage if no items remaining",
-    "PtF.H.008" : "Place the {0} back in bin {1} and press PPTL",    
+    "PtF.H.008" : "Place the {0} back in bin {1} and press PPTL",             
     "PtF.H.009" : "Scan excess item",
     "PtF.H.010" : "Scan {0} which has excess item",
     "PtF.H.011" : "Take out the {0} from bin {1} and scan entity",              
@@ -118,8 +118,7 @@ var serverMessages = {
     "PtB.W.002" : "Entity already scanned.Waiting for PPTL press",
     "PtB.W.003" : "No bins available to stage",
     "PtB.W.004" : "Bin already staged. Ignoring event",
-    "PtB.W.005" : "Bin empty. Cannot be staged",    
-    "PtB.W.012" : "{0} in use at front seat",
+    "PtB.W.005" : "Bin empty. Cannot be staged",
     "PkF.A.012" : "Scan {0} items",
     "PtF.C.007" :"Waiting for MSU to arrive",
     "PkF.D.010" :"Scan box barcode",
@@ -411,14 +410,6 @@ var serverMessages = {
     "UdpF.H.005" : "Wait for MSU"
 
 };
+
+
 module.exports = serverMessages;
-
-
-
-
-
-
-
-
-
-

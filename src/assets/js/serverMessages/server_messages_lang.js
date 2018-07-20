@@ -564,5 +564,27 @@ function server_messages_list() {
     _("Tote cannot be associated with bin of another seat");
     _("Waiting for Tote to be associated from back");
     _("Waiting for put away to complete from front");
+    _("Expecting tote closure.");
+    _("Tote matched .");
+    _("Scan a Tote");
+    _("Scan a Tote or Press PPTL");
+    _("Please press ppsbin button which does not have any totes associated");
+    _("PPTL press not expected.");
+    _("Tote association required");
+    _("Scan pptl barcode after scannning tote barcode");
+    _("Wrong entity Scanned. Tote Scan Expected.");
+    _("Invalid tote scan");
+    _("Putaway unit scan successful");
+    _("Tote Close Cancel");
+    _("Putaway unit docked successfully");
+    _("PPS bin already docked");
+    _("Wrong entity scanned. Waiting for ppsbin scan");
+    _("Wrong entity scan.Please scan item");
+    _("Wrong entity scanned. Waiting for slot scan");
+    _("Wrong slot scanned");
+    _("Scan new putaway unit");
+    _("Scan PPS bin barcode");
+    _("Scan item or putaway unit");
+    _("Put item in slot and scan slot to confirm");
 }
 

@@ -416,7 +416,7 @@ function server_messages_list() {
     _(" items");
     _("Wrong ppsbin button pressed");
     _("Total ");
-    _("Place the tote back in bin {0} and press pptl");
+    _("Place the tote back in bin {0} and press PPTL");
     _("Take out the tote from bin {0} and scan entity");
     _("Scan tote first and then scan item");
     _("Scan excess item");
@@ -564,4 +564,14 @@ function server_messages_list() {
     _("Tote cannot be associated with bin of another seat");
     _("Waiting for Tote to be associated from back");
     _("Waiting for put away to complete from front");
+    _("Expecting tote closure.");
+    _("Tote matched .");
+    _("Scan a Tote");
+    _("Scan a Tote or Press PPTL");
+    _("Please press ppsbin button which does not have any totes associated");
+    _("PPTL press not expected.");
+    _("Tote association required");
+    _("Scan pptl barcode after scannning tote barcode");
+    _("Wrong entity Scanned. Tote Scan Expected.");
+    _("Invalid tote scan");
 }

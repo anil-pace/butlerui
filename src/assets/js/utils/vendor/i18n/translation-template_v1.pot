@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-20 07:33+0000\n"
+"POT-Creation-Date: 2018-07-20 08:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -930,6 +930,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:190
 #: src/assets/js/serverMessages/server_messages_lang.js:195
+#: src/assets/js/serverMessages/server_messages_lang.js:584
 msgid "Wrong slot scanned"
 msgstr ""
 
@@ -3219,4 +3220,88 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:715
 msgid "Unscannable Tote"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:567
+msgid "Expecting tote closure."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:568
+msgid "Tote matched ."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:569
+msgid "Scan a Tote"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:570
+msgid "Scan a Tote or Press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:571
+msgid "Please press ppsbin button which does not have any totes associated"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:572
+msgid "PPTL press not expected."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:573
+msgid "Tote association required"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:574
+msgid "Scan pptl barcode after scannning tote barcode"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:575
+msgid "Wrong entity Scanned. Tote Scan Expected."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:576
+msgid "Invalid tote scan"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:577
+msgid "Putaway unit scan successful"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:578
+msgid "Tote Close Cancel"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:579
+msgid "Putaway unit docked successfully"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:580
+msgid "PPS bin already docked"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:581
+msgid "Wrong entity scanned. Waiting for ppsbin scan"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:582
+msgid "Wrong entity scan.Please scan item"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:583
+msgid "Wrong entity scanned. Waiting for slot scan"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:585
+msgid "Scan new putaway unit"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:586
+msgid "Scan PPS bin barcode"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:587
+msgid "Scan item or putaway unit"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:588
+msgid "Put item in slot and scan slot to confirm"
 msgstr ""

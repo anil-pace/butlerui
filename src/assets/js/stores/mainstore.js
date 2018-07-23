@@ -217,7 +217,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         showModal = false;
     },
     getNavData: function () {
-        switch (_currentSeat) {
+         switch (_currentSeat) {
             case appConstants.PUT_BACK:
             if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
                 _NavData = navConfig.putBack[0];
@@ -309,6 +309,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             else
                 _NavData = navConfig.pickBack[0];
             break;
+            
             case appConstants.PICK_FRONT:
             if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
                 _NavData = navConfig.pickFront[0];
@@ -366,6 +367,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 else
                     _NavData = navConfig.pickFront[1];
                 break;
+
                 case appConstants.AUDIT:
 
                 if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU && _seatData.k_deep_audit)
@@ -684,6 +686,22 @@ getOrderID: function () {
             return null;
         }
     },
+
+
+
+    getChecklistData: function () {
+        if (_seatData.hasOwnProperty('checklist_data')) {
+            return _seatData.checklist_data;
+        }
+    },
+
+
+    getChecklistIdx: function () {
+        if (_seatData.hasOwnProperty('checklist_index')) {
+            return _seatData.checklist_index;
+        }
+    },
+
 
     getNotificationData: function () {
         if (_clearNotification == true && _seatData.hasOwnProperty('notification_list')) {
@@ -2846,6 +2864,29 @@ setCurrentSeat: function (data) {
             data["PickFrontCancelScan"] = this.cancelScanDetails();
 
             break;
+
+            case appConstants.PICK_FRONT_CHECKLIST:
+
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontPickDirection"] = this.getDirectionDetails();
+                data["PickFrontRackTypeMPU"]=this.getRackType();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistData"] = this.getChecklistData();
+                data["PickFrontChecklistIndex"] = this.getChecklistIdx();
+            break;
+
             case appConstants.PICK_FRONT_PACKING_BOX:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontBinData"] = this.getBinData();

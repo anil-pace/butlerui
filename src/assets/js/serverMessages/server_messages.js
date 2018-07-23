@@ -79,6 +79,7 @@ var serverMessages = {
     "PkF.H.024" : "Place {0} items in bin {1} and press PPTL to confirm",
     "PkF.H.025" : "Paste Printout on the item and confirm",
     "PkF.H.026" : "Waiting for Tote to be associated from back",
+    "PkF.H.031" : "Scan checklist items to proceed",
     "PkF.H.027" : "Scan {0} to Open",
     "PkB.H.001" : "Scan a Tote",
     "PkB.H.002" : "Press PPTL or Scan a Tote",

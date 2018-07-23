@@ -28,6 +28,7 @@ var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
 var OrderDetails = require('./OrderDetails/OrderDetails.js');
 var Pallet=require("./Pallet/pallet");
+var CheckList=require("./CheckList.js");
 var utils = require('../utils/utils.js');
 
 var checkListOpen = false;
@@ -239,7 +240,42 @@ var PickFront = React.createClass({
                 }
                 break;
 
-        
+                case appConstants.PICK_FRONT_CHECKLIST:
+                var cancelScanFlag = this.state.PickFrontCancelScan;
+                var cancelButton;
+                if (cancelScanFlag) {
+                    cancelButton = (
+                        <div ><Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
+                                       action={appConstants.CANCEL_SCAN} color={"black"}/></div>);
+                }
+                else {
+                    cancelButton = (<div ></div>);
+                }
+                var checklistData="";
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                    serverNavData={this.state.PickFrontServerNavData}
+                                                    navMessagesJson={this.props.navMessagesJson}/>);
+
+                        checklistData = <CheckList checklistData = {this.state.PickFrontChecklistData}
+                                                    checklistIndex = {this.state.PickFrontChecklistIndex} />
+            
+                        this._component = (
+                            <div className='grid-container'>
+                                <Modal />
+                                <div className='main-container'>
+                                   {checklistData}
+                                    <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
+                                </div>
+                                <div className='actions'>
+                                    {cancelButton}
+                                </div>
+                            </div>
+                        );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
 
 
             case appConstants.PICK_FRONT_CONTAINER_SCAN:

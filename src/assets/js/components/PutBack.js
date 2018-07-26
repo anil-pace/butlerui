@@ -142,12 +142,20 @@ var PutBack = React.createClass({
 
 
       case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
-      this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
-      this._component = (
+        this._navigation = (<Navigation navData ={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
+        var binComponent ="";
+        if (this.state.OrigBinUse){
+          binComponent =(  <BinsFlex binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} seatType = {this.state.SeatType}/>)
+        }else{
+          binComponent = ( <div className='main-container'>
+            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            </div>)
+        }
+        this._component = (
           <div className='grid-container'>
           <div className='main-container'>
           <Modal/>
-            <Bins binsData={this.state.PutBackBinData} screenId = {this.state.PutBackScreenId} />
+            {binComponent}
             </div>
           </div>
           );         

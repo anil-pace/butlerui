@@ -981,7 +981,9 @@ getOrderID: function () {
     getCustomContainerNames: function(){
         return _seatData.Possible_Container_Names || null
     },
-
+    isAddlInfoPresent: function(){
+        return (Object.keys(_seatData.info_button_data).length ? true :false)
+    },
     getReconcileBoxSerialData: function() {
         var data = {};
         data["header"] = [];

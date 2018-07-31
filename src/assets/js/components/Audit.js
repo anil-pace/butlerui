@@ -70,7 +70,9 @@ var GorSelect = require("./gor-select/gor-select");
           allInfoModalStatus:this.state ? this.state.allInfoModalStatus : false,
           selectedTab:this.state ? this.state.selectedTab : 0,
           infoButtonData: mainstore.getInfoButtonData(),
-          customContainerNames: mainstore.getCustomContainerNames()
+          customContainerNames: mainstore.getCustomContainerNames(),
+          isAddlInfoPresent: mainstore.isAddlInfoPresent()
+
          }
          return Object.assign({}, screenData, localState);
        },
@@ -144,7 +146,7 @@ var GorSelect = require("./gor-select/gor-select");
       case appConstants.AUDIT_WAITING_FOR_MSU:
 
       if(this.state.AuditExceptionStatus == false){
-        var AuditAddlInfoData = this.getAddlInfoData();
+
         this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
           <div className='grid-container'>
@@ -256,7 +258,10 @@ var GorSelect = require("./gor-select/gor-select");
 
 case appConstants.AUDIT_SCAN_SR:
 if(this.state.AuditExceptionStatus == false){
-  var AuditAddlInfoData = this.getAddlInfoData();
+  var isAddlInfoPresent = this.state.isAddlInfoPresent;
+    if(isAddlInfoPresent){
+      var AuditAddlInfoData = this.getAddlInfoData();
+    }
  this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
  if(this.state.AuditCancelScanStatus == true){
   this._cancelStatus = (
@@ -268,12 +273,14 @@ if(this.state.AuditExceptionStatus == false){
   this._cancelStatus = '';
 }
 if(this.state.AuditPackData["tableRows"].length > 0){
-  this._packData = (<div className="audit-wrapper"><p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p><TabularData data = {this.state.AuditPackData}/></div>);
+  this._packData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditPackData}/></div>);
+
 }else{
   this._packData = '';
 }
 if(this.state.AuditSubPackData["tableRows"].length > 0){
-  this._subPackData = (<div className="audit-wrapper"><p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p><TabularData data = {this.state.AuditSubPackData} /></div>);
+  this._subPackData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditSubPackData} /></div>);
+
 }else{
   this._subPackData = '';
 }
@@ -287,7 +294,8 @@ this._component = (
   {this._packData}
   {this._subPackData}
   </div>
-            {this.state.allInfoModalStatus && <ReactModal title={_("Additional Information")} customClassNames="audit-uom-info">
+            {this.state.allInfoModalStatus && isAddlInfoPresent && <ReactModal title={_("Additional Information")} customClassNames="audit-uom-info">
+
           <GorTabs onTabClick ={this._onTabClick} defaultActiveTabIndex={this.state.selectedTab} tabClass={"tabs-audit"} >
               {Object.keys(AuditAddlInfoData).map(function(value,index){
 

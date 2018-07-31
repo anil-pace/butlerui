@@ -5,7 +5,7 @@ var allSvgConstants = {
 	menu : 'assets/images/menu.png',
 	place:'assets/images/Icon2.png',
 	rack: 'assets/images/rack.png',
-	gorLogo : 'assets/images/LogoVectorSmartObject.png',
+	gorLogo : 'assets/images/gorLogoUpdated.svg',
 	factoryImg : 'assets/images/factoryImage.png',
 	forma1 : 'assets/images/Forma1.png',
 	headerbg : 'assets/images/headerbg.png',

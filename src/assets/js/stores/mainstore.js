@@ -218,193 +218,230 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         showModal = false;
     },
     getNavData: function () {
-        switch (_currentSeat) {
-            case appConstants.PUT_BACK:
-            if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
-                _NavData = navConfig.putBack[0];
-            else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
-                _NavData = navConfig.utility[0];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+        if(_seatData.header_steps){
+        	var headerSteps = _seatData.header_steps;
+           navConfig.header=[];
+            for(var i =0; i < headerSteps.length; i++){
+                navConfig.header.push({
+                    "screen_id": serverMessages[(headerSteps[i])]["screen_id"],
+                    "code": "",
+                    "message": serverMessages[(headerSteps[i])]["textToDisplay"],
+                    "showImage": true,
+                    "level": "",
+                    "type": 'passive'
+                });
             }
-            else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
-                _NavData = navConfig.utility[1];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-            }
-            else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
-                _NavData = navConfig.putBack[2];
-            else if(_seatData.screen_id ===appConstants.PUT_BACK_SCAN_TOTE)
-                _NavData = navConfig.putBack[3];
-            else if(_seatData.screen_id ===appConstants.PUT_BACK_PRESS_PPTL_TOTE)
-                _NavData = navConfig.putBack[4]; 
-            else if(_seatData.screen_id ===appConstants.PUT_BACK_NO_SCAN_TOTE)
-                _NavData = navConfig.putBack[5];
-                else
-                _NavData = navConfig.putBack[1];
-            break;
-            case appConstants.PUT_FRONT:
-            if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
-                _NavData = navConfig.putFront[0];
-            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_TOTE_SCAN){
-                _NavData = navConfig.putFront[9];
-            }
-            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_ENTITY_SCAN){
-                _NavData = navConfig.putFront[10];
-            }
-            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_BIN_SCAN){
-                 _NavData = navConfig.putFront[11];
-            }
-            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK){
-                _NavData = navConfig.putFront[12];
-            }
-             else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK){
-                _NavData = navConfig.putFront[13];
-            }
-            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_MISSING){
-                _NavData = navConfig.putFront[14];
-            }
-            else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_UNEXPECTED){
-                _NavData = navConfig.putFront[15];
-            }
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
-                _NavData = navConfig.putFront[2];
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL)
-                _NavData = navConfig.putFront[5];
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
-                _NavData = navConfig.putFront[3];
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
-                _NavData = navConfig.putFront[7];
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
-                _NavData = navConfig.putFront[8];
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
-                _NavData = navConfig.putFront[4];
-            else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
-                _NavData = navConfig.utility[0];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-            }
-            else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
-                _NavData = navConfig.utility[1];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-            }
-            else if (_seatData.screen_id === appConstants.PUT_FRONT_WRONG_UNDOCK) {
-                _NavData = navConfig.putFront[6];
-            }
-            else
-                _NavData = navConfig.putFront[1];
-            break;
-            case appConstants.PICK_BACK:
-            if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
-                _NavData = navConfig.utility[0];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-            }
-            else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
-                _NavData = navConfig.utility[1];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-            }
-           
-            else if(_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN){
-                    _NavData = navConfig.pickBack[1];
-                }
-            else if(_seatData.screen_id === appConstants.PICK_BACK_SCAN ){
-                _NavData = navConfig.pickBack[2];
-            }    
-            else
-                _NavData = navConfig.pickBack[0];
-            break;
-            case appConstants.PICK_FRONT:
-            if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
-                _NavData = navConfig.pickFront[0];
-            else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
-                _NavData = navConfig.pickFront[2];
-            else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
-                _NavData = navConfig.utility[0];
-                _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-            }
-            else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX) {
-                _NavData = navConfig.pickFront[3];
-                _NavData[0].type = 'active';
-            }
+            _NavData = navConfig.header;
 
-            else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN) {
-                _NavData = navConfig.pickFront[4];
-                _NavData[1].type = 'active';
-            }
-            else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN) {
-                _NavData = navConfig.pickFront[5];
-                _NavData[2].type = 'active';
-            }
-            else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS) {
-                _NavData = navConfig.pickFront[6];
-                _NavData[2].type = 'active';
-            }
-            else if (_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM) {
-                _NavData = navConfig.pickFront[7];
-                    //_NavData[2].type = 'active';
+            _NavData.map(function (data, index) {
+                if(data.screen_id.constructor === Array && data.screen_id.length>0){
+                    if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
+                        _NavData[index].type = 'active';
+                    } else {
+                        _NavData[index].type = 'passive';
+                    }
+                } else if (_seatData.screen_id == data.screen_id) {
+                    _NavData[index].type = 'active';
+                } else {
+                    _NavData[index].type = 'passive';
                 }
-                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
-                    _NavData = navConfig.utility[1];
-                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-                }
-                else if (_seatData.screen_id === appConstants.PICK_FRONT_BIN_PRINTOUT|| _seatData.screen_id===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT) {
-                    _NavData = navConfig.pickFront[8];
-                }
-                else if (_seatData.screen_id === appConstants.PICK_FRONT_SCAN_PACKS) {
-                    _NavData = navConfig.pickFront[9];
-                    _NavData[0].type="active"
-                }
-                else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_CONTAINER_BREAK))
-                {
-                    _NavData = navConfig.pickFront[10];
-                }
-                else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) || (_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS))
-                {
-                     _NavData = navConfig.pickFront[11];
-                }
-                else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
-                {
-                    _NavData = navConfig.print[0];
-                }
-
-                else
-                    _NavData = navConfig.pickFront[1];
+                _NavData[index].level = index + 1; //appending level no. at run time
+            });
+            return _NavData;
+        }
+        else{
+            switch (_currentSeat) {
+                case appConstants.PUT_BACK:
+                    if (_seatData.screen_id === appConstants.PUT_BACK_INVALID_TOTE_ITEM)
+                        _NavData = navConfig.putBack[0];
+                    else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                        _NavData = navConfig.utility[0];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                    }
+                    else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                        _NavData = navConfig.utility[1];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                    }
+                    else if (_seatData.screen_id === appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN)
+                        _NavData = navConfig.putBack[2];
+                    else if(_seatData.screen_id ===appConstants.PUT_BACK_SCAN_TOTE)
+                        _NavData = navConfig.putBack[3];
+                    else if(_seatData.screen_id ===appConstants.PUT_BACK_PRESS_PPTL_TOTE)
+                        _NavData = navConfig.putBack[4]; 
+                    else if(_seatData.screen_id ===appConstants.PUT_BACK_NO_SCAN_TOTE)
+                    _NavData = navConfig.putBack[5];
+                    else
+                    _NavData = navConfig.putBack[1];
                 break;
+
+                case appConstants.PUT_FRONT:
+                    if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_FOR_RACK)
+                        _NavData = navConfig.putFront[0];
+                    else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_TOTE_SCAN){
+                        _NavData = navConfig.putFront[9];
+                    }
+                    else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_ENTITY_SCAN){
+                        _NavData = navConfig.putFront[10];
+                    }
+                    else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_BIN_SCAN){
+                         _NavData = navConfig.putFront[11];
+                    }
+                    else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK){
+                        _NavData = navConfig.putFront[12];
+                    }
+                     else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK){
+                        _NavData = navConfig.putFront[13];
+                    }
+                    else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_MISSING){
+                        _NavData = navConfig.putFront[14];
+                    }
+                    else if(_seatData.screen_id === appConstants.UDP_PUT_FRONT_UNEXPECTED){
+                        _NavData = navConfig.putFront[15];
+                    }
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_WAITING_UNDOCK)
+                        _NavData = navConfig.putFront[2];
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL)
+                        _NavData = navConfig.putFront[5];
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_PPTL_PRESS)
+                        _NavData = navConfig.putFront[3];
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL)
+                        _NavData = navConfig.putFront[7];
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN)
+                        _NavData = navConfig.putFront[8];
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK || _seatData.screen_id === appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY)
+                        _NavData = navConfig.putFront[4];
+                    else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                        _NavData = navConfig.utility[0];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                    }
+                    else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                        _NavData = navConfig.utility[1];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                    }
+                    else if (_seatData.screen_id === appConstants.PUT_FRONT_WRONG_UNDOCK) {
+                        _NavData = navConfig.putFront[6];
+                    }
+                    else
+                        _NavData = navConfig.putFront[1];
+                break;
+
+                case appConstants.PICK_BACK:
+                    if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                        _NavData = navConfig.utility[0];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                    }
+                    else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                        _NavData = navConfig.utility[1];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                    }
+                   
+                    else if(_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN){
+                            _NavData = navConfig.pickBack[1];
+                        }
+                    else if(_seatData.screen_id === appConstants.PICK_BACK_SCAN ){
+                        _NavData = navConfig.pickBack[2];
+                    }    
+                    else
+                        _NavData = navConfig.pickBack[0];
+                break;
+
+                case appConstants.PICK_FRONT:
+                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
+                        _NavData = navConfig.pickFront[0];
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
+                        _NavData = navConfig.pickFront[2];
+                    else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                        _NavData = navConfig.utility[0];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                    }
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_BOX) {
+                        _NavData = navConfig.pickFront[3];
+                        _NavData[0].type = 'active';
+                    }
+
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN) {
+                        _NavData = navConfig.pickFront[4];
+                        _NavData[1].type = 'active';
+                    }
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_ITEM_SCAN) {
+                        _NavData = navConfig.pickFront[5];
+                        _NavData[2].type = 'active';
+                    }
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_PACKING_PPTL_PRESS) {
+                        _NavData = navConfig.pickFront[6];
+                        _NavData[2].type = 'active';
+                    }
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_CONFIRM) {
+                        _NavData = navConfig.pickFront[7];
+                            //_NavData[2].type = 'active';
+                        }
+                    else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                        _NavData = navConfig.utility[1];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                    }
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_BIN_PRINTOUT|| _seatData.screen_id===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT) {
+                        _NavData = navConfig.pickFront[8];
+                    }
+                    else if (_seatData.screen_id === appConstants.PICK_FRONT_SCAN_PACKS) {
+                        _NavData = navConfig.pickFront[9];
+                        _NavData[0].type="active"
+                    }
+                    else if(_seatData.location_scan_required && (_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE ||_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS ||_seatData.screen_id === appConstants.PICK_FRONT_LOCATION_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_ITEM_SCAN || _seatData.screen_id === appConstants.PICK_FRONT_CONTAINER_BREAK))
+                    {
+                        _NavData = navConfig.pickFront[10];
+                    }
+                    else if((_seatData.screen_id === appConstants.PICK_FRONT_WORKING_TABLE) || (_seatData.screen_id === appConstants.PICK_FRONT_PPTL_PRESS))
+                    {
+                         _NavData = navConfig.pickFront[11];
+                    }
+                    else if(_seatData.screen_id== appConstants.PER_ITEM_PRINT)
+                    {
+                        _NavData = navConfig.print[0];
+                    }
+
+                    else
+                        _NavData = navConfig.pickFront[1];
+                break;
+                
                 case appConstants.AUDIT:
 
-                if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU && _seatData.k_deep_audit)
-                    _NavData = navConfig.sraudit[0];
-                else if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
-                    _NavData = navConfig.audit[0];
-                else if (_seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN && _seatData.k_deep_audit)
-                    _NavData = navConfig.sraudit[1];
-                else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
-                    _NavData = navConfig.sraudit[1];
-                else if (_seatData.screen_id === appConstants.AUDIT_RECONCILE && _seatData.k_deep_audit)
-                    _NavData = navConfig.sraudit[1];
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
-                    _NavData = navConfig.utility[0];
-                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-                }
-                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
-                    _NavData = navConfig.utility[1];
-                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-                }
-                else
-                    _NavData = navConfig.audit[1];
+                    if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU && _seatData.k_deep_audit)
+                        _NavData = navConfig.sraudit[0];
+                    else if (_seatData.screen_id === appConstants.AUDIT_WAITING_FOR_MSU)
+                        _NavData = navConfig.audit[0];
+                    else if (_seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN && _seatData.k_deep_audit)
+                        _NavData = navConfig.sraudit[1];
+                    else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
+                        _NavData = navConfig.sraudit[1];
+                    else if (_seatData.screen_id === appConstants.AUDIT_RECONCILE && _seatData.k_deep_audit)
+                        _NavData = navConfig.sraudit[1];
+                    else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                        _NavData = navConfig.utility[0];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                    }
+                    else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                        _NavData = navConfig.utility[1];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                    }
+                    else
+                        _NavData = navConfig.audit[1];
                 break;
+
                 case appConstants.PRE_PUT:
-                if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE) {
-                    _NavData = navConfig.prePut[1];
-                }
-                else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
-                    _NavData = navConfig.utility[0];
-                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
-                }
-                else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
-                    _NavData = navConfig.utility[1];
-                    _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
-                }
-                else {
-                    _NavData = navConfig.prePut[0];
-                }
+                    if (_seatData.screen_id === appConstants.PRE_PUT_RELEASE) {
+                        _NavData = navConfig.prePut[1];
+                    }
+                    else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
+                        _NavData = navConfig.utility[0];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_004;
+                    }
+                    else if (_seatData.screen_id === appConstants.SCANNER_MANAGEMENT) {
+                        _NavData = navConfig.utility[1];
+                        _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
+                    }
+                    else {
+                        _NavData = navConfig.prePut[0];
+                    }
                 break;
 
                 default:
@@ -424,6 +461,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
         });
         return _NavData;
+        }
     },
 
     getModalStatus: function () {

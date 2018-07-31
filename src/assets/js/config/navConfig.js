@@ -662,7 +662,8 @@ var navData = {
             "level": 1,
             "type": 'active'
         }]
-    ]
+    ],
+    "header": []
 
 };
 

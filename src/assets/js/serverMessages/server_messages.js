@@ -388,8 +388,32 @@ var serverMessages = {
     "UdpF.H.002" : "Scan PPS bin barcode",
     "UdpF.H.003" : "Scan item or putaway unit",
     "UdpF.H.004" : "Put item in slot and scan slot to confirm",
-    "UdpF.H.005" : "Wait for MSU"
-
+    "UdpF.H.005" : "Wait for MSU",
+    //location_required
+    "PkF.S.001"  : {
+                    "textToDisplay": "Location",
+                    "screen_id": ""
+                   },
+    //packing_box
+    "PkF.S.002"  : {
+                    "textToDisplay": "Place Box",
+                    "screen_id": ""
+                },  
+    //item_scan
+    "PkF.S.003" : {
+                    "textToDisplay": "Scan",
+                    "screen_id": ["pick_front_item_scan", "pick_front_checklist"]
+                },
+    //checklist
+    "PkF.S.004" : {
+                    "textToDisplay": "Checklist",
+                    "screen_id": ""
+                },
+    //press_pptl
+    "PkF.S.005" : {
+                    "textToDisplay": "Press PPTL",
+                    "screen_id": ""
+                }
 };
 
 

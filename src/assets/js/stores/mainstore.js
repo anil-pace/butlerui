@@ -37,6 +37,7 @@ _putBackExceptionScreen,
 _finishAuditFlag = true;
 _errorPopupDisabled = false;
 _cancelButtonClicked = false;
+_auditModalStatus = false;
 
 var modalContent = {
     data: "",
@@ -974,7 +975,12 @@ getOrderID: function () {
     getCancelScanStatus: function () {
         return _seatData.Cancel_scan;
     },
-
+    getInfoButtonData: function(){
+        return _seatData.info_button_data || null
+    },
+    getCustomContainerNames: function(){
+        return _seatData.Possible_Container_Names || null
+    },
 
     getReconcileBoxSerialData: function() {
         var data = {};
@@ -1384,12 +1390,18 @@ getScanDetails: function () {
         return _seatData["scan_details"];
     }
 },
-setCancelButtonStatus(status){
+setCancelButtonStatus:function(status){
     _cancelButtonClicked = status;
 },
-getCancelButtonStatus(){
+getCancelButtonStatus:function(){
     return _cancelButtonClicked;
 },
+/*setAuditModalStatus: function(status){
+    _cancelButtonClicked = status;
+},
+setAuditModalStatus: function(){
+    _auditModalStatus = status;
+},*/
 
 getQuantityDetails:function(){
 var data={
@@ -3267,6 +3279,9 @@ AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
 
+        case appConstants.OPEN_AUDIT_MODAL:
+        mainstore.setAuditModalStatus(action.data);
+        break;
         case appConstants.SET_CANCEL_BUTTON_STATUS:
         mainstore.setCancelButtonStatus(action.data);
         break;

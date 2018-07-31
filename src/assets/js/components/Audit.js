@@ -23,31 +23,10 @@ var CurrentSlot = require('./CurrentSlot');
 var Modal = require('./Modal/Modal');
 var ExceptionHeader = require('./ExceptionHeader');
 var Pallet=require("./Pallet/pallet");
-
-
-function getStateData(){
- /* return {
-           AuditNavData : AuditStore.getNavData(),
-           AuditNotification : AuditStore.getNotificationData(),
-           AuditScreenId:AuditStore.getScreenId(),
-           AuditServerNavData : AuditStore.getServerNavData(),
-           AuditBoxSerialData :AuditStore.getBoxSerialData(),
-           AuditReconcileBoxSerialData :AuditStore.getReconcileBoxSerialData(),
-           AuditCurrentBoxSerialData :AuditStore.getCurrentBoxSerialData(),
-           AuditLooseItemsData:AuditStore.getLooseItemsData(),
-           AuditReconcileLooseItemsData:AuditStore.getReconcileLooseItemsData(),
-           AuditItemDetailsData:AuditStore.getItemDetailsData(),
-           AuditRackDetails:AuditStore.getRackDetails(),
-           AuditCancelScanStatus:AuditStore.getCancelScanStatus(),
-           AuditScanDetails:AuditStore.getScanDetails(),
-           AuditSlotDetails :AuditStore.getCurrentSlot(),
-           AuditFinishFlag:AuditStore.getFinishAuditFlag(),
-           AuditShowModal:AuditStore.getModalStatus()
-
-         };*/
-         return mainstore.getScreenData();
-       }
-
+var GorTabs = require("./gor-tabs/tabs");
+var Tab = require("./gor-tabs/tabContent");
+var ReactModal = require("./Modal/ReactModal");
+var GorSelect = require("./gor-select/gor-select");
 
        var Audit = React.createClass({
         _component:'',
@@ -83,8 +62,18 @@ function getStateData(){
           }
         },
         getInitialState: function(){
-          return getStateData();
+          return this.getStateData();
         },
+        getStateData: function(){
+         var screenData = mainstore.getScreenData();
+         var localState = {
+          allInfoModalStatus:this.state ? this.state.allInfoModalStatus : false,
+          selectedTab:this.state ? this.state.selectedTab : 0,
+          infoButtonData: mainstore.getInfoButtonData(),
+          customContainerNames: mainstore.getCustomContainerNames()
+         }
+         return Object.assign({}, screenData, localState);
+       },
         componentWillMount: function(){
     //this.showModal();
     mainstore.addChangeListener(this.onChange);
@@ -97,7 +86,7 @@ function getStateData(){
     AuditStore.addChangeListener(this.onChange);
   },
   onChange: function(){ 
-    this.setState(getStateData());
+    this.setState(this.getStateData());
     this.showModal();
   },
   getExceptionComponent:function(){
@@ -114,10 +103,48 @@ function getStateData(){
       </div>
       );
   },
+  _onTabClick: function(selectedIndex){
+    this.setState({
+      selectedTab:selectedIndex
+    })
+  },
+  _openAddlInfoModal: function(status){
+    this.setState({
+      allInfoModalStatus:status
+    })
+  },
+  getAddlInfoData: function(){
+      var AuditAddlInfoData={}
+      var infoButtonData = this.state.infoButtonData,
+      customContainerNames = this.state.customContainerNames,
+      header = [
+          new mainstore.tableCol(_("SKU"), "header", false, "small", false, true, true, false),
+          new mainstore.tableCol(_("Serial"), "header", false, "small", false, true, true, false),
+          new mainstore.tableCol(_("Quantity"), "header", false, "small", false, true, true, false)];
+      for(var k in infoButtonData){
+        var rowData = infoButtonData[k],
+        name =  customContainerNames ? customContainerNames[k] : k;
+        AuditAddlInfoData[name] = {};
+        AuditAddlInfoData[name]["header"] = header;
+        AuditAddlInfoData[name]["tableRows"] = [];
+        for(var i=0,len = rowData.length;i< len;i++){
+          AuditAddlInfoData[name]["tableRows"].push([]);
+          AuditAddlInfoData[name]["tableRows"][i].push(new mainstore.tableCol(rowData[i].sku, "enabled", false, "small", false, true, false, false));
+          AuditAddlInfoData[name]["tableRows"][i].push(new mainstore.tableCol(rowData[i].serial, "enabled", false, "small", false, true, false, false));
+          AuditAddlInfoData[name]["tableRows"][i].push(new mainstore.tableCol(rowData[i].quantity, "enabled", false, "small", false, true, false, false))
+        }
+        AuditAddlInfoData[name]["footer"] = [new mainstore.tableCol(_(""), "header", false, "small", false, true, true, false)]
+      }
+      
+     return AuditAddlInfoData;
+
+  },
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.AUDIT_WAITING_FOR_MSU:
+
       if(this.state.AuditExceptionStatus == false){
+        var AuditAddlInfoData = this.getAddlInfoData();
         this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
         this._component = (
           <div className='grid-container'>
@@ -229,6 +256,7 @@ function getStateData(){
 
 case appConstants.AUDIT_SCAN_SR:
 if(this.state.AuditExceptionStatus == false){
+  var AuditAddlInfoData = this.getAddlInfoData();
  this._navigation = (<Navigation navData ={this.state.AuditNavData} serverNavData={this.state.AuditServerNavData} navMessagesJson={this.props.navMessagesJson}/>);
  if(this.state.AuditCancelScanStatus == true){
   this._cancelStatus = (
@@ -240,12 +268,12 @@ if(this.state.AuditExceptionStatus == false){
   this._cancelStatus = '';
 }
 if(this.state.AuditPackData["tableRows"].length > 0){
-  this._packData = (<TabularData data = {this.state.AuditPackData}/>);
+  this._packData = (<div className="audit-wrapper"><p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p><TabularData data = {this.state.AuditPackData}/></div>);
 }else{
   this._packData = '';
 }
 if(this.state.AuditSubPackData["tableRows"].length > 0){
-  this._subPackData = (<TabularData data = {this.state.AuditSubPackData} />);
+  this._subPackData = (<div className="audit-wrapper"><p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p><TabularData data = {this.state.AuditSubPackData} /></div>);
 }else{
   this._subPackData = '';
 }
@@ -259,6 +287,31 @@ this._component = (
   {this._packData}
   {this._subPackData}
   </div>
+            {this.state.allInfoModalStatus && <ReactModal title={_("Additional Information")} customClassNames="audit-uom-info">
+          <GorTabs onTabClick ={this._onTabClick} defaultActiveTabIndex={this.state.selectedTab} tabClass={"tabs-audit"} >
+              {Object.keys(AuditAddlInfoData).map(function(value,index){
+
+                return (<Tab tabName = {value} iconClassName={'icon-class-0'}
+                                 linkClassName={'link-class-0'}  >
+                
+              <div className="audit-table-wrap">
+              <TabularData data = {AuditAddlInfoData[value]}/>
+              </div>
+
+                    </Tab>)
+
+              } ) } 
+                 
+          </GorTabs>
+          <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-1 pull-right"><button className={"close-info custom-button black"} onClick={function(){this._openAddlInfoModal(false)}.bind(this)}>{_("Close")}</button></div>
+                </div>
+              </div>
+            </div>
+             
+          </ReactModal>}
   <div className="audit-scan-middle">
   <Img srcURL= {this.state.AuditItemDetailsData.image_url}/>
   <TabularData data = {this.state.AuditItemDetailsData}/>

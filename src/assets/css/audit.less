@@ -5,6 +5,11 @@
 	flex-flow:column;
 	align-items:center;
 	flex-basis:0;
+	.audit-wrapper{
+		.overflow{
+			flex:unset;
+		}
+	}
 }
 
 .audit-scan-middle{
@@ -70,5 +75,34 @@
     	opacity: 0.4;
     }
 }
-	
+.audit-uom-info-icon{
+	display:inline-block;
+	width:30px;
+	height:30px;
+	border-radius: 50%;
+	border: 2px solid #666666;
+	text-align:center;
+	cursor:pointer;
+	i{
+		color: #666666;
+		font-style:normal;
+		font-size:20px;
+	}
+
+}
+.audit-table-wrap{
+	padding:2% 5%;
+}
+.a-info-wrap{
+	position: relative;
+    top: 75px;
+    right: 32px;
+}
+.close-info{
+	&.custom-button{
+		width: 5em;
+		min-width:unset;
+		margin-left:unset;
+	}
+}
 

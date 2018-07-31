@@ -298,7 +298,9 @@ var appConstants = {
 	CLOSE_UNEXPECTED_SCAN:"CLOSE_UNEXPECTED_SCAN",
 	SEND_MSU:"send_msu",
 	CLOSE_CART:"close_cart",
-	PICK_FRONT_CHECKLIST: "pick_front_checklist"
+	PICK_FRONT_CHECKLIST: "pick_front_checklist",
+	/*Constants for Audit*/
+	OPEN_AUDIT_MODAL:"OPEN_AUDIT_MODAL"
 };
 
 module.exports = appConstants;

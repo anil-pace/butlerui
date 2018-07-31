@@ -3,7 +3,7 @@ var React = require('react');
 var ReactModal = React.createClass({
   render: function(data){
       return (
-        <div className="modal-open react-modal">
+        <div className={"modal-open react-modal "+(this.props.customClassNames || "")}>
                           <div className="modal-backdrop react-modal-backdrop in"></div>
                           <div className="modal in">
         <div className={"modal-dialog"}>

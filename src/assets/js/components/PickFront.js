@@ -30,6 +30,7 @@ var OrderDetails = require('./OrderDetails/OrderDetails.js');
 var Pallet=require("./Pallet/pallet");
 var CheckList=require("./CheckList.js");
 var utils = require('../utils/utils.js');
+var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 
 var checkListOpen = false;
 
@@ -51,7 +52,7 @@ var PickFront = React.createClass({
         return getStateData();
     },
     componentWillMount: function () {
-        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PACKING_BOX) {
             this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
         }
         mainstore.addChangeListener(this.onChange);
@@ -61,7 +62,7 @@ var PickFront = React.createClass({
     },
     onChange: function () {
         this.setState(getStateData());
-        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PACKING_BOX) {
             this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
         }
     },
@@ -457,7 +458,7 @@ else {
                                                                       itemUid={this.state.PickFrontItemUid}/>
                                                                       </div>)
                         } else {
-                            binComponent=(<div className='main-container'> 
+                            binComponent=(<div className='main-container adjust-main-container'> 
                                 <div className="workingTable"></div>
                             <Wrapper scanDetails={this.state.PickFrontScanDetails}
                                                              productDetails={this.state.PickFrontProductDetails}
@@ -471,17 +472,14 @@ else {
                             binComponent = (<div className="binsFlexWrapperContainer">
                                 <BinsFlex binsData={this.state.PickFrontBinData}
                                           screenId={screen_id} seatType={this.state.SeatType}/>
-                                <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
-                                                  productDetails={this.state.PickFrontProductDetails}
-                                                  itemUid={this.state.PickFrontItemUid}/>
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
+                                
                             </div>)
                         } else {
-                            binComponent = (<div className='main-container'>
+                            binComponent = (<div className='main-container adjust-main-container'>
                                 <Bins binsData={this.state.PickFrontBinData}
                                       screenId={screen_id}/>
-                                <Wrapper scanDetails={this.state.PickFrontScanDetails}
-                                         productDetails={this.state.PickFrontProductDetails}
-                                         itemUid={this.state.PickFrontItemUid}/>
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
                             </div>);
                         }
                     }

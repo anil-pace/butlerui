@@ -737,6 +737,11 @@ getOrderID: function () {
         }
     },
 
+    getPackingBoxType: function() {
+        if (_seatData.hasOwnProperty('packing_box_type')) {
+            return _seatData.packing_box_type;
+        }
+    },
 
     getNotificationData: function () {
         if (_clearNotification == true && _seatData.hasOwnProperty('notification_list')) {
@@ -3010,6 +3015,7 @@ setCurrentSeat: function (data) {
                 data["PickFrontButtonType"] = this.getPickFrontButtonType();
                 data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
                 data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontPackingBoxType"] = this.getPackingBoxType();
             break;
 
             case appConstants.PER_ITEM_PRINT:

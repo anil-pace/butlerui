@@ -417,17 +417,17 @@ var serverMessages = {
     //packing_box
     "PkF.S.002"  : {
                     "textToDisplay": "Place Box",
-                    "screen_id": ""
+                    "screen_id": "pick_front_packing_box"
                 },  
     //item_scan
     "PkF.S.003" : {
                     "textToDisplay": "Scan",
-                    "screen_id": ["pick_front_item_scan", "pick_front_checklist"]
+                    "screen_id": "pick_front_item_scan"
                 },
     //checklist
     "PkF.S.004" : {
                     "textToDisplay": "Checklist",
-                    "screen_id": ""
+                    "screen_id": "pick_front_checklist"
                 },
     //press_pptl
     "PkF.S.005" : {

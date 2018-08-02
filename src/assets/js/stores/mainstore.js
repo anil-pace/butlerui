@@ -2935,10 +2935,10 @@ setCurrentSeat: function (data) {
                 data["PickFrontChecklistIndex"] = this.getChecklistIdx();
             break;
 
-            case appConstants.PICK_FRONT_PACKING_BOX:
-            data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontNotification"] = this.getNotificationData();
+            // case appConstants.PICK_FRONT_PACKING_BOX:
+            // data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+            // data["PickFrontBinData"] = this.getBinData();
+            // data["PickFrontNotification"] = this.getNotificationData();
             
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
@@ -2986,6 +2986,30 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
+            break;
+
+            case appConstants.PICK_FRONT_PACKING_BOX:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
             break;
 
             case appConstants.PER_ITEM_PRINT:

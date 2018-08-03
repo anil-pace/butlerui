@@ -710,5 +710,9 @@ function server_messages_list() {
     _("Wrong entity scanned. Please scan {0}");
     _("Scan new {0}");
     _("Scan item or {0}");
+    _("Additional Information");
+    _("Selected UOM: ");
+    _("Close");
+    _("Select Value");
 }
 

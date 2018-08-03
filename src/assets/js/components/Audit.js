@@ -71,7 +71,9 @@ var GorSelect = require("./gor-select/gor-select");
           selectedTab:this.state ? this.state.selectedTab : 0,
           infoButtonData: mainstore.getInfoButtonData(),
           customContainerNames: mainstore.getCustomContainerNames(),
-          isAddlInfoPresent: mainstore.isAddlInfoPresent()
+          isAddlInfoPresent: mainstore.isAddlInfoPresent(),
+          selectedUOM:mainstore.getSelectedUOM() || null,
+          isChangeUOMApplicable: mainstore.isChangeUOMApplicable()
 
          }
          return Object.assign({}, screenData, localState);
@@ -115,6 +117,26 @@ var GorSelect = require("./gor-select/gor-select");
       allInfoModalStatus:status
     })
   },
+  _onSelect: function(val,txt){
+    var data = {
+        "event_name": "audit_change_uom",
+        "event_data": {
+          "container_level":val
+        }
+    };
+    ActionCreators.postDataToInterface(data);
+  },
+  getUOMDropdownValues: function(){
+    var customContainerNames = this.state.customContainerNames,
+    options = [];
+    for(var k in customContainerNames){
+      options.push({
+        "value":k,
+        "text":customContainerNames[k]
+      })
+    }
+    return options;
+  },
   getAddlInfoData: function(){
       var AuditAddlInfoData={}
       var infoButtonData = this.state.infoButtonData,
@@ -140,6 +162,25 @@ var GorSelect = require("./gor-select/gor-select");
       
      return AuditAddlInfoData;
 
+  },
+  getLooseItemsData: function(){
+    var KDeepLooseItemsData = this.state.AuditKDeepLooseItemsData;
+    if(KDeepLooseItemsData){
+        var looseItemsData = {}
+        var header = [
+          new mainstore.tableCol(_("Each"), "header", false, "small", false, true, true, false),
+          new mainstore.tableCol(_("Actual"), "header", false, "small", false, true, true, false)];
+        looseItemsData["header"]= header;
+        looseItemsData["tableRows"]=[];
+        for(var i=0;i < KDeepLooseItemsData.length; i++){
+          looseItemsData["tableRows"].push([]);
+          looseItemsData["tableRows"][i].push(new mainstore.tableCol(KDeepLooseItemsData[i].Sku, "enabled", false, "small", false, true, false, false));
+          looseItemsData["tableRows"][i].push(new mainstore.tableCol(KDeepLooseItemsData[i].Actual_qty, "enabled", false, "small", false, true, false, false));
+        }
+        looseItemsData["footer"] = [new mainstore.tableCol(_(""), "header", false, "small", false, true, true, false)]
+      return looseItemsData
+    }
+    return null;
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -258,6 +299,8 @@ var GorSelect = require("./gor-select/gor-select");
 
 case appConstants.AUDIT_SCAN_SR:
 if(this.state.AuditExceptionStatus == false){
+  var uomOptions = this.getUOMDropdownValues();
+  var looseItemsData =  this.getLooseItemsData();
   var isAddlInfoPresent = this.state.isAddlInfoPresent;
     if(isAddlInfoPresent){
       var AuditAddlInfoData = this.getAddlInfoData();
@@ -284,6 +327,12 @@ if(this.state.AuditSubPackData["tableRows"].length > 0){
 }else{
   this._subPackData = '';
 }
+if(looseItemsData){
+  this._looseItemData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {looseItemsData} /></div>);
+}
+else{
+  this._looseItemData="";
+}
 
 this._component = (
   <div className='grid-container'>
@@ -293,6 +342,7 @@ this._component = (
   <div className="audit-scan-left">
   {this._packData}
   {this._subPackData}
+  {this._looseItemData}
   </div>
             {this.state.allInfoModalStatus && isAddlInfoPresent && <ReactModal title={_("Additional Information")} customClassNames="audit-uom-info">
 
@@ -321,6 +371,27 @@ this._component = (
              
           </ReactModal>}
   <div className="audit-scan-middle">
+  {this.state.isChangeUOMApplicable && <div className="uom-selection">
+              <GorSelect options = {uomOptions} customData={true} selectedOption = {this.state.selectedUOM} placeholderPrefix = {_("Selected UOM: ")} onSelectHandler={this._onSelect} placeholder={this.state.customContainerNames[this.state.selectedUOM] || _("Select Value")}>
+              {
+                function(_this){
+                  var options=[];
+                  (uomOptions).map(function(el,idx){
+                    options.push(<span className="gor-dropdown-option" key={el.value} onClick={function(){_this._onSelect(el.value,el.text)}}>
+                      <section>
+                        <span className="icon-cont">
+                        <img src={"./assets/images/"+el.value+".png"} height={80} width={80} />
+                        </span>
+                        <span className="text-cont">{el.text}</span>
+                        <span className={_this.state.selectedValue===el.value ? "selected-green sel-icon-cont" : "sel-icon-cont"}></span>
+                      </section>
+                      </span>)
+                  })
+                  return options;
+                }
+              }
+              </GorSelect>
+              </div>}
   <Img srcURL= {this.state.AuditItemDetailsData.image_url}/>
   <TabularData data = {this.state.AuditItemDetailsData}/>
   </div>

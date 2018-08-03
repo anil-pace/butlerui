@@ -1034,7 +1034,10 @@ getOrderID: function () {
         return _seatData.Possible_Container_Names || null
     },
     isAddlInfoPresent: function(){
-        return (Object.keys(_seatData.info_button_data).length ? true :false)
+        return (_seatData.info_button_data && Object.keys(_seatData.info_button_data).length ? true :false)
+    },
+    isChangeUOMApplicable: function(){
+        return _seatData.change_uom_applicable
     },
     getReconcileBoxSerialData: function() {
         var data = {};
@@ -1045,6 +1048,7 @@ getOrderID: function () {
         var missingDamagedBoxSerials = '';
         var extraBoxSerials = '';
         var countMissingDamagedBoxSerials = 0;
+        _seatData.k_deep_audit = false;
         if(!_seatData.k_deep_audit)
         {
             _seatData.Box_qty_list.map(function(value, index) {
@@ -1311,7 +1315,12 @@ getLooseItemsData: function () {
 getFinishAuditFlag: function () {
     return _finishAuditFlag;
 },
-
+getKDeepLooseItemsData: function(){
+    return _seatData.Loose_sku_list || null
+},
+getSelectedUOM: function(){
+    return _seatData.selected_uom || null
+},
 getReconcileLooseItemsData: function () {
     var data = {};
     data["header"] = [];
@@ -3282,6 +3291,7 @@ data["AuditItemDetailsData"]=this.getItemDetailsData();
 data["AuditSRKQQuantity"]=this.getSRKQQuantity();
 data["AuditFinishFlag"] = this.getFinishAuditFlag();
 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
+data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
 break;
 
 case appConstants.PPTL_MANAGEMENT:

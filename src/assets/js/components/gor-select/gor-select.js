@@ -12,7 +12,8 @@ var GorSelect = React.createClass({
         }
     },
     componentWillReceiveProps: function(nextProps){
-        if (nextProps.placeholder && nextProps.placeholder !== this.state.placeholder) {
+        if ((nextProps.placeholder && nextProps.placeholder !== this.state.placeholder) ||
+          (nextProps.selectedOption !== nextProps.selectedOption)) {
             this.setState({
                 placeholder: nextProps.placeholder,
                 defaultPlaceHolder: nextProps.placeholder
@@ -53,7 +54,7 @@ var GorSelect = React.createClass({
     render: function(){
         return (
             <div className="gor-dropdown-wrapper" onClick={!this.props.disabled ? this._toggleDropdown : null}>
-            <span className={this.props.disabled?'gor-dropdown':'gor-dropdown gor-enabled'}   >{!this.props.resetOnSelect ? this.state.placeholder : this.state.defaultPlaceHolder}</span>
+            <span className={this.props.disabled?'gor-dropdown':'gor-dropdown gor-enabled'}><span>{!this.props.resetOnSelect ? ((this.props.placeholderPrefix || '')+this.state.placeholder) : this.state.defaultPlaceHolder}</span></span>
             <span className={this.state.dropDownVisible ? "gor-dropdown-arrow up" : "gor-dropdown-arrow"}></span>
             {!this.props.customData ? <List data={this.props.options} selectedOption={this.props.selectedOption} optionAction={this._onSelect}
               dropDownVisible={this.state.dropDownVisible} />: <span className={"gor-option-wrapper"}

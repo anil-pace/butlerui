@@ -564,6 +564,10 @@ function server_messages_list() {
     _("Tote cannot be associated with bin of another seat");
     _("Waiting for Tote to be associated from back");
     _("Waiting for put away to complete from front");
+    _("Additional Information");
+    _("Selected UOM: ");
+    _("Close");
+    _("Select Value");
     _("Scan checklist items to proceed");
     //added during BSS-9407
     _("Unexpected Entity In {0}");

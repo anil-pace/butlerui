@@ -7,7 +7,7 @@ var CheckList = React.createClass({
         var checklistIndex = this.props.checklistIndex;
         var eachRow = [];
         var dataToDisplay = ""; var iconToDisplay = ""; var applyClass = "boldText"; 
-        if(checklistData && checklistIndex){
+        if(checklistData){
             checklistData.map(function(key, index) {
                 if(index === parseInt(checklistIndex, 10)){ 
                      dataToDisplay = "";

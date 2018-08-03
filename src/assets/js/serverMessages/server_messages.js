@@ -234,14 +234,12 @@ var serverMessages = {
     "CLIENTCODE_400" : "Bad Data",
     "CLIENTCODE_400_PERIPHERAL":"Bad Data",
     "PkF.I.001" : "Pick complete. Waiting for next rack.",
-    "PkF.I.007" : "Data capture valid",
-    "PkF.E.012" : "Data capture failed at item {0}",       
     "PkF.I.002" : "Location scan successful",
     "PkF.I.003" : "Box scan successful",
     "PkF.I.004" : "{0} scan successful",
     "PkF.I.005" : "Cancel scan successful",
     "PkF.I.006" : "PPTL press successful",
-    "PkF.I.007" : "Data capture valid so far",
+    "PkF.I.007" : "Data capture successful",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
     "PkF.W.003" : "Data capture failed at item",
@@ -256,7 +254,7 @@ var serverMessages = {
     "PkF.E.009" : "System Error. Scanned entity details not available at this time",
     "PkF.E.010" : "No PPS bins empty. Please empty them from Pickback",
     "PkF.E.011" : "Extra details entered are incorrect.Please enter correct details",
-    "PkF.E.012" : "Data capture failed at item {0}",
+    "PkF.E.012" : "Data capture failed",
     "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Packing box scan failed",
     "PkF.E.015" : "Wrong entity scan.Please scan the correct entity",
@@ -422,12 +420,12 @@ var serverMessages = {
     //item_scan
     "PkF.S.003" : {
                     "textToDisplay": "Scan",
-                    "screen_id": ["pick_front_item_scan", "pick_front_checklist"]
+                    "screen_id": "pick_front_item_scan"
                 },
     //checklist
     "PkF.S.004" : {
                     "textToDisplay": "Checklist",
-                    "screen_id": ""
+                    "screen_id": "pick_front_checklist"
                 },
     //press_pptl
     "PkF.S.005" : {

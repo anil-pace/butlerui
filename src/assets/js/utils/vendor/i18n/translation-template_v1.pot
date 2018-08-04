@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 10:13+0000\n"
+"POT-Creation-Date: 2018-08-04 09:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3201,4 +3201,20 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:712
 msgid "Scan item or {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:713
+msgid "Additional Information"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:714
+msgid "Selected UOM: "
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:715
+msgid "Close"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:716
+msgid "Select Value"
 msgstr ""

@@ -431,22 +431,10 @@ else {
 
 
             case appConstants.PICK_FRONT_PACKING_BOX:
-                // var cancelScanFlag = this.state.PickFrontCancelScan;
-                // var cancelClicked = mainstore.getCancelButtonStatus();
-                // var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
                                                     navMessagesJson={this.props.navMessagesJson}/>);
-                    // if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
-                    //     var editButton = (
-                    //         <Button1 disabled={false} text={_("Edit Details")} module={appConstants.PICK_FRONT}
-                    //                  action={appConstants.EDIT_DETAILS} color={"orange"}/> );
-                    // } else {
-                    //     var editButton = '';
-                    // }
-                    //var BinFull = (<Button1 disabled={false} text={_("Bin full")} module={appConstants.PICK_FRONT}
-                    //                        action={appConstants.BIN_FULL} color={"black"}/> );
                     var binComponent = "";
 
                     if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
@@ -485,27 +473,10 @@ else {
                     }
                     this._component = (
                         <div className='grid-container'>
-                            { /* <Modal cancelClicked={cancelClicked}/>
-
-                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
-                            */}
-
                             {this.state.SplitScreenFlag &&
                             <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                                     screenClass='frontFlow'/>}
                             {binComponent}
-                            {/*
-                            <div className='actions'>
-                                <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}
-                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
-                                         color={"black"}/>
-                                {editButton}
-
-                                {(this.state.PickFrontScreenId!==appConstants.PICK_FRONT_WORKING_TABLE && this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''}
-                            
-                            </div>
-                            */}
-
                         </div>
                     );
                 } else {

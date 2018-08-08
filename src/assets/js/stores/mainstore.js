@@ -2940,11 +2940,6 @@ setCurrentSeat: function (data) {
                 data["PickFrontChecklistIndex"] = this.getChecklistIdx();
             break;
 
-            // case appConstants.PICK_FRONT_PACKING_BOX:
-            // data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
-            // data["PickFrontBinData"] = this.getBinData();
-            // data["PickFrontNotification"] = this.getNotificationData();
-            
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontNotification"] = this.getNotificationData();

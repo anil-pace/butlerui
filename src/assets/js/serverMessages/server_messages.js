@@ -432,7 +432,7 @@ var serverMessages = {
     //press_pptl
     "PkF.S.005" : {
                     "textToDisplay": "Press PPTL",
-                    "screen_id": ""
+                    "screen_id": "pick_front_pptl_press"
                 }
 };
 

@@ -434,7 +434,7 @@ var Bin = React.createClass({
               applyClassNameOnTote = 'bin-icon tote-icon ';
             }
             if ((compData.packing_box == true) || (compData.packing_box == "true")) {
-              applyClassNameOnTote = 'bin-icon packing-icon ';
+              applyClassNameOnTote = 'bin-icon tote-icon ';
             }
             if(this.props.binCoordinatePlotting == true || this.props.binCoordinatePlotting == "true"){
               applyClassNameOnTote = applyClassNameOnTote + 'bin-coordinate-plotting-enabled';

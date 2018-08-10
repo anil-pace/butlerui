@@ -218,7 +218,9 @@ var GorSelect = require("./gor-select/gor-select");
         this._component = (
           <div className='grid-container'>
           <Modal />
+          <div className='main-container'>
           {rackType}
+          </div>
           </div>
           );
 

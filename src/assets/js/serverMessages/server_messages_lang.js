@@ -714,5 +714,9 @@ function server_messages_list() {
     _("Selected UOM: ");
     _("Close");
     _("Select Value");
+    _("Location");
+    _("Place Box");
+    _("Scan");
+    _("Checklist");
 }
 

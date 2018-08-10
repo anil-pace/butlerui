@@ -714,5 +714,9 @@ function server_messages_list() {
     _("Wrong entity scanned. Please scan {0}");
     _("Scan new {0}");
     _("Scan item or {0}");
+    _("Location");
+    _("Place Box");
+    _("Scan");
+    _("Checklist");
 }
 

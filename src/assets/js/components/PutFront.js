@@ -26,7 +26,7 @@ var TabularData = require('./TabularData');
 var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 var utils = require('../utils/utils.js');
-var PreviousPutDetails = require('./PreviousPutDetails');
+var PreviousDetails = require('./PreviousDetails');
 var ProductDetUDP = require('./ProductDetails/ProductDetUDP');
 var ActionCreators = require('../actions/CommonActions');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
@@ -63,7 +63,7 @@ var PutFront = React.createClass({
         PutFrontProductDetails: mainstore.productDetails(),
         selectedTotes: mainstore.getSelectedTotes(),
         PutFrontNotification : mainstore.getNotificationData(),
-        PreviousPutDetails: mainstore.getPreviousPutDetails(),
+        PreviousDetails: mainstore.getPreviousPutDetails(),
         PutFrontCurrentBin: mainstore.getCurrentSelectedBin(),
         PutFrontCurrentBinCount: mainstore.getPutFrontCurrentBinCount(),
         PutFrontRackDetails: mainstore.getRackDetails(),
@@ -698,7 +698,7 @@ var PutFront = React.createClass({
             <div className="single-bin udp-flow">
             <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow'/>
             <CurrentBin details={this.state.PutFrontCurrentBinCount} />
-            <PreviousPutDetails previousPutDetails={this.state.PreviousPutDetails} />
+            <PreviousDetails previousDetails={this.state.PreviousDetails} />
             </div>
             <div className='main-container'>
             <Rack hideSlotDetails={true} isDrawer = {false} slotType={null} rackData = {this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection}/>
@@ -790,7 +790,7 @@ var PutFront = React.createClass({
             
              <BinMap orientation={this.state.groupOrientation} mapDetails = {this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow'/>
             <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-            <PreviousPutDetails previousPutDetails={this.state.PreviousPutDetails} />
+            <PreviousDetails previousDetails={this.state.PreviousDetails} />
             
             </div>
             <div className='main-container udp-flow'>

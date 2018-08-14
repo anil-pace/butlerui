@@ -64,15 +64,59 @@ var ProductDetails = React.createClass({
         });
       
     },
+    displayCode:function(data){
+      var language_locale = sessionStorage.getItem('localeData');
+      var locale;
+      if(language_locale == 'null' || language_locale == null){
+        locale = 'en-US';
+      }else{
+        locale = JSON.parse(language_locale)["data"]["locale"]; 
+      }
+      var code=[];
+     data.map(function(value,index){
+       var obj={};
+      var arrKeyNames=Object.keys(value[0]);
+      if(arrKeyNames.indexOf("product_barcodes")>-1){
+        arrKeyNames.map(function(eachValueName,index){
+          value[0][eachValueName].map(function(nestedName,index){
+          if((value[0][eachValueName]).constructor!=="Array"){obj.displayvalue=nestedName}
+          if(nestedName.locale==locale){
+            obj.displayName=nestedName.display_name;
+          }
+          })
+         
+          })
+          code.push(obj);
+      }
+     })
+     return code;
+    },
     render: function() {
-        this.displayLocale(this.props.productInfo);
+      var flag=this.props.QLCodeDetails;
+      var barcodeArr=this.displayCode(this.props.productInfo);
+       this.displayLocale(this.props.productInfo);
+
         return (
-            <div className="productTableInfo">
-				<ProductImage srcURL={image_url.product_local_image_url}/>
-                <div className="productHeader">
-                    {_("Details")}
-                </div>
-                <ProductInfo infoDetails = {product_info_locale} />
+            <div className={flag?"productTableInfo qlDetails":"productTableInfo"}>
+				<ProductImage srcURL={image_url.product_local_image_url}/>        
+{flag?(
+  <div className="detailsOuterWrapper">
+  <div className="detailsInnerWrapper">
+   <span className="detailsDispName">{barcodeArr[0].displayName}</span>
+   <span className="detailsDispVal">{barcodeArr[0].displayvalue}</span>
+   </div>
+   <div className="detailsDispValShort">{(barcodeArr[0].displayvalue).substr((barcodeArr[0].displayvalue.length)-3)}</div>
+    </div>
+):(
+  <div>
+<div className="productHeader">
+{_("Details")}
+</div>
+<ProductInfo infoDetails = {product_info_locale} flag="codeDetails"/>
+</div>
+)
+}
+                
 			</div>
         );
     }

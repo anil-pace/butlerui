@@ -1,6 +1,6 @@
 var React = require('react');
 
-var PreviousPutDetails = React.createClass({
+var PreviousDetails = React.createClass({
     getInitialState: function(){
       return {
         product_info_locale:null
@@ -59,17 +59,20 @@ var PreviousPutDetails = React.createClass({
       
     },
      render: function() {
-        var previousPutDetails = this.displayLocale(this.props.previousPutDetails);
+       var type=this.props.type||"";
+       var typeToShow=(type==="pick")? _("Previous Pick Details"):_("Previous Put Details")
+       var customizeClass=this.props.customizeClass;
+        var previousDetails = this.displayLocale(this.props.previousDetails);
         return (
-            <div className="p-put-details">
+            <div className={customizeClass?"p-put-details "+customizeClass:"p-put-details"}>
     <div className="p-put-head">
-      {_("Previous Put Details")}
+      {typeToShow}
     </div>
     <div className="p-put-content">
-    {Object.keys(previousPutDetails).map(function(key,idx){
+    {Object.keys(previousDetails).map(function(key,idx){
         return (<section key={key+idx} className="p-put-row">
         <p className="p-put-key">{_(key)+" :"}</p>
-        <p className="p-put-value">{(previousPutDetails[key]).trim()  || "--"}</p>
+        <p className="p-put-value">{(previousDetails[key]).trim()  || "--"}</p>
       </section>)
     })}
     </div>
@@ -78,7 +81,7 @@ var PreviousPutDetails = React.createClass({
     }
   });
 
-module.exports = PreviousPutDetails
+module.exports = PreviousDetails
 
 
 

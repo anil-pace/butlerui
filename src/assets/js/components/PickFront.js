@@ -7,6 +7,7 @@ var ExceptionHeader = require('./ExceptionHeader');
 var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing');
 var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
+var allresourceConstants = require('../constants/resourceConstants');
 var Navigation = require("./Navigation/Navigation.react");
 var Spinner = require("./Spinner/LoaderButler");
 var Notification = require("./Notification/Notification");
@@ -30,6 +31,8 @@ var OrderDetails = require('./OrderDetails/OrderDetails.js');
 var Pallet=require("./Pallet/pallet");
 var CheckList=require("./CheckList.js");
 var utils = require('../utils/utils.js');
+var SplitPPS = require('./SplitPPS');
+var PreviousDetails = require('./PreviousDetails');
 
 var checkListOpen = false;
 
@@ -38,6 +41,7 @@ function getStateData() {
     var splitPPSData = {
         groupInfo: mainstore._getBinMapDetails(),
         groupOrientation: mainstore._getBinMapOrientation()
+        
     }
     
     return Object.assign({}, screenData, splitPPSData);
@@ -156,13 +160,18 @@ var PickFront = React.createClass({
         switch (screen_id) {
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-                if (this.state.PickFrontExceptionStatus == false) {
+            var previousPickDetails="";
+            if(this.state.PreviousDetails){
+            previousPickDetails= <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick"/>
+            }   
+            if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
+                            {previousPickDetails}
                             <div className='main-container'>
                                 <Spinner />
                             </div>
@@ -172,6 +181,7 @@ var PickFront = React.createClass({
                     this._component = this.getExceptionComponent();
                 }
                 break;
+            
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
                 var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
@@ -1095,6 +1105,100 @@ else {
                             {reprintButton}
                         </div>
 
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+                
+                case appConstants.PICK_FRONT_DOCK_TOTE:
+                var  rackType="";
+                var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
+                var cancelButton;
+                if (cancelScanDisabled) {
+                    cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
+                                                                          module={appConstants.PICK_FRONT}
+                                                                          action={appConstants.CANCEL_SCAN}
+                                                                          color={"black"}/></div>);
+                }
+                else {
+                    cancelButton = "";
+                }
+
+                if (!this.state.PickFrontExceptionStatus) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                    serverNavData={this.state.PickFrontServerNavData}
+                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                                     
+                    this._component = (
+
+                        <div className='grid-container'>
+                            <Modal />
+                            <div className='main-container'>
+                            <CheckList checklistData = {this.state.PickFrontChecklistData}
+                                                    checklistIndex = {this.state.PickFrontChecklistIndex} />
+                            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
+                            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} customizeClassSplitPPS="centerAlignSplitPPS"
+                            docked = {this.state.selectedTotes} ruleset={'withBorder'} 
+                            selectedbin={this.state.PickCurrentBin}/>
+                            </div>
+                            <div className='actions'>
+                            {cancelButton}
+                            </div>
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+                
+                case appConstants.PICK_FRONT_ONE_STEP_SCAN:
+                var  rackType="";
+                if (!this.state.PickFrontExceptionStatus) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                    serverNavData={this.state.PickFrontServerNavData}
+                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                                     
+                    this._component = (
+
+                        <div className='grid-container'>
+                            <Modal />
+                            <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick"/>
+                            <div className='main-container leftJustify'>
+                            
+                            <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
+                                   rackData={this.state.PickFrontRackDetails}  QLCodeDetails={true}/>
+                            
+                            </div>
+                            <SplitPPS orientation={this.state.groupOrientation}  customizeClassSplitPPS="rightAligned"
+                            displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
+                            undockAwaited = {null} docked = {this.state.selectedTotes} 
+                            ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+                case appConstants.PICK_FRONT_UNDOCK_TOTE:
+                if (!this.state.PickFrontExceptionStatus) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                    serverNavData={this.state.PickFrontServerNavData} subMessage={allresourceConstants.PUSH_TOTE_AWAY}
+                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                                     
+                    this._component = (
+
+                        <div className='grid-container'>
+                            <Modal />
+                           
+                            <SplitPPS orientation={this.state.groupOrientation}
+                            displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
+                            undockAwaited = {this.state.undockAwaited} docked = {this.state.selectedTotes} 
+                            ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+
+                        </div>
                     );
                 } else {
                     this._component = this.getExceptionComponent();

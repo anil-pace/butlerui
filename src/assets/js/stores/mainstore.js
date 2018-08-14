@@ -345,7 +345,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
                 case appConstants.PICK_FRONT:
-                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU)
+                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU ||_seatData.screen_id ===appConstants.PICK_FRONT_ONE_STEP_SCAN || _seatData.screen_id ===appConstants.PICK_FRONT_DOCK_TOTE ||_seatData.screen_id ===appConstants.PICK_FRONT_UNDOCK_TOTE) 
                         _NavData = navConfig.pickFront[0];
                     else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
                         _NavData = navConfig.pickFront[2];
@@ -734,6 +734,30 @@ getOrderID: function () {
     getChecklistIdx: function () {
         if (_seatData.hasOwnProperty('checklist_index')) {
             return _seatData.checklist_index;
+        }
+    },
+
+    getChecklistDockData: function () {
+        if (_seatData.hasOwnProperty('dock_actions')) {
+            var dockActionsArray=[];
+          (Array.isArray(_seatData.dock_actions)) && (_seatData.dock_actions).map(function(value,key){
+                var dataToReplace=value.details;
+                var data=serverMessages[value.code];
+                    data = data.replace(/{\w+}/g, function(everyPlaceholder) {
+                        var placeHolder=everyPlaceholder.match(/\d+/g);
+                        return dataToReplace[placeHolder];
+                    });
+
+                var eachData={"action_results":{"value":data,"key":" "}}
+                dockActionsArray.push(eachData);
+            })
+            return dockActionsArray;
+        }
+    },
+
+    getChecklistDockIdx: function () {
+        if (_seatData.hasOwnProperty('dock_index')) {
+            return _seatData.dock_index;
         }
     },
 
@@ -2430,6 +2454,7 @@ setCurrentSeat: function (data) {
         var groupInfo = {};
         var leftBins=[];
         var rightBins = [];
+        var centerBins=[];
         if(_seatData["ppsbin_list"]){
         _seatData["ppsbin_list"].forEach(function(bin){
             if(bin["direction"] === "left"){
@@ -2437,6 +2462,9 @@ setCurrentSeat: function (data) {
             }
             else if(bin["direction"] === "right"){
                 rightBins.push(bin)
+            }
+            else if(bin["direction"] === "center"){
+                centerBins.push(bin)
             }
             
         })
@@ -2446,7 +2474,11 @@ setCurrentSeat: function (data) {
         rightBins.sort(function(a,b){
         return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
       });
-        leftBins = leftBins.concat(rightBins);
+      centerBins.sort(function(a,b){
+        return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
+      });
+
+        leftBins = leftBins.concat(rightBins,centerBins);
         leftBins.forEach(function(bin){
             groupInfo[bin["ppsbin_id"]] = bin["direction"]
         })
@@ -2459,6 +2491,9 @@ setCurrentSeat: function (data) {
     getPreviousPutDetails: function(){
         return _seatData.previous_put_details || []
     },
+    getPreviousPickDetails: function(){
+        return _seatData.previous_pick_details;
+    },
     getSelectedTotes: function(){
         var selectedTotes = [];
         if(_seatData["ppsbin_list"]){
@@ -2470,6 +2505,18 @@ setCurrentSeat: function (data) {
         }
         return selectedTotes;
     },
+    _getSelectedBinID: function(){
+        var selectedBin = [];
+        if(_seatData["ppsbin_list"]){
+            _seatData["ppsbin_list"].forEach(function(bin){
+                if(bin.selected_state){
+                    selectedBin.push(bin["ppsbin_id"])
+                }
+            })
+        }
+        return selectedBin;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -2741,6 +2788,8 @@ setCurrentSeat: function (data) {
             data["PutFrontNotification"] = this.getNotificationData();
             data["PutFrontExceptionStatus"] = this.getExceptionStatus();
             break;
+
+
             case appConstants.PUT_FRONT_PPTL_PRESS:
             data["PutFrontNavData"] = this.getNavData();
             data["PutFrontServerNavData"] = this.getServerNavData();
@@ -2887,6 +2936,7 @@ setCurrentSeat: function (data) {
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+            data["PreviousDetails"]=this.getPreviousPickDetails();
             break;
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
@@ -2902,6 +2952,55 @@ setCurrentSeat: function (data) {
             data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
 
             break;
+
+            case appConstants.PICK_FRONT_DOCK_TOTE:
+            data["PickFrontNavData"] = this.getNavData();
+            data["PickFrontServerNavData"] = this.getServerNavData();
+            data["PickFrontScreenId"] = this.getScreenId();
+            data["PickFrontExceptionData"] = this.getExceptionData();
+            data["PickFrontNotification"] = this.getNotificationData();
+            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["udpBinMapDetails"] =this.getUDPMapDetails(),
+            data["groupOrientation"] =this._getBinMapOrientation(),
+            data["selectedTotes"] =this.getSelectedTotes()
+            data["PickCurrentBin"] = this._getSelectedBinID();
+            data['PickFrontChecklistData']=this.getChecklistDockData();
+            data['PickFrontChecklistIndex']=this.getChecklistDockIdx();
+            data["PickFrontCancelScan"] = this.cancelScanDetails();
+            break;
+
+            case appConstants.PICK_FRONT_ONE_STEP_SCAN:
+            data["PickFrontExceptionData"] = this.getExceptionData();
+            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontNavData"] = this.getNavData();
+            data["PickFrontServerNavData"] = this.getServerNavData();
+            data["PickFrontNotification"] = this.getNotificationData();
+            data["PickFrontScreenId"] = this.getScreenId();
+            data["groupOrientation"] =this._getBinMapOrientation();
+            data["udpBinMapDetails"] =this.getUDPMapDetails();
+            data["selectedTotes"] =this.getSelectedTotes();
+            data["PickCurrentBin"] = this._getSelectedBinID();
+            data["PreviousDetails"]=this.getPreviousPickDetails();
+            data["SlotType"] = this.getSlotType();
+            data["isDrawer"] = this.getDrawerFlag();
+            data["PickFrontRackDetails"] = this.getRackDetails();
+            data["PickFrontProductDetails"] = this.productDetails();
+            data["undockAwaited"]= this._getUndockAwaitedGroup();
+            break;
+            case appConstants.PICK_FRONT_UNDOCK_TOTE:
+            data["PickFrontExceptionData"] = this.getExceptionData();
+            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontNotification"] = this.getNotificationData();
+            data["PickFrontNavData"] = this.getNavData();
+            data["PickFrontServerNavData"] = this.getServerNavData();
+            data["PickFrontScreenId"] = this.getScreenId();
+            data["groupOrientation"] =this._getBinMapOrientation();
+            data["udpBinMapDetails"] =this.getUDPMapDetails();
+            data["selectedTotes"] =this.getSelectedTotes();
+            data["PickCurrentBin"] = this._getSelectedBinID();
+            data["undockAwaited"] = this._getUndockAwaitedGroup();
+
+            break;   
             case appConstants.PICK_FRONT_CONTAINER_BREAK:
             case appConstants.PICK_FRONT_ITEM_SCAN:
             data["PickFrontNavData"] = this.getNavData();

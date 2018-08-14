@@ -671,7 +671,7 @@ function server_messages_list() {
     _("{0} association required");
     _("{0} association failed. Repeat scan operation");
     _("{0} are anyway not required.Please proceed further");
-    _("{0} already associated with bin {0}");
+    _("{0} already associated with bin");
     _("{0} in use at front seat");
     _("{0} cannot be associated with bin of another seat");
     _("{0} assigned successfully to bin");
@@ -709,10 +709,30 @@ function server_messages_list() {
     _("{0} scan successful");
     _("{0} Close Cancelled");
     _("{0} docked successfully");
+    _("Previous Pick Details");
+    _("Previous Put Details");
     _("{0} close successful");
     _("Close current {0} first");
     _("Wrong entity scanned. Please scan {0}");
     _("Scan new {0}");
     _("Scan item or {0}");
+    _("Dock {0}");
+    _("Scan {1} or Dock {0}");
+    _("Undock {0}");
+    _("Scan a Tote");
+    _("Scan {0}");
+    _("Scan {0} location");
+    _("Pick complete. Waiting for next pick.");
+    _("Missing barcode scanned. Waiting for confirmation.");
+    _("{0} cannot be associated with inactive bin");
+    _("{0} cleared");
+    _("Scan load unit and gently push it away");
+
+
+
+
+
+
+
 }
 

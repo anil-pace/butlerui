@@ -8,8 +8,9 @@ var SplitPPS = React.createClass({
 		var leftCol = [],dockedGroup = this.props.docked||[],
 		undockAwaited = this.props.undockAwaited||[],
 		wrongUndock=this.props.wrongUndock||[],
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=0;
-
+		selectedBin=this.props.selectedbin||[],
+		rightCol=[],centerCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,maxCenterCount=0,style=null,maxWidth=0;
+		dockedGroup = dockedGroup.filter(val => !selectedBin.includes(val));
 		for(var  key in data){
 			if(data[key] === allresourceConstants.BIN_GROUP_LEFT){
 				maxLeftCount++;
@@ -17,64 +18,119 @@ var SplitPPS = React.createClass({
 			else if(data[key] === allresourceConstants.BIN_GROUP_RIGHT){
 				maxRightCount++;
 			}
+			else if(data[key] === allresourceConstants.BIN_GROUP_CENTER){
+				maxCenterCount++;
+			}
 		}
-		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
-		maxBlockHeight = 50/maxBlockCount;
-		maxWidth = (maxBlockHeight/100)*360;
-		style = {
-			height:maxBlockHeight+"%",
-			width: (maxWidth <= 100 ? maxWidth : 100)+'px'
-		}
+		maxBlockCount = maxCenterCount>0?maxCenterCount:(maxLeftCount > maxRightCount) ? maxLeftCount :maxRightCount;
+		
+		maxBlockHeight =  maxCenterCount>0? 75/maxBlockCount:50/maxBlockCount;
+		maxWidth = ((maxBlockHeight/100)*360).toFixed(3);
+
+			style = {
+				height:maxBlockHeight+"%",
+				width: (maxWidth <= 100 ? maxWidth : 100)+'px',
+			}
 		if(this.props.displayBinId){
-			style = Object.assign({},style,{padding: '10%',
+			fontSize=maxCenterCount>0?((70/28) * maxBlockHeight)+'px':((50/28) * maxBlockHeight)+'px'
+			style = Object.assign({},style,{
 					    color: '#fff',
-					    'fontSize': ((50/28) * maxBlockHeight)+'px'
+						'fontSize': fontSize,
+						
 					})
 		}
+		var dockedclassName=this.props.ruleset==='withBorder'?"dockedCont bottomBorderLeft":"dockedCont";
+		var undockclassName=this.props.ruleset==='withBorder'?"undockedCont bottomBorderLeft":"undockedCont";
+		var wrongUndockclassName=this.props.ruleset==='withBorder'?"wrongUndockCont bottomBorderLeft":"wrongUndockCont";
+		var selectedbinclassName=this.props.ruleset==='withBorder'?"selectedbinCont bottomBorderLeft":"selectedbin";
+
+		var dockedRightclassName=this.props.ruleset==='withBorder'?"dockedCont bottomBorderRight":"dockedCont";
+		var undockRigtclassName=this.props.ruleset==='withBorder'?"undockedCont bottomBorderRight":"undockedCont";
+		var wrongUndockRightclassName=this.props.ruleset==='withBorder'?"wrongUndockCont bottomBorderRight":"wrongUndockCont";
+		var selectedbinRightclassName=this.props.ruleset==='withBorder'?"selectedbinCont bottomBorderRight":"selectedbin";
+		
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
-				
+					
 				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
 
 					if(dockedGroup.indexOf(k) >= 0){
-						leftCol.push(<li  key={k} style={style} className="dockedCont">
-							<span  className="docked">{this.props.displayBinId ? k : null}</span>
+						leftCol.push(<li  key={k} style={style} className={dockedclassName}>
+							<span  className={this.props.ruleset==='withBorder'?"":"docked"}>{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
-						leftCol.push(<li key={k} style={style} className="undockedCont">
-							<span  className="undock left">{this.props.displayBinId ? k : null}</span>
+						leftCol.push(<li key={k} style={style} className={undockclassName}>
+							<span  className="undock left">&nbsp;</span>
 							</li>);
 					}
 					else if(wrongUndock.indexOf(k) >= 0){
-						leftCol.push(<li key={k} style={style} className="wrongUndockCont">
+						leftCol.push(<li key={k} style={style} className={wrongUndockclassName}>
 							<span   className="wrongUndock left">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
+					else if(selectedBin.indexOf(k) >= 0){
+						leftCol.push(<li key={k} style={style} className={selectedbinclassName}>
+							<span   className="selectedbin">{this.props.displayBinId ? k : null}</span>
+							</li>);
+					}
 					else{
-						leftCol.push(<li key={k} style={style} ><span>{this.props.displayBinId ? k : null}</span></li>);
+						leftCol.push(<li key={k} style={style} className={this.props.ruleset==='withBorder'?"bottomBorderLeft padding":"padding"} ><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 					
 				}
 				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
 					if(dockedGroup.indexOf(k) >= 0){
-						rightCol.push(<li key={k} style={style} className="dockedCont">
-							<span className="docked">{this.props.displayBinId ? k : null}</span>
+						rightCol.push(<li key={k} style={style} className={dockedRightclassName}>
+							<span className={this.props.ruleset==='withBorder'?"":"docked"}>{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
 					else if(undockAwaited.indexOf(k) >= 0){
-						rightCol.push(<li key={k} style={style} className="undockedCont">
-							<span className="undock right">{this.props.displayBinId ? k : null}</span>
+						rightCol.push(<li key={k} style={style} className={undockRigtclassName}>
+							<span className="undock right">&nbsp;</span>
 							</li>);
 					}else if(wrongUndock.indexOf(k) >= 0){
-						rightCol.push(<li key={k} style={style} className="wrongUndockCont">
+						rightCol.push(<li key={k} style={style} className={wrongUndockRightclassName}>
 							<span  className="wrongUndock right">{this.props.displayBinId ? k : null}</span>
 							</li>);
 					}
+					else if(selectedBin.indexOf(k) >= 0){
+						rightCol.push(<li key={k} style={style} className={selectedbinRightclassName}>
+							<span   className="selectedbin">{this.props.displayBinId ? k : null}</span>
+							</li>);
+					}
 					else{
-						rightCol.push(<li key={k} style={style} ><span>{this.props.displayBinId ? k : null}</span></li>);
+						rightCol.push(<li key={k} style={style} className={this.props.ruleset==='withBorder'?"bottomBorderRight padding":"padding"} ><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 					
+				}
+				else if(data[k] === allresourceConstants.BIN_GROUP_CENTER){
+					if(dockedGroup.indexOf(k) >= 0){
+						centerCol.push(<li key={k} style={style} className="dockedCont">
+							<span className={this.props.ruleset==='withBorder'?"":"docked"}>{this.props.displayBinId ? k : null}</span>
+							</li>);
+					}
+					else if(undockAwaited.indexOf(k) >= 0){
+						centerCol.push(<li key={k} style={style} className="undockedCont">
+						<span >{this.props.displayBinId ? k : null}</span>
+							<span  className="undock below">
+							</span>
+							</li>);
+					}
+					else if(wrongUndock.indexOf(k) >= 0){
+						centerCol.push(<li key={k} style={style} className={"wrongUndockCont"}>
+							<span   className="wrongUndock left">{this.props.displayBinId ? k : null}</span>
+							</li>);
+					}
+					else if(selectedBin.indexOf(k) >= 0){
+						centerCol.push(<li key={k} style={style} className={"selectedbinCont"}>
+							<span  className="selectedbin">{this.props.displayBinId ? k : null}</span>
+							</li>);
+					}
+					else{
+						centerCol.push(<li key={k} style={style}><span>{this.props.displayBinId ? k : null}</span></li>);
+					}
+
 				}
 
 			}
@@ -83,7 +139,8 @@ var SplitPPS = React.createClass({
 
 		return {
 			leftCol:leftCol,
-			rightCol:rightCol
+			rightCol:rightCol,
+			centerCol:centerCol
 		}
 	},
 	render:function(){		
@@ -96,23 +153,37 @@ var SplitPPS = React.createClass({
 		var textTransform = {
 			transform: 'rotate('+(((orientation > 90 ? 180 : 0)+'deg)'))
 		}
+		var customizeClassSplitPPS=this.props.customizeClassSplitPPS;
 		
 		return (
-				<div className="splitPPSWrapper" style={transformStyle}>
+				<div className={customizeClassSplitPPS?"splitPPSWrapper "+customizeClassSplitPPS:"splitPPSWrapper"} style={transformStyle}>
 					<div className="mapCont">
-					<div className="msuSpace"  style={textTransform}>{_("MSU")}</div>
+		<div className="msuSpace"  style={textTransform}>&nbsp;</div>
 					<div className={"col1 three"}>
-					<ul>
+					{(mapStructure.leftCol).length>=1?
+					<ul className={this.props.ruleset==='withBorder'?'withBorderLeft':''}>
 					{mapStructure.leftCol}
-					</ul>
+					</ul>:""
+					}
 					</div>
 					<div className="col2 spriteIcons">
 					</div>
 					<div className={"col3 three"}>
-					<ul>
+					{(mapStructure.rightCol).length>=1?
+					<ul className={this.props.ruleset==='withBorder'?'withBorder':''}>
 					{mapStructure.rightCol}
-					</ul>
+					</ul>:""
+					}
 					</div>
+					
+					<div className={"col4 three"}>
+					{(mapStructure.centerCol).length>=1?
+					<ul>
+					{mapStructure.centerCol}
+					</ul>:""
+					}
+					</div>
+
 					</div>
 				</div>
 						

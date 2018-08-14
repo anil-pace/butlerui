@@ -530,15 +530,15 @@ var KQ = React.createClass({
         }
 
 
-        return ( < div className = {!this.props.disable? "kq-wrapper":"kq-wrapper-counter"}>
-            {!this.props.disable?< a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
-            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a>:'' }
+        return ( <div className = {!this.props.disable? "kq-wrapper":"kq-wrapper-counter"}>
+            {!this.props.disable?<a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
+            <span className = "glyphicon glyphicon-menu-up" > </span> </a>:'' }
 
             {this._qtyComponent}
-            {!this.props.disable?< a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
-            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a>:''}
+            {!this.props.disable?<a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
+            < span className = "glyphicon glyphicon-menu-down" > </span> </a>:''}
             
-            < /div>
+            </div>
         )
 
     }

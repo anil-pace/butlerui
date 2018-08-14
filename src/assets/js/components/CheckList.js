@@ -10,8 +10,8 @@ var CheckList = React.createClass({
         if(checklistData){
             checklistData.map(function(key, index) {
                 if(index === parseInt(checklistIndex, 10)){ 
-                     dataToDisplay = "";
-                     if(checklistData[index]["action_results"] && checklistData[index]["action_results"]["errors"] !== null) /* error is present */{
+                     dataToDisplay = checklistData[index]["action_results"] && checklistData[index]["action_results"]["value"]?checklistData[index]["action_results"]["value"]:""
+                     if(checklistData[index]["action_results"] && checklistData[index]["action_results"]["errors"] && checklistData[index]["action_results"]["errors"] !== null) /* error is present */{
                         iconToDisplay = <img className="img-responsive" src="assets/images/error_checklist.png"/>;
                     }
                     else{
@@ -19,23 +19,23 @@ var CheckList = React.createClass({
                     }
                 }
                 else if(index < parseInt(checklistIndex, 10)){
-                    if(checklistData[index]["action_results"] && checklistData[index]["action_results"]["errors"] !== null) /* error is present */{
+                    if(checklistData[index]["action_results"] && checklistData[index]["action_results"]["errors"] && checklistData[index]["action_results"]["errors"] !== null) /* error is present */{
                         dataToDisplay = "";
                         iconToDisplay = <img className="img-responsive" src="assets/images/error_checklist.png"/>;
                     }
                     else{
-                        dataToDisplay = ": " + checklistData[index]["action_results"]["value"];
+                        dataToDisplay =  checklistData[index]["action_results"]["value"];
                         iconToDisplay = <img className="img-responsive" src="assets/images/done_checklist.png"/>;
                     }
                 }
                 else{
-                    dataToDisplay = "";
+                    dataToDisplay=checklistData[index]["action_results"] && checklistData[index]["action_results"]["value"]?checklistData[index]["action_results"]["value"]:"";
                     iconToDisplay = <img className="img-responsive" src="assets/images/toBeDone_checklist.png"/>;
                     applyClass = "greyText";
                 }
                 eachRow.push(
                     <tr>
-                        <td className={applyClass}> {checklistData[index]["action_parameters"]["key"] + dataToDisplay} </td>
+                        <td className={applyClass}> {checklistData[index]["action_parameters"]?checklistData[index]["action_parameters"]["key"]+": " + dataToDisplay:dataToDisplay} </td>
                         <td className="value"> {iconToDisplay} </td>
                     </tr>
                 );

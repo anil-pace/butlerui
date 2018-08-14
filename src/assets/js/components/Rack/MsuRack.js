@@ -8,7 +8,7 @@ var MsuRack = React.createClass({
     render: function(){
 		return (
 				<div className="drawRackWrapper">
-                    <MsuRackFlex hideSlotDetails={this.props.hideSlotDetails} rackDetails={this.props.rackData.rack_type_rec} slotBarcodes={this.props.rackData.slot_barcodes} rackWidth={this.props.rackData.rack_width} putDirectionFlex={this.props.putDirection} />
+                    <MsuRackFlex hideSlotDetails={this.props.hideSlotDetails} rackDetails={this.props.rackData.rack_type_rec} slotBarcodes={this.props.rackData.slot_barcodes} rackWidth={this.props.rackData.rack_width} putDirectionFlex={this.props.putDirection} QLCodeDetails={this.props.QLCodeDetails} PickFrontProductDetails={this.props.PickFrontProductDetails}/>
                 </div>
 			);
 	}

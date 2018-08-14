@@ -1,4 +1,5 @@
 var React = require('react');
+var PrdtDetails = require('../PrdtDetails/ProductDetails');
 
 var MsuRackFlex = React.createClass({
 
@@ -226,6 +227,7 @@ var MsuRackFlex = React.createClass({
     render: function() {
       var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
       var putDirection = this.props.putDirectionFlex;
+      var QLCodeDetails =this.props.QLCodeDetails;
       var vHTMLSlots = this._createSlotLayouts(this.state.vSlots,
                                                this.state.lastHSlot,
                                                this.state.lastVSlot,
@@ -281,7 +283,12 @@ var MsuRackFlex = React.createClass({
                  </div> 
                  </div>
 ):""}
-            </div>
+
+
+</div>
+{QLCodeDetails?
+  <PrdtDetails productInfo={this.props.PickFrontProductDetails} QLCodeDetails={this.props.QLCodeDetails}/>:""
+}
  </div>
       );
     }

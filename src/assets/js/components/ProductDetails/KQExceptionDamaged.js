@@ -436,12 +436,12 @@ var KQ = React.createClass({
         this.handleTotalQty();
      
         
-        return ( < div className = "kq-wrapper" >
-            < a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
-            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a> {this._qtyComponent} 
-            < a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
-            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a> 
-            < /div>
+        return ( <div className = "kq-wrapper" >
+            <a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
+            <span className = "glyphicon glyphicon-menu-up" > </span> </a> {this._qtyComponent} 
+            <a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
+            <span className = "glyphicon glyphicon-menu-down" > </span> </a> 
+            </div>
         )
 
     }

@@ -77,6 +77,12 @@
     justify-content: center;
     margin-left: 3%;
     width: 28%;
+    &.qlDetails{
+        width: 350px;
+        margin-top: 12%;
+        margin-left: 63%;
+        display:block;
+    }
     .table-wrapper {
         display: flex;
         //flex: 1 0 0;
@@ -122,6 +128,28 @@
         padding-bottom: 0.3em;
         font-size: 2.5rem;
         font-weight: bold;
+    }
+    .detailsOuterWrapper{
+        border: 1px solid #CCCCCC;
+        color: #4D5055;
+        .detailsInnerWrapper{
+            border-bottom: 1px solid #CCCCCC;
+            padding: 5px 20px 5px 20px;
+            font-size: 25px;
+            .detailsDispName{
+                font-weight: 600;
+            }
+            .detailsDispVal{
+                float: right;
+                font-weight: 400;
+            }
+        }
+        .detailsDispValShort{
+            text-align: center;
+    font-size: 13em;
+    line-height: 126px;
+    padding: 8px;
+        }
     }
 }
 

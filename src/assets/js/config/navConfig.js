@@ -292,7 +292,7 @@ var navData = {
     ],
     "pickFront": [
         [{
-            "screen_id": "pick_front_waiting_for_msu",
+            "screen_id": ["pick_front_waiting_for_msu","pick_front_one_step_scan","pick_front_dock_tote","pick_front_undock_tote"],
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,
@@ -501,9 +501,8 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        }
-
-        ]
+        }]
+        
 
     ],
     "pickBack": [

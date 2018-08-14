@@ -1924,7 +1924,8 @@ setCurrentSeat: function (data) {
                     if (product_details[0].product_sku) {
                         product_sku = product_details[0].product_sku;
                         quantity = value.qty;
-                        total_damaged += quantity
+                        total_damaged += quantity;
+                        serial=value.serial;
                         data["tableRows"].push([new self.tableCol(type, "enabled", false, "small", false, true, false, false), new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(serial, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
                     }
                 });

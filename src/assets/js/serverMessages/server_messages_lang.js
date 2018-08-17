@@ -716,6 +716,10 @@ function server_messages_list() {
     _("Wrong entity scanned. Please scan {0}");
     _("Scan new {0}");
     _("Scan item or {0}");
+    _("Additional Information");
+    _("Selected UOM: ");
+    _("Close");
+    _("Select Value");
     _("Dock {0}");
     _("Scan {1} or Dock {0}");
     _("Undock {0}");
@@ -727,12 +731,7 @@ function server_messages_list() {
     _("{0} cannot be associated with inactive bin");
     _("{0} cleared");
     _("Scan load unit and gently push it away");
-
-
-
-
-
-
-
+    _("Scan {0} Serial");
+    _("Scan {0} Serial to Open");
 }
 

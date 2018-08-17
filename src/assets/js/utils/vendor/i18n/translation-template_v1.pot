@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-16 12:37+0000\n"
+"POT-Creation-Date: 2018-08-17 12:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2911,6 +2911,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:593
 #: src/assets/js/serverMessages/server_messages_lang.js:693
 #: src/assets/js/serverMessages/server_messages_lang.js:723
+#: src/assets/js/serverMessages/server_messages_lang.js:728
 msgid "Scan {0}"
 msgstr ""
 
@@ -3383,41 +3384,79 @@ msgid "Previous Put Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:719
+#: src/assets/js/serverMessages/server_messages_lang.js:724
 msgid "Dock {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:720
+#: src/assets/js/serverMessages/server_messages_lang.js:725
 msgid "Scan {1} or Dock {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:721
+#: src/assets/js/serverMessages/server_messages_lang.js:726
 msgid "Undock {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:722
+#: src/assets/js/serverMessages/server_messages_lang.js:727
 msgid "Scan a Tote"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:724
+#: src/assets/js/serverMessages/server_messages_lang.js:729
 msgid "Scan {0} location"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:725
+#: src/assets/js/serverMessages/server_messages_lang.js:730
 msgid "Pick complete. Waiting for next pick."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:726
+#: src/assets/js/serverMessages/server_messages_lang.js:731
 msgid "Missing barcode scanned. Waiting for confirmation."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:727
+#: src/assets/js/serverMessages/server_messages_lang.js:732
 msgid "{0} cannot be associated with inactive bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:728
+#: src/assets/js/serverMessages/server_messages_lang.js:733
 msgid "{0} cleared"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:729
+#: src/assets/js/serverMessages/server_messages_lang.js:734
 msgid "Scan load unit and gently push it away"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:719
+msgid "Box Type"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:720
+msgid "Location"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:721
+msgid "Place Box"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:722
+msgid "Scan"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:723
+msgid "Checklist"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:735
+msgid "Scan {0} Serial"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:736
+msgid "Scan {0} Serial to Open"
 msgstr ""

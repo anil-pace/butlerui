@@ -1080,9 +1080,10 @@ getOrderID: function () {
             _seatData.Box_qty_list.map(function(value, index) {
                 if (value.Scan_status == "no_scan") {
                     missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
-                    countMissingDamagedBoxSerials = countMissingDamagedBoxSerials + 1;
+                    countMissingDamagedBoxSerials = value.Box_Expected_Qty-value.Box_Actual_Qty;
                 }
             });
+            countMissingDamagedBoxSerials = countMissingDamagedBoxSerials < 0 ? 0 : countMissingDamagedBoxSerials;
             missingDamagedBoxSerials = missingDamagedBoxSerials.replace(/,([^,]*)$/,'$1');
             _seatData.Extra_box_list.map(function(value, index) {
                 extraBoxSerials = extraBoxSerials + value.Box_serial + " ";

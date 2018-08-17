@@ -510,6 +510,7 @@ else {
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
 
                 var _button;
+                var headerDataToShow=this.state.PickFrontServerNavData.code||"";
                  var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0];
 
                 if(!this.state.GetIRTScanStatus)
@@ -539,7 +540,7 @@ else {
                         <div className="exception-right">
                             <div className="main-container">
                                 <div className="kq-exception">
-                                    <div className="kq-header">{remainingEntitiesToBeScanned!==0 ? utils.frntStringTransform("PkF.H.013",[remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
+                                    <div className="kq-header">{remainingEntitiesToBeScanned!==0 ? utils.frntStringTransform(headerDataToShow,[remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
                                     <TabularData data={this.state.PickFrontDamagedItems} className='limit-height width-extra '/>
                                     {_button}
                                 </div>

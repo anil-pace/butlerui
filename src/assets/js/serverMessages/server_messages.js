@@ -87,6 +87,13 @@ var serverMessages = {
     "PkF.H.027" : "Scan {0} to Open",
     "PkB.H.001" : "Scan a {0}",
     "PkB.H.002" : "Press PPTL or Scan a {0}",
+    "PkF.H.028" : "Dock {0}",
+    "PkF.H.029" : "Scan {1} or Dock {0}",
+    "PkF.H.030" : "Undock {0}",
+    "PkF.H.032" : "Scan {0} Serial",
+    "PkF.H.033" : "Scan {0} Serial to Open",
+    "PkB.H.001" : "Scan a Tote",
+    "PkB.H.002" : "Press PPTL or Scan a Tote",
     "PkB.H.003" : "Press PPTL to clear the bin",
     "PkB.H.004" : "Press bin PPTL to remove entities",
     "PkB.H.005" : "Press print button to proceed",
@@ -420,7 +427,7 @@ var serverMessages = {
     //item_scan
     "PkF.S.003" : {
                     "textToDisplay": "Scan",
-                    "screen_id": "pick_front_item_scan"
+                    "screen_id": ["pick_front_item_scan","pick_front_working_table","pick_front_more_item_scan","pick_front_container_break"]
                 },
     //checklist
     "PkF.S.004" : {
@@ -430,8 +437,9 @@ var serverMessages = {
     //press_pptl
     "PkF.S.005" : {
                     "textToDisplay": "Press PPTL",
-                    "screen_id": ""
-                }
+                    "screen_id": "pick_front_pptl_press"
+                }           
+            
 };
 
 

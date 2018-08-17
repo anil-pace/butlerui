@@ -714,5 +714,18 @@ function server_messages_list() {
     _("Selected UOM: ");
     _("Close");
     _("Select Value");
+    _("Dock {0}");
+    _("Scan {1} or Dock {0}");
+    _("Undock {0}");
+    _("Scan a Tote");
+    _("Scan {0}");
+    _("Scan {0} location");
+    _("Pick complete. Waiting for next pick.");
+    _("Missing barcode scanned. Waiting for confirmation.");
+    _("{0} cannot be associated with inactive bin");
+    _("{0} cleared");
+    _("Scan load unit and gently push it away");
+    _("Scan {0} Serial");
+    _("Scan {0} Serial to Open");
 }
 

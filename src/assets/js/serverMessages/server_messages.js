@@ -429,7 +429,7 @@ var serverMessages = {
     //item_scan
     "PkF.S.003" : {
                     "textToDisplay": "Scan",
-                    "screen_id": "pick_front_item_scan"
+                    "screen_id": ["pick_front_item_scan","pick_front_working_table","pick_front_more_item_scan","pick_front_container_break"]
                 },
     //checklist
     "PkF.S.004" : {
@@ -439,8 +439,9 @@ var serverMessages = {
     //press_pptl
     "PkF.S.005" : {
                     "textToDisplay": "Press PPTL",
-                    "screen_id": ""
-                }
+                    "screen_id": "pick_front_pptl_press"
+                }           
+            
 };
 
 

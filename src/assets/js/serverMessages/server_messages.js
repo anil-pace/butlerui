@@ -422,7 +422,7 @@ var serverMessages = {
     //packing_box
     "PkF.S.002"  : {
                     "textToDisplay": "Place Box",
-                    "screen_id": ""
+                    "screen_id": "pick_front_packing_box"
                 },  
     //item_scan
     "PkF.S.003" : {
@@ -438,8 +438,7 @@ var serverMessages = {
     "PkF.S.005" : {
                     "textToDisplay": "Press PPTL",
                     "screen_id": "pick_front_pptl_press"
-                }           
-            
+                }
 };
 
 

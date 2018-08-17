@@ -710,10 +710,15 @@ function server_messages_list() {
     _("Wrong entity scanned. Please scan {0}");
     _("Scan new {0}");
     _("Scan item or {0}");
+    _("Box Type");
     _("Additional Information");
     _("Selected UOM: ");
     _("Close");
     _("Select Value");
+    _("Location");
+    _("Place Box");
+    _("Scan");
+    _("Checklist");
     _("Dock {0}");
     _("Scan {1} or Dock {0}");
     _("Undock {0}");

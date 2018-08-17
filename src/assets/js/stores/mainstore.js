@@ -1061,7 +1061,10 @@ getOrderID: function () {
         return _seatData.Possible_Container_Names || null
     },
     isAddlInfoPresent: function(){
-        return (Object.keys(_seatData.info_button_data).length ? true :false)
+        return (_seatData.info_button_data && Object.keys(_seatData.info_button_data).length ? true :false)
+    },
+    isChangeUOMApplicable: function(){
+        return _seatData.change_uom_applicable
     },
     getReconcileBoxSerialData: function() {
         var data = {};
@@ -1337,6 +1340,12 @@ getLooseItemsData: function () {
 
 getFinishAuditFlag: function () {
     return _finishAuditFlag;
+},
+getKDeepLooseItemsData: function(){
+    return _seatData.Loose_sku_list || null
+},
+getSelectedUOM: function(){
+    return _seatData.selected_uom || null
 },
 
 getReconcileLooseItemsData: function () {

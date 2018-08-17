@@ -246,7 +246,7 @@ var serverMessages = {
     "PkF.I.004" : "{0} scan successful",
     "PkF.I.005" : "Cancel scan successful",
     "PkF.I.006" : "PPTL press successful",
-    "PkF.I.007" : "Data capture successful",
+    "PkF.I.007" : "Data capture valid",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
     "PkF.W.003" : "Missing barcode scanned. Waiting for confirmation.",
@@ -261,7 +261,7 @@ var serverMessages = {
     "PkF.E.009" : "System Error. Scanned entity details not available at this time",
     "PkF.E.010" : "No PPS bins empty. Please empty them from Pickback",
     "PkF.E.011" : "Extra details entered are incorrect.Please enter correct details",
-    "PkF.E.012" : "Data capture failed",
+    "PkF.E.012" : "Data capture failed at item {0}",
     "PkF.E.013" : "Invalid Event.Expecting PPTL button press",
     "PkF.E.014" : "Packing box scan failed",
     "PkF.E.015" : "Wrong entity scan.Please scan the correct entity",
@@ -424,7 +424,7 @@ var serverMessages = {
     //packing_box
     "PkF.S.002"  : {
                     "textToDisplay": "Place Box",
-                    "screen_id": ""
+                    "screen_id": "pick_front_packing_box"
                 },  
     //item_scan
     "PkF.S.003" : {
@@ -440,8 +440,7 @@ var serverMessages = {
     "PkF.S.005" : {
                     "textToDisplay": "Press PPTL",
                     "screen_id": "pick_front_pptl_press"
-                }           
-            
+                }
 };
 
 

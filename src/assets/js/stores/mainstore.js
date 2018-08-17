@@ -219,7 +219,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getNavData: function () {
         if(_seatData.header_steps){
-        	var headerSteps = _seatData.header_steps;
+            var headerSteps = _seatData.header_steps;
             navConfig.header=[];
             for(var i =0; i < headerSteps.length; i++){
                 navConfig.header.push({
@@ -737,6 +737,9 @@ getOrderID: function () {
         }
     },
 
+    getPackingBoxType: function() {
+        return _seatData.packing_box_type || null;
+    },
     getChecklistDockData: function () {
         if (_seatData.hasOwnProperty('dock_actions')) {
             var dockActionsArray=[];
@@ -1058,10 +1061,7 @@ getOrderID: function () {
         return _seatData.Possible_Container_Names || null
     },
     isAddlInfoPresent: function(){
-        return (_seatData.info_button_data && Object.keys(_seatData.info_button_data).length ? true :false)
-    },
-    isChangeUOMApplicable: function(){
-        return _seatData.change_uom_applicable
+        return (Object.keys(_seatData.info_button_data).length ? true :false)
     },
     getReconcileBoxSerialData: function() {
         var data = {};
@@ -1338,12 +1338,7 @@ getLooseItemsData: function () {
 getFinishAuditFlag: function () {
     return _finishAuditFlag;
 },
-getKDeepLooseItemsData: function(){
-    return _seatData.Loose_sku_list || null
-},
-getSelectedUOM: function(){
-    return _seatData.selected_uom || null
-},
+
 getReconcileLooseItemsData: function () {
     var data = {};
     data["header"] = [];
@@ -3043,11 +3038,6 @@ setCurrentSeat: function (data) {
                 data["PickFrontChecklistIndex"] = this.getChecklistIdx();
             break;
 
-            case appConstants.PICK_FRONT_PACKING_BOX:
-            data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
             data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
             data["PickFrontNotification"] = this.getNotificationData();
@@ -3094,6 +3084,31 @@ setCurrentSeat: function (data) {
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
             data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
             data["PickFrontCancelScan"] = this.cancelScanDetails();
+            break;
+
+            case appConstants.PICK_FRONT_PACKING_BOX:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontPackingBoxType"] = this.getPackingBoxType();
             break;
 
             case appConstants.PER_ITEM_PRINT:
@@ -3390,7 +3405,6 @@ data["AuditItemDetailsData"]=this.getItemDetailsData();
 data["AuditSRKQQuantity"]=this.getSRKQQuantity();
 data["AuditFinishFlag"] = this.getFinishAuditFlag();
 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
-data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
 break;
 
 case appConstants.PPTL_MANAGEMENT:

@@ -731,6 +731,11 @@ function server_messages_list() {
     _("{0} cannot be associated with inactive bin");
     _("{0} cleared");
     _("Scan load unit and gently push it away");
+    _("Box Type");
+    _("Location");
+    _("Place Box");
+    _("Scan");
+    _("Checklist");
     _("Scan {0} Serial");
     _("Scan {0} Serial to Open");
 }

@@ -33,6 +33,7 @@ var CheckList=require("./CheckList.js");
 var utils = require('../utils/utils.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
+var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 
 var checkListOpen = false;
 
@@ -55,7 +56,7 @@ var PickFront = React.createClass({
         return getStateData();
     },
     componentWillMount: function () {
-        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PACKING_BOX) {
             this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
         }
         mainstore.addChangeListener(this.onChange);
@@ -65,7 +66,7 @@ var PickFront = React.createClass({
     },
     onChange: function () {
         this.setState(getStateData());
-        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS) {
+        if (this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS || this.state.PickFrontScreenId === appConstants.PICK_FRONT_PACKING_BOX) {
             this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
         }
     },
@@ -881,35 +882,56 @@ else {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
                                                     navMessagesJson={this.props.navMessagesJson}/>);
-
                     var binComponent = "";
-                    if (this.state.OrigBinUse) {
 
-                        binComponent = (<BinsFlex binsData={this.state.PickFrontBinData}
-                                                  screenId={appConstants.PICK_FRONT_PACKING_BOX}
-                                                  seatType={this.state.SeatType}/>)
-                    } else {
-                        binComponent = (<div className='main-container'>
-                            <Bins binsData={this.state.PickFrontBinData}
-                                  screenId={appConstants.PICK_FRONT_PACKING_BOX}/>
-                        </div>)
+                    if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
+                        if (this.state.OrigBinUse){
+                             binComponent=(<div className="binsFlexWrapperContainer"> 
+                                <div className="workingTableFlex"></div>
+                                <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
+                                                                      productDetails={this.state.PickFrontProductDetails}
+                                                                      itemUid={this.state.PickFrontItemUid}/>
+                                                                      </div>)
+                        } else {
+                            binComponent=(<div className='main-container adjust-main-container'> 
+                                <div className="workingTable"></div>
+                            <Wrapper scanDetails={this.state.PickFrontScanDetails}
+                                                             productDetails={this.state.PickFrontProductDetails}
+                                                             itemUid={this.state.PickFrontItemUid}/>
+                                                             </div>);
+                        }
+                    }
+                    else
+                    {
+                        if (this.state.OrigBinUse) {
+                            binComponent = (<div className="binsFlexWrapperContainer">
+                                <BinsFlex binsData={this.state.PickFrontBinData}
+                                          screenId={screen_id} seatType={this.state.SeatType}/>
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
+                                
+                            </div>)
+                        } else {
+                            binComponent = (<div className='main-container adjust-main-container'>
+                                <Bins binsData={this.state.PickFrontBinData}
+                                      screenId={screen_id}/>
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
+                            </div>);
+                        }
                     }
                     this._component = (
-
                         <div className='grid-container'>
-                            <Modal />
-                            <div className='main-container'>
-                                {binComponent}
-
-                                <OrderDetails orderData={this.state.PickFrontBoxOrderDetails}/>
-                            </div>
-
+                            <Modal cancelClicked={cancelClicked}/>
+                            {this.state.SplitScreenFlag &&
+                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFlow'/>}
+                            {binComponent}
                         </div>
                     );
                 } else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
+                
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}

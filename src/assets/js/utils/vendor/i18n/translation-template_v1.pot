@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-16 15:45+0000\n"
+"POT-Creation-Date: 2018-08-17 18:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2861,6 +2861,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:589
 #: src/assets/js/serverMessages/server_messages_lang.js:689
+#: src/assets/js/serverMessages/server_messages_lang.js:726
 msgid "Scan {0}"
 msgstr ""
 
@@ -3204,17 +3205,89 @@ msgid "Scan item or {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:713
+#: src/assets/js/serverMessages/server_messages_lang.js:714
 msgid "Additional Information"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:714
+#: src/assets/js/serverMessages/server_messages_lang.js:715
 msgid "Selected UOM: "
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:715
+#: src/assets/js/serverMessages/server_messages_lang.js:716
 msgid "Close"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:716
+#: src/assets/js/serverMessages/server_messages_lang.js:717
 msgid "Select Value"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:713
+msgid "Box Type"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:718
+msgid "Location"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:719
+msgid "Place Box"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:720
+msgid "Scan"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:721
+msgid "Checklist"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:722
+msgid "Dock {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:723
+msgid "Scan {1} or Dock {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:724
+msgid "Undock {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:725
+msgid "Scan a Tote"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:727
+msgid "Scan {0} location"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:728
+msgid "Pick complete. Waiting for next pick."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:729
+msgid "Missing barcode scanned. Waiting for confirmation."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:730
+msgid "{0} cannot be associated with inactive bin"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:731
+msgid "{0} cleared"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:732
+msgid "Scan load unit and gently push it away"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:733
+msgid "Scan {0} Serial"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:734
+msgid "Scan {0} Serial to Open"
 msgstr ""

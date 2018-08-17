@@ -219,7 +219,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
     getNavData: function () {
         if(_seatData.header_steps){
-        	var headerSteps = _seatData.header_steps;
+            var headerSteps = _seatData.header_steps;
             navConfig.header=[];
             for(var i =0; i < headerSteps.length; i++){
                 navConfig.header.push({
@@ -1072,7 +1072,6 @@ getOrderID: function () {
         var missingDamagedBoxSerials = '';
         var extraBoxSerials = '';
         var countMissingDamagedBoxSerials = 0;
-        _seatData.k_deep_audit = false;
         if(!_seatData.k_deep_audit)
         {
             _seatData.Box_qty_list.map(function(value, index) {

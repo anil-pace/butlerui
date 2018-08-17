@@ -73,7 +73,8 @@ var GorSelect = require("./gor-select/gor-select");
           customContainerNames: mainstore.getCustomContainerNames(),
           isAddlInfoPresent: mainstore.isAddlInfoPresent(),
           selectedUOM:mainstore.getSelectedUOM() || null,
-          isChangeUOMApplicable: mainstore.isChangeUOMApplicable()
+          isChangeUOMApplicable: mainstore.isChangeUOMApplicable(),
+          kQstatus: mainstore.kQstatus()
 
          }
          return Object.assign({}, screenData, localState);
@@ -304,6 +305,7 @@ if(this.state.AuditExceptionStatus == false){
   var uomOptions = this.getUOMDropdownValues();
   var looseItemsData =  this.getLooseItemsData();
   var isAddlInfoPresent = this.state.isAddlInfoPresent;
+  var kqDisabled = !this.state.kQstatus
     if(isAddlInfoPresent){
       var AuditAddlInfoData = this.getAddlInfoData();
     }
@@ -398,7 +400,7 @@ this._component = (
   <TabularData data = {this.state.AuditItemDetailsData}/>
   </div>
   <div className="audit-scan-right">
-  <KQ scanDetailsGood={this.state.AuditSRKQQuantity}/>
+  <KQ scanDetailsGood={this.state.AuditSRKQQuantity} disable={kqDisabled} />
   
   <div className = 'finish-scan'>
   <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>

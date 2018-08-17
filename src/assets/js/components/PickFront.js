@@ -308,7 +308,7 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
                  binComponent=(<div className='main-container'> 
                     <div className='printImage'></div>
-                    <KQ scanDetails = {this.state.PrintScanDetails} disable={true} />
+                    <KQ scanDetails = {this.state.PrintScanDetails}  hideCounters={true}/>
                     </div> 
                     );
                    this._component = (

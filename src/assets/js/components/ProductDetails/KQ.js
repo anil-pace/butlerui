@@ -493,12 +493,13 @@ var KQ = React.createClass({
     }
   },
 
-  handleTotalQty : function(){
+handleTotalQty : function(){
 
+    var hideCounters = !!this.props.hideCounters;
     if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
         this._qtyComponent = (
-          <div id={!this.props.disable?'textbox':'textbox-counter'}>
-            <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={this.openNumpad.call(null,"keyboard")}/>
+          <div id={!hideCounters?'textbox':'textbox-counter'}>
+            <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
             <span className="separator">/</span>
             <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
           </div>
@@ -506,7 +507,7 @@ var KQ = React.createClass({
     }else{
         this._qtyComponent = (
           <div id='textbox'>
-            <input id="keyboard"  key="text_1"  value={_updatedQty} onClick={this.openNumpad.call(null,"keyboard")}/>
+            <input id="keyboard"  disabled={!!this.props.disable} key="text_1"  value={_updatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
           </div>
         );
     }
@@ -528,18 +529,19 @@ var KQ = React.createClass({
             this.handleTotalQty();
             
         }
+        var hideCounters = !!this.props.hideCounters
 
-
-        return ( < div className = {!this.props.disable? "kq-wrapper":"kq-wrapper-counter"}>
-            {!this.props.disable?< a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown = {this.incrementValue} >
-            < span className = "glyphicon glyphicon-menu-up" > < /span> < /a>:'' }
+        return ( <div className = "kq-wrapper">
+            {!hideCounters ? <a href = "#" className = {this._appendClassUp} action={this.props.action} onClick={!this.props.disable ? this.incrementValue :null} onMouseDown = {!this.props.disable ? this.incrementValue:null} >
+            <span className = "glyphicon glyphicon-menu-up" > </span> </a>: ''}
 
             {this._qtyComponent}
-            {!this.props.disable?< a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={this.decrementValue}  onMouseDown = {this.decrementValue} >
-            < span className = "glyphicon glyphicon-menu-down" > < /span> < /a>:''}
+            {!hideCounters ? <a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={!this.props.disable ? this.decrementValue:null}  onMouseDown = {!this.props.disable? this.decrementValue :null} >
+            <span className = "glyphicon glyphicon-menu-down" > </span> </a> :''}
             
-            < /div>
+            </div>
         )
+
 
     }
 

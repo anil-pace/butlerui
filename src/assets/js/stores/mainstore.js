@@ -1048,7 +1048,6 @@ getOrderID: function () {
         var missingDamagedBoxSerials = '';
         var extraBoxSerials = '';
         var countMissingDamagedBoxSerials = 0;
-        _seatData.k_deep_audit = false;
         if(!_seatData.k_deep_audit)
         {
             _seatData.Box_qty_list.map(function(value, index) {

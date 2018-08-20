@@ -392,6 +392,28 @@ function loadComponent(modalType,modalData,ths){
       title = _("Cancel Exception");    
       break;
 
+      case appConstants.NEW_CARRYING_UNIT:
+        component = [];
+        component.push((
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="title-textbox">{_("Are you sure you want to request a new carrying unit?")}</div>
+              </div>
+            </div>
+            <div className="modal-footer removeBorder">
+              <div className="buttonContainer center-block chklstButtonContainer">
+                <div className="row removeBorder">
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Cancel")} color={"black"} module ={modalData} action={appConstants.CANCEL_TOTE_SEND_TO_SERVER_MODAL}/></div>
+                  <div className="col-md-6"><Button1 disabled = {false} text ={_("Confirm")} color={"orange"} module ={modalData} action={appConstants.CONFIRM_TOTE_SEND_TO_SERVER_MODAL}/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          ));
+          title = _("New carrying unit");    
+      break;
+
         case appConstants.CANCEL_SCAN_ALL:
         component = [];
         component.push((

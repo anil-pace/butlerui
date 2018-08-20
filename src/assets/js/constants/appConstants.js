@@ -303,7 +303,15 @@ var appConstants = {
 	CLOSE_CART:"close_cart",
 	PICK_FRONT_CHECKLIST: "pick_front_checklist",
 	/*Constants for Audit*/
-	OPEN_AUDIT_MODAL:"OPEN_AUDIT_MODAL"
+	OPEN_AUDIT_MODAL:"OPEN_AUDIT_MODAL",
+	CONFIRM_LOCATION:"CONFIRM_LOCATION",
+	PICK_FRONT_SLOT_SCAN:"pick_front_slot_scan",
+	PICK_FRONT_TOTE_CONFIRM: "pick_front_tote_confirm",
+	NEW_CARRYING_UNIT: "request_tote",
+	CANCEL_TOTE: "cancel_tote",
+	CONFIRM_TOTE: "confirm_tote",
+	CONFIRM_TOTE_SEND_TO_SERVER_MODAL: "CONFIRM_TOTE_SEND_TO_SERVER_MODAL",
+	CANCEL_TOTE_SEND_TO_SERVER_MODAL: "CANCEL_TOTE_SEND_TO_SERVER_MODAL"
 };
 
 module.exports = appConstants;

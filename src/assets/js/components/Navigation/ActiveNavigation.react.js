@@ -6,6 +6,13 @@ var ActiveNavigation = React.createClass({
         var navMessagesJson = this.props.navMessagesJson;
         var compData = this.props.data;
         var message_args  = this.props.serverNavData.details.slice(0);
+
+        /* START => special handling for pick_front_scan_slot where details === "038.1.E.01-02" */
+            if(this.props.screenId === appConstants.PICK_FRONT_SLOT_SCAN){
+                message_args = ((message_args[0].split("-")[0]).split(".")[2]).split(); // to derive ["E"] from above
+            };
+        /* END */
+
         var errorCode = this.props.serverNavData.code;
         var navId = this.props.navId;
         var level;

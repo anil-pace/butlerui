@@ -218,16 +218,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         showModal = false;
     },
     getNavData: function () {
+        /* dynamic header navigation implementation */
         if(_seatData.header_steps){
             var headerSteps = _seatData.header_steps;
             navConfig.header=[];
             for(var i =0; i < headerSteps.length; i++){
                 navConfig.header.push({
                     "screen_id": serverMessages[(headerSteps[i])]["screen_id"],
-                    "code": "",
+                    "code": null,
                     "message": serverMessages[(headerSteps[i])]["textToDisplay"],
                     "showImage": true,
-                    "level": "",
+                    "level": null,
                     "type": 'passive'
                 });
             }
@@ -244,7 +245,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 } else {
                     _NavData[index].type = 'passive';
                 }
-                _NavData[index].level = index + 1; //appending level no. at run time
+                /* condition to NOT show indexing when there is one active item in header_steps */
+                if(headerSteps.length > 1){
+                    _NavData[index].level = index + 1; //appending level no. at run time
+                }
             });
             return _NavData;
         }
@@ -345,7 +349,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
                 case appConstants.PICK_FRONT:
-                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU ||_seatData.screen_id ===appConstants.PICK_FRONT_ONE_STEP_SCAN || _seatData.screen_id ===appConstants.PICK_FRONT_DOCK_TOTE ||_seatData.screen_id ===appConstants.PICK_FRONT_UNDOCK_TOTE) 
+                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU ||_seatData.screen_id ===appConstants.PICK_FRONT_ONE_STEP_SCAN || _seatData.screen_id ===appConstants.PICK_FRONT_DOCK_TOTE ||_seatData.screen_id ===appConstants.PICK_FRONT_UNDOCK_TOTE || _seatData.screen_id ===appConstants.PICK_FRONT_SLOT_SCAN) 
                         _NavData = navConfig.pickFront[0];
                     else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
                         _NavData = navConfig.pickFront[2];
@@ -780,8 +784,12 @@ getOrderID: function () {
     },
     getLocationButtonStatus: function () {
         return _seatData.button_press_allowed;
-
     },
+
+    getCarryingUnitButtonStatus: function(){
+        return _seatData.button_press_id === "dock_tote" ? _seatData.button_press_allowed : null;
+    },
+
     clearNotifications: function () {
         _clearNotification = true;
     },
@@ -2991,18 +2999,31 @@ setCurrentSeat: function (data) {
             data["PickFrontProductDetails"] = this.productDetails();
             data["undockAwaited"]= this._getUndockAwaitedGroup();
             break;
+
+            case appConstants.PICK_FRONT_SLOT_SCAN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontCarryingUnitBtnEnable"] = this.getCarryingUnitButtonStatus();
+                break;
+            
             case appConstants.PICK_FRONT_UNDOCK_TOTE:
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["groupOrientation"] =this._getBinMapOrientation();
-            data["udpBinMapDetails"] =this.getUDPMapDetails();
-            data["selectedTotes"] =this.getSelectedTotes();
-            data["PickCurrentBin"] = this._getSelectedBinID();
-            data["undockAwaited"] = this._getUndockAwaitedGroup();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["groupOrientation"] =this._getBinMapOrientation();
+                data["udpBinMapDetails"] =this.getUDPMapDetails();
+                data["selectedTotes"] =this.getSelectedTotes();
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data["undockAwaited"] = this._getUndockAwaitedGroup();
 
             break;   
             case appConstants.PICK_FRONT_CONTAINER_BREAK:

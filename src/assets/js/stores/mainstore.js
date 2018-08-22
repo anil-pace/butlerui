@@ -1273,34 +1273,37 @@ getItemInBoxReconcileData: function () {
 },
 
 getLooseItemsData: function () {
-    var data = {};
+var data = {};
     var disabledStatus;
+    var containerNames = this.getContainerNames();
     disabledStatus = false;
     data["header"] = [];
-    if(!_seatData.k_deep_audit)
-    {
-        data["header"].push(new this.tableCol(_("Loose Items"), "header", false, "small", false, true, true, false));
+
+        data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Loose Items") : containerNames['container_level_0'], "header", false, "small", false, true, true, false));
+        
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function (value, index) {
-            d = [];
-            var itemQtyList = [];
-            var itemList = value.Item_Qty_List;
-            if (itemList) {
-                for (var i = 0, listLen = itemList.length; i < listLen; i++) {
-                    itemQtyList.push(itemList[i].Actual_Qty)
+        if(_seatData.Sku_Item_List){
+            _seatData.Sku_Item_List.map(function (value, index) {
+                d = [];
+                var itemQtyList = [];
+                var itemList = value.Item_Qty_List;
+                if (itemList) {
+                    for (var i = 0, listLen = itemList.length; i < listLen; i++) {
+                        itemQtyList.push(itemList[i].Actual_Qty)
+                    }
                 }
-            }
-            d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            data["tableRows"].push(d);
-        });
+                d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+                d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+                data["tableRows"].push(d);
+                });
+        }
         _seatData.extra_loose_sku_item_list.map(function (value, index) {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
@@ -1309,7 +1312,7 @@ getLooseItemsData: function () {
             d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });
-    }
+    
     return data;
 
 
@@ -1332,7 +1335,7 @@ getReconcileLooseItemsData: function () {
     var totalLooseItemsMissing = 0;
     var extraLooseItemsMissing = 0;
     var c = 0;
-    if (!_seatData.k_deep_audit) {
+
         _seatData.Loose_sku_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c = c + 1;
@@ -1366,7 +1369,7 @@ getReconcileLooseItemsData: function () {
         data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
     }
-}
+
 return data;
 },
 
@@ -1592,7 +1595,7 @@ setCurrentSeat: function (data) {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
-        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||_screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION|| _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
+        else if (_screenId == appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||_screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION|| _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
             _auditExceptionScreen = "first_screen";
         if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 &&
             (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) ||
@@ -3288,6 +3291,7 @@ setCurrentSeat: function (data) {
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
             case appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION:
             case appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:
+            case appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION:
             data["AuditNavData"] = this.getNavData();
             data["AuditNotification"] = this.getNotificationData();
             data["AuditScreenId"] = this.getScreenId();
@@ -3316,6 +3320,7 @@ data["AuditSRKQQuantity"]=this.getSRKQQuantity();
 data["AuditFinishFlag"] = this.getFinishAuditFlag();
 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
 data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
+data["AuditLooseItemsData"] = this.getLooseItemsData();
 break;
 
 case appConstants.PPTL_MANAGEMENT:

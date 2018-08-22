@@ -263,6 +263,7 @@ var PutBack = React.createClass({
               }
               this._component = (
                 <div className='grid-container'>
+                <Modal/>
                 {binComponent}
               <div className = 'cancel-scan'>
               <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PUT_BACK} action={appConstants.CANCEL_SCAN}  color={"black"}/>

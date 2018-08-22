@@ -42,7 +42,8 @@ var GorSelect = require("./gor-select/gor-select");
             this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION && 
             this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
             this.state.AuditScreenId != appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
-            this.state.AuditScreenId != appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION)
+            this.state.AuditScreenId != appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
+            this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION)
           {
             if(this.state.AuditShowModal["showModal"] !=undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/){
               var self = this;
@@ -179,7 +180,7 @@ var GorSelect = require("./gor-select/gor-select");
           looseItemsData["tableRows"][i].push(new mainstore.tableCol(KDeepLooseItemsData[i].Actual_qty, "enabled", false, "small", false, true, false, false));
         }
         looseItemsData["footer"] = [new mainstore.tableCol(_(""), "header", false, "small", false, true, true, false)]
-      return looseItemsData
+      return looseItemsData["tableRows"].length > 0 ? looseItemsData : null;
     }
     return null;
   },
@@ -305,7 +306,7 @@ if(this.state.AuditExceptionStatus == false){
   var uomOptions = this.getUOMDropdownValues();
   var looseItemsData =  this.getLooseItemsData();
   var isAddlInfoPresent = this.state.isAddlInfoPresent;
-  var kqDisabled = !this.state.kQstatus
+  var kqDisabled = !this.state.kQstatus;
     if(isAddlInfoPresent){
       var AuditAddlInfoData = this.getAddlInfoData();
     }
@@ -337,6 +338,11 @@ if(looseItemsData){
 else{
   this._looseItemData="";
 }
+if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
+      this._looseItems = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditLooseItemsData} /></div>);
+    }else{
+      this._looseItems = '';
+    }
 
 this._component = (
   <div className='grid-container'>
@@ -347,6 +353,7 @@ this._component = (
   {this._packData}
   {this._subPackData}
   {this._looseItemData}
+  {this._looseItems}
   </div>
             {this.state.allInfoModalStatus && isAddlInfoPresent && <ReactModal title={_("Additional Information")} customClassNames="audit-uom-info">
 
@@ -494,6 +501,7 @@ case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
 case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
 case appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION:
 case appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:
+case appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION:
 this._navigation = '';
 if(this.state.AuditExceptionScreen == "first_screen"){
           /**

@@ -21,6 +21,7 @@ _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty
 _logoutStatus,
 _activeException = null,
 _enableException = false,
+_enableSearch=false,
 popupVisible = false,
 _showSpinner = true,
 _goodQuantity = 0,
@@ -896,6 +897,9 @@ getOrderID: function () {
     getExceptionAllowed: function () {
         return _seatData.exception_allowed;
     },
+    orphanSearchAllowed: function () {
+        return _seatData.search_allowed;
+    },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
         return _scanDetails;
@@ -1746,8 +1750,14 @@ setCurrentSeat: function (data) {
 
         _enableException = data;
     },
+    enableSearch: function (data) {
+        _enableSearch = data;
+    },
     getExceptionStatus: function () {
         return _enableException;
+    },
+    getItemSearchWindow: function () {
+        return _enableSearch;
     },
 
     setActiveException: function (data) {
@@ -2380,6 +2390,12 @@ setCurrentSeat: function (data) {
             }
         }
         _seatData["utility"] = data;
+        this.setCurrentSeat(_seatData);
+        console.log(_seatData);
+    },
+    updateScreenId: function (type) {
+        if(type=="itemSearch")
+        _seatData["screen_id"] = appConstants.ITEM_SEARCH;
         this.setCurrentSeat(_seatData);
         console.log(_seatData);
     },
@@ -3182,6 +3198,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionData"] = this.getExceptionData();
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontSearchStatus"] = this.getItemSearchWindow();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
@@ -3190,6 +3207,10 @@ setCurrentSeat: function (data) {
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PickFrontItemUid"] = this.getItemUid();
 
+
+            break;
+            case appConstants.ITEM_SEARCH:
+            data["PickFrontScreenId"] = this.getScreenId();
             break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
@@ -3557,6 +3578,10 @@ AppDispatcher.register(function (payload) {
         mainstore.enableException(action.data);
         mainstore.emitChange();
         break;
+        case appConstants.ENABLE_SEARCH:
+        mainstore.enableSearch(action.data);
+        mainstore.emitChange();
+        break;
         case appConstants.SET_ACTIVE_EXCEPTION:
         mainstore.setActiveException(action.data);
         mainstore.emitChange();
@@ -3618,6 +3643,12 @@ AppDispatcher.register(function (payload) {
         mainstore.updateSeatData(action.data, action.type, action.status, action.method);
         mainstore.emitChange();
         break;
+        case appConstants.UPDATE_SCREEN_ID:
+        mainstore.showSpinner();
+        mainstore.updateScreenId(action.type);
+        mainstore.emitChange();
+        break;
+
         case appConstants.CONVERT_TEXTBOX:
         mainstore.convert_textbox(action.data, action.index);
         mainstore.emitChange();

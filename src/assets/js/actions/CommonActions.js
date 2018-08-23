@@ -169,6 +169,12 @@ var commonActions = {
       data:data
     }); 
   },
+  enableSearch:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ENABLE_SEARCH,
+      data:data
+    }); 
+  },
   logoutSession:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGOUT_SESSION,
@@ -274,6 +280,12 @@ var commonActions = {
       status: status,
       method : method
     });
+   },
+   updateScreenId: function(type){
+    AppDispatcher.handleAction({
+      actionType : appConstants.UPDATE_SCREEN_ID,
+      type : type
+    })
    },
    convertTextBox : function(data, index){
     AppDispatcher.handleAction({

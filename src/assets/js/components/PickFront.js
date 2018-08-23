@@ -157,6 +157,8 @@ var PickFront = React.createClass({
             </div>
         );
     },
+
+    
     getScreenComponent: function (screen_id) {
         switch (screen_id) {
 
@@ -495,6 +497,23 @@ else {
                 }
                 break;
 
+
+                case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                         <input placeholder="Scan item or enter barcode details" type="text"/>
+        
+                        </div>
+                        </div>
+                    </div>
+                )
+                break;
+
                 case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
@@ -502,6 +521,24 @@ else {
                 var cancelClicked = mainstore.getCancelButtonStatus();
                 var BinFull = (<Button1 disabled={false} text={_("Bin full")} module={appConstants.PICK_FRONT}
                                         action={appConstants.BIN_FULL} color={"black"}/> );
+               
+                // if (this.state.PickFrontSearchStatus) {
+                //  this._navigation = '';
+                // this._component=(
+                //     <div className="outerWrapperItemSearch">
+                //         <div className="subHeaderItemDetails">Item details</div>
+                //         <div className="innerWrapperItemSearch">
+                //         <div className="textBoxContainer">
+                //          <span className="barcode"></span>
+                //          <input placeholder="Scan item or enter barcode details" type="text"/>
+        
+                //         </div>
+                //         </div>
+                //     </div>
+                // )
+
+                // }
+                //else 
                 if (this.state.PickFrontExceptionStatus == false) {
 
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
@@ -556,6 +593,21 @@ else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
+
+                case appConstants.SEARCH_ITEM_DETAILS:
+                this._component=(
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                       <div className="otherLocationText">
+                       <span>This item could also be present in other locations.</span>
+                       </div>
+<TabularData data={this.state.PickFrontDamagedItems}/>
+                        </div>
+                    </div>
+                )
+                break;
+
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
@@ -933,7 +985,10 @@ else {
                 );
                 break;
 
+
+
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}

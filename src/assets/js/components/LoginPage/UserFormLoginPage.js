@@ -14,7 +14,7 @@ var UserFormLoginPage = React.createClass({
 
 						<div className="form-group">
 							<label for="username">User Name :</label>
-    						<input type="text" class="form-control" id="username" placeholder="Enter Username" />
+    						<input type="text" class="form-control" id="username" placeholder="Enter Usernam" />
 						</div>
 						<div className="form-group">
 							<label for="password">Password :</label>

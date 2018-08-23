@@ -221,6 +221,38 @@ getPeripheralData : function(type, seat_name, status, method){
     });
 },
 ///itemsearch
+data=[{
+    "eventName": "put",
+    "Put_Expectation": "xyz",
+    "location": ["PPS01", "Bin07"],
+    "UOM": [{
+            "Case id": "ASHJS787JI"
+        },
+        {
+            "Inner ID": "18771242774"
+        },
+        {
+            "Each ID": "688332"
+        }
+    ]
+},
+{
+    "eventName": "put",
+    "Put_Expectation": "xyz",
+    "location": ["PPS01", "Bin07"],
+    "UOM": [{
+            "Case id": "ASHJS787JI"
+        },
+        {
+            "Inner ID": "18771242774"
+        },
+        {
+            "Each ID": "688332"
+        }
+    ]
+}
+], 
+
 getOrphanItemData : function(data){
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];

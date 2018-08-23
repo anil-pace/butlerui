@@ -34,6 +34,7 @@ var utils = require('../utils/utils.js');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
+var TextEditor=require('./ProductDetails/textEditor');
 
 var checkListOpen = false;
 
@@ -157,7 +158,9 @@ var PickFront = React.createClass({
             </div>
         );
     },
-
+callAPItoGetData:function(data){
+    CommonActions.getOrphanItemData(data);
+},
     
     getScreenComponent: function (screen_id) {
         switch (screen_id) {
@@ -506,13 +509,25 @@ else {
                         <div className="innerWrapperItemSearch">
                         <div className="textBoxContainer">
                          <span className="barcode"></span>
-                         <input placeholder="Scan item or enter barcode details" type="text"/>
-        
+                        {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
                         </div>
                         </div>
                     </div>
                 )
                 break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                        
+                        </div>
+                    </div>
+                )
+                break;
+
 
                 case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;

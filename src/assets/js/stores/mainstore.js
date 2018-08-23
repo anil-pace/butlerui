@@ -2350,6 +2350,11 @@ setCurrentSeat: function (data) {
         _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
     },
+    getOrphanItemData: function (data) {
+        _seatData.scan_allowed = false;
+        utils.getOrphanItemData(data, _seatData.seat_name);
+    },
+   
     updateSeatData: function (data, type, status, method) {
         _peripheralScreen = true;
         var dataNotification = {};
@@ -2358,6 +2363,9 @@ setCurrentSeat: function (data) {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+        }
+        else if(type==="orphanSearch"){
+            _seatData["screen_id"] = appConstants.ITEM_SEARCH_RESULT;
         }
         if (status == "success") {
             if (method == "POST")
@@ -3212,6 +3220,11 @@ setCurrentSeat: function (data) {
             case appConstants.ITEM_SEARCH:
             data["PickFrontScreenId"] = this.getScreenId();
             break;
+            case appConstants.ITEM_SEARCH_RESULT:
+            data["PickFrontScreenId"] = this.getScreenId();
+            
+            break;
+
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
             data["PickFrontNavData"] = this.getNavData();
@@ -3636,6 +3649,10 @@ AppDispatcher.register(function (payload) {
         break;
         case appConstants.PERIPHERAL_DATA:
         mainstore.getPeripheralData(action.data);
+        mainstore.emitChange();
+        break;
+        case appConstants.ORPHAN_ITEM_DATA:
+        mainstore.getOrphanItemData(action.data);
         mainstore.emitChange();
         break;
         case appConstants.UPDATE_SEAT_DATA:

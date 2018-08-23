@@ -220,6 +220,29 @@ getPeripheralData : function(type, seat_name, status, method){
 
     });
 },
+///itemsearch
+getOrphanItemData : function(data){
+    var retrieved_token = sessionStorage.getItem('sessionData');
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+    $.ajax({
+        type: 'GET',
+        //url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
+        dataType: "json",
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+            'Authentication-Token' : authentication_token
+        }
+    }).done(function(response) {
+        CommonActions.updateSeatData(response.data, "orphanSearch", status, method);  
+    }).fail(function(jqXhr) {    
+
+    });
+},
+
+
+
+
 updatePeripherals : function(data, method, seat_name){
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];

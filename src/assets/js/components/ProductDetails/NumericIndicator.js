@@ -156,7 +156,7 @@ updateStore: function(event, qty) {
 },
 incrementValue: function(event){
     var total_entered= parseInt(this._updatedQtyGood) +parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) +parseInt(this._updatedQtyUnscannble);
-    if(parseInt(total_entered,10)>9999) {
+    if(parseInt(total_entered,10)>=9999) {
         this.generateExcessNotification();
     }
     else {

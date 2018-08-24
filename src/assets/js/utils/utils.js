@@ -220,45 +220,81 @@ getPeripheralData : function(type, seat_name, status, method){
 
     });
 },
-///itemsearch
-data=[{
-    "eventName": "put",
-    "Put_Expectation": "xyz",
-    "location": ["PPS01", "Bin07"],
-    "UOM": [{
-            "Case id": "ASHJS787JI"
-        },
-        {
-            "Inner ID": "18771242774"
-        },
-        {
-            "Each ID": "688332"
-        }
-    ]
-},
-{
-    "eventName": "put",
-    "Put_Expectation": "xyz",
-    "location": ["PPS01", "Bin07"],
-    "UOM": [{
-            "Case id": "ASHJS787JI"
-        },
-        {
-            "Inner ID": "18771242774"
-        },
-        {
-            "Each ID": "688332"
-        }
-    ]
-}
-], 
+///itemsearch 
+getOrphanItemData : function(type, seat_name, status, method){
+    var data=[{
+        "eventName": "put",
+        "expectation":{"Put Expectation": "xyz"},
+        "location": ["PPS01", "Bin07"],
+    //     "UOM": [{
+    //         "Case id": "ASHJS787JI"
+    //     },
+    //     {
+    //         "Inner ID": "18771242774"
+    //     },
+    //     {
+    //         "Each ID": "688332"
+    //     },
+    //     {
+    //         "UNIT": "8332"
+    //     }
 
-getOrphanItemData : function(data){
+    // ]
+        "UOM": {
+                "child":{
+                    "childId":"Case ID",
+                    "childValue": "ASHASDccc",
+                    "child":{
+                        "childId":"Inner ID",
+                        "childValue": "ASAHSDJASD",
+                        "child":{
+                            "childId":"Each ID",
+                            "childValue": "ALKSDAScds"
+                        }
+                    }
+                } 
+            }
+    },
+    {
+        "eventName": "put",
+        "Put Expectation": "xyz",
+        "expectation":{"Put Expectation": "xyz"},
+        "location": ["PPS01", "Bin07"],
+        // "UOM": [{
+        //         "Case id": "ASHJS787JI"
+        //     },
+        //     {
+        //         "Inner ID": "18771242774"
+        //     },
+        //     {
+        //         "Each ID": "688332"
+        //     },
+        //     {
+        //         "UNIT": "8332"
+        //     }
+
+        // ]
+        "UOM": {
+            "child":{
+                "childId":"Case ID",
+                "childValue": "ASHASDccc",
+                "child":{
+                    "childId":"Inner ID",
+                    "childValue": "ASAHSDJASD",
+                    "child":{
+                        "childId":"Each ID",
+                        "childValue": "ALKSDAScds"
+                    }
+                }
+            } 
+        }
+    }
+    ];
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
     $.ajax({
         type: 'GET',
-        //url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type='+type,
+        url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type=pptl',
         dataType: "json",
         headers: {
             'content-type': 'application/json',
@@ -266,7 +302,7 @@ getOrphanItemData : function(data){
             'Authentication-Token' : authentication_token
         }
     }).done(function(response) {
-        CommonActions.updateSeatData(response.data, "orphanSearch", status, method);  
+        CommonActions.updateSeatData(data, "orphanSearch", status, method);  
     }).fail(function(jqXhr) {    
 
     });

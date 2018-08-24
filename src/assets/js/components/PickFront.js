@@ -35,6 +35,7 @@ var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
 var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
 
 var checkListOpen = false;
 
@@ -521,8 +522,8 @@ else {
                 this._component=(
                     <div className="outerWrapperItemSearch">
                         <div className="subHeaderItemDetails">Item details</div>
-                        <div className="innerWrapperItemSearch">
-                        
+                        <div className="innerWrapperItemResult">
+                        <ItemTable data={this.state.ItemSearchData}/>
                         </div>
                     </div>
                 )

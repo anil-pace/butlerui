@@ -2354,7 +2354,10 @@ setCurrentSeat: function (data) {
         _seatData.scan_allowed = false;
         utils.getOrphanItemData(data, _seatData.seat_name);
     },
-   
+    getItemData:function(){
+        if(_seatData.utility)
+        return _seatData.utility;
+    },
     updateSeatData: function (data, type, status, method) {
         _peripheralScreen = true;
         var dataNotification = {};
@@ -3222,7 +3225,7 @@ setCurrentSeat: function (data) {
             break;
             case appConstants.ITEM_SEARCH_RESULT:
             data["PickFrontScreenId"] = this.getScreenId();
-            
+            data["ItemSearchData"]=this.getItemData();            
             break;
 
             case appConstants.PICK_FRONT_BIN_PRINTOUT:

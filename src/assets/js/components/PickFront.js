@@ -505,6 +505,7 @@ else {
                 case appConstants.ITEM_SEARCH:
                 this._navigation = '';
                 this._component=(
+                    <div>
                     <div className="outerWrapperItemSearch">
                         <div className="subHeaderItemDetails">Item details</div>
                         <div className="innerWrapperItemSearch">
@@ -515,17 +516,29 @@ else {
                         </div>
                         </div>
                     </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module={appConstants.PICK_FRONT}
+                    action={appConstants.BIN_FULL} color={"black"}/>
+                    </div> 
+                    </div>
                 )
                 break;
                 case appConstants.ITEM_SEARCH_RESULT:
                 this._navigation = '';
                 this._component=(
+                    <div>
                     <div className="outerWrapperItemSearch">
                         <div className="subHeaderItemDetails">Item details</div>
                         <div className="innerWrapperItemResult">
-                        <ItemTable data={this.state.ItemSearchData}/>
+                        <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>
                         </div>
+                        
                     </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module={appConstants.PICK_FRONT}
+                    action={appConstants.BIN_FULL} color={"black"}/>
+                    </div> 
+                      </div>   
                 )
                 break;
 

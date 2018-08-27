@@ -2358,6 +2358,18 @@ setCurrentSeat: function (data) {
         if(_seatData.utility)
         return _seatData.utility;
     },
+    getDynamicColumnWidth:function(){
+        var rowconfig=[];
+        if(_seatData.utility){
+        var noOfCol= Object.keys(_seatData.utility[_seatData.utility.length-1])
+        
+        if(noOfCol.length==5)
+        rowconfig=[{'width':'10%'},{'width':'10%'},{'width':'25%'},{'width':'45%'},{'width':'10%'}];
+        else
+        rowconfig=[{'width':'15%'},{'width':'15%'},{'width':'25%'},{'width':'45%'}];
+        }
+        return rowconfig;
+    },
     updateSeatData: function (data, type, status, method) {
         _peripheralScreen = true;
         var dataNotification = {};
@@ -3225,7 +3237,8 @@ setCurrentSeat: function (data) {
             break;
             case appConstants.ITEM_SEARCH_RESULT:
             data["PickFrontScreenId"] = this.getScreenId();
-            data["ItemSearchData"]=this.getItemData();            
+            data["ItemSearchData"]=this.getItemData();  
+            data["rowconfig"]=this.getDynamicColumnWidth();          
             break;
 
             case appConstants.PICK_FRONT_BIN_PRINTOUT:

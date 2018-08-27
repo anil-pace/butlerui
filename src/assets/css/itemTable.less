@@ -1,6 +1,12 @@
 .rowData{
     display: block;
     border-bottom: 1px solid #CCCCCC;
+    .longCell{
+        display: inline-flex;
+        div{
+            flex: 1;
+        }
+    }
     .itemCell{
         display: inline-block;
         width: 15%;
@@ -31,9 +37,18 @@
     }
 }
 .itemCell{
-    display: inline-block;
+        display: inline-block;
         width: 15%;
         padding: 5px;
         text-align: center;
-        vertical-align: middle;
+        vertical-align: middle;  
+}
+&.headerCell{
+    height: 85px;
+    background-color: #4D5055;
+    height: 85px;
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
 }

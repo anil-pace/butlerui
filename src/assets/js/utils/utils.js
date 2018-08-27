@@ -244,7 +244,6 @@ getOrphanItemData : function(type, seat_name, status, method){
     },
     {
         "eventName": "put",
-        "Put Expectation": "xyz",
         "expectation":{"Put Expectation": "xyz"},
         "location": ["PPS01", "Bin07"],
         "UOM": {
@@ -260,7 +259,8 @@ getOrphanItemData : function(type, seat_name, status, method){
                     }
                 }
             } 
-        }
+        },
+        "quantity":4
     }
     ];
     var retrieved_token = sessionStorage.getItem('sessionData');

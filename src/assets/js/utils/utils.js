@@ -226,20 +226,6 @@ getOrphanItemData : function(type, seat_name, status, method){
         "eventName": "put",
         "expectation":{"Put Expectation": "xyz"},
         "location": ["PPS01", "Bin07"],
-    //     "UOM": [{
-    //         "Case id": "ASHJS787JI"
-    //     },
-    //     {
-    //         "Inner ID": "18771242774"
-    //     },
-    //     {
-    //         "Each ID": "688332"
-    //     },
-    //     {
-    //         "UNIT": "8332"
-    //     }
-
-    // ]
         "UOM": {
                 "child":{
                     "childId":"Case ID",
@@ -253,27 +239,14 @@ getOrphanItemData : function(type, seat_name, status, method){
                         }
                     }
                 } 
-            }
+            },
+            "quantity":4
     },
     {
         "eventName": "put",
         "Put Expectation": "xyz",
         "expectation":{"Put Expectation": "xyz"},
         "location": ["PPS01", "Bin07"],
-        // "UOM": [{
-        //         "Case id": "ASHJS787JI"
-        //     },
-        //     {
-        //         "Inner ID": "18771242774"
-        //     },
-        //     {
-        //         "Each ID": "688332"
-        //     },
-        //     {
-        //         "UNIT": "8332"
-        //     }
-
-        // ]
         "UOM": {
             "child":{
                 "childId":"Case ID",

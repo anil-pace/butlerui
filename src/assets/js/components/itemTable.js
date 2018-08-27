@@ -2,6 +2,15 @@ var React = require('react');
 
 var ItemTable = React.createClass({ 
     _tableRows:[],
+    headerName:['Event','Expectation Id','Item Location','UOM Details'],
+    getTableHeaders:function(data){
+        var headerData =[];
+        for(var i=0;i<data.length;i++){
+        var headerCellData =[];
+        headerData.push(<div className="itemCell">{this.headerName[i]}</div>)
+        }
+        return headerData;
+    },
     getTableRows:function(data){
     	var rowData =[];
     	for(var i=0;i<data.length;i++){
@@ -30,14 +39,18 @@ var ItemTable = React.createClass({
 
     render: function() {
 
-    	var rowDataItem=this.getTableRows(this.props.data);
+        var rowDataItem=this.getTableRows(this.props.data);
+        var headerDataItem=this.getTableHeaders(this.props.data);
 
         // var size = this.props.size=="double"?classes = classes + "double ":"";
         // var size = this.props.size=="triple"?classes = classes + "triple ":"";
-        return (  
+        return ( 
+            <div>
+                {headerDataItem}
                 <div>
                     {rowDataItem}
       		    </div>
+                  </div>
         );
     },
 });

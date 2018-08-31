@@ -439,6 +439,63 @@ else {
                 }
                 break;
 
+            case appConstants.PICK_FRONT_PACKING_BOX:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                    serverNavData={this.state.PickFrontServerNavData}
+                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                    var binComponent = "";
+
+                    if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
+                        if (this.state.OrigBinUse){
+                             binComponent=(<div className="binsFlexWrapperContainer"> 
+                                <div className="workingTableFlex"></div>
+                                <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
+                                                                      productDetails={this.state.PickFrontProductDetails}
+                                                                      itemUid={this.state.PickFrontItemUid}/>
+                                                                      </div>)
+                        } else {
+                            binComponent=(<div className='main-container adjust-main-container'> 
+                                <div className="workingTable"></div>
+                            <Wrapper scanDetails={this.state.PickFrontScanDetails}
+                                                             productDetails={this.state.PickFrontProductDetails}
+                                                             itemUid={this.state.PickFrontItemUid}/>
+                                                             </div>);
+                        }
+                    }
+                    else
+                    {
+                        if (this.state.OrigBinUse) {
+                            binComponent = (<div className="binsFlexWrapperContainer" style={{"display": "flex"}}>
+                                <BinsFlex binsData={this.state.PickFrontBinData}
+                                          screenId={screen_id} seatType={this.state.SeatType}/>
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
+                                
+                            </div>)
+                        } else {
+                            binComponent = (<div className='main-container adjust-main-container'>
+                                <Bins binsData={this.state.PickFrontBinData}
+                                      screenId={screen_id}/>
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
+                            </div>);
+                        }
+                    }
+                    this._component = (
+                        <div className='grid-container'>
+                            <Modal cancelClicked={cancelClicked}/>
+                            {this.state.SplitScreenFlag &&
+                            <BinMap orientation={this.state.groupOrientation} 
+                                    mapDetails={this.state.BinMapDetails} 
+                                    selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFLowPackingBox'/>}
+                            {binComponent}
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
                 case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;

@@ -467,7 +467,7 @@ else {
                     else
                     {
                         if (this.state.OrigBinUse) {
-                            binComponent = (<div className="binsFlexWrapperContainer">
+                            binComponent = (<div className="binsFlexWrapperContainer" style={{"display": "flex"}}>
                                 <BinsFlex binsData={this.state.PickFrontBinData}
                                           screenId={screen_id} seatType={this.state.SeatType}/>
                                 <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
@@ -485,8 +485,10 @@ else {
                         <div className='grid-container'>
                             <Modal cancelClicked={cancelClicked}/>
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>}
+                            <BinMap orientation={this.state.groupOrientation} 
+                                    mapDetails={this.state.BinMapDetails} 
+                                    selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFLowPackingBox'/>}
                             {binComponent}
                         </div>
                     );

@@ -1191,12 +1191,13 @@ else {
                             
                             <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
                                    rackData={this.state.PickFrontRackDetails}  QLCodeDetails={true}/>
-                            
-                            </div>
                             <SplitPPS orientation={this.state.groupOrientation}  customizeClassSplitPPS="rightAligned"
                             displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
                             undockAwaited = {null} docked = {this.state.selectedTotes} 
                             ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+
+                            </div>
+                            
 
                         </div>
                     );

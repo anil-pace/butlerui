@@ -105,7 +105,7 @@ var ProductDetails = React.createClass({
    <span className="detailsDispName">{barcodeArr[0].displayName}</span>
    <span className="detailsDispVal">{barcodeArr[0].displayvalue}</span>
    </div>
-   <div className="detailsDispValShort">{(barcodeArr[0].displayvalue).substr((barcodeArr[0].displayvalue.length)-3)}</div>
+   <div className="detailsDispValShort"><span>{(barcodeArr[0].displayvalue).substr((barcodeArr[0].displayvalue.length)-3)}</span></div>
     </div>
 ):(
   <div>

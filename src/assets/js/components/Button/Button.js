@@ -261,10 +261,29 @@ switch (module) {
                                 data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
-                                break;    
+                                break;
+
+                            case appConstants.CONFIRM_TOTE_SEND_TO_SERVER_MODAL:
+                                data["event_name"] = appConstants.CONFIRM_TOTE;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;
+
+                            case appConstants.CANCEL_TOTE_SEND_TO_SERVER_MODAL:
+                                data["event_name"] = appConstants.CANCEL_TOTE;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;
+                                
+                            case appConstants.NEW_CARRYING_UNIT:
+                                data["event_name"] = appConstants.NEW_CARRYING_UNIT;
+                                ActionCreators.postDataToInterface(data);
+                                this.showModal(appConstants.PICK_FRONT, appConstants.NEW_CARRYING_UNIT);
+                               break;    
+
                             case appConstants.CANCEL_SCAN_MODAL:
                                 this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
-                               break;    
+                               break; 
                             
                             case appConstants.CHECKLIST_SUBMIT:
                                 var checklist_index = this.props.checkListData.checklist_index;
@@ -367,26 +386,26 @@ switch (module) {
                                 ActionCreators.setCancelButtonStatus(true);
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
-                            break;   
+                                break;   
                             case appConstants.CONFIRM_BIN_FULL_REQUEST:
                                  ActionCreators.setCancelButtonStatus(true);
                                  ActionCreators.validateAndSendDataToServer();
-                            closeModalBox();
+                                closeModalBox();
                             break; 
                             case appConstants.CANCEL_BOX_FULL:
                                 data["event_name"] = appConstants.CANCEL_BOX_FULL_REQUEST;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            closeModalBox();
+                                closeModalBox();
                             break;   
                             case appConstants.CONFIRM_BOX_FULL:
                                 data["event_name"] = appConstants.CONFIRM_BOX_FULL;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
-                            closeModalBox();
+                                closeModalBox();
                             break; 
                             case appConstants.CONFIRM_LOCATION:
-                            data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
+                                data["event_name"] = appConstants.CONFIRM_LOCATION_PRESS;
                                 data["event_data"]= null;
                                 ActionCreators.postDataToInterface(data);
                             break;  
@@ -412,10 +431,9 @@ switch (module) {
                                 data["event_data"]["action"] ="pick_front_item_reprint";
                                 ActionCreators.postDataToInterface(data);
                                 break;  
-
                              case appConstants.CLOSE_CANCEL_SCAN:
                                closeModalBox(); 
-                               break;                   
+                               break;   
                             default:
                                 return true;
                         }

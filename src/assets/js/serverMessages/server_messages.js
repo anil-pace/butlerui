@@ -84,6 +84,7 @@ var serverMessages = {
     "PkF.H.025" : "Paste Printout on the item and confirm",
     "PkF.H.026" : "Waiting for {0} to be associated from back",
     "PkF.H.031" : "Scan checklist items to proceed",
+    "PkF.H.035" : "Pick all items from slot {0} and scan slot",
     "PkF.H.027" : "Scan {0} to Open",
     "PkF.H.028" : "Dock {0}",
     "PkF.H.029" : "Scan {1} or Dock {0}",
@@ -248,6 +249,7 @@ var serverMessages = {
     "PkF.I.005" : "Cancel scan successful",
     "PkF.I.006" : "PPTL press successful",
     "PkF.I.007" : "Data capture valid",
+    "PkF.I.014" : "Slot scan successful",
     "PkF.W.001" : "Expecting MSU release confirmation from GUI, got invalid event.",
     "PkF.W.002" : "Cannot cancel scan. No Scanned box found",
     "PkF.W.003" : "Missing barcode scanned. Waiting for confirmation.",
@@ -284,9 +286,9 @@ var serverMessages = {
     "PkB.I.002" : "{0} scan cancelled",
     "PkB.I.003" : "Documents printed successfully",
     "PkB.I.004" : "Order removed successfully from bin {0}",
-    "PkB.I.005" : "{0} assigned successfully to bin",
+    "PkB.I.005" : "{0} docked successfully",
     "PkB.I.006" : "Please scan PPTL barcode",
-    "PkB.I.007" : "{0} disassociated from Bin",
+    "PkB.I.007" : "{0} undocked successfully",
     "PkB.I.008" : "{0} scan successful.",
     "PkB.W.001" : "Please complete pickback for pending bin and then proceed",
     "PkB.W.002" : "{0} associated with another bin",
@@ -433,7 +435,7 @@ var serverMessages = {
     //item_scan
     "PkF.S.003" : {
                     "textToDisplay": "Scan",
-                    "screen_id": ["pick_front_item_scan","pick_front_working_table","pick_front_more_item_scan","pick_front_container_break"]
+                    "screen_id": ["pick_front_item_scan","pick_front_working_table","pick_front_more_item_scan","pick_front_container_break","dock_carrying_unit"]
                 },
     //checklist
     "PkF.S.004" : {

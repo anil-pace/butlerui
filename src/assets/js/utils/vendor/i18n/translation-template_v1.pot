@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-02 12:36+0000\n"
+"POT-Creation-Date: 2018-09-03 12:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -942,6 +942,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:193
 #: src/assets/js/serverMessages/server_messages_lang.js:197
 #: src/assets/js/serverMessages/server_messages_lang.js:198
+#: src/assets/js/serverMessages/server_messages_lang.js:739
 msgid "Slot scan successful"
 msgstr ""
 
@@ -2957,6 +2958,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:707
 #: src/assets/js/serverMessages/server_messages_lang.js:599
 #: src/assets/js/serverMessages/server_messages_lang.js:711
+#: src/assets/js/serverMessages/server_messages_lang.js:740
 msgid "{0} docked successfully"
 msgstr ""
 
@@ -3454,9 +3456,23 @@ msgid "Checklist"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:735
+#: src/assets/js/serverMessages/server_messages_lang.js:736
 msgid "Scan {0} Serial"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:736
+#: src/assets/js/serverMessages/server_messages_lang.js:737
 msgid "Scan {0} Serial to Open"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:735
+msgid "Scan carrying unit and gently push it away"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:738
+msgid "Pick all items from slot {0} and scan slot"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:741
+msgid "{0} undocked successfully"
 msgstr ""

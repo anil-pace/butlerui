@@ -232,6 +232,7 @@ var Bin = React.createClass({
             return (
                 <div className={"bin staged " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>
+                    {binParams.iconToShow}
                     {binParams.ppsBinCount}
                     <div className={"pptl " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
                          style={compData["ppsbin_light_color"] ? {backgroundColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>{compData.ppsbin_id}</div>

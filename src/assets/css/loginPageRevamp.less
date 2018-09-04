@@ -1,0 +1,81 @@
+.containerLogin {
+    padding:20px;
+    display: grid;    
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+    height: 100vh;
+    header {
+        grid-column: 1 / span 12;
+        grid-row: 1 /span 1;
+        display: flex;
+        .logo{
+            width: 70%;
+            .imgLogo{
+                width:30%;
+            }
+        }
+        .languageDropDown{
+            margin-left:auto;
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            .selectLang{
+                width:73%;
+                height: 40px;
+                border:1px solid #6C6C6C;
+            }
+            .langText{
+                color: #6C6C6C;
+                font-size: 4vh;
+                font-weight: 400;
+                text-align: left;
+                padding: 3%;
+               
+            }
+        }
+    }
+    
+    .subHeading {
+        grid-column: 1 / span 12;
+        grid-row: 2 / span 4;
+        //align-self: start;
+        place-self:start center;
+        .selectPPS{
+            width:100%;
+            height: 40px;
+            border:1px solid #6C6C6C;
+        }
+        .langText{
+                color: #000000;
+                font-size: 5vh;
+                font-weight: 400;
+                //letter-spacing: -2.06px;
+               // text-align: center;
+        }
+    }
+}
+
+
+
+
+main {
+    grid-column: 1 / span 12;
+    grid-row: 6 / span 8;
+    display: flex;
+    justify-content: space-between;
+    .keyboardLogin{
+        border: 1px solid black;
+        width:50%;
+    }
+    .scanIdLogin{
+        border: 1px solid black;
+        width:50%;
+    }
+}
+
+footer {
+    grid-column: 1/ span 12;
+    grid-row: 14 / span 1;
+    place-self: center;
+}

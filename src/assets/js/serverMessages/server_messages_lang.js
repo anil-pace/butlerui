@@ -739,5 +739,7 @@ function server_messages_list() {
     _("Slot scan successful");
     _("{0} docked successfully");
     _("{0} undocked successfully");
+    _("Unscannable {0}");
+    _("{0} unexpected. Scanned {0} does not exist.");
 }
 

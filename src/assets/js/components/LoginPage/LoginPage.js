@@ -237,14 +237,14 @@ var LoginPage = React.createClass({
         </div>
       );
     }
-     else{ 
-      return(
-         <div className="main">
-            <Operator />
-          </div>
+    //  else{ 
+    //   return(
+    //      <div className="main">
+    //         <Operator />
+    //       </div>
         
-      )
-    }
+    //   )
+    // }
 
     
   }

@@ -134,23 +134,65 @@ var LoginPageRevamp = React.createClass({
        $('.errorNotify').css('display','none');
   },
   render: function(){
-    var _languageDropDown=(
-      <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-          <option value="en-US">{"English"}</option>
-          <option value="ja-JP">{"日本語"}</option>
-          <option value="de-DE">{"Deutsche"}</option>
-          <option value="zh-ZH">{"中文"}</option>
-          <option value="fr-FR">{"Français"}</option>
-          <option value="es-ES">{"Español"}</option>
-          <option value="nl">{"Dutch"}</option>
-      </select>    
+    if(this.state.seatList.length > 0){
+      var parseSeatID;
+      seatData = this.state.seatList.map(function(data, index){ 
+        if(data.hasOwnProperty('seat_type')){
+           parseSeatID = null;
+           return (
+              <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_name.split("_").join(" ")}</option>
+            )
+        }else{
+          parseSeatID = data.split('_');
+          _seat_name = data;
+          seat_name = parseSeatID[0] +' '+parseSeatID[1];
+          if (seat_name.charAt(seat_name.length - 1) == '#') {
+            seat_name = seat_name.substr(0, seat_name.length - 1);
+          }
+          if (_seat_name.charAt(_seat_name.length - 1) == '#') {
+            _seat_name = _seat_name.substr(0, _seat_name.length - 1);
+          }
+          return (
+            <header className="ppsSeat" key={'pps' + index}  >PPS {data.split('_').join(" ")}</header>
+          )
+        }
+      });
+      if(parseSeatID != null){
+        var ppsOption = seatData;
+      }
+      else{
+        _seat_name = null;
+        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+      }
+
+  }else{
+
+  }
+  var _languageDropDown=(
+    <div className="selectWrapper">
+    <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
+        <option value="en-US">{"English"}</option>
+        <option value="ja-JP">{"日本語"}</option>
+        <option value="de-DE">{"Deutsche"}</option>
+        <option value="zh-ZH">{"中文"}</option>
+        <option value="fr-FR">{"Français"}</option>
+        <option value="es-ES">{"Español"}</option>
+        <option value="nl">{"Dutch"}</option>
+    </select>  
+    <span className="tiltButton"></span>
+</div>
 );
-var  ppsDropDown=(
-  <select className="selectPPS" value={this.state.getCurrentLang} ref='pps' onChange={this.changeLanguage} >
-      <option value="pps1front">{"PPS 1 Front"}</option>
-      <option value="pps2back">{"PPS 2 Back"}</option>
-  </select>
-);
+  if(this.state.flag === false){
+    if(this.state.showError != null){
+        errorClass = 'ErrorMsg showErr';
+        this.disableLoginButton();
+    } else{
+        errorClass = 'ErrorMsg'
+    }
+  
+
+
+
     return(
     <div className="containerLogin">
         <header className="heading">
@@ -164,15 +206,20 @@ var  ppsDropDown=(
         </header>
         <div className="subHeading">
         <div className="langText">{appConstants.LOGINTEXT}</div>
-        {ppsDropDown}
+        <div className="selectWrapper">
+        {ppsOption}
+        <span className="tiltButton"></span>
+      </div>
+        <div className={errorClass}><span>{_(this.state.showError)}</span></div>
         </div>
+       
         <main>
 
         <div className="keyboardLogin">
 
 <div className="unameContainer">
                 <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
-                 <div className="textboxContainer">
+                 <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
                  <span className="iconPlace"></span>
                   <input type="text" className
                   ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
@@ -181,10 +228,11 @@ var  ppsDropDown=(
   
 <div className="passContainer">
                 <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
-                <div className="textboxContainer">
+                <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
                 <span className="iconPlace"></span>
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
         </div>
+        <div className={errorClass}><span>{_("username/password is invalid.Please try again.")}</span></div>
         </div>
 
 <div className="buttonContainer">
@@ -218,6 +266,16 @@ var  ppsDropDown=(
         </footer>
   </div>
     )
+  }
+
+    else{ 
+      return(
+         <div className="main">
+            <Operator />
+          </div>
+        
+      )
+    }
   }
 });
 

@@ -3,7 +3,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 // var LoginForm = require('./components/LoginPage/LoginPage');
-var LoginForm = require('./components/LoginPage/LoginPageRevamp'); 
+var LoginForm = require('./components/LoginPage/LoginPageRevamp');
+
 var Operator = require('./components/Operator');
 
 var App = React.createClass({

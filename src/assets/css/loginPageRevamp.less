@@ -20,17 +20,36 @@
             display: flex;
             justify-content: space-between;
             align-items:center;
+            .selectWrapper{
+                position:relative;
+                width: 100%;
             .selectLang{
-                width:73%;
-                height: 40px;
-                border:1px solid #6C6C6C;
+                width:100%;
+                background:transparent;
+            border:1px solid #6C6C6C;
+            -webkit-appearance: none;
+            padding: 10px;
+            border-radius: 0; 
+            font-size:  3vh; 
             }
+            .tiltButton{
+                position: absolute;
+                content:" ";
+                right:15px;
+                top:23px;
+                width: 0;
+                height: 0;
+                border: 6px solid transparent;
+                border-color: black transparent transparent transparent;
+            }
+        }
             .langText{
                 color: #6C6C6C;
                 font-size: 4vh;
                 font-weight: 400;
                 text-align: left;
                 padding: 3%;
+                
                
             }
         }
@@ -41,19 +60,59 @@
         grid-row: 2 / span 4;
         //align-self: start;
         place-self:start center;
+        
+
+        .selectWrapper{
+            position:relative;
         .selectPPS{
             width:100%;
-            height: 40px;
+            background:transparent;
             border:1px solid #6C6C6C;
-        }
-        .langText{
-                color: #000000;
-                font-size: 5vh;
-                font-weight: 400;
-                //letter-spacing: -2.06px;
-               // text-align: center;
-        }
+            -webkit-appearance: none;
+            padding: 10px;
+            border-radius: 0;
+            position: absolute;  
+            font-size:  3vh;  
+            &.error{
+                border:1px solid red;
+            }
     }
+    .tiltButton{
+        position: absolute;
+        content:" ";
+        right:15px;
+        top:23px;
+        width: 0;
+        height: 0;
+        border: 6px solid transparent;
+        border-color: black transparent transparent transparent;
+
+    }
+}
+
+
+.langText{
+    color: #000000;
+    font-size: 5vh;
+    font-weight: 400;
+   margin-bottom:5%;
+}
+.ErrorMsg{
+    border:1px solid red;
+    //background-color:#f8981d;
+    opacity:0.4;            
+    display:none;
+    word-wrap: break-word;
+    span{
+        font-size:2em;
+        color:black;
+        padding-left:1%;
+    }
+    .showErr{
+        display:block;
+    }
+}
+  
 }
 
 
@@ -72,7 +131,7 @@ main {
         float: right;
         clear: both;
         width: 50%;
-        margin-bottom: 5%;  
+       height: 30%;
         .usernmeText{
             color: #6C6C6C;
             font-size: 24px;
@@ -86,6 +145,10 @@ main {
             height: 65px;
             display: flex;
             align-items: center; 
+            height: 45%;
+            &.error{
+                border:1px solid red;
+            }
         .iconPlace{
             width: 8%;
             height: 30px;
@@ -112,6 +175,7 @@ main {
         float: right;
         clear: both;
         width: 50%;
+        height: 30%;
         .usernmeText{
             color: #6C6C6C;
             font-size: 24px;
@@ -125,6 +189,10 @@ main {
             height: 65px;
             display: flex;
             align-items: center; 
+            height: 45%;
+            &.error{
+                border:1px solid red;
+            }
         .iconPlace{
             width: 8%;
             height: 30px;
@@ -146,16 +214,30 @@ main {
 
         } 
         }
+        .ErrorMsg{    
+            display:none;
+            word-wrap: break-word;
+            span{
+                color: #FF0000;
+                font-size: 2vh;
+                font-weight: 400;
+                text-align: left;
+            }
+        }
+        .showErr{
+            display:block;
+        }
     }
     
     .buttonContainer{
         float: right;
         clear: both;
         width: 50%;
-        margin-top: 10%;
+        height: 25%;
+        display: flex;
         .loginButton{
             width: 100%;
-            height: 65px;
+            height: 45%;
             color: #FFFFFF;
             font-size: 24px;
             font-weight: 700;
@@ -163,6 +245,7 @@ main {
             line-height: 29px;
             text-align: center;
             background-color: #D34700;
+            align-self: flex-end;
         }
     }
     }
@@ -255,4 +338,5 @@ footer {
     grid-column: 1/ span 12;
     grid-row: 14 / span 1;
     place-self: center;
+}
 }

@@ -3,10 +3,12 @@ var React = require('react');
 var PackingDetails = React.createClass({
   
   render: function(data){ 
-    var boxTypeInfo = this.props.boxTypeInfo;
-    if(this.props.boxTypeInfo.length > 5){
+    var boxTypeInfo = this.props.boxTypeInfo||"";
+    if(boxTypeInfo.length > 5){
       boxTypeInfo = boxTypeInfo.substr(-3);
-    };
+    }else{
+      boxTypeInfo=<span>&nbsp;</span>
+    }
 
     return (
         <div className="packingBoxTableInfo">

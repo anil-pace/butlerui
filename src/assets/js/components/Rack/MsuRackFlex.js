@@ -65,11 +65,7 @@ var MsuRackFlex = React.createClass({
       }
       selectedSlotIds = newBarcodes.join(', ');
 
-      /* START => special handling for pick_front_scan_slot where selectedSlotIds === ["E.01","E.02"] */
-        if(this.props.screenId === appConstants.PICK_FRONT_SLOT_SCAN){
-          selectedSlotIds = selectedSlotIds.split(",")[0].split(".")[0]; //get the first character from selectedSlotIds
-        }
-      /* END */
+
       
       vSlots.map(function(eachSlot, index){
         var eachSlotBarcodes = eachSlot.barcodes;

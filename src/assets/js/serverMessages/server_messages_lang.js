@@ -735,7 +735,7 @@ function server_messages_list() {
     _("Scan carrying unit and gently push it away");
     _("Scan {0} Serial");
     _("Scan {0} Serial to Open");
-    _("Pick all items from slot {0} and scan slot");
+    _("Pick all items from slot and scan slot");
     _("Slot scan successful");
     _("{0} docked successfully");
     _("{0} undocked successfully");

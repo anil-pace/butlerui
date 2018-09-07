@@ -84,7 +84,7 @@ var serverMessages = {
     "PkF.H.025" : "Paste Printout on the item and confirm",
     "PkF.H.026" : "Waiting for {0} to be associated from back",
     "PkF.H.031" : "Scan checklist items to proceed",
-    "PkF.H.035" : "Pick all items from slot {0} and scan slot",
+    "PkF.H.035" : "Pick all items from slot and scan slot",
     "PkF.H.027" : "Scan {0} to Open",
     "PkF.H.028" : "Dock {0}",
     "PkF.H.029" : "Scan {1} or Dock {0}",

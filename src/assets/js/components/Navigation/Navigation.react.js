@@ -14,7 +14,6 @@ var Navigation = React.createClass({
                                                   data={value} serverNavData={this.props.serverNavData} 
                                                   navMessagesJson={this.props.navMessagesJson} 
                                                   subMessage={this.props.subMessage} 
-                                                  screenId={this.props.screenId}
                                                   showSpinner={this.props.showSpinner} />
                             );
                     }

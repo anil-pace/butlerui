@@ -4,10 +4,9 @@ var PackingDetails = React.createClass({
   
   render: function(data){ 
     var boxTypeInfo = this.props.boxTypeInfo||"";
+    var emptyPlace= <span>&nbsp;</span>;
     if(boxTypeInfo.length > 5){
       boxTypeInfo = boxTypeInfo.substr(-3);
-    }else{
-      boxTypeInfo=<span>&nbsp;</span>
     }
 
     return (
@@ -20,7 +19,7 @@ var PackingDetails = React.createClass({
                   <span className="detailsDispName"> {_("Box Type: ")} </span>
                   <span className="detailsDispVal">{this.props.boxTypeInfo}</span>
                 </div>
-                <div className="detailsDispValShort">{boxTypeInfo}</div>
+                <div className="detailsDispValShort">{boxTypeInfo===""?emptyPlace:boxTypeInfo}</div>
             </div>
         </div>
     );

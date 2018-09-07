@@ -1193,7 +1193,6 @@ else {
                                      action={appConstants.NEW_CARRYING_UNIT} 
                                      color={"black"}/>);
                         this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                        screenId={screen_id}
                                                         serverNavData={this.state.PickFrontServerNavData}
                                                         navMessagesJson={this.props.navMessagesJson}/>);
                         this._component = (
@@ -1202,7 +1201,6 @@ else {
                                 <div className='main-container'>
                                     <Rack isDrawer={this.state.isDrawer} 
                                           slotType={this.state.SlotType}
-                                          screenId={screen_id}
                                           rackData={this.state.PickFrontRackDetails}/>
                                 </div>
                                 <div className='actions'>

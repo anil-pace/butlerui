@@ -93,7 +93,7 @@ var ProductDetails = React.createClass({
     },
     render: function() {
       var flag=this.props.QLCodeDetails;
-      var barcodeArr=this.displayCode(this.props.productInfo);
+     var barcodeArr=flag?this.displayCode(this.props.productInfo):"";
        this.displayLocale(this.props.productInfo);
 
         return (

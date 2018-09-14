@@ -214,7 +214,7 @@ var serverMessages = {
     "AdF.B.001" :"Wrong Barcode",
     "AdF.B.002" :"Box Scan successful",
     "AdF.B.003" :"Item Scan successful",
-    "AdF.B.004"    : "No {0} or {1} to reconcile",
+    "AdF.B.004"    : "No entities to reconcile",
     "CLIENTCODE_001" : "Bin {0} selected",
     "CLIENTCODE_002" : "Bin {0} unselected",
     "CLIENTCODE_003" : "Connection is closed. Connecting...",

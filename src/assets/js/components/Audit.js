@@ -443,10 +443,11 @@ if(this.state.AuditExceptionStatus == false){
     "description": "No Items To Reconcile",
     "level": "info"
   };
+
   var SRmessage = {
-    "details": [auditPossibleContainerNames.container_level_2,auditPossibleContainerNames.container_level_1],
+    "details": [],
     "code": "AdF.B.004",
-    "description": "No {0} or {1} to reconcile",
+    "description": "No entities to reconcile",
     "level": "info"
   };
   if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)

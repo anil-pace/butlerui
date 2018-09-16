@@ -226,7 +226,7 @@ var LoginPage = React.createClass({
                
                {this.state.getLang?'':_languageDropDown}
 
-              <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value={_('Login')} />
+              <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" onClick={this.handleLogin} value={_('Login')} />
           </form>
           </div>
                 </div>

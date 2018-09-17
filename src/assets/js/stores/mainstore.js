@@ -725,9 +725,15 @@ getOrderID: function () {
 
 
     getChecklistData: function () {
-        if (_seatData.hasOwnProperty('checklist_data')) {
+        if (Array.isArray(_seatData.checklist_data) && _seatData.hasOwnProperty('checklist_data')) {
             return _seatData.checklist_data;
         }
+            else
+            {
+                console.log("Empty CheckList");
+                return [];
+            }
+        
     },
 
 

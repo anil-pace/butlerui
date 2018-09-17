@@ -308,7 +308,6 @@ var Bin = React.createClass({
                  <span className="glyphicon glyphicon-info-sign info-icon grey-icon"
                        onClick={this.showModal.bind(this, compData.bin_info, "bin-info")}>
                  </span>
-                    {binParams.iconToShow}
                     {binParams.ppsBinCount}
                     <div className={"pptl selected " + (compData['ppsbin_blink_state'] ? 'blink' : '')}
                          onClick={this.pressPptl.bind(this, compData.ppsbin_id, compData.ppsbin_state)}

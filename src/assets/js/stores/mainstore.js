@@ -2377,7 +2377,7 @@ setCurrentSeat: function (data) {
     },
     getDynamicColumnWidth:function(){
         var rowconfig=[];
-        if(_seatData.utility){
+        if(_seatData.utility.length){
         var noOfCol= Object.keys(_seatData.utility[_seatData.utility.length-1])
         
         if(noOfCol.length==5)

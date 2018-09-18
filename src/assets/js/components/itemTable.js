@@ -18,14 +18,14 @@ var ItemTable = React.createClass({
     	for(var i=0;i<data.length;i++){
             this.noofCOlumn= Object.keys(data[i]).length;
             var tableData=[],locationCell=[],UOMCell=[],childData=data[i].UOM;
-            tableData.push(<span style={rowconfig[0]} className="itemCell cellData">{data[i].eventName}</span>);
+            tableData.push(<div className="outerCell" style={rowconfig[0]}><div  className="itemCell cellData">{data[i].eventName}</div></div>);
             var expectationKeys=Object.keys(data[i].expectation)
-            tableData.push(<div style={rowconfig[1]} className="itemCell"><div className="cellHeader">{expectationKeys}</div><div className="cellData">{data[i].expectation[expectationKeys[0]]}</div></div>);
+            tableData.push(<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellHeader">{expectationKeys}</div><div className="cellData">{data[i].expectation[expectationKeys[0]]}</div></div></div>);
             data[i].location.forEach(function(x,i){
                 if(i>0){locationCell.push(<span className="itemSeparator">{">"}</span>)}
                 locationCell.push(<span className="cellData">{x}</span>)
                 })
-                tableData.push(<div style={rowconfig[2]} className="itemCell">{locationCell}</div>)
+                tableData.push(<div className="outerCell" style={rowconfig[2]} ><div className="itemCell">{locationCell}</div></div>)
 
                 while(childData.hasOwnProperty('child')){
                    DataItem=childData.child;
@@ -38,8 +38,8 @@ var ItemTable = React.createClass({
             // data[i].UOM.forEach(function(datum){
             //         UOMCell.push(<div className=""><span className="">{Object.keys(datum)}</span><span className="">{datum[Object.keys(datum)]}</span></div>)
             // })
-            tableData.push(<div style={rowconfig[3]} className="longCell">{UOMCell}</div>);
-            tableData.push(<span style={rowconfig[4]} className="itemCell cellData">{data[i].quantity}</span>);
+            tableData.push(<div className="outerCell" style={rowconfig[3]} ><div className="longCell">{UOMCell}</div></div>);
+            tableData.push(<div className="outerCell" style={rowconfig[4]} ><span className="itemCell cellData">{data[i].quantity}</span></div>);
             rowData.push(<div className="rowData">{tableData}</div>);
         }
         return rowData;

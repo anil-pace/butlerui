@@ -22,7 +22,7 @@ var ItemTable = React.createClass({
             var expectationKeys=Object.keys(data[i].expectation)
             tableData.push(<div style={rowconfig[1]} className="itemCell"><div className="cellHeader">{expectationKeys}</div><div className="cellData">{data[i].expectation[expectationKeys[0]]}</div></div>);
             data[i].location.forEach(function(x,i){
-                if(i>0){locationCell.push(<span className="">{">"}</span>)}
+                if(i>0){locationCell.push(<span className="itemSeparator">{">"}</span>)}
                 locationCell.push(<span className="cellData">{x}</span>)
                 })
                 tableData.push(<div style={rowconfig[2]} className="itemCell">{locationCell}</div>)
@@ -33,7 +33,7 @@ var ItemTable = React.createClass({
                     UOMCell.push(<div className="itemCell"><div className="cellHeader">{DataItem.childId}</div><div className="cellData">{DataItem.childValue}</div></div>)
                     
                     childData=childData.child;
-                    childData.hasOwnProperty('child')?UOMCell.push(<span className="">{">"}</span>):""
+                    childData.hasOwnProperty('child')?UOMCell.push(<span className="itemSeparator">{">"}</span>):""
             }
             // data[i].UOM.forEach(function(datum){
             //         UOMCell.push(<div className=""><span className="">{Object.keys(datum)}</span><span className="">{datum[Object.keys(datum)]}</span></div>)

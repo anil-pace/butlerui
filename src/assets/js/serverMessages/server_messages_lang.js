@@ -732,7 +732,12 @@ function server_messages_list() {
     _("{0} cannot be associated with inactive bin");
     _("{0} cleared");
     _("Scan load unit and gently push it away");
+    _("Scan carrying unit and gently push it away");
     _("Scan {0} Serial");
     _("Scan {0} Serial to Open");
+    _("Pick all items from slot and scan slot");
+    _("Slot scan successful");
+    _("{0} docked successfully");
+    _("{0} undocked successfully");
 }
 

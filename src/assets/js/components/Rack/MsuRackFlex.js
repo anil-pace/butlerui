@@ -1,5 +1,6 @@
 var React = require('react');
 var PrdtDetails = require('../PrdtDetails/ProductDetails');
+var appConstants = require('../../constants/appConstants');
 
 var MsuRackFlex = React.createClass({
 
@@ -51,20 +52,21 @@ var MsuRackFlex = React.createClass({
       var selectedSlotIds = "";
 
       if(this.props.slotBarcodes){
-      this.props.slotBarcodes.map(function(slotBarcodes,idx){
-          var str = slotBarcodes,
-          delimiter = '.',
-          start = 2,
-          tokens = str.split(delimiter).slice(start);
-          if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
-          else result = tokens.toString();
+        this.props.slotBarcodes.map(function(slotBarcodes,idx){
+            var str = slotBarcodes,
+            delimiter = '.',
+            start = 2,
+            tokens = str.split(delimiter).slice(start);
+            if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
+            else result = tokens.toString();
 
-          newBarcodes.push(result);
-      });
-    }
+            newBarcodes.push(result);
+        });
+      }
       selectedSlotIds = newBarcodes.join(', ');
-    
 
+
+      
       vSlots.map(function(eachSlot, index){
         var eachSlotBarcodes = eachSlot.barcodes;
         if(!eachSlotBarcodes) return;

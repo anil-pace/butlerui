@@ -96,6 +96,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             alert("WebSocket NOT supported by your Browser!");            
         }
     },
+    getCurrentLang:function(){
+        var localeStr = window.sessionStorage.getItem("localeData"),
+        localeObj =  (localeStr) ? JSON.parse(localeStr) : {},
+        localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
+        return localeLang
+      },
     checkSessionStorage : function(){
         var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
         if(sessionData === null){  

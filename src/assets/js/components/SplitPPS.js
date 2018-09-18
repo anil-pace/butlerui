@@ -28,11 +28,16 @@ var SplitPPS = React.createClass({
 		maxWidth = ((maxBlockHeight/100)*360).toFixed(3);
 
 			style = {
-				height:maxBlockHeight+"%",
-				width: (maxWidth <= 100 ? maxWidth : 100)+'px',
+				height: (maxBlockHeight >= 50 ? 25 : maxBlockHeight)+"%",
+				width: (maxWidth <= 100 ? maxWidth : 100)+'px'
 			}
 		if(this.props.displayBinId){
-			fontSize=maxCenterCount>0?((70/28) * maxBlockHeight)+'px':((50/28) * maxBlockHeight)+'px'
+			fontSize=maxCenterCount>0?((70/28) * maxBlockHeight)+'px':((50/28) * maxBlockHeight)+'px';
+
+			/* Start =>special condition for pick_front_slot_scan to limit font size when only one bin is there */
+				if(parseInt(fontSize,10) > parseInt("100px",10)){fontSize = 62.5+'px';}
+			/* End */
+
 			style = Object.assign({},style,{
 					    color: '#fff',
 						'fontSize': fontSize,

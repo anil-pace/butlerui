@@ -473,7 +473,7 @@ else {
                     else
                     {
                         if (this.state.OrigBinUse) {
-                            binComponent = (<div className="binsFlexWrapperContainer">
+                            binComponent = (<div className="binsFlexWrapperContainer" style={{"display": "flex"}}>
                                 <BinsFlex binsData={this.state.PickFrontBinData}
                                           screenId={screen_id} seatType={this.state.SeatType}/>
                                 <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
@@ -491,8 +491,10 @@ else {
                         <div className='grid-container'>
                             <Modal cancelClicked={cancelClicked}/>
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>}
+                            <BinMap orientation={this.state.groupOrientation} 
+                                    mapDetails={this.state.BinMapDetails} 
+                                    selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFLowPackingBox'/>}
                             {binComponent}
                         </div>
                     );
@@ -1218,46 +1220,81 @@ else {
                 break;
                 
                 case appConstants.PICK_FRONT_DOCK_TOTE:
-                var  rackType="";
-                var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
-                var cancelButton;
-                if (cancelScanDisabled) {
-                    cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
-                                                                          module={appConstants.PICK_FRONT}
-                                                                          action={appConstants.CANCEL_SCAN}
-                                                                          color={"black"}/></div>);
-                }
-                else {
-                    cancelButton = "";
-                }
+                    var  rackType="";
+                    var adjustStyleOnSplitPPS = "";
+                    var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
+                    var cancelButton;
+                    if (cancelScanDisabled) {
+                        cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
+                                                                              module={appConstants.PICK_FRONT}
+                                                                              action={appConstants.CANCEL_SCAN}
+                                                                              color={"black"}/></div>);
+                    }
+                    else {
+                        cancelButton = "";
+                    }
 
-                if (!this.state.PickFrontExceptionStatus) {
-                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
-                                     
-                    this._component = (
-
-                        <div className='grid-container'>
-                            <Modal />
-                            <div className='main-container'>
-                            <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                                    checklistIndex = {this.state.PickFrontChecklistIndex} />
-                            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
-                            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} customizeClassSplitPPS="centerAlignSplitPPS"
-                            docked = {this.state.selectedTotes} ruleset={'withBorder'} 
-                            selectedbin={this.state.PickCurrentBin}/>
+                    if (!this.state.PickFrontExceptionStatus) {
+                        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                        serverNavData={this.state.PickFrontServerNavData}
+                                                        navMessagesJson={this.props.navMessagesJson}/>);
+                        if(this.state.PickFrontChecklistData){
+                            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+                        }
+                        this._component = (
+                            <div className='grid-container'>
+                                <Modal />
+                                <div className='main-container'>
+                                <CheckList checklistData = {this.state.PickFrontChecklistData}
+                                            checklistIndex = {this.state.PickFrontChecklistIndex} />
+                                <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
+                                            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} 
+                                            customizeClassSplitPPS={adjustStyleOnSplitPPS}
+                                            docked = {this.state.selectedTotes} ruleset={'withBorder'} 
+                                            selectedbin={this.state.PickCurrentBin}/>
+                                </div>
+                                <div className='actions'>
+                                {cancelButton}
+                                </div>
                             </div>
-                            <div className='actions'>
-                            {cancelButton}
-                            </div>
-                        </div>
-                    );
-                } else {
-                    this._component = this.getExceptionComponent();
-                }
+                        );
+                    } else {
+                        this._component = this.getExceptionComponent();
+                    }
                 break;
+
                 
+                case appConstants.PICK_FRONT_SLOT_SCAN:
+                case appConstants.PICK_FRONT_TOTE_CONFIRM:
+                    if (this.state.PickFrontExceptionStatus == false) {
+                        var carryingUnitBtnEnable = this.state.PickFrontCarryingUnitBtnEnable ? false : true;
+                        var carryingUnitButton = (
+                            <Button1 disabled={carryingUnitBtnEnable} 
+                                     text={_("New carrying unit")} 
+                                     module={appConstants.PICK_FRONT} 
+                                     action={appConstants.NEW_CARRYING_UNIT} 
+                                     color={"black"}/>);
+                        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                        serverNavData={this.state.PickFrontServerNavData}
+                                                        navMessagesJson={this.props.navMessagesJson}/>);
+                        this._component = (
+                            <div className='grid-container'>
+                                <Modal />
+                                <div className='main-container'>
+                                    <Rack isDrawer={this.state.isDrawer} 
+                                          slotType={this.state.SlotType}
+                                          rackData={this.state.PickFrontRackDetails}/>
+                                </div>
+                                <div className='actions'>
+                                    {carryingUnitButton}
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        this._component = this.getExceptionComponent();
+                    }
+                break;
+
                 case appConstants.PICK_FRONT_ONE_STEP_SCAN:
                 var  rackType="";
                 if (!this.state.PickFrontExceptionStatus) {
@@ -1274,12 +1311,13 @@ else {
                             
                             <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
                                    rackData={this.state.PickFrontRackDetails}  QLCodeDetails={true}/>
-                            
-                            </div>
                             <SplitPPS orientation={this.state.groupOrientation}  customizeClassSplitPPS="rightAligned"
                             displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
                             undockAwaited = {null} docked = {this.state.selectedTotes} 
                             ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+
+                            </div>
+                            
 
                         </div>
                     );
@@ -1289,26 +1327,28 @@ else {
                 break;
 
                 case appConstants.PICK_FRONT_UNDOCK_TOTE:
-                if (!this.state.PickFrontExceptionStatus) {
-                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData} subMessage={allresourceConstants.PUSH_TOTE_AWAY}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
-                                     
-                    this._component = (
+                    if (!this.state.PickFrontExceptionStatus) {
+                        var subMessage = (this.state.PickFrontServerNavData.details ? this.state.PickFrontServerNavData.details[0] : "");
+                        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                                                        serverNavData={this.state.PickFrontServerNavData} 
+                                                        subMessage={"Scan " + subMessage + " and gently push it away"}
+                                                        navMessagesJson={this.props.navMessagesJson}/>);
+                                         
+                        this._component = (
 
-                        <div className='grid-container'>
-                            <Modal />
-                           
-                            <SplitPPS orientation={this.state.groupOrientation}
-                            displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
-                            undockAwaited = {this.state.undockAwaited} docked = {this.state.selectedTotes} 
-                            ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+                            <div className='grid-container'>
+                                <Modal />
+                               
+                                <SplitPPS orientation={this.state.groupOrientation}
+                                displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
+                                undockAwaited = {this.state.undockAwaited} docked = {this.state.selectedTotes} 
+                                ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
 
-                        </div>
-                    );
-                } else {
-                    this._component = this.getExceptionComponent();
-                }
+                            </div>
+                        );
+                    } else {
+                        this._component = this.getExceptionComponent();
+                    }
                 break;
 
             case appConstants.PICK_FRONT_SCAN_PACKS:

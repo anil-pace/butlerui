@@ -93,7 +93,7 @@ var ProductDetails = React.createClass({
     },
     render: function() {
       var flag=this.props.QLCodeDetails;
-      var barcodeArr=this.displayCode(this.props.productInfo);
+     var barcodeArr=flag?this.displayCode(this.props.productInfo):"";
        this.displayLocale(this.props.productInfo);
 
         return (
@@ -105,7 +105,7 @@ var ProductDetails = React.createClass({
    <span className="detailsDispName">{barcodeArr[0].displayName}</span>
    <span className="detailsDispVal">{barcodeArr[0].displayvalue}</span>
    </div>
-   <div className="detailsDispValShort">{(barcodeArr[0].displayvalue).substr((barcodeArr[0].displayvalue.length)-3)}</div>
+   <div className="detailsDispValShort"><span>{(barcodeArr[0].displayvalue).substr((barcodeArr[0].displayvalue.length)-3)}</span></div>
     </div>
 ):(
   <div>

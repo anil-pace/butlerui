@@ -162,6 +162,7 @@ var appConstants = {
 
 	AUDIT_PACK_UNSCANNABLE_EXCEPTION:"audit_pack_unscannable_exception",
 	AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:"audit_sub_pack_unscannable_exception",
+	AUDIT_EACH_UNSCANNABLE_EXCEPTION:"audit_each_unscannable_exception",
 	DEFAULT:"default",
 	AUDIT:"audit_front",
 	SET_AUDIT_DATA:"SET_AUDIT_DATA",
@@ -317,8 +318,15 @@ var appConstants = {
 	SR_SERVICE:"/sr-service",
 	PLATFORM_SRMS:"/platform-srms",
 	SERVICE_REQUEST:"/service-request",
-	SEARCH_ITEM:"/search-item"
-
+	SEARCH_ITEM:"/search-item",
+	CONFIRM_LOCATION:"CONFIRM_LOCATION",
+	PICK_FRONT_SLOT_SCAN:"pick_front_slot_scan",
+	PICK_FRONT_TOTE_CONFIRM: "pick_front_tote_confirm",
+	NEW_CARRYING_UNIT: "request_tote",
+	CANCEL_TOTE: "cancel_tote",
+	CONFIRM_TOTE: "confirm_tote",
+	CONFIRM_TOTE_SEND_TO_SERVER_MODAL: "CONFIRM_TOTE_SEND_TO_SERVER_MODAL",
+	CANCEL_TOTE_SEND_TO_SERVER_MODAL: "CANCEL_TOTE_SEND_TO_SERVER_MODAL"
 };
 
 module.exports = appConstants;

@@ -219,16 +219,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         showModal = false;
     },
     getNavData: function () {
+        /* dynamic header navigation implementation */
         if(_seatData.header_steps){
             var headerSteps = _seatData.header_steps;
             navConfig.header=[];
             for(var i =0; i < headerSteps.length; i++){
                 navConfig.header.push({
                     "screen_id": serverMessages[(headerSteps[i])]["screen_id"],
-                    "code": "",
+                    "code": null,
                     "message": serverMessages[(headerSteps[i])]["textToDisplay"],
                     "showImage": true,
-                    "level": "",
+                    "level": null,
                     "type": 'passive'
                 });
             }
@@ -245,7 +246,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 } else {
                     _NavData[index].type = 'passive';
                 }
-                _NavData[index].level = index + 1; //appending level no. at run time
+                /* condition to NOT show indexing when there is one active item in header_steps */
+                if(headerSteps.length > 1){
+                    _NavData[index].level = index + 1; //appending level no. at run time
+                }
             });
             return _NavData;
         }
@@ -346,7 +350,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
                 case appConstants.PICK_FRONT:
-                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU ||_seatData.screen_id ===appConstants.PICK_FRONT_ONE_STEP_SCAN || _seatData.screen_id ===appConstants.PICK_FRONT_DOCK_TOTE ||_seatData.screen_id ===appConstants.PICK_FRONT_UNDOCK_TOTE) 
+                    if (_seatData.screen_id === appConstants.PICK_FRONT_WAITING_FOR_MSU ||_seatData.screen_id ===appConstants.PICK_FRONT_ONE_STEP_SCAN || _seatData.screen_id ===appConstants.PICK_FRONT_DOCK_TOTE ||_seatData.screen_id ===appConstants.PICK_FRONT_UNDOCK_TOTE || _seatData.screen_id ===appConstants.PICK_FRONT_SLOT_SCAN) 
                         _NavData = navConfig.pickFront[0];
                     else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
                         _NavData = navConfig.pickFront[2];
@@ -726,9 +730,15 @@ getOrderID: function () {
 
 
     getChecklistData: function () {
-        if (_seatData.hasOwnProperty('checklist_data')) {
+        if (Array.isArray(_seatData.checklist_data) && _seatData.hasOwnProperty('checklist_data')) {
             return _seatData.checklist_data;
         }
+            else
+            {
+                console.log("Empty CheckList");
+                return [];
+            }
+        
     },
 
 
@@ -781,8 +791,12 @@ getOrderID: function () {
     },
     getLocationButtonStatus: function () {
         return _seatData.button_press_allowed;
-
     },
+
+    getCarryingUnitButtonStatus: function(){
+        return _seatData.button_press_id === "dock_tote" ? _seatData.button_press_allowed : null;
+    },
+
     clearNotifications: function () {
         _clearNotification = true;
     },
@@ -1303,32 +1317,35 @@ getItemInBoxReconcileData: function () {
 getLooseItemsData: function () {
     var data = {};
     var disabledStatus;
+    var containerNames = this.getContainerNames();
     disabledStatus = false;
     data["header"] = [];
-    if(!_seatData.k_deep_audit)
-    {
-        data["header"].push(new this.tableCol(_("Loose Items"), "header", false, "small", false, true, true, false));
+
+        data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Loose Items") : containerNames['container_level_0'], "header", false, "small", false, true, true, false));
+        
         if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
             data["header"].push(new this.tableCol(_("Expected"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Actual"), "header", false, "small", false, false, true, false, true));
         data["tableRows"] = [];
         var self = this;
         var d = [];
-        _seatData.Sku_Item_List.map(function (value, index) {
-            d = [];
-            var itemQtyList = [];
-            var itemList = value.Item_Qty_List;
-            if (itemList) {
-                for (var i = 0, listLen = itemList.length; i < listLen; i++) {
-                    itemQtyList.push(itemList[i].Actual_Qty)
+        if(_seatData.Sku_Item_List){
+            _seatData.Sku_Item_List.map(function (value, index) {
+                d = [];
+                var itemQtyList = [];
+                var itemList = value.Item_Qty_List;
+                if (itemList) {
+                    for (var i = 0, listLen = itemList.length; i < listLen; i++) {
+                        itemQtyList.push(itemList[i].Actual_Qty)
+                    }
                 }
-            }
-            d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-            if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-            d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-            data["tableRows"].push(d);
-        });
+                d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
+                if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
+                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
+                d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+                data["tableRows"].push(d);
+                });
+        }
         _seatData.extra_loose_sku_item_list.map(function (value, index) {
             d = [];
             d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
@@ -1337,7 +1354,7 @@ getLooseItemsData: function () {
             d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
             data["tableRows"].push(d);
         });
-    }
+    
     return data;
 
 
@@ -1361,7 +1378,7 @@ getReconcileLooseItemsData: function () {
     var totalLooseItemsMissing = 0;
     var extraLooseItemsMissing = 0;
     var c = 0;
-    if (!_seatData.k_deep_audit) {
+    
         _seatData.Loose_sku_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c = c + 1;
@@ -1395,7 +1412,7 @@ getReconcileLooseItemsData: function () {
         data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
     }
-}
+
 return data;
 },
 
@@ -1621,7 +1638,7 @@ setCurrentSeat: function (data) {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
-        else if (_screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||_screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION|| _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
+        else if (_screenId == appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION ||_screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION|| _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
             _auditExceptionScreen = "first_screen";
         if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 &&
             (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) ||
@@ -3030,18 +3047,31 @@ setCurrentSeat: function (data) {
             data["PickFrontProductDetails"] = this.productDetails();
             data["undockAwaited"]= this._getUndockAwaitedGroup();
             break;
+
+            case appConstants.PICK_FRONT_SLOT_SCAN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontCarryingUnitBtnEnable"] = this.getCarryingUnitButtonStatus();
+                break;
+            
             case appConstants.PICK_FRONT_UNDOCK_TOTE:
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["groupOrientation"] =this._getBinMapOrientation();
-            data["udpBinMapDetails"] =this.getUDPMapDetails();
-            data["selectedTotes"] =this.getSelectedTotes();
-            data["PickCurrentBin"] = this._getSelectedBinID();
-            data["undockAwaited"] = this._getUndockAwaitedGroup();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["groupOrientation"] =this._getBinMapOrientation();
+                data["udpBinMapDetails"] =this.getUDPMapDetails();
+                data["selectedTotes"] =this.getSelectedTotes();
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data["undockAwaited"] = this._getUndockAwaitedGroup();
 
             break;   
             case appConstants.PICK_FRONT_CONTAINER_BREAK:
@@ -3438,6 +3468,7 @@ setCurrentSeat: function (data) {
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
             case appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION:
             case appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:
+            case appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION:
             data["AuditNavData"] = this.getNavData();
             data["AuditNotification"] = this.getNotificationData();
             data["AuditScreenId"] = this.getScreenId();
@@ -3465,6 +3496,8 @@ data["AuditItemDetailsData"]=this.getItemDetailsData();
 data["AuditSRKQQuantity"]=this.getSRKQQuantity();
 data["AuditFinishFlag"] = this.getFinishAuditFlag();
 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
+data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
+data["AuditLooseItemsData"] = this.getLooseItemsData();
 break;
 
 case appConstants.PPTL_MANAGEMENT:

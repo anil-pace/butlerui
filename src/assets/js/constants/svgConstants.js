@@ -1,11 +1,11 @@
 var allSvgConstants = {
 	putBackScan : 'assets/images/scan.svg',
 	putBackPlace : 'assets/images/place.svg',
-	logo : 'assets/images/logo.png',
+	logo : 'assets/images/GO_Orange_Black_Horizontal.svg',
 	menu : 'assets/images/menu.png',
 	place:'assets/images/Icon2.png',
 	rack: 'assets/images/rack.png',
-	gorLogo : 'assets/images/LogoVectorSmartObject.png',
+	gorLogo : 'assets/images/GO_White_Horizontal.svg',
 	factoryImg : 'assets/images/factoryImage.png',
 	forma1 : 'assets/images/Forma1.png',
 	headerbg : 'assets/images/headerbg.png',

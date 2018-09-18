@@ -168,7 +168,7 @@ var Header = React.createClass({
         return (<div>
             <div className="head">
               <div className="logo">
-              <img src={allSvgConstants.logo} />
+              <img src={allSvgConstants.logo} style={{'width':'142px'}} />
               </div>
               <div className="ppsMode"> PPS Mode : {this.state.ppsMode.toUpperCase()} </div>
                 <div className={cssClass} onClick={this.openKeyboard}>

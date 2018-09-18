@@ -221,53 +221,47 @@ getPeripheralData : function(type, seat_name, status, method){
     });
 },
 ///itemsearch 
-getOrphanItemData : function(type, seat_name, status, method){
-    var data=[{
-        "eventName": "put",
-        "expectation":{"Put Expectation": "xyz"},
-        "location": ["PPS01", "Bin07"],
-        "UOM": {
-                "child":{
-                    "childId":"Case ID",
-                    "childValue": "ASHASDccc",
-                    "child":{
-                        "childId":"Inner ID",
-                        "childValue": "ASAHSDJASD",
-                        "child":{
-                            "childId":"Each ID",
-                            "childValue": "ALKSDAScds"
-                        }
-                    }
-                } 
-            },
-            "quantity":4
-    },
-    {
-        "eventName": "put",
-        "expectation":{"Put Expectation": "xyz"},
-        "location": ["PPS01", "Bin07"],
-        "UOM": {
-            "child":{
-                "childId":"Case ID",
-                "childValue": "ASHASDccc",
-                "child":{
-                    "childId":"Inner ID",
-                    "childValue": "ASAHSDJASD",
-                    "child":{
-                        "childId":"Each ID",
-                        "childValue": "ALKSDAScds"
-                    }
-                }
-            } 
-        },
-        "quantity":4
-    }
-    ];
+getOrphanItemData : function(data, seat_name){
+    //var data=[{
+    //     "eventType": "put",
+    //     "requestId":{"label":"Put Expectation","value":"xyz"},
+    //     "location": ["PPS01", "Bin07"],
+    //     "UOM": {
+    //             "child":{
+    //                 "childId":"Case ID",
+    //                 "childValue": "ASHASDccc"
+    //             } 
+    //         },
+    //         "quantity":4
+    // },
+    // {
+    //     "eventType": "put",
+    //     "requestId":{"label":"Put Expectation","value":"xyz"},
+    //     "location": ["PPS01", "Bin07"],
+    //     "UOM": {
+    //         "child":{
+    //             "childId":"Case ID",
+    //             "childValue": "ASHASDccc",
+    //             "child":{
+    //                 "childId":"Inner ID",
+    //                 "childValue": "ASAHSDJASD",
+    //                 "child":{
+    //                     "childId":"Each ID",
+    //                     "childValue": "ALKSDAScds"
+    //                 }
+    //             }
+    //         } 
+    //     },
+    //     "quantity":4
+    // }
+    // ];
+    var dataToSent="?"+"barcode="+data+"&"+"ppsId="+seat_name;
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
     $.ajax({
         type: 'GET',
-        url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type=pptl',
+        url: configConstants.INTERFACE_IP + appConstants.API +appConstants.API_GATEWAY+appConstants.SR_SERVICE+appConstants.PLATFORM_SRMS+appConstants.SERVICE_REQUEST+appConstants.SEARCH_ITEM+dataToSent,
+        //url: configConstants.INTERFACE_IP + appConstants.API + appConstants.PPS_SEATS + seat_name + '/'+ appConstants.PERIPHERALS+'?type=pptl',
         dataType: "json",
         headers: {
             'content-type': 'application/json',
@@ -275,9 +269,10 @@ getOrphanItemData : function(type, seat_name, status, method){
             'Authentication-Token' : authentication_token
         }
     }).done(function(response) {
-        CommonActions.updateSeatData(data, "orphanSearch", status, method);  
+        CommonActions.updateSeatData(response.data, "orphanSearch");  
     }).fail(function(jqXhr) {    
-
+        console.log('Connection Issue');
+        CommonActions.updateSeatData([], "orphanSearch"); 
     });
 },
 
@@ -353,7 +348,7 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
-    data.state_data={ "seat_name": "front_4", "notification_list": [], "scan_details": { "current_qty": "2", "total_qty": "2", "kq_allowed": true }, "rack_details": { "slot_barcodes": ["025.1.E.01", "025.1.E.02"], "rack_type_rec": [{ "slot_ref": [49, 46, 65, 46, 48, 49, 45, 65, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 5], "type": "slot", "barcodes": ["A.01", "A.02"] }, { "slot_ref": [49, 46, 65, 46, 48, 51, 45, 65, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 5], "type": "slot", "barcodes": ["A.03", "A.04"] }, { "slot_ref": [49, 46, 65, 46, 48, 53, 45, 65, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 5], "type": "slot", "barcodes": ["A.05", "A.06"] }, { "slot_ref": [49, 46, 66, 46, 48, 49, 45, 66, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 43], "type": "slot", "barcodes": ["B.01", "B.02"] }, { "slot_ref": [49, 46, 66, 46, 48, 51, 45, 66, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 43], "type": "slot", "barcodes": ["B.03", "B.04"] }, { "slot_ref": [49, 46, 66, 46, 48, 53, 45, 66, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 43], "type": "slot", "barcodes": ["B.05", "B.06"] }, { "slot_ref": [49, 46, 67, 46, 48, 49, 45, 67, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 81], "type": "slot", "barcodes": ["C.01", "C.02"] }, { "slot_ref": [49, 46, 67, 46, 48, 51, 45, 67, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 81], "type": "slot", "barcodes": ["C.03", "C.04"] }, { "slot_ref": [49, 46, 67, 46, 48, 53, 45, 67, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 81], "type": "slot", "barcodes": ["C.05", "C.06"] }, { "slot_ref": [49, 46, 68, 46, 48, 49, 45, 68, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 119], "type": "slot", "barcodes": ["D.01", "D.02"] }, { "slot_ref": [49, 46, 68, 46, 48, 51, 45, 68, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 119], "type": "slot", "barcodes": ["D.03", "D.04"] }, { "slot_ref": [49, 46, 68, 46, 48, 53, 45, 68, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 119], "type": "slot", "barcodes": ["D.05", "D.06"] }, { "slot_ref": [49, 46, 69, 46, 48, 49, 45, 69, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 157], "type": "slot", "barcodes": ["E.01", "E.02"] }, { "slot_ref": [49, 46, 69, 46, 48, 51, 45, 69, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 157], "type": "slot", "barcodes": ["E.03", "E.04"] }, { "slot_ref": [49, 46, 69, 46, 48, 53, 45, 69, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 157], "type": "slot", "barcodes": ["E.05", "E.06"] }], "rack_type": "msu", "rack_width": 96, "slot_type": "slot" }, "exception_allowed": [], "roll_cage_flow": false, "bin_coordinate_plotting": false, "event": "empty", "screen_id": "pick_front_pptl_press", "logout_allowed": false, "seat_type": "front", "time_stamp": "1534160270", "ppsbin_list": [{ "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "6", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 1], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "5", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 2], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "4", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 3], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "3", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 4], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "2", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 5], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [{ "product_sku": "a1", "serial": [], "type": "Item", "quantity": 2 }], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "1", "ppsbin_light_color": "blue", "length": "200", "selected_state": true, "ppsbin_state": "empty", "ppsbin_count": "2", "coordinate": [1, 6], "group_id": "1", "totes_associated": "false" }], "mode": "pick", "group_info": { "1": "center" }, "search_allowed":true, "scan_allowed": false, "operator_orientation": "0", "button_press_allowed": true, "cancel_scan_enabled": true, "button_press_id": "bin_full", "structure": [1, 6], "error_popup_disabled": true, "header_steps": ["PkF.S.003", "PkF.S.005"], "screen_version": "1", "docked": [], "api_version": "1", "is_idle": false, "header_msge_list": [{ "level": "info", "code": "PkF.H.007", "details": ["1"], "description": "Press PPTL for Bin to confirm" }] };
+    //data.state_data={ "seat_name": "front_4", "notification_list": [], "scan_details": { "current_qty": "2", "total_qty": "2", "kq_allowed": true }, "rack_details": { "slot_barcodes": ["025.1.E.01", "025.1.E.02"], "rack_type_rec": [{ "slot_ref": [49, 46, 65, 46, 48, 49, 45, 65, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 5], "type": "slot", "barcodes": ["A.01", "A.02"] }, { "slot_ref": [49, 46, 65, 46, 48, 51, 45, 65, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 5], "type": "slot", "barcodes": ["A.03", "A.04"] }, { "slot_ref": [49, 46, 65, 46, 48, 53, 45, 65, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 5], "type": "slot", "barcodes": ["A.05", "A.06"] }, { "slot_ref": [49, 46, 66, 46, 48, 49, 45, 66, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 43], "type": "slot", "barcodes": ["B.01", "B.02"] }, { "slot_ref": [49, 46, 66, 46, 48, 51, 45, 66, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 43], "type": "slot", "barcodes": ["B.03", "B.04"] }, { "slot_ref": [49, 46, 66, 46, 48, 53, 45, 66, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 43], "type": "slot", "barcodes": ["B.05", "B.06"] }, { "slot_ref": [49, 46, 67, 46, 48, 49, 45, 67, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 81], "type": "slot", "barcodes": ["C.01", "C.02"] }, { "slot_ref": [49, 46, 67, 46, 48, 51, 45, 67, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 81], "type": "slot", "barcodes": ["C.03", "C.04"] }, { "slot_ref": [49, 46, 67, 46, 48, 53, 45, 67, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 81], "type": "slot", "barcodes": ["C.05", "C.06"] }, { "slot_ref": [49, 46, 68, 46, 48, 49, 45, 68, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 119], "type": "slot", "barcodes": ["D.01", "D.02"] }, { "slot_ref": [49, 46, 68, 46, 48, 51, 45, 68, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 119], "type": "slot", "barcodes": ["D.03", "D.04"] }, { "slot_ref": [49, 46, 68, 46, 48, 53, 45, 68, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 119], "type": "slot", "barcodes": ["D.05", "D.06"] }, { "slot_ref": [49, 46, 69, 46, 48, 49, 45, 69, 46, 48, 50], "height": 33, "length": 32, "orig_coordinates": [0, 157], "type": "slot", "barcodes": ["E.01", "E.02"] }, { "slot_ref": [49, 46, 69, 46, 48, 51, 45, 69, 46, 48, 52], "height": 33, "length": 32, "orig_coordinates": [32, 157], "type": "slot", "barcodes": ["E.03", "E.04"] }, { "slot_ref": [49, 46, 69, 46, 48, 53, 45, 69, 46, 48, 54], "height": 33, "length": 32, "orig_coordinates": [64, 157], "type": "slot", "barcodes": ["E.05", "E.06"] }], "rack_type": "msu", "rack_width": 96, "slot_type": "slot" }, "exception_allowed": [], "roll_cage_flow": false, "bin_coordinate_plotting": false, "event": "empty", "screen_id": "pick_front_pptl_press", "logout_allowed": false, "seat_type": "front", "time_stamp": "1534160270", "ppsbin_list": [{ "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "6", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 1], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "5", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 2], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "4", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 3], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "3", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 4], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "2", "ppsbin_light_color": "none", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 5], "group_id": "1", "totes_associated": "false" }, { "breadth": "200", "direction": "center", "bin_info": [{ "product_sku": "a1", "serial": [], "type": "Item", "quantity": 2 }], "ppsbin_blink_state": false, "packing_box": "false", "ppsbin_id": "1", "ppsbin_light_color": "blue", "length": "200", "selected_state": true, "ppsbin_state": "empty", "ppsbin_count": "2", "coordinate": [1, 6], "group_id": "1", "totes_associated": "false" }], "mode": "pick", "group_info": { "1": "center" }, "search_allowed":true, "scan_allowed": false, "operator_orientation": "0", "button_press_allowed": true, "cancel_scan_enabled": true, "button_press_id": "bin_full", "structure": [1, 6], "error_popup_disabled": true, "header_steps": ["PkF.S.003", "PkF.S.005"], "screen_version": "1", "docked": [], "api_version": "1", "is_idle": false, "header_msge_list": [{ "level": "info", "code": "PkF.H.007", "details": ["1"], "description": "Press PPTL for Bin to confirm" }] };
  console.log(data); 
      switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

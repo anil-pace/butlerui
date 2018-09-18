@@ -15,6 +15,8 @@ var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var ExceptionHeader = require('./ExceptionHeader');
 var TabularData = require('./TabularData');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
 
 
 function getStateData(){
@@ -58,6 +60,9 @@ var PickBack = React.createClass({
               </div>
             );
   },
+  callAPItoGetData:function(data){
+    CommonActions.getOrphanItemData(data);
+},
   getExceptionAction:function(screen_id){
      switch(screen_id){
         case appConstants.PICK_BACK_EXCEPTION_REPRINT:
@@ -219,6 +224,43 @@ var PickBack = React.createClass({
               </div>
             );
         break;  
+        case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                        {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemResult">
+                        <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
 
       default:
         return true; 

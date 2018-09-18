@@ -31,6 +31,8 @@ var ProductDetUDP = require('./ProductDetails/ProductDetUDP');
 var ActionCreators = require('../actions/CommonActions');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CurrentBin = require('./CurrentBin');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
 
 
 
@@ -133,6 +135,9 @@ var PutFront = React.createClass({
       </div>
       );
   },
+  callAPItoGetData:function(data){
+    ActionCreators.getOrphanItemData(data);
+},
 
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -649,6 +654,47 @@ var PutFront = React.createClass({
             </div>
             );
           break;
+          case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                        {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemResult">
+                        <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK} color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
+                
+
+
+
           case appConstants.UDP_PUT_FRONT_TOTE_SCAN:
           this._modalContent='';
           if(this.state.PutFrontExceptionStatus == false){

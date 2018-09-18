@@ -18,9 +18,9 @@ var ItemTable = React.createClass({
     	for(var i=0;i<data.length;i++){
             this.noofCOlumn= Object.keys(data[i]).length;
             var tableData=[],locationCell=[],UOMCell=[],childData=data[i].UOM;
-            tableData.push(<div className="outerCell" style={rowconfig[0]}><div  className="itemCell cellData">{data[i].eventName}</div></div>);
-            var expectationKeys=Object.keys(data[i].expectation)
-            tableData.push(<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellHeader">{expectationKeys}</div><div className="cellData">{data[i].expectation[expectationKeys[0]]}</div></div></div>);
+            tableData.push(<div className="outerCell" style={rowconfig[0]}><div  className="itemCell cellData">{data[i].eventType}</div></div>);
+            var expectationKeys=data[i].requestId;
+            tableData.push(<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellHeader">{expectationKeys.label}</div><div className="cellData">{expectationKeys.value}</div></div></div>);
             data[i].location.forEach(function(x,i){
                 if(i>0){locationCell.push(<span className="itemSeparator">{">"}</span>)}
                 locationCell.push(<span className="cellData">{x}</span>)
@@ -46,19 +46,20 @@ var ItemTable = React.createClass({
     },
 
     render: function() {
-
-        var rowDataItem=this.getTableRows(this.props.data,this.props.rowconfig);
-        var headerDataItem=this.getTableHeaders(this.props.data,this.props.rowconfig);
-
-        // var size = this.props.size=="double"?classes = classes + "double ":"";
-        // var size = this.props.size=="triple"?classes = classes + "triple ":"";
-        return ( 
+        var tableData=this.props.data||[];
+        var rowDataItem=this.getTableRows(tableData,this.props.rowconfig);
+        var headerDataItem=this.getTableHeaders(tableData,this.props.rowconfig);
+return ( 
+            <div>
+            {tableData.length>0?
             <div>
                 {headerDataItem}
                 <div>
                     {rowDataItem}
       		    </div>
-                  </div>
+                  </div>:<div className="">NO ITEM FOUND</div>
+            }
+            </div>
         );
     },
 });

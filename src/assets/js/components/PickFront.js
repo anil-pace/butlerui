@@ -517,8 +517,7 @@ else {
                         </div>
                     </div>
                     <div className="itemSearchfooter">
-                    <Button1 disabled={false} text={_("Close")} module={appConstants.PICK_FRONT}
-                    action={appConstants.BIN_FULL} color={"black"}/>
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
                     </div> 
                     </div>
                 )
@@ -535,8 +534,7 @@ else {
                         
                     </div>
                     <div className="itemSearchfooter">
-                    <Button1 disabled={false} text={_("Close")} module={appConstants.PICK_FRONT}
-                    action={appConstants.BIN_FULL} color={"black"}/>
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
                     </div> 
                       </div>   
                 )

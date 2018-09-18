@@ -2364,9 +2364,9 @@ setCurrentSeat: function (data) {
         var noOfCol= Object.keys(_seatData.utility[_seatData.utility.length-1])
         
         if(noOfCol.length==5)
-        rowconfig=[{'width':'10%'},{'width':'10%'},{'width':'25%'},{'width':'45%'},{'width':'10%'}];
+        rowconfig=[{'width':'10%',},{'width':'10%'},{'width':'25%'},{'width':'45%','justify-content':'flex-start','padding-left':'50px'},{'width':'10%'}];
         else
-        rowconfig=[{'width':'15%'},{'width':'15%'},{'width':'25%'},{'width':'45%'}];
+        rowconfig=[{'width':'15%'},{'width':'15%'},{'width':'25%'},{'width':'45%','justify-content':'flex-start','padding-left':'50px'}];
         }
         return rowconfig;
     },

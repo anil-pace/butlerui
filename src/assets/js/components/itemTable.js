@@ -57,7 +57,7 @@ return (
                 <div>
                     {rowDataItem}
       		    </div>
-                  </div>:<div className="itemNotFound">NO ITEM FOUND</div>
+                  </div>:<div className="itemNotFound">{_("NO ITEM FOUND")}</div>
             }
             </div>
         );

@@ -591,7 +591,6 @@ if(this.state.AuditExceptionScreen == "first_screen"){
                         <div className="innerWrapperItemSearch">
                         <div className="textBoxContainer">
                          <span className="barcode"></span>
-                        {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
                          <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
                         </div>
                         </div>

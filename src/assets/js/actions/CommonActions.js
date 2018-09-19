@@ -289,12 +289,6 @@ var commonActions = {
       method : method
     });
    },
-   updateScreenId: function(type){
-    AppDispatcher.handleAction({
-      actionType : appConstants.UPDATE_SCREEN_ID,
-      type : type
-    })
-   },
    convertTextBox : function(data, index){
     AppDispatcher.handleAction({
       actionType : appConstants.CONVERT_TEXTBOX,

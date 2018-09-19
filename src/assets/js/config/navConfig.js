@@ -12,7 +12,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": "scanner_managemen",
+            "screen_id": "scanner_management",
             "code": "CLIENTCODE_005",
             "image": svgConstants.scanner,
             "message": "Unexpected Item",

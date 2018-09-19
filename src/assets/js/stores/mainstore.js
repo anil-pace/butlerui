@@ -2441,13 +2441,7 @@ setCurrentSeat: function (data) {
         this.setCurrentSeat(_seatData);
         console.log(_seatData);
     },
-    // updateScreenId: function (type) {
-    //     if(type=="itemSearch")
-    //     _seatData["screen_id"] = appConstants.ITEM_SEARCH;
-    //     _seatData["notification_list"]=[];
-    //     this.setCurrentSeat(_seatData);
-    //     console.log(_seatData);
-    // },
+
     getUtility: function () {
         return _utility;
     },
@@ -3717,11 +3711,6 @@ AppDispatcher.register(function (payload) {
         case appConstants.UPDATE_SEAT_DATA:
         mainstore.showSpinner();
         mainstore.updateSeatData(action.data, action.type, action.status, action.method);
-        mainstore.emitChange();
-        break;
-        case appConstants.UPDATE_SCREEN_ID:
-        mainstore.showSpinner();
-        mainstore.updateScreenId(action.type);
         mainstore.emitChange();
         break;
 

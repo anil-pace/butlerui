@@ -65,7 +65,7 @@ var TextEditor = React.createClass({
           
           accepted: function(e, keypressed, el) {
             var usernameValue = document.getElementById('username').value;  
-            this.props  
+
           }
         });
        },

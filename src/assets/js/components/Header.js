@@ -84,8 +84,7 @@ var Header = React.createClass({
         $("#actionMenu").hide();
     }, 
     enableSearch:function(){
-        //CommonActions.enableSearch(true);
-        CommonActions.updateScreenId('itemSearch');
+        CommonActions.updateSeatData([],'itemSearch');
         $("#actionMenu").hide();
     },
     showMenu: function(){
@@ -128,7 +127,7 @@ var Header = React.createClass({
                                     </div>);
     },
     getSearchItemMenu:function(){
-        if(mainstore.orphanSearchAllowed){
+        if(mainstore.orphanSearchAllowed()){
         this.searchMenu = (<div className="actionItem" onClick = {this.enableSearch}>
                                          {_("Item Search")}
                                     </div>);

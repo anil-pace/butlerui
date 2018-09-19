@@ -681,7 +681,7 @@ var PutFront = React.createClass({
                     <div className="outerWrapperItemSearch">
                         <div className="subHeaderItemDetails">Item details</div>
                         <div className="innerWrapperItemResult">
-                        <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
                         </div>
                         
                     </div>

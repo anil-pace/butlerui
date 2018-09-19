@@ -37,6 +37,7 @@ var TextEditor = React.createClass({
           
           accepted: function(e, keypressed, el) {
             var usernameValue = document.getElementById('username').value; 
+            CommonActions.updateSeatData(true, "orphanSearchStart"); 
             self.props.callAPItoGetData(usernameValue)  ;
           }
         }); 

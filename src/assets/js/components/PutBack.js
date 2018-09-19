@@ -26,7 +26,8 @@ var serverMessages = require('../serverMessages/server_messages');
 var utils = require('../utils/utils.js');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var TextEditor=require('./ProductDetails/textEditor');
-var ItemTable= require('./itemTable')
+var ItemTable= require('./itemTable');
+var Spinner = require("./Spinner/LoaderButler");
 function getStateData(){
   return mainstore.getScreenData();
 }
@@ -640,7 +641,7 @@ var PutBack = React.createClass({
                     <div className="outerWrapperItemSearch">
                         <div className="subHeaderItemDetails">Item details</div>
                         <div className="innerWrapperItemResult">
-                        <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
                         </div>
                         
                     </div>

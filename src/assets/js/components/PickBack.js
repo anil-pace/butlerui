@@ -17,6 +17,7 @@ var ExceptionHeader = require('./ExceptionHeader');
 var TabularData = require('./TabularData');
 var TextEditor=require('./ProductDetails/textEditor');
 var ItemTable= require('./itemTable')
+var Spinner = require("./Spinner/LoaderButler");
 
 
 function getStateData(){
@@ -251,7 +252,7 @@ var PickBack = React.createClass({
                     <div className="outerWrapperItemSearch">
                         <div className="subHeaderItemDetails">Item details</div>
                         <div className="innerWrapperItemResult">
-                        <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
                         </div>
                         
                     </div>

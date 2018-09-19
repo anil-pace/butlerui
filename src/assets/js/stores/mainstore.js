@@ -912,7 +912,7 @@ getOrderID: function () {
         return _seatData.exception_allowed;
     },
     orphanSearchAllowed: function () {
-        return _seatData.search_allowed;
+        return true;//_seatData.search_allowed;
     },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
@@ -2375,6 +2375,10 @@ setCurrentSeat: function (data) {
         if(_seatData.utility)
         return _seatData.utility;
     },
+    getLoaderStatus:function(){
+        if(_seatData.loader)
+        return _seatData.loader;
+    },
     getDynamicColumnWidth:function(){
         var rowconfig=[];
         if(_seatData.utility.length){
@@ -2396,9 +2400,12 @@ setCurrentSeat: function (data) {
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
         }
-        else if(type==="orphanSearch"){
+        else if(type==="orphanSearch" || type==="orphanSearchStart"){
             _seatData["screen_id"] = appConstants.ITEM_SEARCH_RESULT;
         }
+       else if(type=="itemSearch")
+            _seatData["screen_id"] = appConstants.ITEM_SEARCH;
+       
         if (status == "success") {
             if (method == "POST")
                 dataNotification["code"] = resourceConstants.CLIENTCODE_006;
@@ -2430,15 +2437,17 @@ setCurrentSeat: function (data) {
             }
         }
         _seatData["utility"] = data;
+        _seatData["loader"]=(data===true)?true:false;
         this.setCurrentSeat(_seatData);
         console.log(_seatData);
     },
-    updateScreenId: function (type) {
-        if(type=="itemSearch")
-        _seatData["screen_id"] = appConstants.ITEM_SEARCH;
-        this.setCurrentSeat(_seatData);
-        console.log(_seatData);
-    },
+    // updateScreenId: function (type) {
+    //     if(type=="itemSearch")
+    //     _seatData["screen_id"] = appConstants.ITEM_SEARCH;
+    //     _seatData["notification_list"]=[];
+    //     this.setCurrentSeat(_seatData);
+    //     console.log(_seatData);
+    // },
     getUtility: function () {
         return _utility;
     },
@@ -3268,7 +3277,8 @@ setCurrentSeat: function (data) {
             case appConstants.ITEM_SEARCH_RESULT:
             data["PickFrontScreenId"] = this.getScreenId();
             data["ItemSearchData"]=this.getItemData();  
-            data["rowconfig"]=this.getDynamicColumnWidth();          
+            data["rowconfig"]=this.getDynamicColumnWidth(); 
+            data["loaderState"]=this.getLoaderStatus();        
             break;
 
             case appConstants.PICK_FRONT_BIN_PRINTOUT:

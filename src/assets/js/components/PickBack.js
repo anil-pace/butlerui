@@ -73,7 +73,8 @@ var PickBack = React.createClass({
           this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Skip Printing")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
-          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Dis-associate Tote")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
+          var toteDisplayName= this.getToteDisplayName();
+          this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Dis-associate")+" "+toteDisplayName} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
           this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Override")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.OVERRIDE_TOTE}  />);
@@ -81,6 +82,18 @@ var PickBack = React.createClass({
         default:
           return true;
       }
+  },
+  getToteDisplayName: function(){
+    var exceptionDetail = null;
+    for(var i=0,len = this.state.PickBackExceptionData.list.length; i<len;i++){
+      var exception = this.state.PickBackExceptionData.list[i];
+      if(exception.exception_id === "PkB007"){
+        exceptionDetail = exception;
+        break;
+      }
+    }
+    return exceptionDetail.details[0];
+    
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){

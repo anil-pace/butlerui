@@ -747,6 +747,10 @@ function server_messages_list() {
     _("Item Location");
     _("UOM Details");
     _("Quantity");
+    _("Excess Quantity");
+    _("Total: ");
+    _("Scan excess entities");
+    _("Dis-associate");
 
 }
 

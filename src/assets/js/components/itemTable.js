@@ -2,8 +2,7 @@ var React = require('react');
 
 var ItemTable = React.createClass({ 
     _tableRows:[],noofCOlumn:0,
-    headerName:['Event','Expectation Id','Item Location','UOM Details','Quantity'],
-    //rowconfig:this.props.rowconfig||[],
+    headerName:[_("Event"),_("Expectation Id"),_("Item Location"),_("UOM Details"),_("Quantity")],
     getTableHeaders:function(data,rowconfig){
         var headerData =[];
         for(var i=0;i<this.noofCOlumn;i++){

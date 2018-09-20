@@ -7,6 +7,12 @@
   font-family: 'SourceSansPro';
   src: url('../fonts/SourceSansPro-Regular.otf.woff') format('woff');
 }
+
+@font-face{
+	font-family: 'SourceSansPro-Bold';
+	src: url('../fonts/SourceSansPro-Bold.otf.woff') format("woff");
+}
+
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;

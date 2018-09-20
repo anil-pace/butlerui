@@ -25,6 +25,9 @@ var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
 var utils = require('../utils/utils.js');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable');
+var Spinner = require("./Spinner/LoaderButler");
 function getStateData(){
   return mainstore.getScreenData();
 }
@@ -96,6 +99,9 @@ var PutBack = React.createClass({
       </div>
       );
   },
+  callAPItoGetData:function(data){
+    CommonActions.getOrphanItemData(data);
+},
 
   
 
@@ -607,7 +613,44 @@ var PutBack = React.createClass({
       <Modal /> 
       </div>
       );
-    break;      
+    break;  
+    case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                        {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemResult">
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;    
     default:
     return true; 
   }

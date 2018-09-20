@@ -1,3 +1,4 @@
+
 var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
@@ -19,6 +20,7 @@ function getState(){
 var Header = React.createClass({
     virtualKeyBoard: '',
     exceptionMenu:'',
+    searchMenu:'',
     getInitialState: function() {
         return getState();
     },
@@ -80,7 +82,11 @@ var Header = React.createClass({
         data["level"] = 'error'
         CommonActions.generateNotification(data);
         $("#actionMenu").hide();
-    },    
+    }, 
+    enableSearch:function(){
+        CommonActions.updateSeatData([],'itemSearch');
+        $("#actionMenu").hide();
+    },
     showMenu: function(){
         $("#actionMenu").toggle();
         $(".subMenu").hide();
@@ -119,7 +125,15 @@ var Header = React.createClass({
             this.exceptionMenu = (<div className="actionItem disable">
                                          {_("Exception")}
                                     </div>);
-    },    
+    },
+    getSearchItemMenu:function(){
+        if(mainstore.orphanSearchAllowed()){
+        this.searchMenu = (<div className="actionItem" onClick = {this.enableSearch}>
+                                         {_("Item Search")}
+                                    </div>);
+        }
+    },
+    
     peripheralData : function(type){
         CommonActions.getPeriPheralData(type);
         $("#actionMenu").hide();
@@ -134,6 +148,7 @@ var Header = React.createClass({
         var disableScanClass;
         var invoiceFlow = mainstore.getScreenId()===appConstants.PUT_BACK_INVOICE?true:false; 
         this.getExceptionMenu();
+        this.getSearchItemMenu();
         if(this.state.spinner || this.state.systemIsIdle || invoiceFlow){
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else{
@@ -176,6 +191,7 @@ var Header = React.createClass({
                         {_("Scanner Management")}
                     </div>
                 </div>  
+                {this.searchMenu}
                 <div className={logoutClass} onClick = {this.logoutSession} >
                     {_("Logout")}
                 </div>

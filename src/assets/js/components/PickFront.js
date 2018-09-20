@@ -34,6 +34,8 @@ var utils = require('../utils/utils.js');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
 
 var checkListOpen = false;
 
@@ -157,6 +159,10 @@ var PickFront = React.createClass({
             </div>
         );
     },
+callAPItoGetData:function(data){
+    CommonActions.getOrphanItemData(data);
+},
+    
     getScreenComponent: function (screen_id) {
         switch (screen_id) {
 
@@ -496,6 +502,47 @@ else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
+
+
+                case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                          <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="innerWrapperItemResult">
+                      
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
+
 
                 case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
@@ -935,7 +982,10 @@ else {
                 );
                 break;
 
+
+
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}

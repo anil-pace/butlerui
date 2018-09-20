@@ -169,6 +169,12 @@ var commonActions = {
       data:data
     }); 
   },
+  enableSearch:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ENABLE_SEARCH,
+      data:data
+    }); 
+  },
   logoutSession:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.LOGOUT_SESSION,
@@ -266,6 +272,14 @@ var commonActions = {
       data:data
     });
    },
+   getOrphanItemData : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ORPHAN_ITEM_DATA,
+      data:data
+    });
+   },
+
+
    updateSeatData : function(data, type, status, method){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,

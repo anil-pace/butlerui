@@ -21,6 +21,7 @@ _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty
 _logoutStatus,
 _activeException = null,
 _enableException = false,
+_enableSearch=false,
 popupVisible = false,
 _showSpinner = true,
 _goodQuantity = 0,
@@ -910,6 +911,9 @@ getOrderID: function () {
     getExceptionAllowed: function () {
         return _seatData.exception_allowed;
     },
+    orphanSearchAllowed: function () {
+        return true;//_seatData.search_allowed;
+    },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
         return _scanDetails;
@@ -1763,8 +1767,14 @@ setCurrentSeat: function (data) {
 
         _enableException = data;
     },
+    enableSearch: function (data) {
+        _enableSearch = data;
+    },
     getExceptionStatus: function () {
         return _enableException;
+    },
+    getItemSearchWindow: function () {
+        return _enableSearch;
     },
 
     setActiveException: function (data) {
@@ -2357,6 +2367,30 @@ setCurrentSeat: function (data) {
         _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
     },
+    getOrphanItemData: function (data) {
+        _seatData.scan_allowed = false;
+        utils.getOrphanItemData(data, _seatData.seat_name);
+    },
+    getItemData:function(){
+        if(_seatData.utility)
+        return _seatData.utility;
+    },
+    getLoaderStatus:function(){
+        if(_seatData.loader)
+        return _seatData.loader;
+    },
+    getDynamicColumnWidth:function(){
+        var rowconfig=[];
+        if(_seatData.utility.length){
+        var noOfCol= Object.keys(_seatData.utility[_seatData.utility.length-1])
+        
+        if(noOfCol.length==5)
+        rowconfig=[{'width':'10%',},{'width':'10%'},{'width':'25%'},{'width':'45%','justify-content':'flex-start','padding-left':'50px'},{'width':'10%'}];
+        else
+        rowconfig=[{'width':'15%'},{'width':'15%'},{'width':'25%'},{'width':'45%','justify-content':'flex-start','padding-left':'50px'}];
+        }
+        return rowconfig;
+    },
     updateSeatData: function (data, type, status, method) {
         _peripheralScreen = true;
         var dataNotification = {};
@@ -2366,6 +2400,12 @@ setCurrentSeat: function (data) {
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
         }
+        else if(type==="orphanSearch" || type==="orphanSearchStart"){
+            _seatData["screen_id"] = appConstants.ITEM_SEARCH_RESULT;
+        }
+       else if(type=="itemSearch")
+            _seatData["screen_id"] = appConstants.ITEM_SEARCH;
+       
         if (status == "success") {
             if (method == "POST")
                 dataNotification["code"] = resourceConstants.CLIENTCODE_006;
@@ -2397,9 +2437,11 @@ setCurrentSeat: function (data) {
             }
         }
         _seatData["utility"] = data;
+        _seatData["loader"]=(data===true)?true:false;
         this.setCurrentSeat(_seatData);
         console.log(_seatData);
     },
+
     getUtility: function () {
         return _utility;
     },
@@ -3212,6 +3254,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionData"] = this.getExceptionData();
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontSearchStatus"] = this.getItemSearchWindow();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
@@ -3220,7 +3263,18 @@ setCurrentSeat: function (data) {
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PickFrontItemUid"] = this.getItemUid();
 
+
             break;
+            case appConstants.ITEM_SEARCH:
+            data["PickFrontScreenId"] = this.getScreenId();
+            break;
+            case appConstants.ITEM_SEARCH_RESULT:
+            data["PickFrontScreenId"] = this.getScreenId();
+            data["ItemSearchData"]=this.getItemData();  
+            data["rowconfig"]=this.getDynamicColumnWidth(); 
+            data["loaderState"]=this.getLoaderStatus();        
+            break;
+
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
             data["PickFrontNavData"] = this.getNavData();
@@ -3590,6 +3644,10 @@ AppDispatcher.register(function (payload) {
         mainstore.enableException(action.data);
         mainstore.emitChange();
         break;
+        case appConstants.ENABLE_SEARCH:
+        mainstore.enableSearch(action.data);
+        mainstore.emitChange();
+        break;
         case appConstants.SET_ACTIVE_EXCEPTION:
         mainstore.setActiveException(action.data);
         mainstore.emitChange();
@@ -3646,11 +3704,16 @@ AppDispatcher.register(function (payload) {
         mainstore.getPeripheralData(action.data);
         mainstore.emitChange();
         break;
+        case appConstants.ORPHAN_ITEM_DATA:
+        mainstore.getOrphanItemData(action.data);
+        mainstore.emitChange();
+        break;
         case appConstants.UPDATE_SEAT_DATA:
         mainstore.showSpinner();
         mainstore.updateSeatData(action.data, action.type, action.status, action.method);
         mainstore.emitChange();
         break;
+
         case appConstants.CONVERT_TEXTBOX:
         mainstore.convert_textbox(action.data, action.index);
         mainstore.emitChange();

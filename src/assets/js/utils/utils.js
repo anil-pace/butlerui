@@ -102,6 +102,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
         return localeLang
       },
+   get3dotTrailedText:function(serial,frontlimit=5,rearLimit=5,stringLength){
+       let trailedText="";
+       if(serial.length>stringLength){
+        trailedText=serial.slice(0,frontlimit)+"..."+serial.slice(-rearLimit);
+       }
+       else{
+        trailedText=serial;
+       }
+       return trailedText
+   },   
     checkSessionStorage : function(){
         var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
         if(sessionData === null){  

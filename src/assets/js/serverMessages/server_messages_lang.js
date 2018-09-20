@@ -747,7 +747,7 @@ function server_messages_list() {
     _("NO ITEM FOUND");
     _("Event");
     _("Expectation Id");
-    -("Item Location");
+    _("Item Location");
     _("UOM Details");
     _("Quantity");
 

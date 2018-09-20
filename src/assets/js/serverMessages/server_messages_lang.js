@@ -750,6 +750,7 @@ function server_messages_list() {
     _("Item Location");
     _("UOM Details");
     _("Quantity");
+    _("No entities to reconcile");
     _("Excess Quantity");
     _("Total: ");
     _("Scan excess entities");

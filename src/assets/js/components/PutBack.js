@@ -104,7 +104,18 @@ var PutBack = React.createClass({
 },
 
   
-
+  getToteDisplayName: function(){
+    var exceptionDetail = null;
+    for(var i=0,len = this.state.PutBackExceptionData.list.length; i<len;i++){
+      var exception = this.state.PutBackExceptionData.list[i];
+      if(exception.exception_id === "PtB006"){
+        exceptionDetail = exception;
+        break;
+      }
+    }
+    return exceptionDetail.details[0];
+    
+  },
   getScreenComponent : function(screen_id){
     switch(screen_id){
       case appConstants.PUT_BACK_STAGE:
@@ -315,6 +326,7 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_UNSCANNABLE:
       var buttonActivateFlag = mainstore.getExeptionQuanity();
       var numericIndicator="";
+      var toteDisplayName = this.getToteDisplayName() || "Tote";
       if(this.state.PutBackExceptionType=="item_unscannable"){
         numericIndicator=<div className="gor-NI-wrapper">
         <hr/>
@@ -325,7 +337,7 @@ var PutBack = React.createClass({
       {
         numericIndicator=<div className="gor-NI-wrapper">
         <hr/>
-        <div className="exception-qty-title">{_("Unscannable Tote")}</div>
+        <div className="exception-qty-title">{_("Unscannable")+" "+toteDisplayName}</div>
         <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
     </div>
       }

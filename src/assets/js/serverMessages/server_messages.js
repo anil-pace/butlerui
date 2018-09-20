@@ -337,6 +337,7 @@ var serverMessages = {
     "PtB002" : "Entity Oversized",
     "PtB003" : "Entity Unscannable",
     "PtB004" : "Extra Entities in Bin",
+    "PtB006" :"{0} Unscannable",
     "PtF001" : "Issues with entity",
     "PtF005" : "Entity Missing",
     "PtF002" : "Space Not Available",

@@ -105,7 +105,7 @@ function server_messages_list() {
     _("Box Scan successful");
     _('Item Scan successful');
     _("Item scan successful");
-    _('Data capture failed at item {0}');
+    _('Data capture failed');
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
@@ -747,10 +747,10 @@ function server_messages_list() {
     _("Item Location");
     _("UOM Details");
     _("Quantity");
+    _("No entities to reconcile");
     _("Excess Quantity");
     _("Total: ");
     _("Scan excess entities");
     _("Dis-associate");
-
 }
 

@@ -226,6 +226,34 @@ getPeripheralData : function(type, seat_name, status, method){
 
     });
 },
+///itemsearch 
+getOrphanItemData : function(data, seat_name){
+    var dataToSent="?"+"barcode="+data+"&"+"ppsId="+seat_name;
+    var retrieved_token = sessionStorage.getItem('sessionData');
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+    $.ajax({
+        type: 'GET',
+         url: configConstants.INTERFACE_IP + appConstants.API +appConstants.API_GATEWAY+appConstants.SR_SERVICE+appConstants.PLATFORM_SRMS+appConstants.SERVICE_REQUEST+appConstants.SEARCH_ITEM+dataToSent,
+         dataType: "json",
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+            'Authentication-Token' : authentication_token
+        }
+
+    }).done(function(response) {
+            CommonActions.updateSeatData(response.data, "orphanSearch");  
+    }).fail(function(jqXhr) {    
+        console.log('Connection Issue');
+        CommonActions.updateSeatData([], "orphanSearch"); 
+        
+    });
+    
+},
+
+
+
+
 updatePeripherals : function(data, method, seat_name){
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
@@ -295,9 +323,8 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
- 
-    console.log(data);
-   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
+    console.log(data); 
+     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
         CommonActions.setPutBackData(data.state_data);
         break;

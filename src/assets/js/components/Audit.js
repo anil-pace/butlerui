@@ -27,6 +27,8 @@ var GorTabs = require("./gor-tabs/tabs");
 var Tab = require("./gor-tabs/tabContent");
 var ReactModal = require("./Modal/ReactModal");
 var GorSelect = require("./gor-select/gor-select");
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
 
        var Audit = React.createClass({
         _component:'',
@@ -109,6 +111,9 @@ var GorSelect = require("./gor-select/gor-select");
       </div>
       );
   },
+  callAPItoGetData:function(data){
+    ActionCreators.getOrphanItemData(data);
+},
   _onTabClick: function(selectedIndex){
     this.setState({
       selectedTab:selectedIndex
@@ -577,6 +582,42 @@ if(this.state.AuditExceptionScreen == "first_screen"){
           </div>
           );
         break; 
+        case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemResult">
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
+                
         
         default:
         return true; 

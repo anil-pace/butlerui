@@ -102,6 +102,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
         return localeLang
       },
+   get3dotTrailedText:function(serial,frontlimit=5,rearLimit=5,stringLength){
+       let trailedText="";
+       if(serial.length>stringLength){
+        trailedText=serial.slice(0,frontlimit)+"..."+serial.slice(-rearLimit);
+       }
+       else{
+        trailedText=serial;
+       }
+       return trailedText
+   },   
     checkSessionStorage : function(){
         var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
         if(sessionData === null){  
@@ -323,8 +333,8 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
-    console.log(data); 
-     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
+ console.log(data);
+   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
         CommonActions.setPutBackData(data.state_data);
         break;

@@ -739,5 +739,14 @@ function server_messages_list() {
     _("Slot scan successful");
     _("{0} docked successfully");
     _("{0} undocked successfully");
+    _("Item details");
+    _("Item Search");
+    _("NO ITEM FOUND");
+    _("Event");
+    _("Expectation Id");
+    -("Item Location");
+    _("UOM Details");
+    _("Quantity");
+
 }
 

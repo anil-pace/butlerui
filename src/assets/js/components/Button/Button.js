@@ -552,8 +552,16 @@ switch (module) {
                                 case appConstants.CANCEL_PPTL:                           
                                 location.reload();
                                 break;
-                            }   
+                            }
+
                             break;
+                            case appConstants.SEARCH_MANAGEMENT:
+        switch(action) {
+            case appConstants.BACK:                           
+            location.reload();
+            break;
+        }
+        break;
                             case appConstants.PRE_PUT:
                             switch (action) {
                                 case appConstants.CANCEL_EXCEPTION_MODAL:

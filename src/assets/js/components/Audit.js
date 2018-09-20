@@ -587,7 +587,7 @@ if(this.state.AuditExceptionScreen == "first_screen"){
                 this._component=(
                     <div>
                     <div className="outerWrapperItemSearch">
-                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
                         <div className="innerWrapperItemSearch">
                         <div className="textBoxContainer">
                          <span className="barcode"></span>
@@ -606,7 +606,7 @@ if(this.state.AuditExceptionScreen == "first_screen"){
                 this._component=(
                     <div>
                     <div className="outerWrapperItemSearch">
-                        <div className="subHeaderItemDetails">Item details</div>
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
                         <div className="innerWrapperItemResult">
                         {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
                         </div>

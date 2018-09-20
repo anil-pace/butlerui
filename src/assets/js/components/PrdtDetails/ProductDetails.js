@@ -2,6 +2,7 @@ var React = require('react');
 
 var ProductInfo = require('./ProductInfo');
 var ProductImage = require('./ProductImage');
+var utils  = require('../../utils/utils');
 
 var product_info_locale = {};
 var image_url = {};
@@ -94,7 +95,9 @@ var ProductDetails = React.createClass({
     render: function() {
       var flag=this.props.QLCodeDetails;
      var barcodeArr=flag?this.displayCode(this.props.productInfo):"";
-       this.displayLocale(this.props.productInfo);
+     var trailedDisplayText=flag? utils.get3dotTrailedText(barcodeArr[0].displayvalue,5,5,10):"";
+     var trailedDisplayKeyText=flag? barcodeArr[0].displayName:"";
+     this.displayLocale(this.props.productInfo);
 
         return (
             <div className={flag?"productTableInfo qlDetails":"productTableInfo"}>
@@ -102,8 +105,8 @@ var ProductDetails = React.createClass({
 {flag?(
   <div className="detailsOuterWrapper">
   <div className="detailsInnerWrapper">
-   <span className="detailsDispName">{barcodeArr[0].displayName}</span>
-   <span className="detailsDispVal">{barcodeArr[0].displayvalue}</span>
+   <span className="detailsDispName" title={barcodeArr[0].displayName}>{trailedDisplayKeyText}</span><span className="colorSeparator">{":"}</span>
+   <span className="detailsDispVal" title={barcodeArr[0].displayvalue}>{trailedDisplayText}</span>
    </div>
    <div className="detailsDispValShort"><span>{(barcodeArr[0].displayvalue).substr((barcodeArr[0].displayvalue.length)-3)}</span></div>
     </div>

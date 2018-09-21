@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-20 12:45+0000\n"
+"POT-Creation-Date: 2018-09-21 12:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3512,17 +3512,29 @@ msgid "UOM Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:750
+#: src/assets/js/serverMessages/server_messages_lang.js:751
 msgid "Excess Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:751
+#: src/assets/js/serverMessages/server_messages_lang.js:752
 msgid "Total: "
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:752
+#: src/assets/js/serverMessages/server_messages_lang.js:753
 msgid "Scan excess entities"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:753
+#: src/assets/js/serverMessages/server_messages_lang.js:754
 msgid "Dis-associate"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:108
+msgid "Data capture failed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:750
+msgid "No entities to reconcile"
 msgstr ""

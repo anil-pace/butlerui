@@ -843,7 +843,7 @@ var PutFront = React.createClass({
             <div className="msu-send-container">
             <PrdtDetails productInfo={this.state.PutFrontProductDetails}/>
             <div className="msu-send-button">
-            <Button1 disabled = {false} text = {_("Send MSU")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
+            <Button1 disabled = {true} text = {_("Send MSU")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
             </div>
             </div>
             </div>

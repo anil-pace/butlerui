@@ -54,6 +54,43 @@ var PrePut = React.createClass({
   },
   getScreenComponent : function(screen_id){
     switch(screen_id){
+      case appConstants.ITEM_SEARCH:
+      this._navigation = '';
+      this._component=(
+          <div>
+          <div className="outerWrapperItemSearch">
+              <div className="subHeaderItemDetails">{_("Item details")}</div>
+              <div className="innerWrapperItemSearch">
+              <div className="textBoxContainer">
+               <span className="barcode"></span>
+               <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+              </div>
+              </div>
+          </div>
+          <div className="itemSearchfooter">
+          <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+          </div> 
+          </div>
+      )
+      break;
+      case appConstants.ITEM_SEARCH_RESULT:
+      this._navigation = '';
+      this._component=(
+          <div>
+          <div className="outerWrapperItemSearch">
+              <div className="subHeaderItemDetails">{_("Item details")}</div>
+              <div className="innerWrapperItemResult">
+              {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+              </div>
+          </div>
+          <div className="itemSearchfooter">
+          <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+          </div> 
+            </div>   
+      )
+      break;
+
+
       case appConstants.PRE_PUT_STAGE:
          if(this.state.PrePutExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PrePutNavData} serverNavData={this.state.PrePutServerNavData} navMessagesJson={this.props.navMessagesJson}/>);

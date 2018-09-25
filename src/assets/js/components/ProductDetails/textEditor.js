@@ -43,6 +43,7 @@ var TextEditor = React.createClass({
         }); 
       },
       componentWillUnmount: function(){
+        $('#username_keyboard').remove();
        // mainstore.removeChangeListener(this.onChange);
       },
        componentWillMount:function(){

@@ -3246,9 +3246,20 @@ setCurrentSeat: function (data) {
             break;
             case appConstants.ITEM_SEARCH:
             data["PickFrontScreenId"] = this.getScreenId();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutFrontScreenId"] = this.getScreenId();
+            data["PickBackScreenId"] = this.getScreenId();
+            data["AuditScreenId"] = this.getScreenId();
+            data["PrePutScreenId"] = this.getScreenId();
+
             break;
             case appConstants.ITEM_SEARCH_RESULT:
             data["PickFrontScreenId"] = this.getScreenId();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutFrontScreenId"] = this.getScreenId();
+            data["PickBackScreenId"] = this.getScreenId();
+            data["AuditScreenId"] = this.getScreenId();
+            data["PrePutScreenId"] = this.getScreenId();
             data["ItemSearchData"]=this.getItemData();  
             data["rowconfig"]=this.getDynamicColumnWidth(); 
             data["loaderState"]=this.getLoaderStatus();        

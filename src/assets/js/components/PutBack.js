@@ -112,7 +112,7 @@ var PutBack = React.createClass({
         break;
       }
     }
-    return exceptionDetail.details[0];
+    return exceptionDetail?exceptionDetail.details[0]:"Tote";
     
   },
 

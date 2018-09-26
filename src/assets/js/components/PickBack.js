@@ -73,7 +73,7 @@ var PickBack = React.createClass({
           this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Skip Printing")} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.SKIP_PRINTING}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
-          var toteDisplayName= this.getToteDisplayName();
+          var toteDisplayName= this.getToteDisplayName()||"Tote"
           this._exceptionAction = (<Button1 disabled = {this.state.PickBackSelectedBin == null} text = {_("Dis-associate")+" "+toteDisplayName} color={"orange"} module ={appConstants.PICK_BACK} action={appConstants.DIS_ASSOCIATE_TOTE}  />);
           break;
         case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
@@ -92,7 +92,7 @@ var PickBack = React.createClass({
         break;
       }
     }
-    return exceptionDetail.details[0];
+    return exceptionDetail?exceptionDetail.details[0]:"Tote";
     
   },
   getScreenComponent : function(screen_id){

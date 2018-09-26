@@ -113,7 +113,7 @@ var PutBack = React.createClass({
         break;
       }
     }
-    return exceptionDetail.details[0];
+    return exceptionDetail?exceptionDetail.details[0]:"Tote";
     
   },
   getScreenComponent : function(screen_id){

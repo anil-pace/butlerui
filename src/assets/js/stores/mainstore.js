@@ -2360,7 +2360,7 @@ setCurrentSeat: function (data) {
         utils.getPeripheralData(data, _seatData.seat_name);
     },
     getOrphanItemData: function (data) {
-        _seatData.scan_allowed = false;
+        _seatData.scan_allowed = true;
         utils.getOrphanItemData(data, _seatData.seat_name);
     },
     getItemData:function(){

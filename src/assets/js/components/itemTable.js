@@ -1,4 +1,5 @@
 var React = require('react');
+var utils = require("../utils/utils.js");
 
 var ItemTable = React.createClass({ 
     _tableRows:[],noofCOlumn:0,
@@ -18,18 +19,22 @@ var ItemTable = React.createClass({
             let location=data[i].location||[];
             this.noofCOlumn= Object.keys(data[i]).length;
             var tableData=[],locationCell=[],UOMCell=[],childData=data[i].uom;
-            tableData.push(data[i].eventType?<div className="outerCell" style={rowconfig[0]}><div  className="itemCell cellData">{data[i].eventType}</div></div>:<div className="outerCell" style={rowconfig[0]}><div  className="itemCell">{"--"}</div></div>);
+            let eventTypeShort=utils.get3dotTrailedText(data[i].eventType,6,6,15)
+            tableData.push(data[i].eventType?<div className="outerCell" style={rowconfig[0]}><div  className="itemCell cellData" title={data[i].eventType}>{eventTypeShort}</div></div>:<div className="outerCell" style={rowconfig[0]}><div  className="itemCell">{"--"}</div></div>);
             var expectationKeys=data[i].requestId;
-            tableData.push(expectationKeys?<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellHeader">{expectationKeys.label}{":"}</div><div className="cellData">{expectationKeys.value}</div></div></div>:<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellData">{"--"}</div></div></div>);
+            let expectationKeysValue=utils.get3dotTrailedText(expectationKeys.value,6,6,15)
+            tableData.push(expectationKeys?<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellHeader">{expectationKeys.label}{":"}</div><div className="cellData" title={expectationKeys.value}>{expectationKeysValue}</div></div></div>:<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellData">{"--"}</div></div></div>);
             location.length?data[i].location.forEach(function(x,i){
+                let locationValue=utils.get3dotTrailedText(x,6,6,15)
                 if(i>0){locationCell.push(<span className="itemSeparator">{">"}</span>)}
-                locationCell.push(<span className="cellData">{x}</span>)
+                locationCell.push(<span className="cellData" title={x}>{locationValue}</span>)
                 }):locationCell.push(<span className="cellData">{"--"}</span>);
                 tableData.push(<div className="outerCell" style={rowconfig[2]} ><div className="itemCell">{locationCell}</div></div>)
                 if(childData)
                 while(childData.hasOwnProperty('child')){
                    DataItem=childData.child;
-                    UOMCell.push(<div className="itemCell"><div className="cellHeader">{DataItem.childLabel}{":"}</div><div className="cellData">{DataItem.childValue}</div></div>)
+                   let DataItemValue=utils.get3dotTrailedText(DataItem.childValue,6,6,15)
+                    UOMCell.push(<div className="itemCell"><div className="cellHeader">{DataItem.childLabel}{":"}</div><div className="cellData" title={DataItem.childValue}>{DataItemValue}</div></div>)
                     childData=childData.child;
                     childData.hasOwnProperty('child')?UOMCell.push(<span className="itemSeparator">{">"}</span>):""
             }

@@ -297,7 +297,8 @@ var appConstants = {
 	UDP_UNEXPECTED_ITEM:"ud_put_front_unexpected",
 	CLOSE_UNEXPECTED_SCAN:"CLOSE_UNEXPECTED_SCAN",
 	SEND_MSU:"send_msu",
-	CLOSE_CART:"close_cart"
+	CLOSE_CART:"close_cart",
+	AUDIT_EACH_UNSCANNABLE_EXCEPTION:"audit_each_unscannable_exception"
 };
 
 module.exports = appConstants;

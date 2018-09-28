@@ -22,10 +22,19 @@ var ItemTable = React.createClass({
             let eventTypeShort=utils.get3dotTrailedText(data[i].eventType,6,6,15)
             tableData.push(data[i].eventType?<div className="outerCell" style={rowconfig[0]}><div  className="itemCell cellData" title={data[i].eventType}>{eventTypeShort}</div></div>:<div className="outerCell" style={rowconfig[0]}><div  className="itemCell">{"--"}</div></div>);
             var expectationKeys=data[i].requestId;
-            let expectationKeysValue=utils.get3dotTrailedText(expectationKeys.value,6,6,15)
+            let expectationKeysValue=utils.get3dotTrailedText(expectationKeys.value,17,17,40)
             tableData.push(expectationKeys?<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellHeader">{expectationKeys.label}{":"}</div><div className="cellData" title={expectationKeys.value}>{expectationKeysValue}</div></div></div>:<div className="outerCell" style={rowconfig[1]}><div  className="itemCell"><div className="cellData">{"--"}</div></div></div>);
             location.length?data[i].location.forEach(function(x,i){
-                let locationValue=utils.get3dotTrailedText(x,6,6,15)
+                let length=location.length;
+                let  locationValue="";
+                if(length<=1){
+                    locationValue=utils.get3dotTrailedText(x,5,5,20);
+                }
+                else
+                {
+                    locationValue=utils.get3dotTrailedText(x,4,4,10);
+                }
+                
                 if(i>0){locationCell.push(<span className="itemSeparator">{">"}</span>)}
                 locationCell.push(<span className="cellData" title={x}>{locationValue}</span>)
                 }):locationCell.push(<span className="cellData">{"--"}</span>);
@@ -58,7 +67,7 @@ return (
             {tableData.length>0?
             <div>
                 {headerDataItem}
-                <div>
+                <div style={{"height":"720px","overflow":"scroll"}}>
                     {rowDataItem}
       		    </div>
                   </div>:<div className="itemNotFound">{_("NO ITEM FOUND")}</div>

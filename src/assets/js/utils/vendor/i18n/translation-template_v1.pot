@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-20 06:53+0000\n"
+"POT-Creation-Date: 2018-10-04 05:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2688,6 +2688,7 @@ msgid "Serial Number"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:11
+#: src/assets/js/serverMessages/server_messages_lang.js:749
 msgid "Quantity"
 msgstr ""
 
@@ -3479,4 +3480,56 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:738
 msgid "Pick all items from slot and scan slot"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:108
+msgid "Data capture failed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:742
+msgid "Item details"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:743
+msgid "Item Search"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:744
+msgid "NO ITEM FOUND"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:745
+msgid "Event"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:746
+msgid "Expectation Id"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:747
+msgid "Item Location"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:748
+msgid "UOM Details"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:750
+msgid "No entities to reconcile"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:751
+msgid "Excess Quantity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:752
+msgid "Total: "
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:753
+msgid "Scan excess entities"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:754
+msgid "Dis-associate"
 msgstr ""

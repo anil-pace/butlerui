@@ -3,7 +3,6 @@ var allSvgConstants = {
 	putBackPlace : 'assets/images/place.svg',
 	logo : 'assets/images/GO_Orange_Black_Horizontal.svg',
 	menu : 'assets/images/menu.png',
-	place:'assets/images/Icon2.png',
 	rack: 'assets/images/rack.png',
 	gorLogo : 'assets/images/GO_White_Horizontal.svg',
 	factoryImg : 'assets/images/factoryImage.png',

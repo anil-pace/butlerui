@@ -598,7 +598,7 @@ var navData = {
         "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan MPU",
+        "message": "Scan slot",
         "showImage": true,
         "level": 1,
         "type": 'passive'
@@ -607,7 +607,7 @@ var navData = {
         "screen_id": "audit_scan_sr",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Sub-Packs",
+        "message": "Scan entities",
         "showImage": true,
         "level": 2,
         "type": 'passive'

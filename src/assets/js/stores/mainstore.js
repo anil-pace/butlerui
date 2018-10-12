@@ -912,7 +912,7 @@ getOrderID: function () {
         return _seatData.exception_allowed;
     },
     orphanSearchAllowed: function () {
-        return true;//_seatData.search_allowed;
+        return _seatData.orphan_search_allowed||false;
     },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;

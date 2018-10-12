@@ -615,7 +615,7 @@ var navData = {
     ,{
         "screen_id": "audit_reconcile",
         "code": "Common.000",
-        "image": svgConstants.place,
+        "image": null,
         "message": "Status",
         "showImage": true,
         "level": 3,

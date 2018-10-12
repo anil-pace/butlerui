@@ -912,7 +912,7 @@ getOrderID: function () {
         return _seatData.exception_allowed;
     },
     orphanSearchAllowed: function () {
-        return _seatData.orphan_search_allowed||false;
+        return _seatData.search_allowed||false;
     },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
@@ -1160,8 +1160,8 @@ getOrderID: function () {
             }
             if (data["tableRows"].length > 0) {
                 data["header"].push(new this.tableCol(_("Damage Barcode"), "header", false, "small", false, true, true, false));
-                data["header"].push(new this.tableCol(_("Packs"), "header", false, "small", false, false, true, false, true));
-                data["header"].push(new this.tableCol(_("Sub-Packs"), "header", false, "small", false, false, true, false, true));
+                data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Packs") : _seatData.Possible_Container_Names.container_level_1, "header", false, "small", false, false, true, false, true));
+                data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Sub-Packs") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
             }
         }
         return data;
@@ -1378,10 +1378,14 @@ getReconcileLooseItemsData: function () {
     var totalLooseItemsMissing = 0;
     var extraLooseItemsMissing = 0;
     var c = 0;
+    var looseItemScreenName = _("Loose Items Serial Numbers");
     
         _seatData.Loose_sku_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c = c + 1;
+            if(_seatData.k_deep_audit){
+                looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
+            }
         })
         _seatData.extra_loose_sku_item_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
@@ -1390,12 +1394,16 @@ getReconcileLooseItemsData: function () {
        
 
      _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function (value, index) {
-        if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+        if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0){
+            var tableRows = [new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(index == ((c % 2 == 0 ? c / 2 : ((c + 1) / 2)) - 1) ? _seatData.loose_item_barcode_damage : "", "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
-                ]);
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
+                ];
+            if(!_seatData.k_deep_audit){
+                tableRows.push(new self.tableCol(index == ((c % 2 == 0 ? c / 2 : ((c + 1) / 2)) - 1) ? _seatData.loose_item_barcode_damage : "", "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false))
+            }
+            data["tableRows"].push(tableRows);
+        }
 
     });
      if (_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0) {
@@ -1407,10 +1415,13 @@ getReconcileLooseItemsData: function () {
     }
 
     if (data["tableRows"].length > 0) {
-        data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(looseItemScreenName , "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        if(!_seatData.k_deep_audit){
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        }
+        
     }
 
 return data;

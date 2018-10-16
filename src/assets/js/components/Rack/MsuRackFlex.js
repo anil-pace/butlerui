@@ -49,21 +49,30 @@ var MsuRackFlex = React.createClass({
 
 
       var newBarcodes = []; // for storing post data manipulation
-      var selectedSlotIds = "";
+      var selectedSlotIds = "",valueToShow="";
+      var barcodeData=this.props.slotBarcodes||[];
+      var lengthSelectedSlot=barcodeData.length;
 
-      if(this.props.slotBarcodes){
-        this.props.slotBarcodes.map(function(slotBarcodes,idx){
-            var str = slotBarcodes,
-            delimiter = '.',
-            start = 2,
-            tokens = str.split(delimiter).slice(start);
-            if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
-            else result = tokens.toString();
+      if(barcodeData){
+                barcodeData.map(function(slotBarcodes,idx){
+          var str = slotBarcodes,
+          delimiter = '.',
+          start = 2,
+          tokens = str.split(delimiter).slice(start);
+          if(tokens.length > 1) result = tokens.join("."); //take extra care when we have 3rd "." as delimiter
+          else result = tokens.toString();
 
-            newBarcodes.push(result);
-        });
+          newBarcodes.push(result);
+      });
+    }
+    if(newBarcodes.length>1){
+        valueToShow=newBarcodes[0] + ' - '+newBarcodes[newBarcodes.length-1];
+      }else if(newBarcodes.length==1){
+        valueToShow=newBarcodes[0];
       }
-      selectedSlotIds = newBarcodes.join(', ');
+      
+            selectedSlotIds = valueToShow
+    
 
 
       

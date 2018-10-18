@@ -33,6 +33,8 @@ var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CurrentBin = require('./CurrentBin');
 var TextEditor=require('./ProductDetails/textEditor');
 var ItemTable= require('./itemTable')
+var CheckList=require("./CheckList")
+
 
 
 
@@ -54,6 +56,7 @@ var PutFront = React.createClass({
         BinMapDetails: mainstore._getBinMapDetails(),
         groupOrientation: mainstore._getBinMapOrientation(),
         udpBinMapDetails: mainstore.getUDPMapDetails(),
+
         PutFrontScreenId : mainstore.getScreenId(),
         PutFrontExceptionStatus : mainstore.getExceptionStatus(),
         PutFrontNavData : mainstore.getNavData(),
@@ -64,6 +67,8 @@ var PutFront = React.createClass({
         PutFrontScanDetails: mainstore.scanDetails(),
         PutFrontProductDetails: mainstore.productDetails(),
         selectedTotes: mainstore.getSelectedTotes(),
+        PutFrontChecklistData:mainstore.getChecklistDockData(),
+        PutFrontChecklistIndex:mainstore.getChecklistDockIdx(),
         PutFrontNotification : mainstore.getNotificationData(),
         PreviousDetails: mainstore.getPreviousPutDetails(),
         PutFrontCurrentBin: mainstore.getCurrentSelectedBin(),
@@ -695,14 +700,22 @@ var PutFront = React.createClass({
 
 
           case appConstants.UDP_PUT_FRONT_TOTE_SCAN:
+          var adjustStyleOnSplitPPS = "";
           this._modalContent='';
           if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          if(this.state.PutFrontChecklistData){
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+        }
           this._component = (
             <div className='grid-container'>
               <Modal/>
             <div className='main-container udp-flow'>
-            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} docked = {this.state.selectedTotes}/>
+            <CheckList checklistData = {this.state.PutFrontChecklistData}
+                                            checklistIndex = {this.state.PutFrontChecklistIndex} />
+            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
+            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} ruleset={'withBorder'} 
+            docked = {this.state.selectedTotes} customizeClassSplitPPS={adjustStyleOnSplitPPS}/>
 
             </div>
             </div>
@@ -712,14 +725,23 @@ var PutFront = React.createClass({
         }
         break;
         case appConstants.UDP_PUT_FRONT_BIN_SCAN:
+        var adjustStyleOnSplitPPS = "";
         this._modalContent='';
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          if(this.state.PutFrontChecklistData){
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+        }
           this._component = (
             <div className='grid-container'>
               <Modal/>
             <div className='main-container udp-flow'>
-            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} docked = {this.state.selectedTotes}/>
+            <CheckList checklistData = {this.state.PutFrontChecklistData}
+                                            checklistIndex = {this.state.PutFrontChecklistIndex} />  
+
+            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
+            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null}
+             docked = {this.state.selectedTotes}  ruleset={'withBorder'} customizeClassSplitPPS={adjustStyleOnSplitPPS}/>
 
             </div>
             <div className = 'cancel-scan'>

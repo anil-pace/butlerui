@@ -300,7 +300,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan", "pick_front_container_break", "pick_front_checklist"],
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan", "pick_front_container_break", "pick_front_checklist", "pick_front_skip_tote", "pick_front_skip_bin"],
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot Barcode",

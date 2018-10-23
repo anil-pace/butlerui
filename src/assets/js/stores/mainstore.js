@@ -793,8 +793,13 @@ getOrderID: function () {
         return _seatData.button_press_allowed;
     },
 
-    getCarryingUnitButtonStatus: function(){
-        return _seatData.button_press_id === "dock_tote" ? _seatData.button_press_allowed : null;
+    getButtonStatus: function(){
+        if(_seatData.button_press_id === "dock_tote" || _seatData.button_press_id === "skip_bin"){
+            return _seatData.button_press_allowed;
+        } 
+        else{
+            return null;
+        }
     },
 
     clearNotifications: function () {
@@ -3027,20 +3032,22 @@ setCurrentSeat: function (data) {
 
             break;
 
+            case appConstants.PICK_FRONT_SKIP_TOTE:
             case appConstants.PICK_FRONT_DOCK_TOTE:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["udpBinMapDetails"] =this.getUDPMapDetails(),
-            data["groupOrientation"] =this._getBinMapOrientation(),
-            data["selectedTotes"] =this.getSelectedTotes()
-            data["PickCurrentBin"] = this._getSelectedBinID();
-            data['PickFrontChecklistData']=this.getChecklistDockData();
-            data['PickFrontChecklistIndex']=this.getChecklistDockIdx();
-            data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["udpBinMapDetails"] =this.getUDPMapDetails(),
+                data["groupOrientation"] =this._getBinMapOrientation(),
+                data["selectedTotes"] =this.getSelectedTotes()
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data['PickFrontChecklistData']=this.getChecklistDockData();
+                data['PickFrontChecklistIndex']=this.getChecklistDockIdx();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
             break;
 
             case appConstants.PICK_FRONT_ONE_STEP_SCAN:
@@ -3071,7 +3078,7 @@ setCurrentSeat: function (data) {
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-                data["PickFrontCarryingUnitBtnEnable"] = this.getCarryingUnitButtonStatus();
+                data["PickFrontCarryingUnitBtnEnable"] = this.getButtonStatus();
                 break;
             
             case appConstants.PICK_FRONT_UNDOCK_TOTE:
@@ -3318,14 +3325,17 @@ setCurrentSeat: function (data) {
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             break;
+
+            case appConstants.PICK_FRONT_SKIP_BIN:
             case appConstants.PICK_FRONT_NO_FREE_BIN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
             break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:

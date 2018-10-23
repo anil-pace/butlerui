@@ -275,7 +275,8 @@ callAPItoGetData:function(data){
                                                     navMessagesJson={this.props.navMessagesJson}/>);
 
                         checklistData = <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                                    checklistIndex = {this.state.PickFrontChecklistIndex} />
+                                                   checklistIndex = {this.state.PickFrontChecklistIndex} 
+                                                    />
             
                         this._component = (
                             <div className='grid-container'>
@@ -605,7 +606,21 @@ else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
+            
+            case appConstants.PICK_FRONT_SKIP_BIN:
             case appConstants.PICK_FRONT_NO_FREE_BIN:
+                var skipDockingButton;
+                var skipDockingBtnEnable = this.state.PickFrontSkipDockingBtnEnable;
+                if(skipDockingBtnEnable) {
+                    skipDockingButton = (<Button1 disabled={!skipDockingBtnEnable} 
+                                                    text={_("Skip docking")} 
+                                                    module={appConstants.PICK_FRONT} 
+                                                    action={appConstants.SKIP_DOCKING} 
+                                                    color={"black"}/>);
+                }
+                else{
+                    skipDockingButton = "";
+                }
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
@@ -615,6 +630,9 @@ else {
                             <Modal />
                             <div className='main-container'>
                                 <Spinner />
+                            </div>
+                            <div className='btn-actions-skip-docking'>
+                                {skipDockingButton}
                             </div>
                         </div>
                     );
@@ -1188,7 +1206,8 @@ else {
                 break;
                 
                 case appConstants.PICK_FRONT_DOCK_TOTE:
-                    var  rackType="";
+                case appConstants.PICK_FRONT_SKIP_TOTE: 
+                    var rackType = "";
                     var adjustStyleOnSplitPPS = "";
                     var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
                     var cancelButton;
@@ -1214,7 +1233,9 @@ else {
                                 <Modal />
                                 <div className='main-container'>
                                 <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                            checklistIndex = {this.state.PickFrontChecklistIndex} />
+                                           checklistIndex = {this.state.PickFrontChecklistIndex} 
+                                           skipDockingBtnStatus = {this.state.PickFrontSkipDockingBtnEnable}
+                                            />
                                 <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
                                             groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} 
                                             customizeClassSplitPPS={adjustStyleOnSplitPPS}

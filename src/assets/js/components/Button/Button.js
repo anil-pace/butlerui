@@ -257,20 +257,9 @@ switch (module) {
                                 data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+
                             case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
                                 data["event_name"] = appConstants.CANCEL_SCAN_ALL;
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;
-
-                            case appConstants.CONFIRM_TOTE_SEND_TO_SERVER_MODAL:
-                                data["event_name"] = appConstants.CONFIRM_TOTE;
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;
-
-                            case appConstants.CANCEL_TOTE_SEND_TO_SERVER_MODAL:
-                                data["event_name"] = appConstants.CANCEL_TOTE;
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
                                 break;
@@ -279,9 +268,39 @@ switch (module) {
                                 data["event_name"] = appConstants.NEW_CARRYING_UNIT;
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(appConstants.PICK_FRONT, appConstants.NEW_CARRYING_UNIT);
-                               break;    
+                               break;  
+                               
+                            case appConstants.CONFIRM_TOTE_SEND_TO_SERVER_MODAL:
+                               data["event_name"] = appConstants.CONFIRM_TOTE;
+                               ActionCreators.postDataToInterface(data);
+                               closeModalBox();
+                               break;
 
-                            case appConstants.CANCEL_SCAN_MODAL:
+                           case appConstants.CANCEL_TOTE_SEND_TO_SERVER_MODAL:
+                               data["event_name"] = appConstants.CANCEL_TOTE;
+                               ActionCreators.postDataToInterface(data);
+                               closeModalBox();
+                               break;
+                               
+                            case appConstants.SKIP_DOCKING:
+                               data["event_name"] = appConstants.SKIP_DOCKING;
+                               ActionCreators.postDataToInterface(data);
+                               this.showModal(appConstants.PICK_FRONT, appConstants.SKIP_DOCKING);
+                              break; 
+
+                            case appConstants.CONFIRM_SKIP_DOCKING_SEND_TO_SERVER_MODAL:
+                              data["event_name"] = appConstants.CONFIRM_SKIP_DOCKING;
+                              ActionCreators.postDataToInterface(data);
+                              closeModalBox();
+                              break;
+
+                            case appConstants.CANCEL_SKIP_DOCKING_SEND_TO_SERVER_MODAL:
+                                data["event_name"] = appConstants.CANCEL_SKIP_DOCKING;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;
+
+                              case appConstants.CANCEL_SCAN_MODAL:
                                 this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
                                break; 
                             

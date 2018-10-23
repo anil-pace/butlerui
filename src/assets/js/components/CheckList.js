@@ -1,5 +1,7 @@
 var React = require('react');
 var utils  = require('../utils/utils.js');
+var Button1 = require("./Button/Button");
+var appConstants = require('../constants/appConstants');
 
 var CheckList = React.createClass({
 
@@ -55,7 +57,22 @@ var CheckList = React.createClass({
     },
 
     render: function() {
+        var skipDockingButton;
         var tableData = this.getTableRows();
+        var skipDockingBtnEnable = this.props.skipDockingBtnStatus? this.props.skipDockingBtnStatus:"";
+        if(skipDockingBtnEnable) {
+            skipDockingButton = (<div className='btn-actions-skip-docking'>
+                                        <Button1 disabled={!skipDockingBtnEnable} 
+                                            text={_("Skip docking")} 
+                                            module={appConstants.PICK_FRONT} 
+                                            action={appConstants.SKIP_DOCKING} 
+                                            color={"black"}/>
+                                </div>);
+        }
+        else{
+            skipDockingButton = "";
+        }
+
         return (
             <div className="table-wrapper-checklist">
                 <table className="table">                 
@@ -63,6 +80,7 @@ var CheckList = React.createClass({
                     {tableData}
                   </tbody>
                 </table>
+                {skipDockingButton}
             </div>
         );
     }

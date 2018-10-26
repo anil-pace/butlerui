@@ -2363,7 +2363,7 @@ setCurrentSeat: function (data) {
                 "scan_details": {
                     "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
-                    "kq_allowed": _seatData.Current_box_details.length?true:false
+                    "kq_allowed": _seatData.enable_kq ? true:false /* BSS-10640 */
 
                 }
             };

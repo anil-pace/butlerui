@@ -1407,11 +1407,14 @@ getReconcileLooseItemsData: function () {
 
     });
      if (_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0) {
-        data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
+        var tableRows =[new self.tableCol("", "enabled", false, "large", false, true, false, false),
             new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-            new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-            new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
-            ]);
+            new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            ] ;
+            if(!_seatData.k_deep_audit){
+                tableRows.push(new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false))
+            }
+        data["tableRows"].push(tableRows);
     }
 
     if (data["tableRows"].length > 0) {

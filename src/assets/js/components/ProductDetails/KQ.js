@@ -510,7 +510,7 @@ mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTIT
     
 }
 
-    else if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
+    else if(_scanDetails.total_qty != 0){
         this._qtyComponent = (
           <div id={!hideCounters?'textbox':'textbox-counter'}>
             <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>

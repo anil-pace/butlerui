@@ -3,7 +3,7 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
-var  _updatedQty = 0,_putUpdatedQty=0, _scanDetails = {},_keypress = false;
+var  _updatedQty = 0,_putPickUpdatedQty=0, _scanDetails = {},_keypress = false;
 function generateExcessNotification () {
     var data={};
     data["code"] = resourceConstants.CLIENTCODE_008;
@@ -498,10 +498,11 @@ var KQ = React.createClass({
     var hideCounters = !!this.props.hideCounters;
 if((mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  
 mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK ||
-mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY) && _scanDetails.total_qty != 0){
+mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY ||appConstants.PICK_FRONT_MORE_ITEM_SCAN 
+||appConstants.PICK_FRONT_WORKING_TABLE ||appConstants.PICK_FRONT_PACKING_BOX ||appConstants.PICK_FRONT_PACKING_ITEM_SCAN) && _scanDetails.total_qty != 0){
     this._qtyComponent = (
         <div id={!hideCounters?'textbox':'textbox-counter'}>
-          <input id="keyboard" className="current-quantity" key="text_1" value={_putUpdatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
+          <input id="keyboard" className="current-quantity" key="text_1" value={_putPickUpdatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
           <span className="separator">/</span>
           <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
         </div>
@@ -530,14 +531,14 @@ mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTIT
         if(this.props.scanDetailsMissing == undefined && this.props.scanDetailsDamaged == undefined && this.props.scanDetailsGood == undefined  ){
              this.checkKqAllowed();
             this.handleTotalQty();
-            _putUpdatedQty=parseInt(this.props.scanDetails.current_qty);
+            _putPickUpdatedQty=parseInt(this.props.scanDetails.current_qty);
             _updatedQty = parseInt(this.props.scanDetails.current_qty);
             _scanDetails = this.props.scanDetails;
 
 
         }
         else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
-            _putUpdatedQty=parseInt(this.props.scanDetailsGood.current_qty);
+            _putPickUpdatedQty=parseInt(this.props.scanDetailsGood.current_qty);
             _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
             _scanDetails = this.props.scanDetailsGood;
             this.checkKqAllowed();

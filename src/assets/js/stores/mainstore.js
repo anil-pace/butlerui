@@ -1129,32 +1129,54 @@ getOrderID: function () {
 
     },
 
-    getDamageReconcileData:function(){
+getDamageReconcileData:function(){
         var data = {};
         data["header"] = [];
         data["tableRows"] = [];
         var self=this;
         var packBarcodeDamagedQty=0;
         var subPackBarcodeDamagedQty=0;
+        var eachBarcodeDamagedQty = 0;
+        var tableRows = [];
         if(_seatData.k_deep_audit)
         {
             _seatData.box_barcode_damage.map(function (val, ind) {
                 if (val.type===appConstants.OUTER_PACK)
-                    packBarcodeDamagedQty = val.damage_count;
+                    packBarcodeDamagedQty+= val.damage_count;
                 else{
-                    subPackBarcodeDamagedQty=val.damage_count;
+                    subPackBarcodeDamagedQty+=val.damage_count;
                 }
             });
+            if(_seatData.loose_item_barcode_damage){
+                eachBarcodeDamagedQty = _seatData.loose_item_barcode_damage
+            }
             if(_seatData.box_barcode_damage.length!=0){
-                data["tableRows"].push([new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
-                    ]);
+                tableRows.push(new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false));
+                if(packBarcodeDamagedQty){
+                    tableRows.push(new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if(subPackBarcodeDamagedQty){
+                    tableRows.push(new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if(eachBarcodeDamagedQty){
+                    tableRows.push(new self.tableCol(eachBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true));
+                }
+                data["tableRows"].push(tableRows);
             }
             if (data["tableRows"].length > 0) {
                 data["header"].push(new this.tableCol(_("Damage Barcode"), "header", false, "small", false, true, true, false));
-                data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Packs") : _seatData.Possible_Container_Names.container_level_1, "header", false, "small", false, false, true, false, true));
-                data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Sub-Packs") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
+                if(packBarcodeDamagedQty){
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Packs") : _seatData.Possible_Container_Names.container_level_2, "header", false, "small", false, false, true, false, true));
+                }
+                if(subPackBarcodeDamagedQty){
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Sub-Packs") : _seatData.Possible_Container_Names.container_level_1, "header", false, "small", false, false, true, false, true));
+                }
+                if(eachBarcodeDamagedQty){
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Eaches") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
+                }
+                
+                
+                
             }
         }
         return data;

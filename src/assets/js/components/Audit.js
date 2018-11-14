@@ -326,25 +326,25 @@ if(this.state.AuditExceptionStatus == false){
   this._cancelStatus = '';
 }
 if(this.state.AuditPackData["tableRows"].length > 0){
-  this._packData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditPackData}/></div>);
+  this._packData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditPackData} className="audit_scan"/></div>);
 
 }else{
   this._packData = '';
 }
 if(this.state.AuditSubPackData["tableRows"].length > 0){
-  this._subPackData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditSubPackData} /></div>);
+  this._subPackData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditSubPackData} className="audit_scan" /></div>);
 
 }else{
   this._subPackData = '';
 }
 if(looseItemsData){
-  this._looseItemData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {looseItemsData} /></div>);
+  this._looseItemData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {looseItemsData} className="audit_scan" /></div>);
 }
 else{
   this._looseItemData="";
 }
 if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
-      this._looseItems = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditLooseItemsData} /></div>);
+      this._looseItems = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditLooseItemsData} className="audit_scan" /></div>);
     }else{
       this._looseItems = '';
     }

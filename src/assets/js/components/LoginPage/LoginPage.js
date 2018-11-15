@@ -8,6 +8,7 @@ var Operator = require('../Operator');
 var allSvgConstants = require('../../constants/svgConstants');
 var resourceConstants = require('../../constants/resourceConstants');
 var utils = require('../../utils/utils.js');
+var appConstants=require('../../constants/appConstants');
 
 var virtualKeyBoard_login, _seat_name = null;
 function getState(){
@@ -43,7 +44,6 @@ var LoginPage = React.createClass({
     console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);
-    //CommonActions.clearNotification(); Removing this clear notification to enable pop-up modal after login 
   }, 
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
@@ -71,7 +71,6 @@ var LoginPage = React.createClass({
       initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
-        //$(".authNotify").css("display","none"); 
       },
       
       accepted: function(e, keypressed, el) {
@@ -104,7 +103,6 @@ var LoginPage = React.createClass({
       initialFocus: true,      
       visible : function(e, keypressed, el){
         el.value = '';
-        //$(".authNotify").css("display","none"); 
       },
       
       accepted: function(e, keypressed, el) {
@@ -133,111 +131,143 @@ var LoginPage = React.createClass({
        $('.errorNotify').css('display','none');
   },
   render: function(){
-    var d = new Date();
-    var n = d.getFullYear();   
-    var seatData;
-    var locale = window.sessionStorage.getItem("localeData");
-    var _languageDropDown=(
-              <select className="selectLang" value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-                  <option value="en-US">{"English"}</option>
-                  <option value="ja-JP">{"日本語"}</option>
-                  <option value="de-DE">{"Deutsche"}</option>
-                  <option value="zh-ZH">{"中文"}</option>
-                  <option value="fr-FR">{"Français"}</option>
-                  <option value="es-ES">{"Español"}</option>
-                  <option value="nl">{"Dutch"}</option>
-              </select>
-      );
-    var display = this.state.flag === true ? 'block' : 'none';
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
     if(this.state.seatList.length > 0){
-          var parseSeatID;
-          seatData = this.state.seatList.map(function(data, index){ 
-            if(data.hasOwnProperty('seat_type')){
-               parseSeatID = null;
-               return (
-                  <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_name.split("_").join(" ")}</option>
-                )
-            }else{
-              parseSeatID = data.split('_');
-              _seat_name = data;
-              seat_name = parseSeatID[0] +' '+parseSeatID[1];
-              if (seat_name.charAt(seat_name.length - 1) == '#') {
-                seat_name = seat_name.substr(0, seat_name.length - 1);
-              }
-              if (_seat_name.charAt(_seat_name.length - 1) == '#') {
-                _seat_name = _seat_name.substr(0, _seat_name.length - 1);
-              }
-              return (
-                <header className="ppsSeat" key={'pps' + index}  >PPS {data.split('_').join(" ")}</header>
-              )
-            }
-          });
-          if(parseSeatID != null){
-            var ppsOption = seatData;
+      var parseSeatID;
+      seatData = this.state.seatList.map(function(data, index){ 
+        if(data.hasOwnProperty('seat_type')){
+           parseSeatID = null;
+           return (
+              <option key={'pps' + index} value={data.seat_name} >PPS {data.seat_name.split("_").join(" ")}</option>
+            )
+        }else{
+          parseSeatID = data.split('_');
+          _seat_name = data;
+          seat_name = parseSeatID[0] +' '+parseSeatID[1];
+          if (seat_name.charAt(seat_name.length - 1) == '#') {
+            seat_name = seat_name.substr(0, seat_name.length - 1);
           }
-          else{
-            _seat_name = null;
-            var ppsOption =  <select className="selectPPS"  ref='seat_name'>{seatData}</select> ;
+          if (_seat_name.charAt(_seat_name.length - 1) == '#') {
+            _seat_name = _seat_name.substr(0, _seat_name.length - 1);
           }
-
-      }else{
-
-      }
-      if(this.state.flag === false){
-        if(this.state.showError != null){
-            errorClass = 'ErrorMsg showErr';
-            this.disableLoginButton();
-        } else{
-            errorClass = 'ErrorMsg'
+          return (
+            <header className="ppsSeat" key={'pps' + index}  >PPS {data.split('_').join(" ")}</header>
+          )
         }
-       
-        return (
-        <div>
-          <div className="headerLoginPage">
-                  <div className="logo">
-                    <img className="imgLogo" src={allSvgConstants.gorLogo} />
-                  </div>
-                  <div className="header-actions">
-                      <img className="mapImg" src={allSvgConstants.headerbg} />
-                  </div>
-          </div>
-          <div className="bodyContent">
-         
-                <div className="bodyLoginPage">
-                    <div className="factoryImage">
-                        <img src ={allSvgConstants.factoryImg} />
-                    </div>
-                    <div className="userFormLoginPage">
-                        <form>
-                            {ppsOption}
-              <div className={errorClass}><span>{_(this.state.showError)}</span>
+      });
+      if(parseSeatID != null){
+        var ppsOption = seatData;
+      }
+      else{
+        _seat_name = null;
+        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+      }
 
-              </div>
-              <div className="form-group"> 
-                <label >{_(resourceConstants.USERNAME)}</label>
+  }else{
+
+  }
+  var _languageDropDown=(
+    <div className="selectWrapper">
+    <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
+        <option value="en-US">{"English"}</option>
+        <option value="ja-JP">{"日本語"}</option>
+        <option value="de-DE">{"Deutsche"}</option>
+        <option value="zh-ZH">{"中文"}</option>
+        <option value="fr-FR">{"Français"}</option>
+        <option value="es-ES">{"Español"}</option>
+        <option value="nl">{"Dutch"}</option>
+    </select>  
+    <span className="tiltButton"></span>
+</div>
+);
+  if(this.state.flag === false){
+    if(this.state.showError != null){
+        errorClass = 'ErrorMsg showErr';
+        this.disableLoginButton();
+    } else{
+        errorClass = 'ErrorMsg'
+    }
+  
+
+
+
+    return(
+    <div className="containerLogin">
+        <header className="heading">
+        <div className="logo">
+        <img className="imgLogo" src={allSvgConstants.logo} />
+        </div>
+        <div className="languageDropDown">
+          <span className="langText">{appConstants.LANGUAGE}</span>
+        {this.state.getLang?'':_languageDropDown}
+        </div>
+        </header>
+        <div className="subHeading">
+        <div className="langText">{appConstants.LOGINTEXT}</div>
+        <div className="selectWrapper">
+        {ppsOption}
+        <span className="tiltButton"></span>
+      </div>
+        <div className={errorClass}><span>{_(this.state.showError)}</span></div>
+        </div>
+       
+        <main>
+
+        <div className="keyboardLogin">
+
+<div className="unameContainer">
+                <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
+                 <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
+                 <span className="iconPlace"></span>
                   <input type="text" className
                   ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
-              </div>
-
-              <div className="form-group">
-                <label >{_(resourceConstants.PASSWORD)}</label>
+                 </div> 
+</div>
+  
+<div className="passContainer">
+                <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
+                <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
+                <span className="iconPlace"></span>
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
-              </div>
-               
-               {this.state.getLang?'':_languageDropDown}
-
-              <input type="button" className="btn btn-default loginButton loginButton" id="loginBtn" disabled onClick={this.handleLogin} value={_('Login')} />
-          </form>
-          </div>
-                </div>
-            </div>
-            <div className="copyright">
-                Copyright &copy; {n} GreyOrange Pte Ltd
-            </div>
         </div>
-      );
-    }
-     else{ 
+        <div className={errorClass}><span>{_("username/password is invalid.Please try again.")}</span></div>
+        </div>
+
+<div className="buttonContainer">
+        <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('Login')} />
+</div>
+     
+        
+        </div>
+
+        <div className="divider">
+        <span className="dividerUpper"></span>
+        <div className="dividerText">OR</div>
+        <span className="dividerBelow"></span>
+        </div>
+
+        <div className="scanIdLogin">
+        <div className="outerDiv">
+        <div className="rightUpper"></div>
+        <div className="leftUpper"></div>
+        <div className="rightBelow"></div>
+        <div className="leftBelow"></div>
+        <div className="scanLogo"></div>
+        <span> Scan ID card to login.</span>
+        
+        
+        </div>
+        </div>
+        </main>
+        <footer>
+        Copyright &copy; {currentYear} GreyOrange Pte Ltd
+        </footer>
+  </div>
+    )
+  }
+
+    else{ 
       return(
          <div className="main">
             <Operator />
@@ -245,8 +275,6 @@ var LoginPage = React.createClass({
         
       )
     }
-
-    
   }
 });
 

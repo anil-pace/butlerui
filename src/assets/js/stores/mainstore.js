@@ -917,7 +917,7 @@ getOrderID: function () {
         return _seatData.exception_allowed;
     },
     orphanSearchAllowed: function () {
-        return _seatData.orphan_search_allowed||true;
+        return _seatData.item_search_enabled||false;
     },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;

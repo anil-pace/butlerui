@@ -751,5 +751,6 @@ function server_messages_list() {
     _("Total: ");
     _("Scan excess entities");
     _("Dis-associate");
+    _("LOGIN"); 
 }
 

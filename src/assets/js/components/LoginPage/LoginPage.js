@@ -238,11 +238,13 @@ var LoginPage = React.createClass({
         </div>
 
 <div className="buttonContainer">
-        <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('Login')} />
+        <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('LOGIN')} />
 </div>
      
         
         </div>
+
+        {/*
 
         <div className="divider">
         <span className="dividerUpper"></span>
@@ -262,6 +264,7 @@ var LoginPage = React.createClass({
         
         </div>
         </div>
+        */}
         </main>
         <footer>
         Copyright &copy; {currentYear} GreyOrange Pte Ltd

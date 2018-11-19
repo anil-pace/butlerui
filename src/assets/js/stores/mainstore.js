@@ -39,6 +39,8 @@ _finishAuditFlag = true;
 _errorPopupDisabled = false;
 _cancelButtonClicked = false;
 _auditModalStatus = false;
+_boiConfig=null;
+_itemSearchEnabled = false;
 
 var modalContent = {
     data: "",
@@ -916,8 +918,14 @@ getOrderID: function () {
     getExceptionAllowed: function () {
         return _seatData.exception_allowed;
     },
+    setOrphanSearchAllowed: function (data) {
+        _itemSearchEnabled = data;
+    },
+    setBOIConfig: function (data) {
+        _boiConfig = data;
+    },
     orphanSearchAllowed: function () {
-        return _seatData.item_search_enabled||false;
+        return _itemSearchEnabled;
     },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
@@ -2412,6 +2420,9 @@ setCurrentSeat: function (data) {
         _seatData.scan_allowed = true;
         utils.getOrphanItemData(data, _seatData.seat_name);
     },
+    getBOIConfigData: function (data) {
+        utils.getBOIConfig();
+    },
     getItemData:function(){
         if(_seatData.utility)
         return _seatData.utility;
@@ -2444,6 +2455,13 @@ setCurrentSeat: function (data) {
         else if(type==="orphanSearch" || type==="orphanSearchStart"){
             _seatData["screen_id"] = appConstants.ITEM_SEARCH_RESULT;
         }
+        else if(type==="BOI_CONFIG"){
+            this.setBOIConfig(data || null);
+            this.updateSeatData((data && data.item_search_enabled) || false,"ITEM_SEARCH_CONFIG")
+        }
+        else if(type === "ITEM_SEARCH_CONFIG"){
+            this.setOrphanSearchAllowed(data)
+        }
        else if(type=="itemSearch")
             _seatData["screen_id"] = appConstants.ITEM_SEARCH;
        
@@ -2472,14 +2490,16 @@ setCurrentSeat: function (data) {
             this.generateNotification(dataNotification);
         }
         else {
-            if (_seatData.notification_list.length > 0) {
+            if (_seatData && _seatData.notification_list.length > 0) {
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
             }
         }
+        if(_seatData){
         _seatData["utility"] = data;
         _seatData["loader"]=(data===true)?true:false;
         this.setCurrentSeat(_seatData);
+        }
         console.log(_seatData);
     },
 
@@ -3763,6 +3783,10 @@ AppDispatcher.register(function (payload) {
         break;
         case appConstants.ORPHAN_ITEM_DATA:
         mainstore.getOrphanItemData(action.data);
+        mainstore.emitChange();
+        break;
+        case appConstants.GET_BOI_CONFIG:
+        mainstore.getBOIConfigData();
         mainstore.emitChange();
         break;
         case appConstants.UPDATE_SEAT_DATA:

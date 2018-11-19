@@ -636,7 +636,7 @@ var PutBack = React.createClass({
                         <div className="textBoxContainer">
                          <span className="barcode"></span>
                         {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
-                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                         <TextEditor callAPItoGetData={this.callAPItoGetData}/>
                         </div>
                         </div>
                     </div>

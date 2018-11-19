@@ -5,10 +5,13 @@ var ReactDOM = require('react-dom');
 var LoginForm = require('./components/LoginPage/LoginPage');
 
 var Operator = require('./components/Operator');
-
+var ActionCreators = require('./actions/CommonActions');
 var App = React.createClass({
   getInitialState: function(){
     return null;
+  },
+  componentWillMount: function(){
+    ActionCreators.getBOIConfig();
   },
   render: function(){
     return (

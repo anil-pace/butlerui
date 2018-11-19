@@ -278,8 +278,11 @@ var commonActions = {
       data:data
     });
    },
-
-
+   getBOIConfig : function(){
+    AppDispatcher.handleAction({
+      actionType: appConstants.GET_BOI_CONFIG
+    });
+   },
    updateSeatData : function(data, type, status, method){
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,

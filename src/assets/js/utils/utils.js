@@ -253,17 +253,24 @@ getOrphanItemData : function(data, seat_name){
 
     }).done(function(response) {
             CommonActions.updateSeatData(response.data, "orphanSearch");  
-    }).fail(function(jqXhr) {    
-        console.log('Connection Issue');
+    }).fail(function(jqXhr) {
         CommonActions.updateSeatData([], "orphanSearch"); 
         
     });
     
 },
-
-
-
-
+getBOIConfig : function(){
+    $.ajax({
+        type: 'GET',
+         url: configConstants.BOI_CONFIG 
+    }).done(function(response) {
+            CommonActions.updateSeatData(response, "BOI_CONFIG");  
+    }).fail(function(jqXhr) {
+        CommonActions.updateSeatData(null, "BOI_CONFIG"); 
+        
+    });
+    
+},
 updatePeripherals : function(data, method, seat_name){
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];

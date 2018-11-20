@@ -199,12 +199,12 @@ var LoginPage = React.createClass({
         <img className="imgLogo" src={allSvgConstants.logo} />
         </div>
         <div className="languageDropDown">
-          <span className="langText">{appConstants.LANGUAGE}</span>
+          <span className="langText">{_(appConstants.LANGUAGE)}</span>
         {this.state.getLang?'':_languageDropDown}
         </div>
         </header>
         <div className="subHeading">
-        <div className="langText">{appConstants.LOGINTEXT}</div>
+        <div className="langText">{_(appConstants.LOGINTEXT)}</div>
         <div className="selectWrapper">
         {ppsOption}
         <span className="tiltButton"></span>

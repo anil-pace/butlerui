@@ -234,11 +234,11 @@ var LoginPage = React.createClass({
         </header>
         <div className="subHeading">
         <div className="langText">{_(appConstants.LOGINTEXT)}</div>
-        <div className="selectWrapper">
+        <div className={this.state.showPPSError? "selectWrapper borderError": "selectWrapper borderSuccess"}>
         {ppsOption}
         <span className="tiltButton"></span>
       </div>
-        <div className={errorClass}><span>{_(this.state.showError)}</span></div>
+        {/*<div className={errorClass}><span>{_(this.state.showError)}</span></div>*/}
         <div className={this.state.showPPSError? 'ppsError showError':'ppsError noError'}><span>{_("PPS Station needs to be selected to login.")}</span></div>
         </div>
        

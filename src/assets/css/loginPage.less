@@ -4,6 +4,7 @@
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(14, 1fr);
     height: 100vh;
+    
     header {
         grid-column: 1 / span 12;
         grid-row: 1 /span 1;
@@ -66,7 +67,7 @@
             .selectPPS{
                 width:100%;
                 background:transparent;
-                border:1px solid #6C6C6C;
+                //border:1px solid #6C6C6C;
                 -webkit-appearance: none;
                 padding: 10px;
                 border-radius: 0;
@@ -87,10 +88,17 @@
                 border-color: black transparent transparent transparent;
 
             }
-
+        }
+        .borderError{
+            border: 1px solid red;
+            height: 7.6vh;
+        }
+        .borderSuccess{
+            border: 1px solid #6C6C6C;
+            height: 7.6vh;
         }
         .ppsError{
-            margin-top: 70px;
+            //margin-top: 70px;
             color: red;
             &.showError{
                 display: block

@@ -19,7 +19,8 @@ function getState(){
       password : '',
       showError: loginstore.getErrorMessage(),
       getLang : loginstore.getLang(),
-      getCurrentLang : loginstore.getCurrentLang()
+      getCurrentLang : loginstore.getCurrentLang(),
+      showPPSError: false
   }
 }
 
@@ -31,6 +32,17 @@ var LoginPage = React.createClass({
   handleLogin: function(e){ 
   if(_seat_name == null){
     _seat_name = this.refs.seat_name.value;
+    if(_seat_name === "none"){
+      this.setState({
+        showPPSError: true
+      });
+      return false
+    }
+    else{
+      this.setState({
+        showPPSError: false
+      });
+    }
   }
     var data = {
         'data_type': 'auth',
@@ -45,6 +57,21 @@ var LoginPage = React.createClass({
     utils.generateSessionId();
     CommonActions.login(data);
   }, 
+
+  handleDropDown: function(e){
+    _seat_name = this.refs.seat_name.value;
+    if(_seat_name !== "none"){
+      this.setState({
+        showPPSError: false
+      });
+    }
+    else{
+      this.setState({
+        showPPSError: true
+      });
+    }
+  },
+
   componentDidMount: function(){
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
@@ -161,7 +188,9 @@ var LoginPage = React.createClass({
       }
       else{
         _seat_name = null;
-        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name' onChange={this.handleDropDown}>
+        <option value="none">Select PPS Station</option>
+        {seatData}</select> ;
       }
 
   }else{
@@ -184,7 +213,7 @@ var LoginPage = React.createClass({
   if(this.state.flag === false){
     if(this.state.showError != null){
         errorClass = 'ErrorMsg showErr';
-        this.disableLoginButton();
+       // this.disableLoginButton();
     } else{
         errorClass = 'ErrorMsg'
     }
@@ -210,6 +239,7 @@ var LoginPage = React.createClass({
         <span className="tiltButton"></span>
       </div>
         <div className={errorClass}><span>{_(this.state.showError)}</span></div>
+        <div className={this.state.showPPSError? 'ppsError showError':'ppsError noError'}><span>{_("PPS Station needs to be selected to login.")}</span></div>
         </div>
        
         <main>

@@ -173,7 +173,7 @@ var LoginPage = React.createClass({
   var _languageDropDown=(
     <div className="selectWrapper">
     <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-        <option value="en-US">{"English"}</option>
+        <option value="en-US">{"English (United States)"}</option>
         <option value="ja-JP">{"日本語"}</option>
         <option value="de-DE">{"Deutsche"}</option>
         <option value="zh-ZH">{"中文"}</option>

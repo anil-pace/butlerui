@@ -2444,16 +2444,19 @@ setCurrentSeat: function (data) {
         return rowconfig;
     },
     updateSeatData: function (data, type, status, method) {
-        _peripheralScreen = true;
+        
         var dataNotification = {};
 
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
+            _peripheralScreen = true;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+            _peripheralScreen = true;
         }
         else if(type==="orphanSearch" || type==="orphanSearchStart"){
             _seatData["screen_id"] = appConstants.ITEM_SEARCH_RESULT;
+            _peripheralScreen = true;
         }
         else if(type==="BOI_CONFIG"){
             this.setBOIConfig(data || null);
@@ -2462,8 +2465,11 @@ setCurrentSeat: function (data) {
         else if(type === "ITEM_SEARCH_CONFIG"){
             this.setOrphanSearchAllowed(data)
         }
-       else if(type=="itemSearch")
-            _seatData["screen_id"] = appConstants.ITEM_SEARCH;
+       else if(type=="itemSearch"){
+        _seatData["screen_id"] = appConstants.ITEM_SEARCH;
+            _peripheralScreen = true;
+       }
+            
        
         if (status == "success") {
             if (method == "POST")

@@ -131,6 +131,7 @@ var LoginPage = React.createClass({
        $('.errorNotify').css('display','none');
   },
   render: function(){
+    var isScannerLoginEnabled = mainstore.loginScannerAllowed();
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
     if(this.state.seatList.length > 0){
@@ -188,9 +189,13 @@ var LoginPage = React.createClass({
     } else{
         errorClass = 'ErrorMsg'
     }
-  
 
-
+    if(isScannerLoginEnabled){
+      var keyboardLoginClass = "keyboardLogin";
+    }
+    else{
+      var keyboardLoginClass = "keyboardLogin alignCenter"; 
+    }
 
     return(
     <div className="containerLogin">
@@ -214,54 +219,53 @@ var LoginPage = React.createClass({
        
         <main>
 
-        <div className="keyboardLogin">
+        <div className={keyboardLoginClass}>
 
-<div className="unameContainer">
-                <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
-                 <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
-                 <span className="iconPlace"></span>
-                  <input type="text" className
-                  ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
-                 </div> 
-</div>
-  
-<div className="passContainer">
-                <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
-                <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
-                <span className="iconPlace"></span>
-                  <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
+        <div className="unameContainer">
+                        <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
+                        <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
+                        <span className="iconPlace"></span>
+                          <input type="text" className
+                          ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
+                        </div> 
         </div>
-        <div className={errorClass}><span>{_("username/password is invalid.Please try again.")}</span></div>
-        </div>
+          
+        <div className="passContainer">
+                        <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
+                        <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
+                        <span className="iconPlace"></span>
+                          <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
+                </div>
+                <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div>
+                </div>
 
-<div className="buttonContainer">
-        <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('LOGIN')} />
-</div>
-     
+        <div className="buttonContainer">
+                <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('LOGIN')} />
+        </div>
+            
         
         </div>
 
-        {/*
+        {isScannerLoginEnabled ? 
+          (<div className="divider">
+          <span className="dividerUpper"></span>
+          <div className="dividerText">OR</div>
+          <span className="dividerBelow"></span>
+          </div>) : ""}
 
-        <div className="divider">
-        <span className="dividerUpper"></span>
-        <div className="dividerText">OR</div>
-        <span className="dividerBelow"></span>
-        </div>
+        {isScannerLoginEnabled ? (
+          <div className="scanIdLogin">
+          <div className="outerDiv">
+          <div className="rightUpper"></div>
+          <div className="leftUpper"></div>
+          <div className="rightBelow"></div>
+          <div className="leftBelow"></div>
+          <div className="scanLogo"></div>
+          <span> Scan ID card to login.</span>
+          </div>
+          </div>
+        ) : ""}
 
-        <div className="scanIdLogin">
-        <div className="outerDiv">
-        <div className="rightUpper"></div>
-        <div className="leftUpper"></div>
-        <div className="rightBelow"></div>
-        <div className="leftBelow"></div>
-        <div className="scanLogo"></div>
-        <span> Scan ID card to login.</span>
-        
-        
-        </div>
-        </div>
-        */}
         </main>
         <footer>
         Copyright &copy; {currentYear} GreyOrange Pte Ltd

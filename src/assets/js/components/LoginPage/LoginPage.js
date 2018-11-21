@@ -213,7 +213,7 @@ var LoginPage = React.createClass({
   if(this.state.flag === false){
     if(this.state.showError != null){
         errorClass = 'ErrorMsg showErr';
-       // this.disableLoginButton();
+        this.disableLoginButton();
     } else{
         errorClass = 'ErrorMsg'
     }
@@ -239,7 +239,7 @@ var LoginPage = React.createClass({
         <span className="tiltButton"></span>
       </div>
         {/*<div className={errorClass}><span>{_(this.state.showError)}</span></div>*/}
-        <div className={this.state.showPPSError? 'ppsError showError':'ppsError noError'}><span>{_("PPS Station needs to be selected to login.")}</span></div>
+        <div className={this.state.showPPSError? 'ppsError showError':'ppsError noError'}><span>{_("PPS station needs to be selected for login.")}</span></div>
         </div>
        
         <main>

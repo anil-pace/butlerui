@@ -182,6 +182,14 @@ var LoginPage = React.createClass({
     <span className="tiltButton"></span>
 </div>
 );
+
+var _dividerWrapper = (<div className="divider">
+                <span className="dividerUpper"></span>
+                <div className="dividerText">OR</div>
+                <span className="dividerBelow"></span>
+                </div>
+);
+
   if(this.state.flag === false){
     if(this.state.showError != null){
         errorClass = 'ErrorMsg showErr';
@@ -191,10 +199,10 @@ var LoginPage = React.createClass({
     }
 
     if(isScannerLoginEnabled){
-      var keyboardLoginClass = "keyboardLogin";
+      var keyboardLoginClass = "keyboardLogin"; // show keyboard login + scanner login
     }
     else{
-      var keyboardLoginClass = "keyboardLogin alignCenter"; 
+      var keyboardLoginClass = "keyboardLogin alignCenter";  // show keyboard login only
     }
 
     return(
@@ -246,12 +254,7 @@ var LoginPage = React.createClass({
         
         </div>
 
-        {isScannerLoginEnabled ? 
-          (<div className="divider">
-          <span className="dividerUpper"></span>
-          <div className="dividerText">OR</div>
-          <span className="dividerBelow"></span>
-          </div>) : ""}
+        {isScannerLoginEnabled ? _dividerWrapper : "" }
 
         {isScannerLoginEnabled ? (
           <div className="scanIdLogin">

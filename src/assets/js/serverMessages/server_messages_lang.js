@@ -752,5 +752,8 @@ function server_messages_list() {
     _("Scan excess entities");
     _("Dis-associate");
     _("LOGIN"); 
+    _("Language");
+    _("Username");
+    _("Login to Butler System");
 }
 

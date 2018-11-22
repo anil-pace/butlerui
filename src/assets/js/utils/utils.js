@@ -161,8 +161,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         utils.storeSession(webSocketData);
         utils.postDataToWebsockets(webSocketData);
     }).fail(function(data,jqXHR, textStatus, errorThrown) {
-        //CommonActions.showErrorMessage(data.responseJSON.error);
-        CommonActions.showErrorMessage(data.status);
+        CommonActions.showErrorMessage(data.responseJSON.error);
     });
 
 },

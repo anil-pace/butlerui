@@ -45,7 +45,25 @@ var LoginPage = React.createClass({
     utils.generateSessionId();
     CommonActions.login(data);
   }, 
+  componentDidUpdate:function(){
+    this.refs.hiddenText.focus()
+    
+    
+  },
   componentDidMount: function(){
+    
+    //this.nameInput.focus();
+  
+    // $("#hiddenText").focus();
+    
+    $('body').on('keypress', function(e) {
+      // 3 = e.which code for numpad +
+      // 107 = String.fromCharCode(43);
+      if (e.which === 13) {
+       alert (document.getElementById('hiddenText').value)
+      }
+    });
+    
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
@@ -61,19 +79,21 @@ var LoginPage = React.createClass({
       layout: 'custom',
       customLayout: {
         'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift} ','{space}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,      
+      initialFocus: true,
+
       visible : function(e, keypressed, el){
         el.value = '';
       },
       
       accepted: function(e, keypressed, el) {
+        alert('pressed')
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
@@ -100,12 +120,13 @@ var LoginPage = React.createClass({
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,      
+      initialFocus: true,
       visible : function(e, keypressed, el){
         el.value = '';
       },
-      
+     
       accepted: function(e, keypressed, el) {
+        
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
@@ -234,7 +255,7 @@ var _dividerWrapper = (<div className="divider">
                         <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
                         <span className="iconPlace"></span>
                           <input type="text" className
-                          ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
+                          ="form-control" id="username" placeholder={_('Enter username')} ref='username' valueLink={this.linkState('username')} />
                         </div> 
         </div>
           
@@ -242,7 +263,7 @@ var _dividerWrapper = (<div className="divider">
                         <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
                         <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
                         <span className="iconPlace"></span>
-                          <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
+                          <input type="password" className="form-control" id="password" placeholder={_('Enter password')} ref='password' valueLink={this.linkState('password')} />
                 </div>
                 <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div>
                 </div>
@@ -265,10 +286,11 @@ var _dividerWrapper = (<div className="divider">
           <div className="leftBelow"></div>
           <div className="scanLogo"></div>
           <div> Scan ID card to login.</div>
+          <div className={errorClass}><span>{_("ID Card authentication failed.")}</span></div>
           </div>
           </div>
         ) : ""}
-
+          <input type="text" id="hiddenText" ref='hiddenText' style={{"width":"2px", "opacity":"0"}}></input>
         </main>
         <footer>
         Copyright &copy; {currentYear} GreyOrange Pte Ltd

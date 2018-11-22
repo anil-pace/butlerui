@@ -290,19 +290,34 @@ main {
             border-bottom: none;
             border-left: none;
             right: 0;
+            &.success{
+                border-top-color: #1E95FF;
+                border-right-color: #1E95FF;
+            }
+            &.error{
+                border-top-color: red;
+                border-right-color: red;
+            }
         }
+        
         .leftUpper{
             height: 23px;
             width: 23px;
             position:absolute;
             border-top-color: #1E95FF;
-           
+            border-left-color: #1E95FF;
             border-style: solid;
             border-width: 4px;
-           
-            border-left-color: #1E95FF;
             border-right:none;
             border-bottom: none;
+            &.success{
+                border-top-color: #1E95FF;
+                border-left-color: #1E95FF;
+            }
+            &.error{
+                border-top-color: red;
+                border-left-color:red;
+            }
         }
         .rightBelow{
             height: 23px;
@@ -311,11 +326,19 @@ main {
             position: absolute;
             right: 0;
             border-right-color: #1E95FF;
+            border-bottom-color: #1E95FF;
             border-style: solid;
             border-width: 4px;
-            border-bottom-color: #1E95FF;
             border-left: none;
             border-top:none;
+            &.success{
+                border-right-color: #1E95FF;
+                border-bottom-color: #1E95FF;
+            }
+            &.error{
+                border-right-color: red;
+                border-bottom-color: red;
+            }
         }
         .leftBelow{
             height: 23px;
@@ -328,6 +351,14 @@ main {
             border-left-color: #1E95FF;
             border-top:none;
             border-right:none;
+            &.success{
+                border-bottom-color: #1E95FF;;
+                border-left-color: #1E95FF;
+            }
+            &.error{
+                border-bottom-color: red;
+                border-left-color: red;
+            }
         }
         .scanLogo{
             background: url(../images/boi_icons.svg) no-repeat;

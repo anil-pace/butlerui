@@ -133,6 +133,16 @@ var LoginPage = React.createClass({
   render: function(){
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
+
+    var errorMessageToDisplay;
+    switch(this.state.showError){
+      case 401: // Authentication error
+        errorMessageToDisplay = "Username/Password is invalid. Please try again.";
+        break;
+      case 403: //Forbidden //UNauthorized
+        errorMessageToDisplay = "Username/Password is unauthorized. Please try again.";
+        break;
+    }
     if(this.state.seatList.length > 0){
       var parseSeatID;
       seatData = this.state.seatList.map(function(data, index){ 
@@ -231,7 +241,10 @@ var LoginPage = React.createClass({
                 <span className="iconPlace"></span>
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
         </div>
-        <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div>
+
+        {/*<div className={errorClass}><span>{_(this.state.showError)}</span></div> */}
+        <div className={errorClass}><span>{errorMessageToDisplay}</span></div>
+       {/* <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div> */}
         </div>
 
 <div className="buttonContainer">

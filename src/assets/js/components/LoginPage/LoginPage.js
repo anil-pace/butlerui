@@ -231,7 +231,7 @@ var LoginPage = React.createClass({
                 <span className="iconPlace"></span>
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
         </div>
-        <div className={errorClass}><span>{_("username/password is invalid.Please try again.")}</span></div>
+        <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div>
         </div>
 
 <div className="buttonContainer">

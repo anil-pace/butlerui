@@ -144,7 +144,7 @@ var LoginPage = React.createClass({
         break;
     }
     if(this.state.seatList.length > 0){
-      var parseSeatID;
+      var parseSeatID, ppsOption, showTiltButton;
       seatData = this.state.seatList.map(function(data, index){ 
         if(data.hasOwnProperty('seat_type')){
            parseSeatID = null;
@@ -167,11 +167,13 @@ var LoginPage = React.createClass({
         }
       });
       if(parseSeatID != null){
-        var ppsOption = seatData;
+        ppsOption = <span style={{"font-size": "24px", "font-weight": "400"}}>{seatData}</span>;
+        showTiltButton = "";
       }
       else{
         _seat_name = null;
-        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        showTiltButton = (<span className="tiltButton"></span>);
       }
 
   }else{
@@ -217,7 +219,8 @@ var LoginPage = React.createClass({
         <div className="langText">{appConstants.LOGINTEXT}</div>
         <div className="selectWrapper">
         {ppsOption}
-        <span className="tiltButton"></span>
+        {showTiltButton}
+        
       </div>
         <div className={errorClass}><span>{_(this.state.showError)}</span></div>
         </div>
@@ -242,9 +245,7 @@ var LoginPage = React.createClass({
                   <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
         </div>
 
-        {/*<div className={errorClass}><span>{_(this.state.showError)}</span></div> */}
-        <div className={errorClass}><span>{errorMessageToDisplay}</span></div>
-       {/* <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div> */}
+       <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div>
         </div>
 
 <div className="buttonContainer">

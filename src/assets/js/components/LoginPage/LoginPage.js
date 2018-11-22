@@ -264,7 +264,7 @@ var _dividerWrapper = (<div className="divider">
           <div className="rightBelow"></div>
           <div className="leftBelow"></div>
           <div className="scanLogo"></div>
-          <span> Scan ID card to login.</span>
+          <div> Scan ID card to login.</div>
           </div>
           </div>
         ) : ""}

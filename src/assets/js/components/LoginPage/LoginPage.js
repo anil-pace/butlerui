@@ -134,15 +134,6 @@ var LoginPage = React.createClass({
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
 
-    var errorMessageToDisplay;
-    switch(this.state.showError){
-      case 401: // Authentication error
-        errorMessageToDisplay = "Username/Password is invalid. Please try again.";
-        break;
-      case 403: //Forbidden //UNauthorized
-        errorMessageToDisplay = "Username/Password is unauthorized. Please try again.";
-        break;
-    }
     if(this.state.seatList.length > 0){
       var parseSeatID, ppsOption, showTiltButton;
       seatData = this.state.seatList.map(function(data, index){ 

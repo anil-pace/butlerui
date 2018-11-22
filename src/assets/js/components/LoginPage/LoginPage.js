@@ -173,7 +173,7 @@ var LoginPage = React.createClass({
   var _languageDropDown=(
     <div className="selectWrapper">
     <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-        <option value="en-US">{"English"}</option>
+        <option value="en-US">{"English (United States)"}</option>
         <option value="ja-JP">{"日本語"}</option>
         <option value="de-DE">{"Deutsche"}</option>
         <option value="zh-ZH">{"中文"}</option>
@@ -202,12 +202,12 @@ var LoginPage = React.createClass({
         <img className="imgLogo" src={allSvgConstants.logo} />
         </div>
         <div className="languageDropDown">
-          <span className="langText">{appConstants.LANGUAGE}</span>
+          <span className="langText">{_(appConstants.LANGUAGE)}</span>
         {this.state.getLang?'':_languageDropDown}
         </div>
         </header>
         <div className="subHeading">
-        <div className="langText">{appConstants.LOGINTEXT}</div>
+        <div className="langText">{_(appConstants.LOGINTEXT)}</div>
         <div className="selectWrapper">
         {ppsOption}
         {showTiltButton}

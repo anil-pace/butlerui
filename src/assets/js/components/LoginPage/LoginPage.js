@@ -227,6 +227,7 @@ var _dividerWrapper = (<div className="divider">
         leftUpper = "leftUpper showErr";
         rightBelow = "rightBelow showErr";
         leftBelow = "leftBelow showErr";
+        plusIconClass = "plusIcon showErr";
 
         this.disableLoginButton();
     } else{
@@ -236,6 +237,7 @@ var _dividerWrapper = (<div className="divider">
         leftUpper = "leftUpper";
         rightBelow = "rightBelow";
         leftBelow = "leftBelow";
+        plusIconClass = "plusIcon";
     }
 
     if(isScannerLoginEnabled){
@@ -303,8 +305,9 @@ var _dividerWrapper = (<div className="divider">
           <div className={leftUpper}></div>
           <div className={rightBelow}></div>
           <div className={leftBelow}></div>
-          <div className="scanLogo"></div><span className="plusIcon"></span>
-          <div> Scan ID card to login.</div>
+          <div className="scanLogo"></div>
+          <span className={plusIconClass}>&#43;</span>
+          <div style={{"fontSize":"2vh"}}> Scan ID card to login.</div>
           <div className={scannerErrorClass}><span>{_("ID Card authentication failed.")}</span></div>
           </div>
           </div>

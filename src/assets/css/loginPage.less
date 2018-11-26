@@ -354,19 +354,22 @@ main {
         }
         
         .plusIcon{
-            span:after {
-                content: '\002B';
-                border: 1px solid red;
+                position: absolute;
+                top: 46%;
+                right: 48%;
                 font-size: 40px;
-                color: black;
-            }
+                color: #1E95FF;
+                &.showErr{
+                    color: red;
+                }
         }
 
         .scannerErrorMsg{
             display:none;
             word-wrap: break-word;
             span{
-                font-size:1em;
+                font-size:2vh;
+                font-weight: 400;
                 color:red;
             }
             &.showErr{

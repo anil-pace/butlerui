@@ -362,17 +362,14 @@ main {
             }
         }
 
-        .ErrorMsg{
-            border:1px solid red;
-            opacity:0.4;            
+        .scannerErrorMsg{
             display:none;
             word-wrap: break-word;
             span{
-                font-size:2em;
-                color:black;
-                padding-left:1%;
+                font-size:1em;
+                color:red;
             }
-            .showErr{
+            &.showErr{
                 display:block;
             }
         }

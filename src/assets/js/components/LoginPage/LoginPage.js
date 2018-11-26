@@ -52,8 +52,6 @@ var LoginPage = React.createClass({
   },
   componentDidMount: function(){
     $('body').on('keypress', function(e) {
-      // 3 = e.which code for numpad +
-      // 107 = String.fromCharCode(43);
       if (e.which === 13) {
        //alert (document.getElementById('hiddenText').value)
        if(_seat_name == null){
@@ -224,6 +222,7 @@ var _dividerWrapper = (<div className="divider">
   if(this.state.flag === false){
     if(this.state.showError != null){
         errorClass = 'ErrorMsg showErr';
+        scannerErrorClass = 'scannerErrorMsg showErr';
         rightUpper = "rightUpper showErr";
         leftUpper = "leftUpper showErr";
         rightBelow = "rightBelow showErr";
@@ -232,6 +231,7 @@ var _dividerWrapper = (<div className="divider">
         this.disableLoginButton();
     } else{
         errorClass = 'ErrorMsg';
+        scannerErrorClass = 'scannerErrorMsg';
         rightUpper = "rightUpper";
         leftUpper = "leftUpper";
         rightBelow = "rightBelow";
@@ -305,7 +305,7 @@ var _dividerWrapper = (<div className="divider">
           <div className={leftBelow}></div>
           <div className="scanLogo"></div><span className="plusIcon"></span>
           <div> Scan ID card to login.</div>
-          <div className={errorClass}><span>{_("ID Card authentication failed.")}</span></div>
+          <div className={scannerErrorClass}><span>{_("ID Card authentication failed.")}</span></div>
           </div>
           </div>
         ) : ""}

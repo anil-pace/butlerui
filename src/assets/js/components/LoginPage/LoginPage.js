@@ -51,16 +51,26 @@ var LoginPage = React.createClass({
     
   },
   componentDidMount: function(){
-    
-    //this.nameInput.focus();
-  
-    // $("#hiddenText").focus();
-    
     $('body').on('keypress', function(e) {
       // 3 = e.which code for numpad +
       // 107 = String.fromCharCode(43);
       if (e.which === 13) {
-       alert (document.getElementById('hiddenText').value)
+       //alert (document.getElementById('hiddenText').value)
+       if(_seat_name == null){
+          _seat_name = this.refs.seat_name.value;
+        }
+       var data = {
+        'data_type': 'auth',
+        'data': {
+              'username': this.refs.hiddenText.value,
+              'password': this.refs.hiddenText.value,
+              'seat_name': _seat_name
+              
+          }
+      }
+      console.log(data);
+      utils.generateSessionId();
+      CommonActions.login(data);
       }
     });
     
@@ -93,7 +103,7 @@ var LoginPage = React.createClass({
       },
       
       accepted: function(e, keypressed, el) {
-        alert('pressed')
+        //alert('pressed')
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
@@ -214,9 +224,18 @@ var _dividerWrapper = (<div className="divider">
   if(this.state.flag === false){
     if(this.state.showError != null){
         errorClass = 'ErrorMsg showErr';
+        rightUpper = "rightUpper showErr";
+        leftUpper = "leftUpper showErr";
+        rightBelow = "rightBelow showErr";
+        leftBelow = "leftBelow showErr";
+
         this.disableLoginButton();
     } else{
-        errorClass = 'ErrorMsg'
+        errorClass = 'ErrorMsg';
+        rightUpper = "rightUpper";
+        leftUpper = "leftUpper";
+        rightBelow = "rightBelow";
+        leftBelow = "leftBelow";
     }
 
     if(isScannerLoginEnabled){
@@ -280,11 +299,11 @@ var _dividerWrapper = (<div className="divider">
         {isScannerLoginEnabled ? (
           <div className="scanIdLogin">
           <div className="outerDiv">
-          <div className="rightUpper"></div>
-          <div className="leftUpper"></div>
-          <div className="rightBelow"></div>
-          <div className="leftBelow"></div>
-          <div className="scanLogo"></div>
+          <div className={rightUpper}></div>
+          <div className={leftUpper}></div>
+          <div className={rightBelow}></div>
+          <div className={leftBelow}></div>
+          <div className="scanLogo"></div><span className="plusIcon"></span>
           <div> Scan ID card to login.</div>
           <div className={errorClass}><span>{_("ID Card authentication failed.")}</span></div>
           </div>

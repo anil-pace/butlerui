@@ -290,11 +290,7 @@ main {
             border-bottom: none;
             border-left: none;
             right: 0;
-            &.success{
-                border-top-color: #1E95FF;
-                border-right-color: #1E95FF;
-            }
-            &.error{
+            &.showErr{
                 border-top-color: red;
                 border-right-color: red;
             }
@@ -310,11 +306,7 @@ main {
             border-width: 4px;
             border-right:none;
             border-bottom: none;
-            &.success{
-                border-top-color: #1E95FF;
-                border-left-color: #1E95FF;
-            }
-            &.error{
+            &.showErr{
                 border-top-color: red;
                 border-left-color:red;
             }
@@ -331,11 +323,7 @@ main {
             border-width: 4px;
             border-left: none;
             border-top:none;
-            &.success{
-                border-right-color: #1E95FF;
-                border-bottom-color: #1E95FF;
-            }
-            &.error{
+            &.showErr{
                 border-right-color: red;
                 border-bottom-color: red;
             }
@@ -351,11 +339,7 @@ main {
             border-left-color: #1E95FF;
             border-top:none;
             border-right:none;
-            &.success{
-                border-bottom-color: #1E95FF;;
-                border-left-color: #1E95FF;
-            }
-            &.error{
+            &.showErr{
                 border-bottom-color: red;
                 border-left-color: red;
             }
@@ -368,6 +352,31 @@ main {
            display: inline-block;
            margin-top: 30%;
         }
+        
+        .plusIcon{
+            span:after {
+                content: '\002B';
+                border: 1px solid red;
+                font-size: 40px;
+                color: black;
+            }
+        }
+
+        .ErrorMsg{
+            border:1px solid red;
+            opacity:0.4;            
+            display:none;
+            word-wrap: break-word;
+            span{
+                font-size:2em;
+                color:black;
+                padding-left:1%;
+            }
+            .showErr{
+                display:block;
+            }
+        }
+
        }
 
     }

@@ -63,13 +63,17 @@ var LoginPage = React.createClass({
     CommonActions.login(data);
   }, 
 
-  componentDidUpdate:function(){
-    this.refs.hiddenText.focus()
-  },
+  // componentDidUpdate:function(){
+  //   if(this.refs.hiddenText){
+  //     this.refs.hiddenText.focus()
+  //   }
+  // },
   componentDidMount: function(){
     var self = this;
+    //self.refs.hiddenText.focus()
     document.getElementById('hiddenText').value = ""; // empty the previous scanned value
     $('body').on('keypress', function(e) {
+      console.log("e.which is=======>" + e.which);
       if (e.which === 13) {
           //alert(document.getElementById('hiddenText').value);
           var hiddenTextValue = document.getElementById('hiddenText').value;

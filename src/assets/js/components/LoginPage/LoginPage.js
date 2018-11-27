@@ -11,6 +11,8 @@ var utils = require('../../utils/utils.js');
 var appConstants=require('../../constants/appConstants');
 
 var virtualKeyBoard_login, _seat_name = null;
+var _mode = null;
+
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -19,7 +21,7 @@ function getState(){
       password : '',
       showError: loginstore.getErrorMessage(),
       getLang : loginstore.getLang(),
-      getCurrentLang : loginstore.getCurrentLang()
+      getCurrentLang : loginstore.getCurrentLang(),
   }
 }
 
@@ -28,11 +30,12 @@ var LoginPage = React.createClass({
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){ 
-  if(_seat_name == null){
-    _seat_name = this.refs.seat_name.value;
-  }
-    var data = {
+  handleLogin: function(mode, barcodeValue){ 
+    if(_seat_name == null){
+      _seat_name = this.refs.seat_name.value;
+    }
+    if(mode === "keyboard"){
+      var data = {
         'data_type': 'auth',
         'data': {
               'username': this.refs.username.value,
@@ -40,36 +43,39 @@ var LoginPage = React.createClass({
               'seat_name': _seat_name
               
           }
-      }
-    console.log(data);
-    utils.generateSessionId();
-    CommonActions.login(data);
-  }, 
-  componentDidUpdate:function(){
-    this.refs.hiddenText.focus()
-    
-    
-  },
-  componentDidMount: function(){
-    $('body').on('keypress', function(e) {
-      if (e.which === 13) {
-       //alert (document.getElementById('hiddenText').value)
-       if(_seat_name == null){
-          _seat_name = this.refs.seat_name.value;
-        }
-       var data = {
+      };
+      _mode = "keyboard";
+    }
+    else{
+      var data = {
         'data_type': 'auth',
         'data': {
-              'username': this.refs.hiddenText.value,
-              'password': this.refs.hiddenText.value,
+              'username': barcodeValue,
+              'password': barcodeValue,
               'seat_name': _seat_name
               
           }
       }
-      console.log(data);
-      utils.generateSessionId();
-      CommonActions.login(data);
-      }
+      _mode = "scanner";
+    }
+    console.log(data);
+    utils.generateSessionId();
+    CommonActions.login(data);
+  }, 
+
+  componentDidUpdate:function(){
+    this.refs.hiddenText.focus()
+  },
+  componentDidMount: function(){
+    var self = this;
+    document.getElementById('hiddenText').value = ""; // empty the previous scanned value
+    $('body').on('keypress', function(e) {
+      if (e.which === 13) {
+          //alert(document.getElementById('hiddenText').value);
+          var hiddenTextValue = document.getElementById('hiddenText').value;
+          document.getElementById('hiddenText').value = "";
+          self.handleLogin("scanner", hiddenTextValue);
+       }
     });
     
     mainstore.addChangeListener(this.onChange);
@@ -134,7 +140,6 @@ var LoginPage = React.createClass({
       },
      
       accepted: function(e, keypressed, el) {
-        
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
@@ -221,16 +226,27 @@ var _dividerWrapper = (<div className="divider">
 
   if(this.state.flag === false){
     if(this.state.showError != null){
-        errorClass = 'ErrorMsg showErr';
-        scannerErrorClass = 'scannerErrorMsg showErr';
-        rightUpper = "rightUpper showErr";
-        leftUpper = "leftUpper showErr";
-        rightBelow = "rightBelow showErr";
-        leftBelow = "leftBelow showErr";
-        plusIconClass = "plusIcon showErr";
+       if(_mode === "scanner"){
+          scannerErrorClass = 'scannerErrorMsg showErr';
+          rightUpper = "rightUpper showErr";
+          leftUpper = "leftUpper showErr";
+          rightBelow = "rightBelow showErr";
+          leftBelow = "leftBelow showErr";
+          plusIconClass = "plusIcon showErr";
+          errorClass = 'ErrorMsg';
+       }
+       else{
+          errorClass = 'ErrorMsg showErr';
+          scannerErrorClass = 'scannerErrorMsg';
+          rightUpper = "rightUpper";
+          leftUpper = "leftUpper";
+          rightBelow = "rightBelow";
+          leftBelow = "leftBelow";
+          plusIconClass = "plusIcon";
+       }
+      this.disableLoginButton();
 
-        this.disableLoginButton();
-    } else{
+    } else{ // when user lands on the login page, don't show any error kind of error
         errorClass = 'ErrorMsg';
         scannerErrorClass = 'scannerErrorMsg';
         rightUpper = "rightUpper";
@@ -273,7 +289,7 @@ var _dividerWrapper = (<div className="divider">
 
         <div className="unameContainer">
                         <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
-                        <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
+                        <div className={(this.state.showError && _mode==="keyboard")?"textboxContainer error":"textboxContainer"}>
                         <span className="iconPlace"></span>
                           <input type="text" className
                           ="form-control" id="username" placeholder={_('Enter username')} ref='username' valueLink={this.linkState('username')} />
@@ -282,7 +298,7 @@ var _dividerWrapper = (<div className="divider">
           
         <div className="passContainer">
                         <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
-                        <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
+                        <div className={(this.state.showError && _mode==="keyboard")?"textboxContainer error":"textboxContainer"}>
                         <span className="iconPlace"></span>
                           <input type="password" className="form-control" id="password" placeholder={_('Enter password')} ref='password' valueLink={this.linkState('password')} />
                 </div>
@@ -290,7 +306,7 @@ var _dividerWrapper = (<div className="divider">
                 </div>
 
         <div className="buttonContainer">
-                <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('LOGIN')} />
+                <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin.bind(this, "keyboard")} value={_('LOGIN')} />
         </div>
             
         

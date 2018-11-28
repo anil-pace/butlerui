@@ -165,6 +165,34 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     });
 
 },
+getAuthTokenForScanner : function(data){
+        sessionStorage.setItem('sessionData', null);
+        var loginData ={
+            "barcode" : data.data.barcode
+        }
+        $.ajax({
+            type: 'POST',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.BARCODE_AUTH,
+            data: JSON.stringify(loginData),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
+        }).done(function(response) {
+            var webSocketData = {
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(webSocketData);
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            CommonActions.showErrorMessage(data.responseJSON.error);
+        });
+},
 sessionLogout:function(data){
     sessionStorage.setItem('sessionData', null);
     location.reload();

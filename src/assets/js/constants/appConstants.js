@@ -6,6 +6,7 @@ var appConstants = {
 	API : '/api',
 	AUTH : '/auth',
 	TOKEN : '/token',
+	BARCODE_AUTH : 'barcode-auth',
 	LOGOUT : '/logout',
 	PPS_SEATS : "/pps_seats/",
 	SEND_DATA : '/send_data',

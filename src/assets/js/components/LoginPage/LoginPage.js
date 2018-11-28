@@ -89,16 +89,14 @@ var LoginPage = React.createClass({
       var data = {
           'data_type': 'auth',
           'data': {
-                'username': barcodeValue,
-                'password': barcodeValue,
+                'barcode': barcodeValue,
                 'seat_name': _seat_name
-                
             }
         }
       _mode = "scanner";
       console.log(data);
       utils.generateSessionId();
-      CommonActions.login(data);
+      CommonActions.loginViaScanner(data);
     }, 
 
   componentDidUpdate:function(){

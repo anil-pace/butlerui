@@ -2,6 +2,7 @@ var appConstants = {
 	WEBSOCKET_CONNECT : "Websocket connection",
 	LIST_SEATS : "LIST_SEATS",
 	LOGIN: "LOGIN",
+	LOGIN_VIA_SCANNER: "LOGIN_VIA_SCANNER",
 	API : '/api',
 	AUTH : '/auth',
 	TOKEN : '/token',

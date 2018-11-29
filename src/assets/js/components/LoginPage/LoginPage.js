@@ -66,22 +66,32 @@ var LoginPage = React.createClass({
   componentDidUpdate:function(){
     if(this.refs.hiddenText){
       this.refs.hiddenText.focus();
-      
     }
   },
   componentDidMount: function(){
     var self = this;
+    
+    /* if enter key is hit from keyboard, do NOT call the API and vice-versa */
     $('body').on('keypress', function(e) {
       if (e.which === 13) {
-          console.log(document.getElementById('hiddenText').value);
           var hiddenTextValue = document.getElementById('hiddenText').value;
-          console.log("hiddenTextValue" + hiddenTextValue + typeof(hiddenTextValue));
+          console.log("hiddenTextValue" + hiddenTextValue);
           if(hiddenTextValue.trim()){
             console.log("api is being called");
             self.handleLogin("scanner", hiddenTextValue);
             document.getElementById('hiddenText').value = ""; // empty the previous scanned value
           }
        }
+    });
+
+    /* Shifting focus to hiddenText if user clicks/taps on any other place other than input selectors */
+    $('body').on('click', function(e) {
+      var currentFocusedElement = document.activeElement.tagName;
+      if(currentFocusedElement === "BODY"){
+          alert("shifting focus to hiddenText ");
+          self.refs.hiddenText.focus();
+          alert(document.activeElement.id);
+      }
     });
     
     mainstore.addChangeListener(this.onChange);

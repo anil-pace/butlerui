@@ -30,38 +30,43 @@ var LoginPage = React.createClass({
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(mode, barcodeValue){ 
+
+  loginViaKeyboard: function(e){ 
     if(_seat_name == null){
       _seat_name = this.refs.seat_name.value;
     }
-    if(mode === "keyboard"){
       var data = {
-        'data_type': 'auth',
-        'data': {
+          'data_type': 'auth',
+          'data': {
+                'username': this.refs.username.value,
+                'password': this.refs.password.value,
+                'seat_name': _seat_name
+                
+            }
+        }
+      _mode = "keyboard";
+      console.log(data);
+      utils.generateSessionId();
+      CommonActions.login(data);
+  }, 
+
+  loginViaScanner: function(barcodeValue){ 
+    if(_seat_name == null){
+      _seat_name = this.refs.seat_name.value;
+    }
+      var data = {
+          'data_type': 'auth',
+          'data': {
               'username': this.refs.username.value,
               'password': this.refs.password.value,
               'seat_name': _seat_name
-              
-          }
-      };
-      _mode = "keyboard";
-    }
-    else{
-      var data = {
-        'data_type': 'auth',
-        'data': {
-              'username': barcodeValue,
-              'password': barcodeValue,
-              'seat_name': _seat_name
-              
-          }
-      }
+            }
+        }
       _mode = "scanner";
-    }
-    console.log(data);
-    utils.generateSessionId();
-    CommonActions.login(data);
-  }, 
+      console.log(data);
+      utils.generateSessionId();
+      CommonActions.login(data);
+    }, 
 
   componentDidUpdate:function(){
     if(this.refs.hiddenText){
@@ -78,7 +83,7 @@ var LoginPage = React.createClass({
           console.log("hiddenTextValue" + hiddenTextValue);
           if(hiddenTextValue.trim()){
             console.log("api is being called");
-            self.handleLogin("scanner", hiddenTextValue);
+            self.loginViaScanner(hiddenTextValue);
             document.getElementById('hiddenText').value = ""; // empty the previous scanned value
           }
        }
@@ -185,7 +190,7 @@ var LoginPage = React.createClass({
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
     if(this.state.seatList.length > 0){
-      var parseSeatID;
+      var parseSeatID, ppsOption, showTiltButton;
       seatData = this.state.seatList.map(function(data, index){ 
         if(data.hasOwnProperty('seat_type')){
            parseSeatID = null;
@@ -208,11 +213,15 @@ var LoginPage = React.createClass({
         }
       });
       if(parseSeatID != null){
-        var ppsOption = seatData;
+        //var ppsOption = seatData;
+        ppsOption = <span style={{"font-size": "24px", "font-weight": "400"}}>{seatData}</span>;
+        showTiltButton = "";
       }
       else{
         _seat_name = null;
-        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        showTiltButton = (<span className="tiltButton"></span>);
+        //var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
       }
 
   }else{
@@ -221,7 +230,7 @@ var LoginPage = React.createClass({
   var _languageDropDown=(
     <div className="selectWrapper">
     <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-        <option value="en-US">{"English"}</option>
+        <option value="en-US">{"English (United States)"}</option>
         <option value="ja-JP">{"日本語"}</option>
         <option value="de-DE">{"Deutsche"}</option>
         <option value="zh-ZH">{"中文"}</option>
@@ -294,7 +303,7 @@ var _dividerWrapper = (<div className="divider">
         <div className="langText">{appConstants.LOGINTEXT}</div>
         <div className="selectWrapper">
         {ppsOption}
-        <span className="tiltButton"></span>
+        {showTiltButton}
       </div>
         <div className={errorClass}><span>{_(this.state.showError)}</span></div>
         </div>
@@ -318,11 +327,11 @@ var _dividerWrapper = (<div className="divider">
                         <span className="iconPlace"></span>
                           <input type="password" className="form-control" id="password" placeholder={_('Enter password')} ref='password' valueLink={this.linkState('password')} />
                 </div>
-                <div className={errorClass}><span>{_("Username/Password is invalid.Please try again.")}</span></div>
+                <div className={errorClass}><span>{_("Username/Password is invalid. Please try again.")}</span></div>
                 </div>
 
         <div className="buttonContainer">
-                <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin.bind(this, "keyboard")} value={_('LOGIN')} />
+                <input type="button" className="loginButton" id="loginBtn"  onClick={this.loginViaKeyboard} value={_('LOGIN')} />
         </div>
             
         

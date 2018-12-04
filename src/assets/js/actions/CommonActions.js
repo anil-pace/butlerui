@@ -20,12 +20,6 @@ var commonActions = {
       data: data
     });
   },
-  loginViaScanner: function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.LOGIN_VIA_SCANNER, 
-      data: data
-    });
-  },
   operatorSeat: function(data){ 
     AppDispatcher.handleAction({
       actionType: appConstants.OPERATOR_SEAT, 

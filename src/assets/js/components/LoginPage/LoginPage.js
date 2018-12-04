@@ -31,43 +31,36 @@ var LoginPage = React.createClass({
     return getState();
   },
 
-  loginViaKeyboard: function(e){ 
+  handleLogin: function(mode, barcodeValue){ 
     if(_seat_name == null){
       _seat_name = this.refs.seat_name.value;
     }
+    if(mode === "keyboard"){
       var data = {
-          'data_type': 'auth',
-          'data': {
-                'username': this.refs.username.value,
-                'password': this.refs.password.value,
-                'seat_name': _seat_name
-            }
-        }
+        'data_type': 'auth',
+        'data': {
+              'username': this.refs.username.value,
+              'password': this.refs.password.value,
+              'seat_name': _seat_name
+              
+          }
+      };
       _mode = "keyboard";
-      console.log(data);
-      utils.generateSessionId();
-      CommonActions.login(data);
-  }, 
-
-  loginViaScanner: function(barcodeValue){ 
-    if(_seat_name == null){
-      _seat_name = this.refs.seat_name.value;
     }
+    else{
       var data = {
-          'data_type': 'auth',
-          'data': {
-            'barcode': this.refs.hiddenText.value,
+        'data_type': 'auth',
+        'data': {
+            'barcode': barcodeValue,
             'seat_name': _seat_name
-             // 'username': "dummy",
-             // 'password': "dummy",
-             // 'seat_name': _seat_name
-            }
-        }
+          }
+      }
       _mode = "scanner";
-      console.log(data);
-      utils.generateSessionId();
-      CommonActions.login(data);
-    }, 
+    }
+    console.log(data);
+    utils.generateSessionId();
+    CommonActions.login(data);
+  },
 
   componentDidUpdate:function(){
     if(this.refs.hiddenText){
@@ -84,7 +77,7 @@ var LoginPage = React.createClass({
           console.log("hiddenTextValue" + hiddenTextValue);
           if(hiddenTextValue.trim()){
             console.log("api is being called");
-            self.loginViaScanner(hiddenTextValue);
+            self.handleLogin("scanner", hiddenTextValue);
             document.getElementById('hiddenText').value = ""; // empty the previous scanned value
           }
        }
@@ -129,7 +122,6 @@ var LoginPage = React.createClass({
       },
       
       accepted: function(e, keypressed, el) {
-        //alert('pressed')
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if(usernameValue != null && usernameValue !=''  && passwordValue != null && passwordValue != '' ){
@@ -214,7 +206,6 @@ var LoginPage = React.createClass({
         }
       });
       if(parseSeatID != null){
-        //var ppsOption = seatData;
         ppsOption = <span style={{"font-size": "24px", "font-weight": "400"}}>{seatData}</span>;
         showTiltButton = "";
       }
@@ -222,7 +213,6 @@ var LoginPage = React.createClass({
         _seat_name = null;
         ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
         showTiltButton = (<span className="tiltButton"></span>);
-        //var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
       }
 
   }else{
@@ -332,7 +322,7 @@ var _dividerWrapper = (<div className="divider">
                 </div>
 
         <div className="buttonContainer">
-                <input type="button" className="loginButton" id="loginBtn"  onClick={this.loginViaKeyboard} value={_('LOGIN')} />
+                <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin.bind(this, "keyboard")} value={_('LOGIN')} />
         </div>
             
         

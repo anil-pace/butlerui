@@ -74,9 +74,7 @@ var LoginPage = React.createClass({
     $('body').on('keypress', function(e) {
       if (e.which === 13) {
           var hiddenTextValue = document.getElementById('hiddenText').value;
-          console.log("hiddenTextValue" + hiddenTextValue);
           if(hiddenTextValue.trim()){
-            console.log("api is being called");
             self.handleLogin("scanner", hiddenTextValue);
             document.getElementById('hiddenText').value = ""; // empty the previous scanned value
           }

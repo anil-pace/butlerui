@@ -138,7 +138,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
         if(data.data.barcode){ // if barcode key is present its login via scanner mode
-            console.log("barcode is present hence it is login via scanner");
             var loginData ={
                 "username" : "dummy",
                 "password" : "dummy",
@@ -150,7 +149,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             }
         }
         else{
-            console.log("barcode is NOT present hence it is login via keyboard");
             var loginData ={
                 "username" : data.data.username,
                 "password" : data.data.password,

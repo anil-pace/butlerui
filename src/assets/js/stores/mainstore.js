@@ -2516,7 +2516,6 @@ setCurrentSeat: function (data) {
         _seatData["loader"]=(data===true)?true:false;
         this.setCurrentSeat(_seatData);
         }
-        console.log("=========================================>");
         console.log(_seatData);
     },
 

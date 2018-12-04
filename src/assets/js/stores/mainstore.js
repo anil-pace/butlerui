@@ -926,7 +926,7 @@ getOrderID: function () {
         _scannerLoginEnabled = data;
     },
     loginScannerAllowed: function () {
-        return true;
+        return _scannerLoginEnabled;
     },
     setBOIConfig: function (data) {
         _boiConfig = data;

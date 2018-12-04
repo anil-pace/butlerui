@@ -137,34 +137,51 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
-        var loginData ={
-          "username" : data.data.username,
-          "password" : data.data.password
-      }
-      $.ajax({
-        type: 'POST',
-        url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
-        data: JSON.stringify(loginData),
-        dataType: "json",
-        headers: {
-            'content-type': 'application/json',
-            'accept': 'application/json'
-        }
-    }).done(function(response) {
-        var webSocketData = {
-            'data_type': 'auth',
-            'data' : {
-                "auth-token" : response.auth_token,
-                "seat_name" : data.data.seat_name
+        if(data.data.barcode){ // if barcode key is present its login via scanner mode
+            console.log("barcode is present hence it is login via scanner");
+            var loginData ={
+                "username" : "dummy",
+                "password" : "dummy",
+                "grant_type": "password",
+                "action": "LOGIN",
+                "context": {
+                    "barcode": data.data.barcode
+                }
             }
-        };
-        utils.storeSession(webSocketData);
-        utils.postDataToWebsockets(webSocketData);
-    }).fail(function(data,jqXHR, textStatus, errorThrown) {
-        CommonActions.showErrorMessage(data.responseJSON.error);
-    });
-
+        }
+        else{
+            console.log("barcode is NOT present hence it is login via keyboard");
+            var loginData ={
+                "username" : data.data.username,
+                "password" : data.data.password,
+                "grant_type": "password",
+                "action": "LOGIN"
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
+            data: JSON.stringify(loginData),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
+        }).done(function(response) {
+            var webSocketData = {
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(webSocketData);
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            CommonActions.showErrorMessage(data.responseJSON.error);
+        });
 },
+
 sessionLogout:function(data){
     sessionStorage.setItem('sessionData', null);
     location.reload();

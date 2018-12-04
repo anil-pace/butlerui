@@ -41,7 +41,6 @@ var LoginPage = React.createClass({
                 'username': this.refs.username.value,
                 'password': this.refs.password.value,
                 'seat_name': _seat_name
-                
             }
         }
       _mode = "keyboard";
@@ -57,9 +56,11 @@ var LoginPage = React.createClass({
       var data = {
           'data_type': 'auth',
           'data': {
-              'username': this.refs.username.value,
-              'password': this.refs.password.value,
-              'seat_name': _seat_name
+            'barcode': this.refs.hiddenText.value,
+            'seat_name': _seat_name
+             // 'username': "dummy",
+             // 'password': "dummy",
+             // 'seat_name': _seat_name
             }
         }
       _mode = "scanner";
@@ -93,9 +94,9 @@ var LoginPage = React.createClass({
     $('body').on('click', function(e) {
       var currentFocusedElement = document.activeElement.tagName;
       if(currentFocusedElement === "BODY"){
-          alert("shifting focus to hiddenText ");
-          self.refs.hiddenText.focus();
-          alert(document.activeElement.id);
+          if(self.refs.hiddenText){
+            self.refs.hiddenText.focus();
+          }
       }
     });
     

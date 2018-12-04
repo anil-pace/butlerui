@@ -139,7 +139,9 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         sessionStorage.setItem('sessionData', null);
         var loginData ={
           "username" : data.data.username,
-          "password" : data.data.password
+          "password" : data.data.password,
+          "grant_type": "password",
+          "action": "LOGIN"
       }
       $.ajax({
         type: 'POST',
@@ -168,7 +170,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 getAuthTokenForScanner : function(data){
         sessionStorage.setItem('sessionData', null);
         var loginData ={
-            "barcode" : data.data.barcode
+            "username" : "dummy",
+            "password" : "dummy",
+            "grant_type": "password",
+            "action": "LOGIN",
+            "context": {
+                "barcode": data.data.barcode
+            }
         }
         $.ajax({
             type: 'POST',

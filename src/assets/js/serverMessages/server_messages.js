@@ -222,7 +222,7 @@ var serverMessages = {
     "CLIENTCODE_412" : "Login not allowed. You're already logged in",
     "CLIENTCODE_503" : "Could not connect to PPS . Please try again",
     "CLIENTCODE_403" : "PPS is Closed",
-    "CLIENTCODE_401" : "Invalid Credentials",
+    "CLIENTCODE_401" : "Username/Password is unauthorized. Please try again.",
     "Audit.A.012"    : "No Items To Reconcile",
     "CLIENTCODE_004" : "PPTL Management",
     "CLIENTCODE_005" : "Scanner Management",

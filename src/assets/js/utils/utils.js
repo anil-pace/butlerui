@@ -137,34 +137,49 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
-        var loginData ={
-          "username" : data.data.username,
-          "password" : data.data.password
-      }
-      $.ajax({
-        type: 'POST',
-        url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
-        data: JSON.stringify(loginData),
-        dataType: "json",
-        headers: {
-            'content-type': 'application/json',
-            'accept': 'application/json'
-        }
-    }).done(function(response) {
-        var webSocketData = {
-            'data_type': 'auth',
-            'data' : {
-                "auth-token" : response.auth_token,
-                "seat_name" : data.data.seat_name
+        if(data.data.barcode){ // if barcode key is present its login via scanner mode
+            var loginData ={
+                "username" : "d_____", // post discussion with platform (rahul.s)
+                "password" : "d_____", // d+(5 times _)
+                "grant_type": "password",
+                "action": "LOGIN",
+                "context": {
+                    "barcode": data.data.barcode
+                }
             }
-        };
-        utils.storeSession(webSocketData);
-        utils.postDataToWebsockets(webSocketData);
-    }).fail(function(data,jqXHR, textStatus, errorThrown) {
-        CommonActions.showErrorMessage(data.responseJSON.error);
-    });
-
+        }
+        else{
+            var loginData ={
+                "username" : data.data.username,
+                "password" : data.data.password,
+                "grant_type": "password",
+                "action": "LOGIN"
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
+            data: JSON.stringify(loginData),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
+        }).done(function(response) {
+            var webSocketData = {
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(webSocketData);
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            CommonActions.showErrorMessage(data.responseJSON.error);
+        });
 },
+
 sessionLogout:function(data){
     sessionStorage.setItem('sessionData', null);
     location.reload();
@@ -340,6 +355,7 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
+  
   console.log(data);
    switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

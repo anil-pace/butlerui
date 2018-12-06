@@ -123,8 +123,9 @@ main {
     justify-content: space-between;
     .keyboardLogin {
         width:50%;
-        margin-left: 12.5%;
-       
+        &.alignCenter{
+            margin-left: 12.5%;
+        }
     .unameContainer{
         float: right;
         clear: both;
@@ -148,12 +149,15 @@ main {
                 border:1px solid red;
             }
         .iconPlace{
-            width: 8%;
-            height: 30px;
-            //border: 1px solid black;
+            background: url(../images/boi_icons.svg) no-repeat;
+            background-position: -271px -474px;
+            width: 24px;
+            height: 21px;
             display: inline-block;
-            vertical-align: middle;
+            margin-left: 10px;
         }   
+
+       
         input{
             width: 90%;
             display: inline-block;
@@ -192,11 +196,12 @@ main {
                 border:1px solid red;
             }
         .iconPlace{
-            width: 8%;
-            height: 30px;
-            //border: 1px solid black;
-            display: inline-block;
-            vertical-align: middle;
+            background: url(../images/boi_icons.svg) no-repeat;
+           background-position: -303px -471px;
+           width: 21px;
+           height: 24px;
+           display: inline-block;
+           margin-left: 10px;
         }   
         input{
             width: 90%;
@@ -270,7 +275,7 @@ main {
     .scanIdLogin{
         width:50%;
        .outerDiv{
-        height: 80%;
+        height: 85%;
         width: 55%;
         position: relative;
         text-align: center;
@@ -285,19 +290,26 @@ main {
             border-bottom: none;
             border-left: none;
             right: 0;
+            &.showErr{
+                border-top-color: red;
+                border-right-color: red;
+            }
         }
+        
         .leftUpper{
             height: 23px;
             width: 23px;
             position:absolute;
             border-top-color: #1E95FF;
-           
+            border-left-color: #1E95FF;
             border-style: solid;
             border-width: 4px;
-           
-            border-left-color: #1E95FF;
             border-right:none;
             border-bottom: none;
+            &.showErr{
+                border-top-color: red;
+                border-left-color:red;
+            }
         }
         .rightBelow{
             height: 23px;
@@ -306,11 +318,15 @@ main {
             position: absolute;
             right: 0;
             border-right-color: #1E95FF;
+            border-bottom-color: #1E95FF;
             border-style: solid;
             border-width: 4px;
-            border-bottom-color: #1E95FF;
             border-left: none;
             border-top:none;
+            &.showErr{
+                border-right-color: red;
+                border-bottom-color: red;
+            }
         }
         .leftBelow{
             height: 23px;
@@ -323,9 +339,44 @@ main {
             border-left-color: #1E95FF;
             border-top:none;
             border-right:none;
-           
-            
+            &.showErr{
+                border-bottom-color: red;
+                border-left-color: red;
+            }
         }
+        .scanLogo{
+            background: url(../images/boi_icons.svg) no-repeat;
+           background-position: -206px -596px;
+           width: 89px;
+           height: 135px;
+           display: inline-block;
+           margin-top: 30%;
+        }
+        
+        .plusIcon{
+                position: absolute;
+                top: 42%;
+                right: 48%;
+                font-size: 40px;
+                color: #1E95FF;
+                &.showErr{
+                    color: red;
+                }
+        }
+
+        .scannerErrorMsg{
+            display:none;
+            word-wrap: break-word;
+            span{
+                font-size:2vh;
+                font-weight: 400;
+                color:red;
+            }
+            &.showErr{
+                display:block;
+            }
+        }
+
        }
 
     }

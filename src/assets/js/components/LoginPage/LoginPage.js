@@ -11,6 +11,8 @@ var utils = require('../../utils/utils.js');
 var appConstants=require('../../constants/appConstants');
 
 var virtualKeyBoard_login, _seat_name = null;
+var _mode = null;
+
 function getState(){
    return {
       flag: loginstore.getFlag(),
@@ -19,7 +21,7 @@ function getState(){
       password : '',
       showError: loginstore.getErrorMessage(),
       getLang : loginstore.getLang(),
-      getCurrentLang : loginstore.getCurrentLang()
+      getCurrentLang : loginstore.getCurrentLang(),
   }
 }
 
@@ -28,11 +30,13 @@ var LoginPage = React.createClass({
   getInitialState: function(){
     return getState();
   },
-  handleLogin: function(e){ 
-  if(_seat_name == null){
-    _seat_name = this.refs.seat_name.value;
-  }
-    var data = {
+
+  handleLogin: function(mode, barcodeValue){ 
+    if(_seat_name == null){
+      _seat_name = this.refs.seat_name.value;
+    }
+    if(mode === appConstants.KEYBOARD){
+      var data = {
         'data_type': 'auth',
         'data': {
               'username': this.refs.username.value,
@@ -40,13 +44,53 @@ var LoginPage = React.createClass({
               'seat_name': _seat_name
               
           }
+      };
+      _mode = appConstants.KEYBOARD;
+    }
+    else{
+      var data = {
+        'data_type': 'auth',
+        'data': {
+            'barcode': barcodeValue,
+            'seat_name': _seat_name
+          }
       }
+      _mode = appConstants.SCANNER;
+    }
     console.log(data);
     utils.generateSessionId();
     CommonActions.login(data);
-    //CommonActions.clearNotification(); Removing this clear notification to enable pop-up modal after login 
-  }, 
+  },
+
+  componentDidUpdate:function(){
+    if(this.refs.hiddenText){
+      this.refs.hiddenText.focus();
+    }
+  },
   componentDidMount: function(){
+    var self = this;
+    
+    /* if enter key is hit from keyboard, do NOT call the API and vice-versa */
+    $('body').on('keypress', function(e) {
+      if (e.which === 13) {
+          var hiddenTextValue = document.getElementById('hiddenText').value;
+          if(hiddenTextValue.trim()){
+            self.handleLogin(appConstants.SCANNER, hiddenTextValue);
+            document.getElementById('hiddenText').value = ""; // empty the previous scanned value
+          }
+       }
+    });
+
+    /* Shifting focus to hiddenText if user clicks/taps on any other place other than input selectors */
+    $('body').on('click', function(e) {
+      var currentFocusedElement = document.activeElement.tagName;
+      if(currentFocusedElement === "BODY"){
+          if(self.refs.hiddenText){
+            self.refs.hiddenText.focus();
+          }
+      }
+    });
+    
     mainstore.addChangeListener(this.onChange);
     loginstore.addChangeListener(this.onChange);
     CommonActions.webSocketConnection(); 
@@ -62,17 +106,17 @@ var LoginPage = React.createClass({
       layout: 'custom',
       customLayout: {
         'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}','{space}', '{a} {c}'],
-        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}','{space}', '{a} {c}']
+        'shift':   ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift} ','{space}', '{a} {c}']
       },
       css: {
         container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,      
+      initialFocus: true,
+
       visible : function(e, keypressed, el){
         el.value = '';
-        //$(".authNotify").css("display","none"); 
       },
       
       accepted: function(e, keypressed, el) {
@@ -102,12 +146,11 @@ var LoginPage = React.createClass({
       },
       reposition: true,
       alwaysOpen: false,
-      initialFocus: true,      
+      initialFocus: true,
       visible : function(e, keypressed, el){
         el.value = '';
-        //$(".authNotify").css("display","none"); 
       },
-      
+     
       accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
@@ -134,10 +177,11 @@ var LoginPage = React.createClass({
        $('.errorNotify').css('display','none');
   },
   render: function(){
+    var isScannerLoginEnabled = mainstore.loginScannerAllowed();
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
     if(this.state.seatList.length > 0){
-      var parseSeatID;
+      var parseSeatID, ppsOption, showTiltButton;
       seatData = this.state.seatList.map(function(data, index){ 
         if(data.hasOwnProperty('seat_type')){
            parseSeatID = null;
@@ -160,11 +204,13 @@ var LoginPage = React.createClass({
         }
       });
       if(parseSeatID != null){
-        var ppsOption = seatData;
+        ppsOption = <span style={{"font-size": "24px", "font-weight": "400"}}>{seatData}</span>;
+        showTiltButton = "";
       }
       else{
         _seat_name = null;
-        var ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        ppsOption =  <select className={false?"selectPPS error":"selectPPS"}  ref='seat_name'>{seatData}</select> ;
+        showTiltButton = (<span className="tiltButton"></span>);
       }
 
   }else{
@@ -173,7 +219,7 @@ var LoginPage = React.createClass({
   var _languageDropDown=(
     <div className="selectWrapper">
     <select className="selectLang"  value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-        <option value="en-US">{"English"}</option>
+        <option value="en-US">{"English (United States)"}</option>
         <option value="ja-JP">{"日本語"}</option>
         <option value="de-DE">{"Deutsche"}</option>
         <option value="zh-ZH">{"中文"}</option>
@@ -184,16 +230,52 @@ var LoginPage = React.createClass({
     <span className="tiltButton"></span>
 </div>
 );
+
+var _dividerWrapper = (<div className="divider">
+                <span className="dividerUpper"></span>
+                <div className="dividerText">OR</div>
+                <span className="dividerBelow"></span>
+                </div>
+);
+
   if(this.state.flag === false){
     if(this.state.showError != null){
-        errorClass = 'ErrorMsg showErr';
-        this.disableLoginButton();
-    } else{
-        errorClass = 'ErrorMsg'
+       if(_mode === appConstants.SCANNER){
+          scannerErrorClass = 'scannerErrorMsg showErr';
+          rightUpper = "rightUpper showErr";
+          leftUpper = "leftUpper showErr";
+          rightBelow = "rightBelow showErr";
+          leftBelow = "leftBelow showErr";
+          plusIconClass = "plusIcon showErr";
+          errorClass = 'ErrorMsg';
+       }
+       else{
+          errorClass = 'ErrorMsg showErr';
+          scannerErrorClass = 'scannerErrorMsg';
+          rightUpper = "rightUpper";
+          leftUpper = "leftUpper";
+          rightBelow = "rightBelow";
+          leftBelow = "leftBelow";
+          plusIconClass = "plusIcon";
+       }
+      this.disableLoginButton();
+
+    } else{ // when user lands on the login page, don't show any error kind of error
+        errorClass = 'ErrorMsg';
+        scannerErrorClass = 'scannerErrorMsg';
+        rightUpper = "rightUpper";
+        leftUpper = "leftUpper";
+        rightBelow = "rightBelow";
+        leftBelow = "leftBelow";
+        plusIconClass = "plusIcon";
     }
-  
 
-
+    if(isScannerLoginEnabled){
+      var keyboardLoginClass = "keyboardLogin"; // show keyboard login + scanner login
+    }
+    else{
+      var keyboardLoginClass = "keyboardLogin alignCenter";  // show keyboard login only
+    }
 
     return(
     <div className="containerLogin">
@@ -210,61 +292,57 @@ var LoginPage = React.createClass({
         <div className="langText">{appConstants.LOGINTEXT}</div>
         <div className="selectWrapper">
         {ppsOption}
-        <span className="tiltButton"></span>
+        {showTiltButton}
       </div>
         <div className={errorClass}><span>{_(this.state.showError)}</span></div>
         </div>
        
         <main>
 
-        <div className="keyboardLogin">
+        <div className={keyboardLoginClass}>
 
-<div className="unameContainer">
-                <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
-                 <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
-                 <span className="iconPlace"></span>
-                  <input type="text" className
-                  ="form-control" id="username" placeholder={_('Enter Username')} ref='username' valueLink={this.linkState('username')} />
-                 </div> 
-</div>
-  
-<div className="passContainer">
-                <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
-                <div className={this.state.showError?"textboxContainer error":"textboxContainer"}>
-                <span className="iconPlace"></span>
-                  <input type="password" className="form-control" id="password" placeholder={_('Enter Password')} ref='password' valueLink={this.linkState('password')} />
+        <div className="unameContainer">
+                        <label className="usernmeText">{_(resourceConstants.USERNAME)}</label>
+                        <div className={(this.state.showError && _mode===appConstants.KEYBOARD)?"textboxContainer error":"textboxContainer"}>
+                        <span className="iconPlace"></span>
+                          <input type="text" className
+                          ="form-control" id="username" placeholder={_('Enter username')} ref='username' valueLink={this.linkState('username')} />
+                        </div> 
         </div>
-        <div className={errorClass}><span>{_("username/password is invalid.Please try again.")}</span></div>
-        </div>
+          
+        <div className="passContainer">
+                        <label className="usernmeText">{_(resourceConstants.PASSWORD)}</label>
+                        <div className={(this.state.showError && _mode===appConstants.KEYBOARD)?"textboxContainer error":"textboxContainer"}>
+                        <span className="iconPlace"></span>
+                          <input type="password" className="form-control" id="password" placeholder={_('Enter password')} ref='password' valueLink={this.linkState('password')} />
+                </div>
+                <div className={errorClass}><span>{_("Username/Password is invalid. Please try again.")}</span></div>
+                </div>
 
-<div className="buttonContainer">
-        <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin} value={_('LOGIN')} />
-</div>
-     
+        <div className="buttonContainer">
+                <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin.bind(this, appConstants.KEYBOARD)} value={_('LOGIN')} />
+        </div>
+            
         
         </div>
 
-        {/*
+        {isScannerLoginEnabled ? _dividerWrapper : "" }
 
-        <div className="divider">
-        <span className="dividerUpper"></span>
-        <div className="dividerText">OR</div>
-        <span className="dividerBelow"></span>
-        </div>
-
-        <div className="scanIdLogin">
-        <div className="outerDiv">
-        <div className="rightUpper"></div>
-        <div className="leftUpper"></div>
-        <div className="rightBelow"></div>
-        <div className="leftBelow"></div>
-        <div className="scanLogo"></div>
-        <span> Scan ID card to login.</span>
-        
-        
-        </div>
-        </div>
-        */}
+        {isScannerLoginEnabled ? (
+          <div className="scanIdLogin">
+          <div className="outerDiv">
+          <div className={rightUpper}></div>
+          <div className={leftUpper}></div>
+          <div className={rightBelow}></div>
+          <div className={leftBelow}></div>
+          <div className="scanLogo"></div>
+          <span className={plusIconClass}>&#43;</span>
+          <div style={{"fontSize":"2vh"}}> Scan ID card to login.</div>
+          <div className={scannerErrorClass}><span>{_("ID Card authentication failed.")}</span></div>
+          </div>
+          </div>
+        ) : ""}
+          <input type="text" id="hiddenText" ref='hiddenText' style={{"width":"2px", "opacity":"0"}}></input>
         </main>
         <footer>
         Copyright &copy; {currentYear} GreyOrange Pte Ltd

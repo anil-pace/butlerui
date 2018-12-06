@@ -41,6 +41,7 @@ _cancelButtonClicked = false;
 _auditModalStatus = false;
 _boiConfig=null;
 _itemSearchEnabled = false;
+_scannerLoginEnabled = false;
 
 var modalContent = {
     data: "",
@@ -920,6 +921,12 @@ getOrderID: function () {
     },
     setOrphanSearchAllowed: function (data) {
         _itemSearchEnabled = data;
+    },
+    setLoginScannerAllowed: function (data) {
+        _scannerLoginEnabled = data;
+    },
+    loginScannerAllowed: function () {
+        return _scannerLoginEnabled;
     },
     setBOIConfig: function (data) {
         _boiConfig = data;
@@ -2444,7 +2451,6 @@ setCurrentSeat: function (data) {
         return rowconfig;
     },
     updateSeatData: function (data, type, status, method) {
-        
         var dataNotification = {};
 
         if (type === 'pptl') {
@@ -2461,9 +2467,13 @@ setCurrentSeat: function (data) {
         else if(type==="BOI_CONFIG"){
             this.setBOIConfig(data || null);
             this.updateSeatData((data && data.item_search_enabled) || false,"ITEM_SEARCH_CONFIG")
+            this.updateSeatData((data && data.login_scanner_enabled) || false,"LOGIN_SCANNER_CONFIG")
         }
         else if(type === "ITEM_SEARCH_CONFIG"){
             this.setOrphanSearchAllowed(data)
+        }
+        else if(type === "LOGIN_SCANNER_CONFIG"){
+            this.setLoginScannerAllowed(data)
         }
        else if(type=="itemSearch"){
         _seatData["screen_id"] = appConstants.ITEM_SEARCH;

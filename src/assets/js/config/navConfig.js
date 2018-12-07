@@ -544,6 +544,14 @@ var navData = {
         "message": "Scan Bin",
         "level": 2,
         "type": 'passive'
+    }],
+    [{
+        "screen_id": ["pick_back_packing_box"],
+        "code": "Common.000",
+        "image": svgConstants.scan,
+        "message": "Place packing box in bin and scan ID",
+        "showImage": true,
+        "type": 'passive'
     }]
     ],
     "search":[

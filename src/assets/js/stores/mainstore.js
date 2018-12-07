@@ -178,6 +178,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return _seatData.event
     },
 
+    getBoxBarcode:function(){
+        let BoxBarcode={};
+        if(_seatData.exception_details && _seatData.exception_details.current_packing_box){
+            BoxBarcode.CurrentBoxBarcode=_seatData.exception_details.current_packing_box;
+        }
+        if(_seatData.exception_details && _seatData.exception_details.new_packing_box){
+            BoxBarcode.NewBoxBarcode=_seatData.exception_details.new_packing_box;
+        }
+        return BoxBarcode;
+        },
+    
+   
+    getConfirmState:function(){
+        return _seatData.exception_details?_seatData.exception_details.confirm_enabled:false;
+    },
+
     getStageActiveStatus: function () {
         if (_seatData.hasOwnProperty('ppsbin_list')) {
             var flag = false;
@@ -347,7 +363,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         }
                     else if(_seatData.screen_id === appConstants.PICK_BACK_SCAN ){
                         _NavData = navConfig.pickBack[2];
-                    }    
+                    } 
+                    else if (_seatData.screen_id === appConstants.PICK_BACK_PACKING_BOX) {
+                        _NavData = navConfig.pickBack[3];
+                       
+                    }   
                     else
                         _NavData = navConfig.pickBack[0];
                 break;
@@ -3518,6 +3538,47 @@ setCurrentSeat: function (data) {
             data["PickBackSelectedBin"] = this.getSelectedBin();
             data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
             break;
+
+            case appConstants.PICK_BACK_PACKING_BOX:
+            data["PickBackNavData"] = this.getNavData();
+            data["PickBackServerNavData"] = this.getServerNavData();
+            data["PickBackScreenId"] = this.getScreenId();
+            data["BinMapDetails"] = this._getBinMapDetails();
+            data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+            data["groupOrientation"] =this._getBinMapOrientation(),
+            data["PickBackBinData"] = this.getBinData();
+            data["PickBackExceptionData"] = this.getExceptionData();
+            data["PickBackNotification"] = this.getNotificationData();
+            data["PickBackExceptionStatus"] = this.getExceptionStatus();
+            data["SplitScreenFlag"] = this._getSplitScreenFlag();
+            data["PickBackPackingBoxType"] = this.getPackingBoxType();
+            data["SplitScreenFlag"] = this._getSplitScreenFlag();
+            data["pickBackCancelButtonData"]=this.cancelScanDetails();
+        break;
+
+        case appConstants.PICK_BACK_CHANGE_PBOX_BIN:
+        data["PickBackNavData"] = this.getNavData();
+        data["PickBackBinData"] = this.getBinData();
+        data["PickBackExceptionData"] = this.getExceptionData();
+        data["PickBackServerNavData"] = this.getServerNavData();
+        data["PickBackNotification"] = this.getNotificationData();
+        data["PickBackExceptionStatus"] = this.getExceptionStatus();
+        data["PickBackScreenId"] = this.getScreenId();
+        data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
+        data["PickBackSelectedBin"] = this.getSelectedBin();
+        break;
+        case appConstants.PICK_BACK_CHANGE_PBOX_SCAN:
+        data["PickBackNavData"] = this.getNavData();
+        data["PickBackExceptionData"] = this.getExceptionData();
+        data["PickBackServerNavData"] = this.getServerNavData();
+        data["PickBackNotification"] = this.getNotificationData();
+        data["PickBackExceptionStatus"] = this.getExceptionStatus();
+        data["PickBackScreenId"] = this.getScreenId();
+        data["BoxBarcode"]=this.getBoxBarcode();
+        data["ConfirmEnabled"]=this.getConfirmState();
+        break;
+
+
 
 
             case appConstants.AUDIT_WAITING_FOR_MSU:

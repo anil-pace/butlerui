@@ -338,7 +338,7 @@ var KQ = React.createClass({
                     data["code"] = null;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
-                    //$('.ui-keyboard-preview').val(_updatedQty);
+                   
                 }
             },
             accepted: function(e, keypressed, el) {

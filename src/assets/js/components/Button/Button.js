@@ -509,6 +509,7 @@ switch (module) {
                                  data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                         
                             case appConstants.DIS_ASSOCIATE_TOTE:
                                  data["event_name"] = "pick_back_exception";
                                  data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
@@ -519,6 +520,20 @@ switch (module) {
                                  data["event_name"] = "pick_back_exception";
                                  data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
                                  data["event_data"]["type"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                                case appConstants.CANCEL_SCAN_ALL:
+                                data["event_name"] = "cancel_scan_all";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                                case appConstants.CONFIRM_BUTTON:
+                                data["event_name"] = "pick_back_exception";
+                                data["event_data"]["action"] ="confirm_button_press";
+                                ActionCreators.postDataToInterface(data);
+                              break;
+                              case appConstants.BACK_BUTTON_PRESS:
+                                data["event_name"] = "pick_back_exception";
+                                data["event_data"]["action"] ="back_button_press";
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:

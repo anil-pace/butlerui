@@ -18,7 +18,9 @@ var TabularData = require('./TabularData');
 var TextEditor=require('./ProductDetails/textEditor');
 var ItemTable= require('./itemTable')
 var Spinner = require("./Spinner/LoaderButler");
-
+var BinMap = require('./BinMap');
+var PackingDetails = require('./PrdtDetails/PackingDetails.js');
+var utils = require("../utils/utils");
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -158,6 +160,118 @@ var PickBack = React.createClass({
         break;
        
 
+        case appConstants.PICK_BACK_PACKING_BOX:
+        if (this.state.PickBackExceptionStatus == false) {
+            this._navigation = (<Navigation navData={this.state.PickBackNavData}
+                                            serverNavData={this.state.PickBackServerNavData}
+                                            navMessagesJson={this.props.navMessagesJson}/>);
+            var binComponent = "";
+            var cancelScanFlag = this.state.pickBackCancelButtonData;
+            var cancelButton;
+            if (cancelScanFlag) {
+              cancelButton = (
+                  <div >
+                    <div className = 'cancel-scan'>
+                    <Button1 disabled = {false} text = {_("Cancel Scan")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN_ALL}  color={"black"}/>
+                </div>
+            </div>);
+          }
+          else {
+              cancelButton = (<div ></div>);
+          }
+                if (this.state.OrigBinUse) {
+                    binComponent = (<div className="binsFlexWrapperContainer" style={{"display": "flex"}}>
+                        <BinsFlex binsData={this.state.PickBackBinData}
+                                  screenId={screen_id} seatType={this.state.SeatType}/>
+                        <PackingDetails boxTypeInfo={this.state.PickBackPackingBoxType}/>
+                    </div>)
+                } else {
+                    binComponent = (<div className='main-container adjust-main-container'>
+                        <Bins binsData={this.state.PickBackBinData}
+                              screenId={screen_id}/>
+                        <PackingDetails boxTypeInfo={this.state.PickBackPackingBoxType}/>
+                    </div>);
+                }
+            
+            this._component = (
+                <div className='grid-container'>
+                    <BinMap orientation={this.state.groupOrientation} 
+                            mapDetails={this.state.BinMapDetails} 
+                            selectedGroup={this.state.BinMapGroupDetails}
+                            screenClass='backFLowPackingBox'/>
+                    {binComponent}
+           {cancelButton}
+                </div>
+            );
+        } else {
+            this._component = this.getExceptionComponent();
+        }
+        break;
+        
+        case appConstants.PICK_BACK_CHANGE_PBOX_BIN:
+          this._navigation = '';
+          if (this.state.OrigBinUse) {
+            binComponent = (
+              <div className="exception1">
+                <BinsFlex
+                dataToDisassociateTote={this.state.PickBackToteDisAssociationData}
+                binsData={this.state.PickBackBinData}
+                          screenId={this.state.PickBackScreenId} 
+                          seatType={this.state.SeatType}/> 
+                          </div>
+          )
+        } else {
+            binComponent = (
+              <div className="main-container exception1">
+                <Bins binsData={this.state.PickBackBinData}
+                dataToDisassociateTote={this.state.PickBackToteDisAssociationData}
+                screenId={this.state.PickBackScreenId} 
+                seatType={this.state.SeatType}/> 
+           </div>
+           );
+        }
+      
+          this._component = (
+              <div className='grid-container exception'>
+                  <Modal/>
+                <Exception data={this.state.PickBackExceptionData}/>
+                <div className="exception-right">
+                   <ExceptionHeader data={this.state.PickBackServerNavData} />
+                   {binComponent}
+                </div>
+                <div className = 'cancel-scan'>
+                   <Button1 disabled = {false}  text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+                </div>
+            );
+        break; 
+
+        case appConstants.PICK_BACK_CHANGE_PBOX_SCAN:
+        this._component = (
+          <div className='grid-container exception'>
+              <Modal/>
+            <Exception data={this.state.PickBackExceptionData}/>
+            <div className="exception-right">
+               <ExceptionHeader data={this.state.PickBackServerNavData} />
+
+               <div className="packing-Data">
+            <div className="packingData-Text">
+              <div className="textLine1"><span className="header">{_("Current Box Barcode")}:</span><span className="textValue">{this.state.BoxBarcode.CurrentBoxBarcode?utils.get3dotTrailedText(this.state.BoxBarcode.CurrentBoxBarcode,5,5,15):"--"}</span></div>
+              <div className="textLine2"><span className="header">{_("New Box Barcode")}:</span><span className="textValue">{this.state.BoxBarcode.NewBoxBarcode?utils.get3dotTrailedText(this.state.BoxBarcode.NewBoxBarcode,5,5,15):"--"}</span></div>
+          </div>
+         <div className="packingData-Button">
+            <Button1 disabled = {false} text = {_("Back")} module ={appConstants.PICK_BACK} action={appConstants.BACK_BUTTON_PRESS}  color={"black"}/>
+            <Button1 disabled = {!this.state.ConfirmEnabled} text = {_("Confirm")} module ={appConstants.PICK_BACK} action={appConstants.CONFIRM_BUTTON}  color={"orange"}/>
+             </div>
+              </div>
+            </div>
+            
+              <div className = 'cancel-scan'>
+                   <Button1 disabled = {false}  text = {_("Cancel Exception")} module ={appConstants.PICK_BACK} action={appConstants.CANCEL_EXCEPTION_TO_SERVER}  color={"black"}/>
+                </div>
+          </div>
+        );
+        break;
         
        case appConstants.PICK_BACK_EXCEPTION_REPRINT:
        case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
@@ -167,7 +281,10 @@ var PickBack = React.createClass({
           this._navigation = '';
           if (this.state.OrigBinUse){
             binComponent = (<div className="exception1">
-                            <BinsFlex dataToDisassociateTote={this.state.PickBackToteDisAssociationData} binsData={this.state.PickBackBinData} screenId = {this.state.PickBackScreenId} seatType = {this.state.SeatType}/>
+                            <BinsFlex dataToDisassociateTote={this.state.PickBackToteDisAssociationData} 
+                            binsData={this.state.PickBackBinData} 
+                            screenId = {this.state.PickBackScreenId} 
+                            seatType = {this.state.SeatType}/>
                             </div>);
           }else{
             binComponent = (<div className="main-container exception1">

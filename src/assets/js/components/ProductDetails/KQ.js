@@ -326,7 +326,7 @@ var KQ = React.createClass({
                     $('.ui-keyboard-preview').val(9999);
                }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
-                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION && mainstore.getScreenId() != appConstants.SEARCH_ENTITY_SCAN ) ){
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
@@ -342,7 +342,7 @@ var KQ = React.createClass({
             },
             accepted: function(e, keypressed, el) {
                var regex = /^[1-9]\d*$/g 
-               if (!regex.test(e.target.value)) {
+               if (!regex.test(e.target.value)&& mainstore.getScreenId() != appConstants.SEARCH_ENTITY_SCAN) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {
                     var data = {};
@@ -366,6 +366,16 @@ var KQ = React.createClass({
                     }
                 };
             }
+            else if(mainstore.getScreenId()==appConstants.SEARCH_ENTITY_SCAN){
+                data = {
+                    "event_name": "quantity_update_from_gui",
+                    "event_data": {
+                        "quantity_updated": parseInt(e.target.value)
+                    },
+                    "source": "ui"
+                };
+            }
+            
 
             else if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
@@ -463,7 +473,14 @@ var KQ = React.createClass({
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 }
-            }else if(mainstore.getScreenId() === appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
+            }else if(mainstore.getScreenId() === appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION ||  
+            mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || 
+            mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  
+            mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || 
+            mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || 
+            mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || 
+            mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK ||
+            mainstore.getScreenId() == appConstants.SEARCH_ENTITY_SCAN ){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;

@@ -423,6 +423,10 @@ var serverMessages = {
     "UdpF.H.003" : "Scan item or {0}",
     "UdpF.H.004" : "Put item in slot and scan slot to confirm",
     "UdpF.H.005" : "Wait for MSU",
+    "Search.H.001":"Scan entity in slot and confirm",
+    "Search.H.002":"Move {0} excess item to IRT bin and confirm",
+    "Search.H.003":"Move {0} excess item to IRT bin and scan IRT bin",
+
     //location_required
     "PkF.S.001"  : {
                     "textToDisplay": "Location",

@@ -85,6 +85,12 @@ var commonActions = {
       data:data
     })
   },
+  setSearchData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_SEARCH_DATA,
+      data:data
+    })
+  },
 
   setPickBackData :function(data){
     AppDispatcher.handleAction({

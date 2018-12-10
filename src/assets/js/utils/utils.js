@@ -112,6 +112,66 @@ var utils = objectAssign({}, EventEmitter.prototype, {
        }
        return trailedText
    },   
+   displayData : function(data,serial){
+    product_info_locale = {};
+    image_url = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if(language_locale == 'null' || language_locale == null){
+      locale = 'en-US';
+    }else{
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    }
+    data.map(function(value, index){
+      var keyValue ="";
+      var imageKey;
+      for (var key in value[0]) { 
+        if (key === "product_dimensions") {
+          var dimension = value[0][key];
+          for (var i = 0; i < dimension.length; i++) {
+            if(i === 0) {
+              keyValue = dimension[i] + "";
+            }
+            else {
+              keyValue = keyValue + " X " + dimension[i]
+            }
+          }
+          
+        }
+        else if(key != 'display_data' && key != 'product_local_image_url' ){
+          keyValue = value[0][key] + ' ';
+         }else if(key != 'display_data' && key == 'product_local_image_url' ){
+          imageKey = value[0][key];
+         }
+      }
+      value[0].display_data.map(
+        function(data_locale, index1){
+         if(data_locale.locale == locale){
+            if(data_locale.display_name != 'product_local_image_url' ){
+              product_info_locale[data_locale.display_name] = keyValue;
+            }
+          }
+          if(data_locale.display_name == 'product_local_image_url' ){
+            if(imageKey === "outer_each" || imageKey === "inner_each" || imageKey === "outer_inner"){
+                product_info_locale[data_locale.display_name] = "assets/images/" + imageKey + ".gif";
+            }
+            else if(imageKey === "outer" || imageKey === "inner"){
+                product_info_locale[data_locale.display_name] = "assets/images/" + imageKey + ".png";
+            }
+            else
+            product_info_locale[data_locale.display_name] = imageKey;
+        }
+        
+        }
+
+      )
+      
+    });
+    if(serial){
+        product_info_locale[_("Serial")]=serial;
+    }
+  return product_info_locale;
+},
     checkSessionStorage : function(){
         var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
         if(sessionData === null){  
@@ -355,8 +415,7 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
-  
-  console.log(data);
+ console.log(data);
    switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
         CommonActions.setPutBackData(data.state_data);
@@ -373,6 +432,10 @@ var putSeatData = function(data) {
         case appConstants.AUDIT:
         CommonActions.setAuditData(data.state_data);
         break;
+        case appConstants.SEARCH:
+        CommonActions.setSearchData(data.state_data);
+        break;
+
         default:
         return true;
     }

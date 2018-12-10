@@ -35,7 +35,8 @@ var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
 var TextEditor=require('./ProductDetails/textEditor');
-var ItemTable= require('./itemTable')
+var ItemTable= require('./itemTable');
+
 
 var checkListOpen = false;
 
@@ -1296,6 +1297,8 @@ else {
                         <div className='grid-container'>
                             <Modal />
                             <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick"/>
+                           
+                            
                             <div className='main-container leftJustify'>
                             
                             <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
@@ -1315,6 +1318,7 @@ else {
                 }
                 break;
 
+                
                 case appConstants.PICK_FRONT_UNDOCK_TOTE:
                     if (!this.state.PickFrontExceptionStatus) {
                         var subMessage = (this.state.PickFrontServerNavData.details ? this.state.PickFrontServerNavData.details[0] : "");

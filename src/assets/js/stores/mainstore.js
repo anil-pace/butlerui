@@ -449,6 +449,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         _NavData = navConfig.prePut[0];
                     }
                 break;
+                case appConstants.SEARCH:
+                    if (_seatData.screen_id === appConstants.SEARCH_ENTITY_SCAN) {
+                        _NavData = navConfig.search[1];
+                    }
+else if(_seatData.screen_id === appConstants.WAITING_FOR_MSU) {
+    _NavData = navConfig.search[0];
+}
+                    else {
+                        _NavData = navConfig.search[2];
+                    }
+                break;
 
                 default:
             //return true;
@@ -1929,9 +1940,14 @@ setCurrentSeat: function (data) {
     getAuditExceptionScreen: function (data) {
         return _auditExceptionScreen;
     },
+    getIRTFlagStatus:function(data){
+        return  _seatData.irt_scan_enabled;
+    },
+    getSearchExcessQty:function(data){
+        return  _seatData.excess_quantity;
+    },
 
     setPickFrontExceptionScreen: function (data) {
-        //_seatData.notification_list[0].code = null;
         _seatData["notification_list"] = [{
             "details": [],
             "code": null,
@@ -2213,7 +2229,10 @@ setCurrentSeat: function (data) {
         })
         return bId;
     },
-
+    getProductSerial:function(){
+        var serial_data=_seatData.serial;
+        return serial_data.length>0?utils.get3dotTrailedText(serial_data[0],4,4,10):null
+    },
     getSelectedBinGroup: function () {
         var ppsbin_list = _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
@@ -3078,6 +3097,7 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PreviousDetails"]=this.getPreviousPickDetails();
             break;
+
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
             data["PickFrontNavData"] = this.getNavData();
@@ -3129,6 +3149,8 @@ setCurrentSeat: function (data) {
             data["PickFrontProductDetails"] = this.productDetails();
             data["undockAwaited"]= this._getUndockAwaitedGroup();
             break;
+
+          
 
             case appConstants.PICK_FRONT_SLOT_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
@@ -3576,6 +3598,7 @@ setCurrentSeat: function (data) {
                 data["AuditKQDetails"] = this.getScanDetails();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
+          
 //SR Audit
 case appConstants.AUDIT_SCAN_SR:
 data["AuditNavData"] = this.getNavData();
@@ -3595,6 +3618,41 @@ data["AuditFinishFlag"] = this.getFinishAuditFlag();
 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
 data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
 data["AuditLooseItemsData"] = this.getLooseItemsData();
+break;
+
+case appConstants.SEARCH_ENTITY_SCAN:
+data['SearchItemExceptionStatus']= this.getExceptionStatus();
+data["SearchItemNavData"] = this.getNavData();
+data["SearchItemServerNavData"] = this.getServerNavData();
+data["SearchItemNotification"] = this.getNotificationData();
+data["SearchItemScreenId"] = this.getScreenId();
+data["SlotType"] = this.getSlotType();
+data["isDrawer"] = this.getDrawerFlag();
+data["SearchItemRackDetails"] = this.getRackDetails();
+data["SearchItemProductDetails"] = this.productDetails();
+data["SearchItemKQQuantity"] = this.getScanDetails();
+data["kQstatus"] = this.kQstatus();
+data["ProductSerial"] = this.getProductSerial();
+
+break;
+case appConstants.SEARCH_IRT_CONFIRM:
+data['SearchItemExceptionStatus']= this.getExceptionStatus();
+data["SearchItemNavData"] = this.getNavData();
+data["SearchItemServerNavData"] = this.getServerNavData();
+data["SearchItemNotification"] = this.getNotificationData();
+data["SearchItemProductDetails"] = this.productDetails();
+data["SearchItemScreenId"] = this.getScreenId();
+data["SearchItemExcessData"]=this.getSearchExcessQty();
+data["SearchIRTFlag"]=this.getIRTFlagStatus();
+data["ProductSerial"] = this.getProductSerial();
+break;
+
+case appConstants.WAITING_FOR_MSU:
+data["SearchItemNavData"] = this.getNavData();
+data["SearchItemServerNavData"] = this.getServerNavData();
+data["SearchItemNotification"] = this.getNotificationData();
+data["SearchItemScreenId"] = this.getScreenId();
+data['SearchItemExceptionStatus']= this.getExceptionStatus();
 break;
 
 case appConstants.PPTL_MANAGEMENT:

@@ -124,9 +124,7 @@ var KQ = React.createClass({
             });
              if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
-
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK )){
-
                 _updatedQty = 1;
             }
 
@@ -519,7 +517,15 @@ mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTIT
             <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
           </div>
         );
-    }else{
+    }
+    else if(appConstants.SEARCH_ENTITY_SCAN){
+        this._qtyComponent = (
+            <div id='textbox'>
+              <input id="keyboard"  disabled={!!this.props.disable} key="text_1"  value={_putPickUpdatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
+            </div>
+          );
+    }
+    else{
         this._qtyComponent = (
           <div id='textbox'>
             <input id="keyboard"  disabled={!!this.props.disable} key="text_1"  value={_updatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
@@ -553,6 +559,7 @@ mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTIT
             <span className = "glyphicon glyphicon-menu-up" > </span> </a>: ''}
 
             {this._qtyComponent}
+            
             {!hideCounters ? <a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={!this.props.disable ? this.decrementValue:null}  onMouseDown = {!this.props.disable? this.decrementValue :null} >
             <span className = "glyphicon glyphicon-menu-down" > </span> </a> :''}
             

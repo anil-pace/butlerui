@@ -56,6 +56,7 @@ switch (module) {
         $(".modal.notification-error").modal("hide");
         $(".modal").removeClass("notification-error")
         break;
+       
     case appConstants.PUT_BACK:
                         switch (action) {
                             case appConstants.STAGE_ONE_BIN:
@@ -250,6 +251,26 @@ switch (module) {
                                 return true;
                         }
                         break;
+
+                        case appConstants.SEARCH_PPS_ITEM:
+                        switch (action) {
+                            case appConstants.KQ_QTY_CONFIRM:
+                            data["event_data"]["action"] ="confirm_quantity_update";
+                            data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                            data["event_name"] = "search_entity_confirm";
+                            ActionCreators.postDataToInterface(data);
+                                break;
+                                case appConstants.SEARCH_ITEM_CONFIRM:
+                                data["event_data"]["action"] ="confirm_submit";
+                                data["event_name"] = "search_irt_confirm";
+                                ActionCreators.postDataToInterface(data);
+                            break;   
+                                default:
+                                return true;
+                        }
+                        break;
+
+
                     case appConstants.PICK_FRONT:
                         switch (action) {
 

@@ -337,7 +337,7 @@ var _dividerWrapper = (<div className="divider">
           <div className={leftBelow}></div>
           <div className="scanLogo"></div>
           <span className={plusIconClass}>&#43;</span>
-          <div style={{"fontSize":"2vh"}}> Scan ID card to login.</div>
+          <div style={{"fontSize":"2vh"}}><span>{_("Scan ID card to login.")}</span></div>
           <div className={scannerErrorClass}><span>{_("ID Card authentication failed.")}</span></div>
           </div>
           </div>

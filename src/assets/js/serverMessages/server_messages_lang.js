@@ -755,5 +755,10 @@ function server_messages_list() {
     _("Language");
     _("Username");
     _("Login to Butler System");
+    _("Username/Password is invalid. Please try again.");
+    _("Username/Password is unauthorized. Please try again.");
+    _("Scan ID card to login.");
+    _("ID Card authorization failed.");
+    _("ID Card authentication failed.");
 }
 

@@ -361,7 +361,7 @@ var Bin = React.createClass({
                 </div>
             );
         }
-        else if (this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) {
+        else if ((this.props.screenId === appConstants.PUT_FRONT_PPTL_PRESS) && compData.selected_state === true && compData.ppsbin_count > 0) {
             return (
                 <div className={"bin selected " + (compData['ppsbin_blink_state'] ? 'blink1' : '')}
                      style={compData["ppsbin_light_color"] ? {borderColor: appConstants.BIN_LIGHT_COLOR[compData["ppsbin_light_color"]]} : {}}>

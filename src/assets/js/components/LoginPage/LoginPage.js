@@ -294,7 +294,6 @@ var _dividerWrapper = (<div className="divider">
         {ppsOption}
         {showTiltButton}
       </div>
-        <div className={errorClass}><span>{_(this.state.showError)}</span></div>
         </div>
        
         <main>
@@ -316,8 +315,8 @@ var _dividerWrapper = (<div className="divider">
                         <span className="iconPlace"></span>
                           <input type="password" className="form-control" id="password" placeholder={_('Enter password')} ref='password' valueLink={this.linkState('password')} />
                 </div>
-                <div className={errorClass}><span>{_("Username/Password is invalid. Please try again.")}</span></div>
-                </div>
+                <div className={errorClass}><span>{_(this.state.showError)}</span></div>
+               </div>
 
         <div className="buttonContainer">
                 <input type="button" className="loginButton" id="loginBtn"  onClick={this.handleLogin.bind(this, appConstants.KEYBOARD)} value={_('LOGIN')} />

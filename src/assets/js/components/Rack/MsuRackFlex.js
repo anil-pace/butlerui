@@ -20,10 +20,6 @@ var MsuRackFlex = React.createClass({
 
        var lines = document.getElementsByClassName("connectingLine");
 
-       if(lines.length){
-        lines[0].remove();
-      }
-
        if(lines.length===0){
           var strEl = document.querySelectorAll("#selectedSlot")[0];
           strEl = strEl ? strEl.parentNode : null;

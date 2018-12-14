@@ -1,5 +1,5 @@
 var configConstants = {
-  WEBSOCKET_IP : "wss://localhost/wss",
+WEBSOCKET_IP : "wss://localhost/wss",
   INTERFACE_IP : "https://localhost"
   };
 var BOI_CONFIG= configConstants.INTERFACE_IP+"/api/components/get_boi_config";

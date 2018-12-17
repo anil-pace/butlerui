@@ -132,9 +132,11 @@ if(newBarcodes.length>1){
       // angle
       var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
       // make hr
-
       var htmlLine = "<div class='connectingLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-      document.getElementById('app').innerHTML += htmlLine; 
+      var lines = document.getElementsByClassName("connectingLine");
+      if((lines.length==1 && ((Math.round(cx)!==lines[0].offsetLeft) ||(Math.round(cy)!==lines[0].offsetTop)))||lines.length==0 ){
+      document.getElementById('app').innerHTML += htmlLine;
+      }
     },
 
     getOffset( el ) {

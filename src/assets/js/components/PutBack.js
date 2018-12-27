@@ -25,6 +25,9 @@ var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
 var utils = require('../utils/utils.js');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable');
+var Spinner = require("./Spinner/LoaderButler");
 function getStateData(){
   return mainstore.getScreenData();
 }
@@ -96,8 +99,22 @@ var PutBack = React.createClass({
       </div>
       );
   },
+  callAPItoGetData:function(data){
+    CommonActions.getOrphanItemData(data);
+},
 
-  
+  getToteDisplayName: function(){
+    var exceptionDetail = null;
+    for(var i=0,len = this.state.PutBackExceptionData.list.length; i<len;i++){
+      var exception = this.state.PutBackExceptionData.list[i];
+      if(exception.exception_id === "PtB006"){
+        exceptionDetail = exception;
+        break;
+      }
+    }
+    return exceptionDetail?exceptionDetail.details[0]:"Tote";
+    
+  },
 
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -308,6 +325,7 @@ var PutBack = React.createClass({
 
       case appConstants.PUT_BACK_UNSCANNABLE:
       var buttonActivateFlag = mainstore.getExeptionQuanity();
+      var toteDisplayName = this.getToteDisplayName() || "Tote";
       var numericIndicator="";
       if(this.state.PutBackExceptionType=="item_unscannable"){
         numericIndicator=<div className="gor-NI-wrapper">
@@ -319,7 +337,7 @@ var PutBack = React.createClass({
       {
         numericIndicator=<div className="gor-NI-wrapper">
         <hr/>
-        <div className="exception-qty-title">{_("Unscannable Tote")}</div>
+        <div className="exception-qty-title">{_("Unscannable")+" "+toteDisplayName}</div>
         <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
     </div>
       }
@@ -607,7 +625,44 @@ var PutBack = React.createClass({
       <Modal /> 
       </div>
       );
-    break;      
+    break;  
+    case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                        {/* <input placeholder="Scan item or enter barcode details" type="text"/> */}
+                         <TextEditor callAPItoGetData={this.callAPItoGetData}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemResult">
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;    
     default:
     return true; 
   }

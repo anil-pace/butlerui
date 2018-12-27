@@ -85,6 +85,12 @@ var commonActions = {
       data:data
     })
   },
+  setSearchData :function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_SEARCH_DATA,
+      data:data
+    })
+  },
 
   setPickBackData :function(data){
     AppDispatcher.handleAction({
@@ -166,6 +172,12 @@ var commonActions = {
   enableException:function(data){
     AppDispatcher.handleAction({
       actionType: appConstants.ENABLE_EXCEPTION,
+      data:data
+    }); 
+  },
+  enableSearch:function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ENABLE_SEARCH,
       data:data
     }); 
   },
@@ -264,6 +276,17 @@ var commonActions = {
     AppDispatcher.handleAction({
       actionType: appConstants.PERIPHERAL_DATA,
       data:data
+    });
+   },
+   getOrphanItemData : function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.ORPHAN_ITEM_DATA,
+      data:data
+    });
+   },
+   getBOIConfig : function(){
+    AppDispatcher.handleAction({
+      actionType: appConstants.GET_BOI_CONFIG
     });
    },
    updateSeatData : function(data, type, status, method){

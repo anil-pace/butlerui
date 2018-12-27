@@ -34,6 +34,9 @@ var utils = require('../utils/utils.js');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable');
+
 
 var checkListOpen = false;
 
@@ -157,6 +160,10 @@ var PickFront = React.createClass({
             </div>
         );
     },
+callAPItoGetData:function(data){
+    CommonActions.getOrphanItemData(data);
+},
+    
     getScreenComponent: function (screen_id) {
         switch (screen_id) {
 
@@ -269,7 +276,8 @@ var PickFront = React.createClass({
                                                     navMessagesJson={this.props.navMessagesJson}/>);
 
                         checklistData = <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                                    checklistIndex = {this.state.PickFrontChecklistIndex} />
+                                                   checklistIndex = {this.state.PickFrontChecklistIndex} 
+                                                    />
             
                         this._component = (
                             <div className='grid-container'>
@@ -497,6 +505,47 @@ else {
                 }
                 break;
 
+
+                case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                          <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemResult">
+                      
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
+
+
                 case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
@@ -558,7 +607,21 @@ else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
+            
+            case appConstants.PICK_FRONT_SKIP_BIN:
             case appConstants.PICK_FRONT_NO_FREE_BIN:
+                var skipDockingButton;
+                var skipDockingBtnEnable = this.state.PickFrontSkipDockingBtnEnable;
+                if(skipDockingBtnEnable) {
+                    skipDockingButton = (<Button1 disabled={!skipDockingBtnEnable} 
+                                                    text={_("Skip docking")} 
+                                                    module={appConstants.PICK_FRONT} 
+                                                    action={appConstants.SKIP_DOCKING} 
+                                                    color={"black"}/>);
+                }
+                else{
+                    skipDockingButton = "";
+                }
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
@@ -568,6 +631,9 @@ else {
                             <Modal />
                             <div className='main-container'>
                                 <Spinner />
+                            </div>
+                            <div className='btn-actions-skip-docking'>
+                                {skipDockingButton}
                             </div>
                         </div>
                     );
@@ -935,7 +1001,10 @@ else {
                 );
                 break;
 
+
+
             case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
                                                     serverNavData={this.state.PickFrontServerNavData}
@@ -1138,7 +1207,8 @@ else {
                 break;
                 
                 case appConstants.PICK_FRONT_DOCK_TOTE:
-                    var  rackType="";
+                case appConstants.PICK_FRONT_SKIP_TOTE: 
+                    var rackType = "";
                     var adjustStyleOnSplitPPS = "";
                     var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
                     var cancelButton;
@@ -1164,7 +1234,9 @@ else {
                                 <Modal />
                                 <div className='main-container'>
                                 <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                            checklistIndex = {this.state.PickFrontChecklistIndex} />
+                                           checklistIndex = {this.state.PickFrontChecklistIndex} 
+                                           skipDockingBtnStatus = {this.state.PickFrontSkipDockingBtnEnable}
+                                            />
                                 <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
                                             groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} 
                                             customizeClassSplitPPS={adjustStyleOnSplitPPS}
@@ -1225,6 +1297,8 @@ else {
                         <div className='grid-container'>
                             <Modal />
                             <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick"/>
+                           
+                            
                             <div className='main-container leftJustify'>
                             
                             <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
@@ -1244,6 +1318,7 @@ else {
                 }
                 break;
 
+                
                 case appConstants.PICK_FRONT_UNDOCK_TOTE:
                     if (!this.state.PickFrontExceptionStatus) {
                         var subMessage = (this.state.PickFrontServerNavData.details ? this.state.PickFrontServerNavData.details[0] : "");

@@ -300,7 +300,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan", "pick_front_container_break", "pick_front_checklist"],
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan", "pick_front_container_break", "pick_front_checklist", "pick_front_skip_tote", "pick_front_skip_bin"],
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot Barcode",
@@ -544,7 +544,49 @@ var navData = {
         "message": "Scan Bin",
         "level": 2,
         "type": 'passive'
+    }],
+    [{
+        "screen_id": ["pick_back_packing_box"],
+        "code": "Common.000",
+        "image": svgConstants.scan,
+        "message": "Place packing box in bin and scan ID",
+        "showImage": true,
+        "type": 'passive'
     }]
+    ],
+    "search":[
+        [{
+            "screen_id": ["waiting_for_msu"],
+            "code": "Common.000",
+            "message": "Wait For MSU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }],
+        [ {
+            "screen_id": "pick_back_scan",
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Scan Slot",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        },{
+            "screen_id": "search_entity_scan",
+            "code": "Common.000",
+            "message": "Remove Item",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "search_irt_confirm",
+            "code": "Common.000",
+            "message": "Wait For MSU",
+            "showImage": false,
+            "level": 1,
+            "type": 'active'
+        }]
     ],
     "audit": [
         [{
@@ -598,7 +640,7 @@ var navData = {
         "screen_id": "audit_front_waiting_for_location_scan",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan MPU",
+        "message": "Scan slot",
         "showImage": true,
         "level": 1,
         "type": 'passive'
@@ -607,7 +649,7 @@ var navData = {
         "screen_id": "audit_scan_sr",
         "code": "Common.001",
         "image": svgConstants.scan,
-        "message": "Scan Sub-Packs",
+        "message": "Scan entities",
         "showImage": true,
         "level": 2,
         "type": 'passive'
@@ -615,7 +657,7 @@ var navData = {
     ,{
         "screen_id": "audit_reconcile",
         "code": "Common.000",
-        "image": svgConstants.place,
+        "image": null,
         "message": "Status",
         "showImage": true,
         "level": 3,

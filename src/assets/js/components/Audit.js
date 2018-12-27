@@ -27,6 +27,8 @@ var GorTabs = require("./gor-tabs/tabs");
 var Tab = require("./gor-tabs/tabContent");
 var ReactModal = require("./Modal/ReactModal");
 var GorSelect = require("./gor-select/gor-select");
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
 
        var Audit = React.createClass({
         _component:'',
@@ -109,6 +111,9 @@ var GorSelect = require("./gor-select/gor-select");
       </div>
       );
   },
+  callAPItoGetData:function(data){
+    ActionCreators.getOrphanItemData(data);
+},
   _onTabClick: function(selectedIndex){
     this.setState({
       selectedTab:selectedIndex
@@ -321,25 +326,27 @@ if(this.state.AuditExceptionStatus == false){
   this._cancelStatus = '';
 }
 if(this.state.AuditPackData["tableRows"].length > 0){
-  this._packData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditPackData}/></div>);
-
+  this._packData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditPackData} className="audit_scan"/></div>);
 }else{
   this._packData = '';
 }
 if(this.state.AuditSubPackData["tableRows"].length > 0){
-  this._subPackData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditSubPackData} /></div>);
+  this._subPackData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditSubPackData} className="audit_scan"/></div>);
+
 
 }else{
   this._subPackData = '';
 }
 if(looseItemsData){
-  this._looseItemData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {looseItemsData} /></div>);
+  this._looseItemData = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {looseItemsData} className="audit_scan"/></div>);
+
 }
 else{
   this._looseItemData="";
 }
 if(this.state.AuditLooseItemsData["tableRows"].length > 0 ){
-      this._looseItems = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditLooseItemsData} /></div>);
+      this._looseItems = (<div className="audit-wrapper">{isAddlInfoPresent && <p className="a-info-wrap"><span className="audit-uom-info-icon" onClick={function(){this._openAddlInfoModal(true)}.bind(this)}><i>i</i></span></p>}<TabularData data = {this.state.AuditLooseItemsData} className="audit_scan"/></div>);
+
     }else{
       this._looseItems = '';
     }
@@ -407,7 +414,7 @@ this._component = (
   <TabularData data = {this.state.AuditItemDetailsData}/>
   </div>
   <div className="audit-scan-right">
-  <KQ scanDetailsGood={this.state.AuditSRKQQuantity} disable={kqDisabled} />
+  <KQ scanDetailsGood={this.state.AuditSRKQQuantity}/>
   
   <div className = 'finish-scan'>
   <Button1 disabled = {!this.state.AuditFinishFlag} text = {_("Finish")} module ={appConstants.AUDIT} action={appConstants.GENERATE_REPORT}  color={"orange"}/>
@@ -443,10 +450,11 @@ if(this.state.AuditExceptionStatus == false){
     "description": "No Items To Reconcile",
     "level": "info"
   };
+
   var SRmessage = {
-    "details": [auditPossibleContainerNames.container_level_2,auditPossibleContainerNames.container_level_1],
+    "details": [],
     "code": "AdF.B.004",
-    "description": "No {0} or {1} to reconcile",
+    "description": "No entities to reconcile",
     "level": "info"
   };
   if(this.state.AuditReconcileBoxSerialData["tableRows"].length == 0  && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
@@ -577,6 +585,42 @@ if(this.state.AuditExceptionScreen == "first_screen"){
           </div>
           );
         break; 
+        case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemResult">
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
+                
         
         default:
         return true; 

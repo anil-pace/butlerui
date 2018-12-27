@@ -31,6 +31,10 @@ var ProductDetUDP = require('./ProductDetails/ProductDetUDP');
 var ActionCreators = require('../actions/CommonActions');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CurrentBin = require('./CurrentBin');
+var TextEditor=require('./ProductDetails/textEditor');
+var ItemTable= require('./itemTable')
+var CheckList=require("./CheckList")
+
 
 
 
@@ -52,6 +56,7 @@ var PutFront = React.createClass({
         BinMapDetails: mainstore._getBinMapDetails(),
         groupOrientation: mainstore._getBinMapOrientation(),
         udpBinMapDetails: mainstore.getUDPMapDetails(),
+
         PutFrontScreenId : mainstore.getScreenId(),
         PutFrontExceptionStatus : mainstore.getExceptionStatus(),
         PutFrontNavData : mainstore.getNavData(),
@@ -62,6 +67,8 @@ var PutFront = React.createClass({
         PutFrontScanDetails: mainstore.scanDetails(),
         PutFrontProductDetails: mainstore.productDetails(),
         selectedTotes: mainstore.getSelectedTotes(),
+        PutFrontChecklistData:mainstore.getChecklistDockData(),
+        PutFrontChecklistIndex:mainstore.getChecklistDockIdx(),
         PutFrontNotification : mainstore.getNotificationData(),
         PreviousDetails: mainstore.getPreviousPutDetails(),
         PutFrontCurrentBin: mainstore.getCurrentSelectedBin(),
@@ -133,6 +140,9 @@ var PutFront = React.createClass({
       </div>
       );
   },
+  callAPItoGetData:function(data){
+    ActionCreators.getOrphanItemData(data);
+},
 
   getScreenComponent : function(screen_id){
     switch(screen_id){
@@ -649,15 +659,63 @@ var PutFront = React.createClass({
             </div>
             );
           break;
+          case appConstants.ITEM_SEARCH:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemSearch">
+                        <div className="textBoxContainer">
+                         <span className="barcode"></span>
+                         <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
+                    </div> 
+                    </div>
+                )
+                break;
+                case appConstants.ITEM_SEARCH_RESULT:
+                this._navigation = '';
+                this._component=(
+                    <div>
+                    <div className="outerWrapperItemSearch">
+                        <div className="subHeaderItemDetails">{_("Item details")}</div>
+                        <div className="innerWrapperItemResult">
+                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
+                        </div>
+                        
+                    </div>
+                    <div className="itemSearchfooter">
+                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK} color={"black"}/>
+                    </div> 
+                      </div>   
+                )
+                break;
+                
+
+
+
           case appConstants.UDP_PUT_FRONT_TOTE_SCAN:
+          var adjustStyleOnSplitPPS = "";
           this._modalContent='';
           if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          if(this.state.PutFrontChecklistData){
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+        }
           this._component = (
             <div className='grid-container'>
               <Modal/>
             <div className='main-container udp-flow'>
-            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} docked = {this.state.selectedTotes}/>
+            <CheckList checklistData = {this.state.PutFrontChecklistData}
+                                            checklistIndex = {this.state.PutFrontChecklistIndex} />
+            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
+            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} ruleset={'withBorder'} 
+            docked = {this.state.selectedTotes} customizeClassSplitPPS={adjustStyleOnSplitPPS}/>
 
             </div>
             </div>
@@ -667,14 +725,23 @@ var PutFront = React.createClass({
         }
         break;
         case appConstants.UDP_PUT_FRONT_BIN_SCAN:
+        var adjustStyleOnSplitPPS = "";
         this._modalContent='';
         if(this.state.PutFrontExceptionStatus == false){
           this._navigation = (<Navigation navData ={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag}/>);
+          if(this.state.PutFrontChecklistData){
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+        }
           this._component = (
             <div className='grid-container'>
               <Modal/>
             <div className='main-container udp-flow'>
-            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} docked = {this.state.selectedTotes}/>
+            <CheckList checklistData = {this.state.PutFrontChecklistData}
+                                            checklistIndex = {this.state.PutFrontChecklistIndex} />  
+
+            <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
+            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null}
+             docked = {this.state.selectedTotes}  ruleset={'withBorder'} customizeClassSplitPPS={adjustStyleOnSplitPPS}/>
 
             </div>
             <div className = 'cancel-scan'>
@@ -798,7 +865,7 @@ var PutFront = React.createClass({
             <div className="msu-send-container">
             <PrdtDetails productInfo={this.state.PutFrontProductDetails}/>
             <div className="msu-send-button">
-            <Button1 disabled = {false} text = {_("Send MSU")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
+            <Button1 disabled = {true} text = {_("Send MSU")} module ={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
             </div>
             </div>
             </div>

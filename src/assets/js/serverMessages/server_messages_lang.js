@@ -105,7 +105,7 @@ function server_messages_list() {
     _("Box Scan successful");
     _('Item Scan successful');
     _("Item scan successful");
-    _('Data capture failed at item {0}');
+    _('Data capture failed');
     _('Bin {0} selected');
     _('Bin {0} unselected');
     _('Connection is closed. Connecting...');
@@ -714,7 +714,6 @@ function server_messages_list() {
     _("{0} close successful");
     _("Close current {0} first");
     _("Wrong entity scanned. Please scan {0}");
-    _("Scan new {0}");
     _("Scan item or {0}");
     _("Box Type");
     _("Location");
@@ -739,5 +738,22 @@ function server_messages_list() {
     _("Slot scan successful");
     _("{0} docked successfully");
     _("{0} undocked successfully");
+    _("Item details");
+    _("Item Search");
+    _("NO ITEM FOUND");
+    _("Event");
+    _("Expectation Id");
+    _("Item Location");
+    _("UOM Details");
+    _("Quantity");
+    _("No entities to reconcile");
+    _("Excess Quantity");
+    _("Total: ");
+    _("Scan excess entities");
+    _("Dis-associate");
+    _("LOGIN"); 
+    _("Language");
+    _("Username");
+    _("Login to Butler System");
 }
 

@@ -3,7 +3,7 @@ var CommonActions = require('../../actions/CommonActions');
 var mainstore = require('../../stores/mainstore');
 var appConstants = require('../../constants/appConstants');
 var resourceConstants = require('../../constants/resourceConstants');
-var  _updatedQty = 0, _scanDetails = {},_keypress = false;
+var  _updatedQty = 0,_putPickUpdatedQty=0, _scanDetails = {},_keypress = false;
 function generateExcessNotification () {
     var data={};
     data["code"] = resourceConstants.CLIENTCODE_008;
@@ -124,9 +124,7 @@ var KQ = React.createClass({
             });
              if((_updatedQty === 0) && (mainstore.getScreenId() == appConstants.PUT_BACK_SCAN ||
                 mainstore.getScreenId() == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
-
                 mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK )){
-
                 _updatedQty = 1;
             }
 
@@ -328,7 +326,7 @@ var KQ = React.createClass({
                     $('.ui-keyboard-preview').val(9999);
                }else if((parseInt(keypressed.last.val) <= 0) &&  (mainstore.getScreenId() != appConstants.AUDIT_SCAN && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
                     mainstore.getScreenId() != appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE && mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION  && mainstore.getScreenId() != appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE &&
-                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION ) ){
+                      mainstore.getScreenId() != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION && mainstore.getScreenId() != appConstants.SEARCH_ENTITY_SCAN ) ){
                     data["code"] = resourceConstants.CLIENTCODE_009;
                     data["level"] = 'error'
                     CommonActions.generateNotification(data);
@@ -344,7 +342,7 @@ var KQ = React.createClass({
             },
             accepted: function(e, keypressed, el) {
                var regex = /^[1-9]\d*$/g 
-               if (!regex.test(e.target.value)) {
+               if (!regex.test(e.target.value)&& mainstore.getScreenId() != appConstants.SEARCH_ENTITY_SCAN) {
                     CommonActions.resetNumpadVal(parseInt(_updatedQty));
                 } else  {
                     var data = {};
@@ -368,6 +366,16 @@ var KQ = React.createClass({
                     }
                 };
             }
+            else if(mainstore.getScreenId()==appConstants.SEARCH_ENTITY_SCAN){
+                data = {
+                    "event_name": "quantity_update_from_gui",
+                    "event_data": {
+                        "quantity_updated": parseInt(e.target.value)
+                    },
+                    "source": "ui"
+                };
+            }
+            
 
             else if (mainstore.getCurrentSeat() == "audit_front") {
                         data = {
@@ -418,6 +426,7 @@ var KQ = React.createClass({
     }
 
   },
+
   componentWillUnmount: function(){
     mainstore.removeChangeListener(this.onChange);
     /*
@@ -464,7 +473,14 @@ var KQ = React.createClass({
                   this._appendClassDown = 'downArrow enable';
                   this._enableDecrement = true;
                 }
-            }else if(mainstore.getScreenId() === appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION ||  mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
+            }else if(mainstore.getScreenId() === appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION ||  
+            mainstore.getScreenId() == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE || 
+            mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE ||  
+            mainstore.getScreenId() ==appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || 
+            mainstore.getScreenId() == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE || 
+            mainstore.getScreenId() == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || 
+            mainstore.getScreenId() == appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK ||
+            mainstore.getScreenId() == appConstants.SEARCH_ENTITY_SCAN ){
                 if(_updatedQty == 0){
                   this._appendClassDown = 'downArrow disable';
                   this._enableDecrement = false;
@@ -496,7 +512,21 @@ var KQ = React.createClass({
   handleTotalQty : function(){
 
     var hideCounters = !!this.props.hideCounters;
-    if(_scanDetails.total_qty != 0 || mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK){
+if((mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK ||  
+mainstore.getScreenId() === appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK ||
+mainstore.getScreenId() ===  appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY ||appConstants.PICK_FRONT_MORE_ITEM_SCAN 
+||appConstants.PICK_FRONT_WORKING_TABLE ||appConstants.PICK_FRONT_PACKING_BOX ||appConstants.PICK_FRONT_PACKING_ITEM_SCAN) && _scanDetails.total_qty != 0){
+    this._qtyComponent = (
+        <div id={!hideCounters?'textbox':'textbox-counter'}>
+          <input id="keyboard" className="current-quantity" key="text_1" value={_putPickUpdatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
+          <span className="separator">/</span>
+          <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
+        </div>
+      );
+    
+}
+
+    else if(_scanDetails.total_qty != 0){
         this._qtyComponent = (
           <div id={!hideCounters?'textbox':'textbox-counter'}>
             <input id="keyboard" className="current-quantity" key="text_1" value={_updatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
@@ -504,7 +534,15 @@ var KQ = React.createClass({
             <span className="total-quantity">{parseInt(_scanDetails.total_qty)}</span>
           </div>
         );
-    }else{
+    }
+    else if(appConstants.SEARCH_ENTITY_SCAN){
+        this._qtyComponent = (
+            <div id='textbox'>
+              <input id="keyboard"  disabled={!!this.props.disable} key="text_1"  value={_putPickUpdatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
+            </div>
+          );
+    }
+    else{
         this._qtyComponent = (
           <div id='textbox'>
             <input id="keyboard"  disabled={!!this.props.disable} key="text_1"  value={_updatedQty} onClick={!this.props.disable ? this.openNumpad.call(null,"keyboard"):null}/>
@@ -517,12 +555,14 @@ var KQ = React.createClass({
         if(this.props.scanDetailsMissing == undefined && this.props.scanDetailsDamaged == undefined && this.props.scanDetailsGood == undefined  ){
              this.checkKqAllowed();
             this.handleTotalQty();
+            _putPickUpdatedQty=parseInt(this.props.scanDetails.current_qty);
             _updatedQty = parseInt(this.props.scanDetails.current_qty);
             _scanDetails = this.props.scanDetails;
 
 
         }
         else if(this.props.scanDetailsGood != undefined && this.props.scanDetails == undefined){
+            _putPickUpdatedQty=parseInt(this.props.scanDetailsGood.current_qty);
             _updatedQty = parseInt(this.props.scanDetailsGood.current_qty);
             _scanDetails = this.props.scanDetailsGood;
             this.checkKqAllowed();
@@ -536,6 +576,7 @@ var KQ = React.createClass({
             <span className = "glyphicon glyphicon-menu-up" > </span> </a>: ''}
 
             {this._qtyComponent}
+            
             {!hideCounters ? <a href = "#" className = {this._appendClassDown} action={this.props.action} onClick={!this.props.disable ? this.decrementValue:null}  onMouseDown = {!this.props.disable? this.decrementValue :null} >
             <span className = "glyphicon glyphicon-menu-down" > </span> </a> :''}
             

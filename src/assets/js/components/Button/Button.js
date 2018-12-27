@@ -56,6 +56,7 @@ switch (module) {
         $(".modal.notification-error").modal("hide");
         $(".modal").removeClass("notification-error")
         break;
+       
     case appConstants.PUT_BACK:
                         switch (action) {
                             case appConstants.STAGE_ONE_BIN:
@@ -250,6 +251,26 @@ switch (module) {
                                 return true;
                         }
                         break;
+
+                        case appConstants.SEARCH_PPS_ITEM:
+                        switch (action) {
+                            case appConstants.KQ_QTY_CONFIRM:
+                            data["event_data"]["action"] ="confirm_quantity_update";
+                            data["event_data"]["quantity"] = mainstore.getkQQuanity();
+                            data["event_name"] = "search_entity_confirm";
+                            ActionCreators.postDataToInterface(data);
+                                break;
+                                case appConstants.SEARCH_ITEM_CONFIRM:
+                                data["event_data"]["action"] ="confirm_submit";
+                                data["event_name"] = "search_irt_confirm";
+                                ActionCreators.postDataToInterface(data);
+                            break;   
+                                default:
+                                return true;
+                        }
+                        break;
+
+
                     case appConstants.PICK_FRONT:
                         switch (action) {
 
@@ -257,20 +278,9 @@ switch (module) {
                                 data["event_name"] = appConstants.CANCEL_SCAN_ALL;
                                 ActionCreators.postDataToInterface(data);
                                 break;
+
                             case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
                                 data["event_name"] = appConstants.CANCEL_SCAN_ALL;
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;
-
-                            case appConstants.CONFIRM_TOTE_SEND_TO_SERVER_MODAL:
-                                data["event_name"] = appConstants.CONFIRM_TOTE;
-                                ActionCreators.postDataToInterface(data);
-                                closeModalBox();
-                                break;
-
-                            case appConstants.CANCEL_TOTE_SEND_TO_SERVER_MODAL:
-                                data["event_name"] = appConstants.CANCEL_TOTE;
                                 ActionCreators.postDataToInterface(data);
                                 closeModalBox();
                                 break;
@@ -279,9 +289,39 @@ switch (module) {
                                 data["event_name"] = appConstants.NEW_CARRYING_UNIT;
                                 ActionCreators.postDataToInterface(data);
                                 this.showModal(appConstants.PICK_FRONT, appConstants.NEW_CARRYING_UNIT);
-                               break;    
+                               break;  
+                               
+                            case appConstants.CONFIRM_TOTE_SEND_TO_SERVER_MODAL:
+                               data["event_name"] = appConstants.CONFIRM_TOTE;
+                               ActionCreators.postDataToInterface(data);
+                               closeModalBox();
+                               break;
 
-                            case appConstants.CANCEL_SCAN_MODAL:
+                           case appConstants.CANCEL_TOTE_SEND_TO_SERVER_MODAL:
+                               data["event_name"] = appConstants.CANCEL_TOTE;
+                               ActionCreators.postDataToInterface(data);
+                               closeModalBox();
+                               break;
+                               
+                            case appConstants.SKIP_DOCKING:
+                               data["event_name"] = appConstants.SKIP_DOCKING;
+                               ActionCreators.postDataToInterface(data);
+                               this.showModal(appConstants.PICK_FRONT, appConstants.SKIP_DOCKING);
+                              break; 
+
+                            case appConstants.CONFIRM_SKIP_DOCKING_SEND_TO_SERVER_MODAL:
+                              data["event_name"] = appConstants.CONFIRM_SKIP_DOCKING;
+                              ActionCreators.postDataToInterface(data);
+                              closeModalBox();
+                              break;
+
+                            case appConstants.CANCEL_SKIP_DOCKING_SEND_TO_SERVER_MODAL:
+                                data["event_name"] = appConstants.CANCEL_SKIP_DOCKING;
+                                ActionCreators.postDataToInterface(data);
+                                closeModalBox();
+                                break;
+
+                              case appConstants.CANCEL_SCAN_MODAL:
                                 this.showModal(appConstants.PICK_FRONT, appConstants.CANCEL_SCAN_ALL);
                                break; 
                             
@@ -469,6 +509,7 @@ switch (module) {
                                  data["event_data"]["type"] = mainstore.getExceptionType();
                                 ActionCreators.postDataToInterface(data);
                                 break;
+                         
                             case appConstants.DIS_ASSOCIATE_TOTE:
                                  data["event_name"] = "pick_back_exception";
                                  data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
@@ -479,6 +520,20 @@ switch (module) {
                                  data["event_name"] = "pick_back_exception";
                                  data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin();
                                  data["event_data"]["type"] = mainstore.getExceptionType();
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                                case appConstants.CANCEL_SCAN_ALL:
+                                data["event_name"] = "cancel_scan_all";
+                                ActionCreators.postDataToInterface(data);
+                                break;
+                                case appConstants.CONFIRM_BUTTON:
+                                data["event_name"] = "pick_back_exception";
+                                data["event_data"]["action"] ="confirm_button_press";
+                                ActionCreators.postDataToInterface(data);
+                              break;
+                              case appConstants.BACK_BUTTON_PRESS:
+                                data["event_name"] = "pick_back_exception";
+                                data["event_data"]["action"] ="back_button_press";
                                 ActionCreators.postDataToInterface(data);
                                 break;
                             default:
@@ -552,8 +607,16 @@ switch (module) {
                                 case appConstants.CANCEL_PPTL:                           
                                 location.reload();
                                 break;
-                            }   
+                            }
+
                             break;
+                            case appConstants.SEARCH_MANAGEMENT:
+        switch(action) {
+            case appConstants.BACK:                           
+            location.reload();
+            break;
+        }
+        break;
                             case appConstants.PRE_PUT:
                             switch (action) {
                                 case appConstants.CANCEL_EXCEPTION_MODAL:

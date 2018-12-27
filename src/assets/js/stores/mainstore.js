@@ -21,6 +21,7 @@ _cancelEvent, _messageJson, _screenId, _itemUid, _exceptionType, _action, _KQQty
 _logoutStatus,
 _activeException = null,
 _enableException = false,
+_enableSearch=false,
 popupVisible = false,
 _showSpinner = true,
 _goodQuantity = 0,
@@ -38,6 +39,9 @@ _finishAuditFlag = true;
 _errorPopupDisabled = false;
 _cancelButtonClicked = false;
 _auditModalStatus = false;
+_boiConfig=null;
+_itemSearchEnabled = false;
+_scannerLoginEnabled = false;
 
 var modalContent = {
     data: "",
@@ -172,6 +176,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     getScreenEvent:function(){
         return _seatData.event
+    },
+
+    getBoxBarcode:function(){
+        let BoxBarcode={};
+        if(_seatData.exception_details && _seatData.exception_details.current_packing_box){
+            BoxBarcode.CurrentBoxBarcode=_seatData.exception_details.current_packing_box;
+        }
+        if(_seatData.exception_details && _seatData.exception_details.new_packing_box){
+            BoxBarcode.NewBoxBarcode=_seatData.exception_details.new_packing_box;
+        }
+        return BoxBarcode;
+        },
+    
+   
+    getConfirmState:function(){
+        return _seatData.exception_details?_seatData.exception_details.confirm_enabled:false;
     },
 
     getStageActiveStatus: function () {
@@ -343,7 +363,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         }
                     else if(_seatData.screen_id === appConstants.PICK_BACK_SCAN ){
                         _NavData = navConfig.pickBack[2];
-                    }    
+                    } 
+                    else if (_seatData.screen_id === appConstants.PICK_BACK_PACKING_BOX) {
+                        _NavData = navConfig.pickBack[3];
+                       
+                    }   
                     else
                         _NavData = navConfig.pickBack[0];
                 break;
@@ -443,6 +467,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     }
                     else {
                         _NavData = navConfig.prePut[0];
+                    }
+                break;
+                case appConstants.SEARCH:
+                    if (_seatData.screen_id === appConstants.SEARCH_ENTITY_SCAN) {
+                        _NavData = navConfig.search[1];
+                    }
+else if(_seatData.screen_id === appConstants.WAITING_FOR_MSU) {
+    _NavData = navConfig.search[0];
+}
+                    else {
+                        _NavData = navConfig.search[2];
                     }
                 break;
 
@@ -729,9 +764,15 @@ getOrderID: function () {
 
 
     getChecklistData: function () {
-        if (_seatData.hasOwnProperty('checklist_data')) {
+        if (Array.isArray(_seatData.checklist_data) && _seatData.hasOwnProperty('checklist_data')) {
             return _seatData.checklist_data;
         }
+            else
+            {
+                console.log("Empty CheckList");
+                return [];
+            }
+        
     },
 
 
@@ -786,8 +827,13 @@ getOrderID: function () {
         return _seatData.button_press_allowed;
     },
 
-    getCarryingUnitButtonStatus: function(){
-        return _seatData.button_press_id === "dock_tote" ? _seatData.button_press_allowed : null;
+    getButtonStatus: function(){
+        if(_seatData.button_press_id === "dock_tote" || _seatData.button_press_id === "skip_bin"){
+            return _seatData.button_press_allowed;
+        } 
+        else{
+            return null;
+        }
     },
 
     clearNotifications: function () {
@@ -903,6 +949,21 @@ getOrderID: function () {
     },
     getExceptionAllowed: function () {
         return _seatData.exception_allowed;
+    },
+    setOrphanSearchAllowed: function (data) {
+        _itemSearchEnabled = data;
+    },
+    setLoginScannerAllowed: function (data) {
+        _scannerLoginEnabled = data;
+    },
+    loginScannerAllowed: function () {
+        return _scannerLoginEnabled;
+    },
+    setBOIConfig: function (data) {
+        _boiConfig = data;
+    },
+    orphanSearchAllowed: function () {
+        return _itemSearchEnabled;
     },
     scanDetails: function () {
         _scanDetails = _seatData.scan_details;
@@ -1133,25 +1194,47 @@ getOrderID: function () {
         var self=this;
         var packBarcodeDamagedQty=0;
         var subPackBarcodeDamagedQty=0;
+        var eachBarcodeDamagedQty = 0;
+        var tableRows = [];
         if(_seatData.k_deep_audit)
         {
             _seatData.box_barcode_damage.map(function (val, ind) {
                 if (val.type===appConstants.OUTER_PACK)
-                    packBarcodeDamagedQty = val.damage_count;
+                    packBarcodeDamagedQty+= val.damage_count;
                 else{
-                    subPackBarcodeDamagedQty=val.damage_count;
+                    subPackBarcodeDamagedQty+=val.damage_count;
                 }
             });
+            if(_seatData.loose_item_barcode_damage){
+                eachBarcodeDamagedQty = _seatData.loose_item_barcode_damage
+            }
             if(_seatData.box_barcode_damage.length!=0){
-                data["tableRows"].push([new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false),
-                    new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true),
-                    new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true)
-                    ]);
+                tableRows.push(new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false));
+                if(packBarcodeDamagedQty){
+                    tableRows.push(new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if(subPackBarcodeDamagedQty){
+                    tableRows.push(new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if(eachBarcodeDamagedQty){
+                    tableRows.push(new self.tableCol(eachBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true));
+                }
+                data["tableRows"].push(tableRows);
             }
             if (data["tableRows"].length > 0) {
                 data["header"].push(new this.tableCol(_("Damage Barcode"), "header", false, "small", false, true, true, false));
-                data["header"].push(new this.tableCol(_("Packs"), "header", false, "small", false, false, true, false, true));
-                data["header"].push(new this.tableCol(_("Sub-Packs"), "header", false, "small", false, false, true, false, true));
+                if(packBarcodeDamagedQty){
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Packs") : _seatData.Possible_Container_Names.container_level_2, "header", false, "small", false, false, true, false, true));
+                }
+                if(subPackBarcodeDamagedQty){
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Sub-Packs") : _seatData.Possible_Container_Names.container_level_1, "header", false, "small", false, false, true, false, true));
+                }
+                if(eachBarcodeDamagedQty){
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit? _("Eaches") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
+                }
+                
+                
+                
             }
         }
         return data;
@@ -1368,10 +1451,14 @@ getReconcileLooseItemsData: function () {
     var totalLooseItemsMissing = 0;
     var extraLooseItemsMissing = 0;
     var c = 0;
+    var looseItemScreenName = _("Loose Items Serial Numbers");
     
         _seatData.Loose_sku_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c = c + 1;
+            if(_seatData.k_deep_audit){
+                looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
+            }
         })
         _seatData.extra_loose_sku_item_list.map(function (value, index) {
             if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
@@ -1380,27 +1467,37 @@ getReconcileLooseItemsData: function () {
        
 
      _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function (value, index) {
-        if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
-            data["tableRows"].push([new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
+        if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0){
+            var tableRows = [new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
                 new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(index == ((c % 2 == 0 ? c / 2 : ((c + 1) / 2)) - 1) ? _seatData.loose_item_barcode_damage : "", "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
-                ]);
+                new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
+                ];
+            if(!_seatData.k_deep_audit){
+                tableRows.push(new self.tableCol(index == ((c % 2 == 0 ? c / 2 : ((c + 1) / 2)) - 1) ? _seatData.loose_item_barcode_damage : "", "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false))
+            }
+            data["tableRows"].push(tableRows);
+        }
 
     });
      if (_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0) {
-        data["tableRows"].push([new self.tableCol("", "enabled", false, "large", false, true, false, false),
+        var tableRows =[new self.tableCol("", "enabled", false, "large", false, true, false, false),
             new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-            new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-            new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false)
-            ]);
+            new self.tableCol(0, "enabled", false, "large", true, false, false, false, true)
+            ] ;
+            if(!_seatData.k_deep_audit){
+                tableRows.push(new self.tableCol(_seatData["loose_item_barcode_damage"], "enabled", false, "large", true, false, false, false, true, '', '', '', '', '', '', '', false))
+            }
+        data["tableRows"].push(tableRows);
     }
 
     if (data["tableRows"].length > 0) {
-        data["header"].push(new this.tableCol(_("Loose Items Serial Numbers"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(looseItemScreenName , "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Missing"), "header", false, "small", false, false, true, false, true));
         data["header"].push(new this.tableCol(_("Extra"), "header", false, "small", false, false, true, false, true));
-        data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        if(!_seatData.k_deep_audit){
+            data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
+        }
+        
     }
 
 return data;
@@ -1757,8 +1854,14 @@ setCurrentSeat: function (data) {
 
         _enableException = data;
     },
+    enableSearch: function (data) {
+        _enableSearch = data;
+    },
     getExceptionStatus: function () {
         return _enableException;
+    },
+    getItemSearchWindow: function () {
+        return _enableSearch;
     },
 
     setActiveException: function (data) {
@@ -1857,9 +1960,14 @@ setCurrentSeat: function (data) {
     getAuditExceptionScreen: function (data) {
         return _auditExceptionScreen;
     },
+    getIRTFlagStatus:function(data){
+        return  _seatData.irt_scan_enabled;
+    },
+    getSearchExcessQty:function(data){
+        return  _seatData.excess_quantity;
+    },
 
     setPickFrontExceptionScreen: function (data) {
-        //_seatData.notification_list[0].code = null;
         _seatData["notification_list"] = [{
             "details": [],
             "code": null,
@@ -2141,7 +2249,10 @@ setCurrentSeat: function (data) {
         })
         return bId;
     },
-
+    getProductSerial:function(){
+        var serial_data=_seatData.serial;
+        return serial_data.length>0?utils.get3dotTrailedText(serial_data[0],4,4,10):null
+    },
     getSelectedBinGroup: function () {
         var ppsbin_list = _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
         var groupId = null;
@@ -2333,7 +2444,7 @@ setCurrentSeat: function (data) {
                 "scan_details": {
                     "current_qty": _seatData.Current_box_details[0]?_seatData.Current_box_details[0].Box_Actual_Qty:0,
                     "total_qty": 0,
-                    "kq_allowed": _seatData.Current_box_details.length?true:false
+                    "kq_allowed": _seatData.enable_kq ? true:false /* BSS-10640 */
 
                 }
             };
@@ -2351,15 +2462,64 @@ setCurrentSeat: function (data) {
         _seatData.scan_allowed = false;
         utils.getPeripheralData(data, _seatData.seat_name);
     },
+    getOrphanItemData: function (data) {
+        _seatData.scan_allowed = true;
+        utils.getOrphanItemData(data, _seatData.seat_name);
+    },
+    getBOIConfigData: function (data) {
+        utils.getBOIConfig();
+    },
+    getItemData:function(){
+        if(_seatData.utility)
+        return _seatData.utility;
+    },
+    getLoaderStatus:function(){
+        if(_seatData.loader)
+        return _seatData.loader;
+    },
+    getDynamicColumnWidth:function(){
+        var rowconfig=[];
+        if(_seatData.utility.length){
+        var noOfCol= Object.keys(_seatData.utility[_seatData.utility.length-1])
+        
+        if(noOfCol.length==5)
+        rowconfig=[{'width':'10%',},{'width':'25%'},{'width':'15%'},{'width':'40%','justify-content':'flex-start','padding-left':'50px'},{'width':'10%'}];
+        else
+        rowconfig=[{'width':'15%'},{'width':'25%'},{'width':'15%'},{'width':'45%','justify-content':'flex-start','padding-left':'50px'}];
+        }
+        return rowconfig;
+    },
     updateSeatData: function (data, type, status, method) {
-        _peripheralScreen = true;
         var dataNotification = {};
 
         if (type === 'pptl') {
             _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT;
+            _peripheralScreen = true;
         } else if (type === 'barcode_scanner') {
             _seatData["screen_id"] = appConstants.SCANNER_MANAGEMENT;
+            _peripheralScreen = true;
         }
+        else if(type==="orphanSearch" || type==="orphanSearchStart"){
+            _seatData["screen_id"] = appConstants.ITEM_SEARCH_RESULT;
+            _peripheralScreen = true;
+        }
+        else if(type==="BOI_CONFIG"){
+            this.setBOIConfig(data || null);
+            this.updateSeatData((data && data.item_search_enabled) || false,"ITEM_SEARCH_CONFIG")
+            this.updateSeatData((data && data.login_scanner_enabled) || false,"LOGIN_SCANNER_CONFIG")
+        }
+        else if(type === "ITEM_SEARCH_CONFIG"){
+            this.setOrphanSearchAllowed(data)
+        }
+        else if(type === "LOGIN_SCANNER_CONFIG"){
+            this.setLoginScannerAllowed(data)
+        }
+       else if(type=="itemSearch"){
+        _seatData["screen_id"] = appConstants.ITEM_SEARCH;
+            _peripheralScreen = true;
+       }
+            
+       
         if (status == "success") {
             if (method == "POST")
                 dataNotification["code"] = resourceConstants.CLIENTCODE_006;
@@ -2385,15 +2545,19 @@ setCurrentSeat: function (data) {
             this.generateNotification(dataNotification);
         }
         else {
-            if (_seatData.notification_list.length > 0) {
+            if (_seatData && _seatData.notification_list.length > 0) {
                 _seatData.notification_list[0]["code"] = null;
                 _seatData.notification_list[0].description = "";
             }
         }
+        if(_seatData){
         _seatData["utility"] = data;
+        _seatData["loader"]=(data===true)?true:false;
         this.setCurrentSeat(_seatData);
+        }
         console.log(_seatData);
     },
+
     getUtility: function () {
         return _utility;
     },
@@ -2953,6 +3117,7 @@ setCurrentSeat: function (data) {
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["PreviousDetails"]=this.getPreviousPickDetails();
             break;
+
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
             data["PickFrontNavData"] = this.getNavData();
@@ -2968,20 +3133,22 @@ setCurrentSeat: function (data) {
 
             break;
 
+            case appConstants.PICK_FRONT_SKIP_TOTE:
             case appConstants.PICK_FRONT_DOCK_TOTE:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-            data["udpBinMapDetails"] =this.getUDPMapDetails(),
-            data["groupOrientation"] =this._getBinMapOrientation(),
-            data["selectedTotes"] =this.getSelectedTotes()
-            data["PickCurrentBin"] = this._getSelectedBinID();
-            data['PickFrontChecklistData']=this.getChecklistDockData();
-            data['PickFrontChecklistIndex']=this.getChecklistDockIdx();
-            data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["udpBinMapDetails"] =this.getUDPMapDetails(),
+                data["groupOrientation"] =this._getBinMapOrientation(),
+                data["selectedTotes"] =this.getSelectedTotes()
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data['PickFrontChecklistData']=this.getChecklistDockData();
+                data['PickFrontChecklistIndex']=this.getChecklistDockIdx();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
             break;
 
             case appConstants.PICK_FRONT_ONE_STEP_SCAN:
@@ -3003,6 +3170,8 @@ setCurrentSeat: function (data) {
             data["undockAwaited"]= this._getUndockAwaitedGroup();
             break;
 
+          
+
             case appConstants.PICK_FRONT_SLOT_SCAN:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -3012,7 +3181,7 @@ setCurrentSeat: function (data) {
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-                data["PickFrontCarryingUnitBtnEnable"] = this.getCarryingUnitButtonStatus();
+                data["PickFrontCarryingUnitBtnEnable"] = this.getButtonStatus();
                 break;
             
             case appConstants.PICK_FRONT_UNDOCK_TOTE:
@@ -3206,6 +3375,7 @@ setCurrentSeat: function (data) {
             data["PickFrontExceptionData"] = this.getExceptionData();
             data["PickFrontNotification"] = this.getNotificationData();
             data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+            data["PickFrontSearchStatus"] = this.getItemSearchWindow();
             data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
             data["BinMapDetails"] = this._getBinMapDetails();
             data["PickFrontButtonType"] = this.getPickFrontButtonType();
@@ -3214,7 +3384,29 @@ setCurrentSeat: function (data) {
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             data["PickFrontItemUid"] = this.getItemUid();
 
+
             break;
+            case appConstants.ITEM_SEARCH:
+            data["PickFrontScreenId"] = this.getScreenId();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutFrontScreenId"] = this.getScreenId();
+            data["PickBackScreenId"] = this.getScreenId();
+            data["AuditScreenId"] = this.getScreenId();
+            data["PrePutScreenId"] = this.getScreenId();
+
+            break;
+            case appConstants.ITEM_SEARCH_RESULT:
+            data["PickFrontScreenId"] = this.getScreenId();
+            data["PutBackScreenId"] = this.getScreenId();
+            data["PutFrontScreenId"] = this.getScreenId();
+            data["PickBackScreenId"] = this.getScreenId();
+            data["AuditScreenId"] = this.getScreenId();
+            data["PrePutScreenId"] = this.getScreenId();
+            data["ItemSearchData"]=this.getItemData();  
+            data["rowconfig"]=this.getDynamicColumnWidth(); 
+            data["loaderState"]=this.getLoaderStatus();        
+            break;
+
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
             data["PickFrontNavData"] = this.getNavData();
@@ -3236,14 +3428,17 @@ setCurrentSeat: function (data) {
             data["SplitScreenFlag"] = this._getSplitScreenFlag();
             data["BinMapGroupDetails"] = this.getSelectedBinGroup();
             break;
+
+            case appConstants.PICK_FRONT_SKIP_BIN:
             case appConstants.PICK_FRONT_NO_FREE_BIN:
-            data["PickFrontNavData"] = this.getNavData();
-            data["PickFrontServerNavData"] = this.getServerNavData();
-            data["PickFrontScreenId"] = this.getScreenId();
-            data["PickFrontBinData"] = this.getBinData();
-            data["PickFrontExceptionData"] = this.getExceptionData();
-            data["PickFrontNotification"] = this.getNotificationData();
-            data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
             break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
@@ -3344,6 +3539,47 @@ setCurrentSeat: function (data) {
             data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
             break;
 
+            case appConstants.PICK_BACK_PACKING_BOX:
+            data["PickBackNavData"] = this.getNavData();
+            data["PickBackServerNavData"] = this.getServerNavData();
+            data["PickBackScreenId"] = this.getScreenId();
+            data["BinMapDetails"] = this._getBinMapDetails();
+            data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+            data["groupOrientation"] =this._getBinMapOrientation(),
+            data["PickBackBinData"] = this.getBinData();
+            data["PickBackExceptionData"] = this.getExceptionData();
+            data["PickBackNotification"] = this.getNotificationData();
+            data["PickBackExceptionStatus"] = this.getExceptionStatus();
+            data["SplitScreenFlag"] = this._getSplitScreenFlag();
+            data["PickBackPackingBoxType"] = this.getPackingBoxType();
+            data["SplitScreenFlag"] = this._getSplitScreenFlag();
+            data["pickBackCancelButtonData"]=this.cancelScanDetails();
+        break;
+
+        case appConstants.PICK_BACK_CHANGE_PBOX_BIN:
+        data["PickBackNavData"] = this.getNavData();
+        data["PickBackBinData"] = this.getBinData();
+        data["PickBackExceptionData"] = this.getExceptionData();
+        data["PickBackServerNavData"] = this.getServerNavData();
+        data["PickBackNotification"] = this.getNotificationData();
+        data["PickBackExceptionStatus"] = this.getExceptionStatus();
+        data["PickBackScreenId"] = this.getScreenId();
+        data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
+        data["PickBackSelectedBin"] = this.getSelectedBin();
+        break;
+        case appConstants.PICK_BACK_CHANGE_PBOX_SCAN:
+        data["PickBackNavData"] = this.getNavData();
+        data["PickBackExceptionData"] = this.getExceptionData();
+        data["PickBackServerNavData"] = this.getServerNavData();
+        data["PickBackNotification"] = this.getNotificationData();
+        data["PickBackExceptionStatus"] = this.getExceptionStatus();
+        data["PickBackScreenId"] = this.getScreenId();
+        data["BoxBarcode"]=this.getBoxBarcode();
+        data["ConfirmEnabled"]=this.getConfirmState();
+        break;
+
+
+
 
             case appConstants.AUDIT_WAITING_FOR_MSU:
             data["AuditNavData"] = this.getNavData();
@@ -3423,6 +3659,7 @@ setCurrentSeat: function (data) {
                 data["AuditKQDetails"] = this.getScanDetails();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 break;
+          
 //SR Audit
 case appConstants.AUDIT_SCAN_SR:
 data["AuditNavData"] = this.getNavData();
@@ -3442,6 +3679,41 @@ data["AuditFinishFlag"] = this.getFinishAuditFlag();
 data["PickFrontDamagedQuantity"]=this.getDamagedScanDetails();
 data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
 data["AuditLooseItemsData"] = this.getLooseItemsData();
+break;
+
+case appConstants.SEARCH_ENTITY_SCAN:
+data['SearchItemExceptionStatus']= this.getExceptionStatus();
+data["SearchItemNavData"] = this.getNavData();
+data["SearchItemServerNavData"] = this.getServerNavData();
+data["SearchItemNotification"] = this.getNotificationData();
+data["SearchItemScreenId"] = this.getScreenId();
+data["SlotType"] = this.getSlotType();
+data["isDrawer"] = this.getDrawerFlag();
+data["SearchItemRackDetails"] = this.getRackDetails();
+data["SearchItemProductDetails"] = this.productDetails();
+data["SearchItemKQQuantity"] = this.getScanDetails();
+data["kQstatus"] = this.kQstatus();
+data["ProductSerial"] = this.getProductSerial();
+
+break;
+case appConstants.SEARCH_IRT_CONFIRM:
+data['SearchItemExceptionStatus']= this.getExceptionStatus();
+data["SearchItemNavData"] = this.getNavData();
+data["SearchItemServerNavData"] = this.getServerNavData();
+data["SearchItemNotification"] = this.getNotificationData();
+data["SearchItemProductDetails"] = this.productDetails();
+data["SearchItemScreenId"] = this.getScreenId();
+data["SearchItemExcessData"]=this.getSearchExcessQty();
+data["SearchIRTFlag"]=this.getIRTFlagStatus();
+data["ProductSerial"] = this.getProductSerial();
+break;
+
+case appConstants.WAITING_FOR_MSU:
+data["SearchItemNavData"] = this.getNavData();
+data["SearchItemServerNavData"] = this.getServerNavData();
+data["SearchItemNotification"] = this.getNotificationData();
+data["SearchItemScreenId"] = this.getScreenId();
+data['SearchItemExceptionStatus']= this.getExceptionStatus();
 break;
 
 case appConstants.PPTL_MANAGEMENT:
@@ -3584,6 +3856,10 @@ AppDispatcher.register(function (payload) {
         mainstore.enableException(action.data);
         mainstore.emitChange();
         break;
+        case appConstants.ENABLE_SEARCH:
+        mainstore.enableSearch(action.data);
+        mainstore.emitChange();
+        break;
         case appConstants.SET_ACTIVE_EXCEPTION:
         mainstore.setActiveException(action.data);
         mainstore.emitChange();
@@ -3640,11 +3916,20 @@ AppDispatcher.register(function (payload) {
         mainstore.getPeripheralData(action.data);
         mainstore.emitChange();
         break;
+        case appConstants.ORPHAN_ITEM_DATA:
+        mainstore.getOrphanItemData(action.data);
+        mainstore.emitChange();
+        break;
+        case appConstants.GET_BOI_CONFIG:
+        mainstore.getBOIConfigData();
+        mainstore.emitChange();
+        break;
         case appConstants.UPDATE_SEAT_DATA:
         mainstore.showSpinner();
         mainstore.updateSeatData(action.data, action.type, action.status, action.method);
         mainstore.emitChange();
         break;
+
         case appConstants.CONVERT_TEXTBOX:
         mainstore.convert_textbox(action.data, action.index);
         mainstore.emitChange();

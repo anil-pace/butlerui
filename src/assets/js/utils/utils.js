@@ -96,6 +96,82 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             alert("WebSocket NOT supported by your Browser!");            
         }
     },
+    getCurrentLang:function(){
+        var localeStr = window.sessionStorage.getItem("localeData"),
+        localeObj =  (localeStr) ? JSON.parse(localeStr) : {},
+        localeLang = (localeObj && localeObj.data) ? localeObj.data.locale : null;
+        return localeLang
+      },
+   get3dotTrailedText:function(serial,frontlimit=5,rearLimit=5,stringLength){
+       let trailedText="";
+       if(serial.length>stringLength){
+        trailedText=serial.slice(0,frontlimit)+"..."+serial.slice(-rearLimit);
+       }
+       else{
+        trailedText=serial;
+       }
+       return trailedText
+   },   
+   displayData : function(data,serial){
+    product_info_locale = {};
+    image_url = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if(language_locale == 'null' || language_locale == null){
+      locale = 'en-US';
+    }else{
+      locale = JSON.parse(language_locale)["data"]["locale"]; 
+    }
+    data.map(function(value, index){
+      var keyValue ="";
+      var imageKey;
+      for (var key in value[0]) { 
+        if (key === "product_dimensions") {
+          var dimension = value[0][key];
+          for (var i = 0; i < dimension.length; i++) {
+            if(i === 0) {
+              keyValue = dimension[i] + "";
+            }
+            else {
+              keyValue = keyValue + " X " + dimension[i]
+            }
+          }
+          
+        }
+        else if(key != 'display_data' && key != 'product_local_image_url' ){
+          keyValue = value[0][key] + ' ';
+         }else if(key != 'display_data' && key == 'product_local_image_url' ){
+          imageKey = value[0][key];
+         }
+      }
+      value[0].display_data.map(
+        function(data_locale, index1){
+         if(data_locale.locale == locale){
+            if(data_locale.display_name != 'product_local_image_url' ){
+              product_info_locale[data_locale.display_name] = keyValue;
+            }
+          }
+          if(data_locale.display_name == 'product_local_image_url' ){
+            if(imageKey === "outer_each" || imageKey === "inner_each" || imageKey === "outer_inner"){
+                product_info_locale[data_locale.display_name] = "assets/images/" + imageKey + ".gif";
+            }
+            else if(imageKey === "outer" || imageKey === "inner"){
+                product_info_locale[data_locale.display_name] = "assets/images/" + imageKey + ".png";
+            }
+            else
+            product_info_locale[data_locale.display_name] = imageKey;
+        }
+        
+        }
+
+      )
+      
+    });
+    if(serial){
+        product_info_locale[_("Serial")]=serial;
+    }
+  return product_info_locale;
+},
     checkSessionStorage : function(){
         var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
         if(sessionData === null){  
@@ -121,34 +197,49 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     },
     getAuthToken : function(data){
         sessionStorage.setItem('sessionData', null);
-        var loginData ={
-          "username" : data.data.username,
-          "password" : data.data.password
-      }
-      $.ajax({
-        type: 'POST',
-        url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
-        data: JSON.stringify(loginData),
-        dataType: "json",
-        headers: {
-            'content-type': 'application/json',
-            'accept': 'application/json'
-        }
-    }).done(function(response) {
-        var webSocketData = {
-            'data_type': 'auth',
-            'data' : {
-                "auth-token" : response.auth_token,
-                "seat_name" : data.data.seat_name
+        if(data.data.barcode){ // if barcode key is present its login via scanner mode
+            var loginData ={
+                "username" : "d_____", // post discussion with platform (rahul.s)
+                "password" : "d_____", // d+(5 times _)
+                "grant_type": "password",
+                "action": "LOGIN",
+                "context": {
+                    "barcode": data.data.barcode
+                }
             }
-        };
-        utils.storeSession(webSocketData);
-        utils.postDataToWebsockets(webSocketData);
-    }).fail(function(data,jqXHR, textStatus, errorThrown) {
-        CommonActions.showErrorMessage(data.responseJSON.error);
-    });
-
+        }
+        else{
+            var loginData ={
+                "username" : data.data.username,
+                "password" : data.data.password,
+                "grant_type": "password",
+                "action": "LOGIN"
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: configConstants.INTERFACE_IP + appConstants.API + appConstants.AUTH + appConstants.TOKEN,
+            data: JSON.stringify(loginData),
+            dataType: "json",
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            }
+        }).done(function(response) {
+            var webSocketData = {
+                'data_type': 'auth',
+                'data' : {
+                    "auth-token" : response.auth_token,
+                    "seat_name" : data.data.seat_name
+                }
+            };
+            utils.storeSession(webSocketData);
+            utils.postDataToWebsockets(webSocketData);
+        }).fail(function(data,jqXHR, textStatus, errorThrown) {
+            CommonActions.showErrorMessage(data.responseJSON.error);
+        });
 },
+
 sessionLogout:function(data){
     sessionStorage.setItem('sessionData', null);
     location.reload();
@@ -220,6 +311,41 @@ getPeripheralData : function(type, seat_name, status, method){
 
     });
 },
+///itemsearch 
+getOrphanItemData : function(data, seat_name){
+    var dataToSent="?"+"barcode="+data+"&"+"ppsId="+seat_name;
+    var retrieved_token = sessionStorage.getItem('sessionData');
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
+    $.ajax({
+        type: 'GET',
+         url: configConstants.INTERFACE_IP + appConstants.API +appConstants.API_GATEWAY+appConstants.SR_SERVICE+appConstants.PLATFORM_SRMS+appConstants.SERVICE_REQUEST+appConstants.SEARCH_ITEM+dataToSent,
+         dataType: "json",
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+            'Authentication-Token' : authentication_token
+        }
+
+    }).done(function(response) {
+            CommonActions.updateSeatData(response.data, "orphanSearch");  
+    }).fail(function(jqXhr) {
+        CommonActions.updateSeatData([], "orphanSearch"); 
+        
+    });
+    
+},
+getBOIConfig : function(){
+    $.ajax({
+        type: 'GET',
+         url: configConstants.BOI_CONFIG 
+    }).done(function(response) {
+            CommonActions.updateSeatData(response, "BOI_CONFIG");  
+    }).fail(function(jqXhr) {
+        CommonActions.updateSeatData(null, "BOI_CONFIG"); 
+        
+    });
+    
+},
 updatePeripherals : function(data, method, seat_name){
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"];
@@ -289,7 +415,7 @@ logError: function(data) {
 });
 
 var putSeatData = function(data) {
-   console.log(data);
+ console.log(data);
    switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:
         CommonActions.setPutBackData(data.state_data);
@@ -306,6 +432,10 @@ var putSeatData = function(data) {
         case appConstants.AUDIT:
         CommonActions.setAuditData(data.state_data);
         break;
+        case appConstants.SEARCH:
+        CommonActions.setSearchData(data.state_data);
+        break;
+
         default:
         return true;
     }

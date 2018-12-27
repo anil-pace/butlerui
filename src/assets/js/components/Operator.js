@@ -4,6 +4,7 @@ var PutBack = require('./PutBack');
 var PutFront = require('./PutFront');
 var PickBack = require('./PickBack');
 var PickFront = require('./PickFront');
+var Search = require('./Search');
 var Audit = require('./Audit');
 var PrePut = require('./PrePut');
 var appConstants = require('../constants/appConstants');
@@ -57,7 +58,11 @@ var Operator = React.createClass({
           this._currentSeat = <Audit navMessagesJson={this.state.navMessages}/>;
         break;
       case appConstants.PRE_PUT:
-          this._currentSeat = <PrePut navMessagesJson={this.state.navMessages}/>;            
+          this._currentSeat = <PrePut navMessagesJson={this.state.navMessages}/>;   
+          break;
+          case appConstants.SEARCH:
+          this._currentSeat = <Search navMessagesJson={this.state.navMessages}/>;   
+          break;             
       default:
         return true; 
       }

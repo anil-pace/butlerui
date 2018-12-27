@@ -170,8 +170,8 @@ var PickFrontStore = assign({}, EventEmitter.prototype, {
 PickFrontStore.dispatchToken = AppDispatcher.register(function(action) {
     switch (action.action.actionType) {
         case ActionTypes.SET_PICK_FRONT_DATA:
-            PickFrontStore.setPickFrontData(action.action.data);
-            PickFrontStore.emitChange();
+        PickFrontStore.setPickFrontData(action.action.data);
+        PickFrontStore.emitChange();
             break;
         default:
             return true;

@@ -12,7 +12,7 @@ var resourceConstants = {
 	TBL_HEADER: 'Box Serial Numbers',
 	NO_RECONCILE: 'No Items To Reconcile',
 	YES_RECONCILE:'List Of Items To Reconcile',
-	USERNAME :'User Name',
+	USERNAME :'Username',
 	PASSWORD : 'Password',
 	BIN_GROUP_LEFT:"left",
 	BIN_GROUP_RIGHT:"right",

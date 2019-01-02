@@ -338,6 +338,7 @@ var _dividerWrapper = (<div className="divider">
           <span className={plusIconClass}>&#43;</span>
           <div style={{"fontSize":"2vh"}}> Scan ID card to login.</div>
           <div className={scannerErrorClass}><span>{_("ID Card authentication failed.")}</span></div>
+          <div className={scannerErrorClass}><span>{_(this.state.showError)}</span></div>
           </div>
           </div>
         ) : ""}

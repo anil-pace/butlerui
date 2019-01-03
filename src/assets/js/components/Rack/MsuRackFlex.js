@@ -18,6 +18,8 @@ var MsuRackFlex = React.createClass({
           drawerLineDrawn is set true once the line is created
        */
 
+       console.log("COMPONENT DID UPDATE ====>");
+
        var lines = document.getElementsByClassName("connectingLine");
 
        if(lines.length===0){
@@ -26,11 +28,13 @@ var MsuRackFlex = React.createClass({
           var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
           if(strEl && endEl){
            this.connect(strEl, endEl, "#626262", 3);
+           console.log("LINE DRAWN");
           }
       }
     },
 
     componentWillUnmount:function(){
+      console.log("COMPONENT WILL UNMOUNT ====>");
       var lines = document.getElementsByClassName("connectingLine");
       if(lines.length){
         lines[0].remove();
@@ -66,11 +70,11 @@ var MsuRackFlex = React.createClass({
             newBarcodes.push(result);
         });
       }
-if(newBarcodes.length>1){
-  valueToShow=newBarcodes[0] + ' - '+newBarcodes[newBarcodes.length-1];
-}else if(newBarcodes.length==1){
-  valueToShow=newBarcodes[0];
-}
+      if(newBarcodes.length>1){
+        valueToShow=newBarcodes[0] + ' - '+newBarcodes[newBarcodes.length-1];
+      }else if(newBarcodes.length==1){
+        valueToShow=newBarcodes[0];
+      }
 
       selectedSlotIds = valueToShow
 
@@ -116,6 +120,10 @@ if(newBarcodes.length>1){
     },
 
     connect:function(startEl, endEl, color, thickness) {
+      var lines = document.getElementsByClassName("connectingLine");
+      if(lines.length){
+        lines[0].remove();
+      }
       var off1 = this.getOffset(startEl);
       var off2 = this.getOffset(endEl);
       // bottom right
@@ -133,10 +141,15 @@ if(newBarcodes.length>1){
       var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
       // make hr
       var htmlLine = "<div class='connectingLine' style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
-      var lines = document.getElementsByClassName("connectingLine");
-      if((lines.length==1 && ((Math.round(cx)!==lines[0].offsetLeft) ||(Math.round(cy)!==lines[0].offsetTop)))||lines.length==0 ){
       document.getElementById('app').innerHTML += htmlLine;
+      /*
+      var lines = document.getElementsByClassName("connectingLine");
+      if((lines.length==1 && ( (Math.round(cx) !== lines[0].offsetLeft) || (Math.round(cy)!==lines[0].offsetTop)))||lines.length==0 ){
+        console.log("")
+        document.getElementById('app').innerHTML += htmlLine;
       }
+      */
+     
     },
 
     getOffset( el ) {
@@ -149,6 +162,7 @@ if(newBarcodes.length>1){
       };
     },
     _createSlotLayouts: function(vSlots, lastHSlot, lastVSlot, selectedSlotIndex, selectedSlotIds) {
+        console.log(" _CREATE SLOT LAYOUTS FUNCTION ===> ")
         if ((vSlots.constructor !== Array && vSlots.length < 1) || !(lastHSlot.length) || !(lastVSlot.length)){
             //no bins found
             return;
@@ -238,6 +252,7 @@ if(newBarcodes.length>1){
     },
 
     render: function() {
+      console.log("RENDER ====>")
       var orientationClass,stackText,count,stackCount,fragileClass,stackClass,nestable_count,nestable_direction,stackicon;
       var putDirection = this.props.putDirectionFlex;
       var QLCodeDetails =this.props.QLCodeDetails;
@@ -247,6 +262,7 @@ if(newBarcodes.length>1){
                                                this.state.selectedSlotIndex,
                                                this.state.selectedSlotIds
                                              );
+      console.log("this.state.selectedSlotIndex" + this.state.selectedSlotIndex);
 
             if(putDirection){
         nestable_count=putDirection.nestable_count;

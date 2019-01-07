@@ -754,6 +754,9 @@ function server_messages_list() {
     _("LOGIN"); 
     _("Language");
     _("Username");
-    _("Login to Butler System");
+    _("Login to");
+    _("Enter username");
+    _("Enter password");
+    _("Scan ID card to login.");
 }
 

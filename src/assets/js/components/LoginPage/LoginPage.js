@@ -284,12 +284,12 @@ var _dividerWrapper = (<div className="divider">
         <img className="imgLogo" src={allSvgConstants.logo} />
         </div>
         <div className="languageDropDown">
-          <span className="langText">{appConstants.LANGUAGE}</span>
+          <span className="langText">{_(appConstants.LANGUAGE)}</span>
         {this.state.getLang?'':_languageDropDown}
         </div>
         </header>
         <div className="subHeading">
-        <div className="langText">{appConstants.LOGINTEXT}</div>
+        <div className="langText">{_(appConstants.LOGINTO) + " " + appConstants.BUTLERSYSTEM}</div>
         <div className="selectWrapper">
         {ppsOption}
         {showTiltButton}
@@ -336,7 +336,7 @@ var _dividerWrapper = (<div className="divider">
           <div className={leftBelow}></div>
           <div className="scanLogo"></div>
           <span className={plusIconClass}>&#43;</span>
-          <div style={{"fontSize":"2vh"}}> Scan ID card to login.</div>
+          <div style={{"fontSize":"2vh"}}> {_("Scan ID card to login.")}</div>
           <div className={scannerErrorClass}><span>{_(this.state.showError)}</span></div>
           </div>
           </div>

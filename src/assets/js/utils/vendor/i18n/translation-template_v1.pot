@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-03 08:53+0000\n"
+"POT-Creation-Date: 2019-01-07 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3584,4 +3584,20 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:757
 msgid "Login to Butler System"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:757
+msgid "Login to"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:758
+msgid "Enter username"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:759
+msgid "Enter password"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:760
+msgid "Scan ID card to login."
 msgstr ""

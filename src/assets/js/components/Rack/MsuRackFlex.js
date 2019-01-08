@@ -12,6 +12,7 @@ var MsuRackFlex = React.createClass({
     },
 
     componentDidUpdate:function(){
+      console.log("===== COMPONENT DID UPDATE ======");
       /*
           Calling the line function only if the drawerLineDrawn is false 
           and the slot type is drawer.
@@ -27,6 +28,18 @@ var MsuRackFlex = React.createClass({
           if(strEl && endEl){
            this.connect(strEl, endEl, "#626262", 3);
           }
+      }
+      else{  // BSS-11804 fix //
+        var lines = document.getElementsByClassName("connectingLine");
+        if(lines.length){
+          lines[0].remove();
+        }
+        var strEl = document.querySelectorAll("#selectedSlot")[0];
+        strEl = strEl ? strEl.parentNode : null;
+        var endEl  = document.querySelectorAll("#slotDisplayArea")[0];
+        if(strEl && endEl){
+          this.connect(strEl, endEl, "#626262", 3);
+        }
       }
     },
 

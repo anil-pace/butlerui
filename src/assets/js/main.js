@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 
 var LoginForm = require('./components/LoginPage/LoginPage');
 
+var DevMode = require('./components/DevMode');
 
 var Operator = require('./components/Operator');
 
@@ -21,7 +22,6 @@ var App = React.createClass({
     return (
       <div className="body-container">
         <LoginForm />
-
       </div>
     );
   }
@@ -31,4 +31,9 @@ var App = React.createClass({
 ReactDOM.render(
     <App />,
     document.getElementById('app')
+)
+
+ReactDOM.render(
+  <DevMode interfaceEnabled={true}/>,
+  document.getElementById('devmode')
 )

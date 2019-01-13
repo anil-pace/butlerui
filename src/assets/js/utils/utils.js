@@ -1,11 +1,14 @@
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
-var configConstants = require('../constants/configConstants');
 var resourceConstants = require('../constants/resourceConstants');
 var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var serverMessages = require('../serverMessages/server_messages');
 var ws,self;
+
+var DevModeUtils = require('../components/DevMode/DevModeUtils');
+
+DevModeUtils.load_config();
 
 var utils = objectAssign({}, EventEmitter.prototype, {
     enableKeyboard:function(){

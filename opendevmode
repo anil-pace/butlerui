@@ -1,0 +1,3 @@
+#!/bin/bash
+
+open -n -a /Applications/Google\ Chrome.app --args --user-data-dir="/tmp/lowSecure" --disable-web-security --ignore-certificate-errors $(pwd)/dist/index.html

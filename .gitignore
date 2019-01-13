@@ -1,5 +1,5 @@
-/dist/
 /node_modules/
+dist/assets/js/main.js
 /src/assets/js/utils/vendor/i18n/*
 !/src/assets/js/utils/vendor/i18n/translation-template_v1.pot
 *configConstants*

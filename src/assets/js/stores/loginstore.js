@@ -1,11 +1,13 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
-var configConstants = require('../constants/configConstants');
 var appConstants = require('../constants/appConstants');
 var objectAssign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var CommonActions = require('../actions/CommonActions');
 var utils  = require('../utils/utils.js');
 
+var DevModeUtils = require('../components/DevMode/DevModeUtils');
+
+DevModeUtils.load_config();
 
 var CHANGE_EVENT = 'change';
 var flag = false;

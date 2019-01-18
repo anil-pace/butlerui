@@ -68,7 +68,7 @@ var DevMode = React.createClass({
         />
 
         <div id="interface">
-          <select id="tool-select" onChange={this.toolSelect} required value="">
+          <select className="devmode-select" onChange={this.toolSelect} required value="">
             <option value="" disabled hidden>
               Select a tool to add
             </option>

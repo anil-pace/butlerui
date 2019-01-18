@@ -2,67 +2,72 @@ var React = require("react");
 
 var DevModeUtils = require("./DevModeUtils");
 
-var makeid = DevModeUtils.makeid;
+
+var ToolLineContainer = require("./ToolLineContainer");
 
 var ToolName = React.createClass({
+  getInitialState: function() {
+    return {
+      lineContainerRef: undefined
+    };
+  },
   createOrder() {
+    OrderLineAggregate = this.state.lineContainerRef.getLineAggregate() 
     console.log("Creating Order at Core");
     var order_id = parseInt($("#slo_order_id").val());
-    var uid = $("#slo_uid").val();
-    var sku = $("#slo_sku").val();
-    var qty = parseInt($("#slo_quantity").val());
+    TotalLineJSON = OrderLineAggregate.map(
+      lineData => ({
+        id: parseInt(lineData.lineId),
+        externalServiceRequestId: "1004",
+        serviceRequests: null,
+        type: "PICK_LINE",
+        actuals: null,
+        expectations: {
+          containers: [
+            {
+              id: 43,
+              state: null,
+              type: "VIRTUAL",
+              barcode: null,
+              products: [
+                {
+                  id: 35,
+                  uid: null,
+                  possibleUids: [
+                    {
+                      quantity_per_unit: 1,
+                      product_uid: lineData.uid,
+                      relative_priority: 1
+                    }
+                  ],
+                  uidType: null,
+                  productQuantity: parseInt(lineData.qty),
+                  productAttributes: {
+                    filter_parameters: ["product_sku = '" + lineData.sku + "'"]
+                  },
+                  createdOn: "2018-05-14T11:25:45.22",
+                  updatedOn: "2018-05-14T11:25:45.22"
+                }
+              ],
+              containers: null,
+              containerAttributes: null,
+              createdOn: "2018-05-14T11:25:45.219",
+              updatedOn: "2018-05-14T11:25:45.219"
+            }
+          ]
+        },
+        receivedOn: "2018-05-14T11:25:45.218",
+        status: "CREATED",
+        state: "created",
+        attributes: null,
+        createdOn: "2018-05-14T11:25:45.218",
+        updatedOn: "2018-05-14T11:25:45.218"
+      })
+    );
     var data = {
       id: order_id,
       externalServiceRequestId: "1003",
-      serviceRequests: [
-        {
-          id: 0,
-          externalServiceRequestId: "1004",
-          serviceRequests: null,
-          type: "PICK_LINE",
-          actuals: null,
-          expectations: {
-            containers: [
-              {
-                id: 43,
-                state: null,
-                type: "VIRTUAL",
-                barcode: null,
-                products: [
-                  {
-                    id: 35,
-                    uid: null,
-                    possibleUids: [
-                      {
-                        quantity_per_unit: 1,
-                        product_uid: uid,
-                        relative_priority: 1
-                      }
-                    ],
-                    uidType: null,
-                    productQuantity: qty,
-                    productAttributes: {
-                      filter_parameters: ["product_sku = '" + sku + "'"]
-                    },
-                    createdOn: "2018-05-14T11:25:45.22",
-                    updatedOn: "2018-05-14T11:25:45.22"
-                  }
-                ],
-                containers: null,
-                containerAttributes: null,
-                createdOn: "2018-05-14T11:25:45.219",
-                updatedOn: "2018-05-14T11:25:45.219"
-              }
-            ]
-          },
-          receivedOn: "2018-05-14T11:25:45.218",
-          status: "CREATED",
-          state: "created",
-          attributes: null,
-          createdOn: "2018-05-14T11:25:45.218",
-          updatedOn: "2018-05-14T11:25:45.218"
-        }
-      ],
+      serviceRequests: TotalLineJSON,
       type: "PICK",
       actuals: null,
       expectations: null,
@@ -89,17 +94,12 @@ var ToolName = React.createClass({
   render() {
     return (
       <div className="toolcontent">
-        <form className="tool-form">
-          <label>Order Id</label>
-          <input type="text" defaultValue="" id="slo_order_id" />
-
-          <label>Product SKU</label>
-          <input type="text" id="slo_sku" defaultValue="a1" />
-          <label>Product UID</label>
-          <input type="text" id="slo_uid" defaultValue="70" />
-          <label>Order Quantity</label>
-          <input type="text" id="slo_quantity" defaultValue="2" />
-        </form>
+        <div className = "tool-form">
+        <label>Order ID</label>
+        <input type="text" defaultValue="" id="slo_order_id" />
+        </div>
+        <br />
+        <ToolLineContainer lineName = "orderline" ref = {t => (this.state.lineContainerRef = t)}/>
         <br />
         <input
           type="button"

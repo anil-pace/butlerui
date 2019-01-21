@@ -5,12 +5,27 @@ var DevModeUtils = require("./DevModeUtils");
 var makeid = DevModeUtils.makeid;
 var stdCallBack = DevModeUtils.stdCallBack;
 
+var ToolLineContainer = require("./ToolLineContainer");
+
 var PutExpectationTool = React.createClass({
+  getInitialState: function() {
+    return {
+      lineContainerRef: undefined
+    };
+  },
   ns_createtote() {
-    console.log("Sending");
+    LineAggregate = this.state.lineContainerRef.getLineAggregate()
     var tote_id = $("#nstote_toteid").val();
-    var sku = $("#nstote_sku").val();
-    var qty = parseInt($("#nstote_quantity").val());
+    ProductsJSON = LineAggregate.map(
+      lineData => ({
+          productQuantity: parseInt(lineData.qty),
+          productAttributes: {
+            pdfa_values: {
+              product_sku: lineData.sku
+            }
+          }
+      })
+    )
     var data = {
       externalServiceRequestId: tote_id,
       type: "PUT",
@@ -20,16 +35,7 @@ var PutExpectationTool = React.createClass({
       expectations: {
         containers: [
           {
-            products: [
-              {
-                productQuantity: qty,
-                productAttributes: {
-                  pdfa_values: {
-                    product_sku: sku
-                  }
-                }
-              }
-            ]
+            products: ProductsJSON
           }
         ]
       }
@@ -46,23 +52,21 @@ var PutExpectationTool = React.createClass({
   render() {
     return (
       <div className="toolcontent">
-        <form className="tool-form">
+        <div className="tool-form">
           <label>Tote ID / SR ID</label>
           <input type="text" defaultValue="" id="nstote_toteid" />
-
-          <label>Product SKU</label>
-          <input type="text" id="nstote_sku" defaultValue="a1" />
-          <label>Product Quantity</label>
-          <input type="text" id="nstote_quantity" defaultValue="2" />
-        </form>
-        <br/>
+        </div>
+        <br />
+        <ToolLineContainer lineName = "putline" ref = {t => (this.state.lineContainerRef = t)}/>
+        <br />
         <input
           type="button"
           className="devtoolBtn"
           defaultValue="Create tote"
           id="totbtn"
           onClick={this.ns_createtote}
-        />&emsp;
+        />
+        &emsp;
         <input
           type="button"
           className="devtoolBtn"

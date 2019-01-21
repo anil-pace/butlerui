@@ -29,6 +29,12 @@ getAuthToken = function() {
   postUrl(EndPoint, JSON.stringify(Data), CallBack);
 };
 
+devlog = function(text){
+  prevText = $("#devconsole_ta").val()
+  $("#devconsole_ta").val(prevText + text + "\n")
+  console.log(text) 
+};
+
 var devModeUtils = {
   devModeInit: function() {
     wsHook.before = function(data, url) {
@@ -64,9 +70,9 @@ var devModeUtils = {
     );
   },
 
-  stdCallBack: function(response) {
-    console.log("Got response " + response.status);
-    console.log(response.responseText);
+  stdCallBack: function(response, responseStatus, xhr) {
+    devlog("Got response: " + responseStatus);
+    console.log(JSON.stringify(response));
   },
 
   getCompositeBarcode: function(serials) {

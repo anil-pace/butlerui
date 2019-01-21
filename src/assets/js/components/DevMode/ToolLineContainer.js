@@ -1,6 +1,7 @@
 var React = require("react");
 
 var Orderline = require("./Orderline");
+var PutExpectationLine = require("./PutExpectationLine");
 
 var ToolLineContainer = React.createClass({
   getInitialState: function() {
@@ -17,6 +18,18 @@ var ToolLineContainer = React.createClass({
         return (
           <div key={lineId} className={isVisible ? "" : "hidden"}>
             <Orderline
+              key={lineId}
+              lineId={lineId}
+              ref={t =>
+                (this.state.lineDictRefs[lineId] = t)
+              }
+            />
+          </div>
+        );
+      case "putline":
+        return (
+          <div key={lineId} className={isVisible ? "" : "hidden"}>
+            <PutExpectationLine
               key={lineId}
               lineId={lineId}
               ref={t =>
@@ -42,7 +55,6 @@ var ToolLineContainer = React.createClass({
         [newLineId]: null
       }
     });
-    console.log(this.state);
   },
   lineSelect(event) {
     this.setState({current_line_id: parseInt(event.target.value)});

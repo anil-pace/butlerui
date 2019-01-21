@@ -12,9 +12,13 @@ ToolConfigs = {
     tags: ["exclusive"]
   },
   devconsole: {
-    tags: ["shared"]
+    tags: ["shared"],
+    visible: true
   },
   order_creator: {
+    visible: false
+  },
+  put_expectation: {
     visible: true
   }
 };

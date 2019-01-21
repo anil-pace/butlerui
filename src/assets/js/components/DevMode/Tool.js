@@ -63,6 +63,7 @@ var Tool = React.createClass({
           className="tool_close_btn"
           onClick={this.closeTool}
         />
+        <br />
         {this.get_tool_markup(this.state.name)}
       </div>
     );

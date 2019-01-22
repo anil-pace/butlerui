@@ -8,6 +8,7 @@ var ConfigTool = require("./ConfigTool.js");
 var SerializedTool = require("./SerializedTool.js");
 var PutExpectionTool = require("./PutExpectationTool.js");
 var OrderCreator = require("./OrderCreator.js");
+var ImageScannerEmulator = require("./ImageScannerEmulator.js");
 
 var ToolConfigs = require("./ToolConfig");
 
@@ -37,6 +38,8 @@ var Tool = React.createClass({
         return <ConfigTool />;
       case "order_creator":
         return <OrderCreator />;
+      case "image_scanner":
+        return <ImageScannerEmulator />;
     }
   },
 

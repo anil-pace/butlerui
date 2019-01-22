@@ -2,6 +2,7 @@ var React = require("react");
 
 var Orderline = require("./Orderline");
 var PutExpectationLine = require("./PutExpectationLine");
+var BarcodeLine = require("./BarcodeLine"); 
 
 var ToolLineContainer = React.createClass({
   getInitialState: function() {
@@ -30,6 +31,18 @@ var ToolLineContainer = React.createClass({
         return (
           <div key={lineId} className={isVisible ? "" : "hidden"}>
             <PutExpectationLine
+              key={lineId}
+              lineId={lineId}
+              ref={t =>
+                (this.state.lineDictRefs[lineId] = t)
+              }
+            />
+          </div>
+        );
+      case "barcodeline":
+        return (
+          <div key={lineId} className={isVisible ? "" : "hidden"}>
+            <BarcodeLine
               key={lineId}
               lineId={lineId}
               ref={t =>

@@ -5,6 +5,7 @@ ToolConfigs = {
     "put_expectation",
     "order_creator",
     "serialized",
+    "image_scanner",
     "devconsole"
   ],
   common: {
@@ -19,6 +20,9 @@ ToolConfigs = {
     visible: false
   },
   put_expectation: {
+    visible: false
+  },
+  image_scanner: {
     visible: true
   }
 };

@@ -31,22 +31,6 @@ var MsuRackFlex = React.createClass({
           3
         );
       }
-    } else {
-      // BSS-11804 fix, special handling when same msu is used and page doesn't refresh//
-      if (lines.length) {
-        lines[0].remove();
-      }
-      var strEl = document.querySelectorAll('#selectedSlot')[0];
-      strEl = strEl ? strEl.parentNode : null;
-      var endEl = document.querySelectorAll('#slotDisplayArea')[0];
-      if (strEl && endEl) {
-        this.connect(
-          strEl,
-          endEl,
-          '#626262',
-          3
-        );
-      }
     }
   },
 

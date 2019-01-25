@@ -3,6 +3,7 @@ var PrdtDetails = require('../PrdtDetails/ProductDetails');
 var appConstants = require('../../constants/appConstants');
 
 var MsuRackFlex = React.createClass({
+<<<<<<< HEAD
 
     getInitialState: function(){
       return this._getMaxXMaxYCoords(this.props.rackDetails);
@@ -42,6 +43,37 @@ var MsuRackFlex = React.createClass({
         //no slots found
         return;
       }
+=======
+  getInitialState: function() {
+    return this._getMaxXMaxYCoords(this.props.rackDetails);
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(this._getMaxXMaxYCoords(nextProps.rackDetails));
+  },
+
+  componentDidUpdate: function() {
+    /*
+            Calling the line function only if the drawerLineDrawn is false 
+            and the slot type is drawer.
+            drawerLineDrawn is set true once the line is created
+         */
+
+    var lines = document.getElementsByClassName('connectingLine');
+    if (lines.length === 0) {
+      var strEl = document.querySelectorAll('#selectedSlot')[0];
+      strEl = strEl ? strEl.parentNode : null;
+      var endEl = document.querySelectorAll('#slotDisplayArea')[0];
+      if (strEl && endEl) {
+        this.connect(
+          strEl,
+          endEl,
+          '#626262',
+          3
+        );
+      }
+    }
+  },
+>>>>>>> e8175e1... BSS-12428 Issue with KQ on latest 61 build
 
       var totalSlots = vSlots.length;
       var totalWidth =0, totalHeight=0;

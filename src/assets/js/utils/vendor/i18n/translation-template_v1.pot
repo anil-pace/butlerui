@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-29 16:09+0000\n"
+"POT-Creation-Date: 2019-01-29 19:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3562,4 +3562,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:757
 #: src/assets/js/serverMessages/server_messages_lang.js:756
 msgid "Dis-associate"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:757
+msgid "Item Unscannable"
 msgstr ""

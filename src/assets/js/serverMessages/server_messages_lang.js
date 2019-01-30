@@ -4,7 +4,7 @@
     cat components/scripts/server_messages.json | sed 's/^.*: /_(/g' | sed 's/,$//g' | grep Ev "({|})" | sed 's/$/);/g'
  */
 function server_messages_list() {
-   _("No more entities to be scanned");
+    _("No more entities to be scanned");
     _("Product SKU");
     _("Type");
     _("Serial Number");
@@ -56,7 +56,7 @@ function server_messages_list() {
     _("Place Entity in Bin and Press PPTL");
     _("Are You Sure You Want to Close Tote?");
     _("Scan Tote or Stage PPS Bin");
-    _("Item Not Expected in Tote");    
+    _("Item Not Expected in Tote");
     _("Tote already opened. Scan some other tote");
     _("Tote already closed. Scan some other tote");
     _("No matching tote found");
@@ -68,7 +68,7 @@ function server_messages_list() {
     _("Bin selected for put. Cannot be staged");
     _("SKU not present in database. Put into IRT bin.");
     _("No free bins. Please scan later");
-    _("Wrong PPTL pressed. Please try another");    
+    _("Wrong PPTL pressed. Please try another");
     _("Please put entities in exception area and confirm");
     _("Wrong bin chosen.Try selecting another bin");
     _("Please scan same SKU to complete this exception");
@@ -175,7 +175,7 @@ function server_messages_list() {
     _("Tote association failed. Repeat scan operation");
     _("Tote associated with another bin");
     _("Please scan PPTL barcode");
-    _("Tote disassociated from Bin");    
+    _("Tote disassociated from Bin");
     _("Please complete process for pending bin and then proceed");
     _("Tote already reserved");
     _("Wrong barcode scanned");
@@ -340,7 +340,7 @@ function server_messages_list() {
     _("Remove Item");
     _("Item Missing/Bad Barcode");
     _("Sum of missing and good quantity should be equal to {0}");
-    _("Login"); 
+    _("Login");
     _("Enter Username");
     _("Enter Password");
     _("Invalid credentials");
@@ -412,7 +412,7 @@ function server_messages_list() {
     _("Tote already associated with slot.Scan empty slot");
     _("Unexpected entity scanned");
     _("Wrong barcode scanned");
-    _("Enter excess item quantity"); 
+    _("Enter excess item quantity");
     _(" items");
     _("Wrong ppsbin button pressed");
     _("Total ");
@@ -443,7 +443,7 @@ function server_messages_list() {
     _("Entities cannot be accommodated! Remove all entities from bin and press PPTL.");
     _("Entities cannot be accommodated!");
     _("Wrong Bin Scanned. Scan Expected for Roll Cage ready for undocking.");
-    _("Take {0} Printout and Press PPTL");    
+    _("Take {0} Printout and Press PPTL");
     _("PPS is Closed");
     _("Place box in MSU slot and confirm");
     _("Wrong Undock");
@@ -754,5 +754,6 @@ function server_messages_list() {
     _("Total: ");
     _("Scan excess entities");
     _("Dis-associate");
+    _("Item Unscannable");
 }
 

@@ -754,6 +754,7 @@ function server_messages_list() {
     _("Total: ");
     _("Scan excess entities");
     _("Dis-associate");
-    _("Item Unscannable");
+    _("{0} Unscannable");
+    _("Scan entities");
 }
 

@@ -9,6 +9,7 @@ var SerializedTool = require("./SerializedTool.js");
 var PutExpectionTool = require("./PutExpectationTool.js");
 var OrderCreator = require("./OrderCreator.js");
 var ImageScannerEmulator = require("./ImageScannerEmulator.js");
+var PPSModeManager = require("./PPSModeManager.js");
 
 var ToolConfigs = require("./ToolConfig");
 
@@ -38,6 +39,8 @@ var Tool = React.createClass({
         return <ConfigTool />;
       case "order_creator":
         return <OrderCreator />;
+      case "pps_mode_manager":
+        return <PPSModeManager />;
       case "image_scanner":
         return <ImageScannerEmulator />;
     }

@@ -75,6 +75,8 @@ var devModeUtils = {
     console.log(JSON.stringify(response));
   },
 
+  devlog: devlog,
+
   getCompositeBarcode: function(serials) {
     var Result = $("#pd_sku").val() + ",4234234," + serials.length;
     for (var i = 0; i < serials.length; ++i) {
@@ -95,7 +97,23 @@ var devModeUtils = {
   
   },
 
-  getAuthToken: getAuthToken
+  getAuthToken: getAuthToken,
+
+  postUrl: postUrl,
+
+  getUrl: function(EndPoint, CallBack){
+    console.log("Get @ " + EndPoint),
+    $.ajax({
+      url: EndPoint,
+      type: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authentication-Token": $("#tokenText").val() //for object property name, use quoted notation shown in second
+      },
+      dataType: "json",
+      success: CallBack
+    }); 
+  }
 };
 
 module.exports = devModeUtils;

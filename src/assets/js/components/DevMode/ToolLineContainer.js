@@ -2,7 +2,7 @@ var React = require("react");
 
 var Orderline = require("./Orderline");
 var PutExpectationLine = require("./PutExpectationLine");
-var BarcodeLine = require("./BarcodeLine"); 
+var BarcodeLine = require("./BarcodeLine");
 
 var ToolLineContainer = React.createClass({
   getInitialState: function() {
@@ -21,9 +21,7 @@ var ToolLineContainer = React.createClass({
             <Orderline
               key={lineId}
               lineId={lineId}
-              ref={t =>
-                (this.state.lineDictRefs[lineId] = t)
-              }
+              ref={t => (this.state.lineDictRefs[lineId] = t)}
             />
           </div>
         );
@@ -33,9 +31,7 @@ var ToolLineContainer = React.createClass({
             <PutExpectationLine
               key={lineId}
               lineId={lineId}
-              ref={t =>
-                (this.state.lineDictRefs[lineId] = t)
-              }
+              ref={t => (this.state.lineDictRefs[lineId] = t)}
             />
           </div>
         );
@@ -45,9 +41,7 @@ var ToolLineContainer = React.createClass({
             <BarcodeLine
               key={lineId}
               lineId={lineId}
-              ref={t =>
-                (this.state.lineDictRefs[lineId] = t)
-              }
+              ref={t => (this.state.lineDictRefs[lineId] = t)}
             />
           </div>
         );
@@ -70,38 +64,48 @@ var ToolLineContainer = React.createClass({
     });
   },
   lineSelect(event) {
-    this.setState({current_line_id: parseInt(event.target.value)});
+    this.setState({ current_line_id: parseInt(event.target.value) });
   },
   render() {
     return (
       <div>
-        <select className="devmode-select" onChange={this.lineSelect} required value={this.state.current_line_id}>
+        <select
+          className="line-select"
+          onChange={this.lineSelect}
+          required
+          value={this.state.current_line_id}
+        >
           <option value="" disabled hidden>
             Select a line
           </option>
+
           {Object.keys(this.state.lineDict).map(lineId => (
             <option key={lineId} value={lineId}>
               {this.props.lineName} {lineId}
             </option>
           ))}
         </select>
-        {Object.keys(this.state.lineDict).map(lineId => (
-            this.getLineMarkup(this.props.lineName, lineId, (lineId == this.state.current_line_id) ? true : false)   
-          ))}
-        <br />
+        &emsp;
         <input
-          type="button"
-          className="devtoolBtn"
-          defaultValue="Add Line"
+          type="image"
+          src="assets/images/devtools/add-line.png"
+          className="addLineBtn"
           onClick={this.addLine}
         />
         &emsp;
         <input
-          type="button"
-          className="devtoolBtn"
-          defaultValue="Delete Line"
+          type="image"
+          className="delLineBtn"
+          src="assets/images/devtools/minus-line.png"
           onClick={this.deleteLine}
         />
+        {Object.keys(this.state.lineDict).map(lineId =>
+          this.getLineMarkup(
+            this.props.lineName,
+            lineId,
+            lineId == this.state.current_line_id ? true : false
+          )
+        )}
       </div>
     );
   }

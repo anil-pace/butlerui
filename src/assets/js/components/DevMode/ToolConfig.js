@@ -18,7 +18,7 @@ ToolConfigs = {
     visible: true
   },
   order_creator: {
-    visible: false
+    visible: true
   },
   put_expectation: {
     visible: false
@@ -27,7 +27,7 @@ ToolConfigs = {
     visible: false
   },
   pps_mode_manager: {
-    visible: true
+    visible: false
   }
 };
 module.exports = ToolConfigs;

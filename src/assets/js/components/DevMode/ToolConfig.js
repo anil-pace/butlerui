@@ -6,6 +6,7 @@ ToolConfigs = {
     "order_creator",
     "serialized",
     "image_scanner",
+    "pps_mode_manager",
     "devconsole"
   ],
   common: {
@@ -23,6 +24,9 @@ ToolConfigs = {
     visible: false
   },
   image_scanner: {
+    visible: false
+  },
+  pps_mode_manager: {
     visible: true
   }
 };

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 16:25+0000\n"
+"POT-Creation-Date: 2019-01-31 12:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3600,4 +3600,12 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:760
 msgid "Scan ID card to login."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:761
+msgid "{0} Unscannable"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:762
+msgid "Scan entities"
 msgstr ""

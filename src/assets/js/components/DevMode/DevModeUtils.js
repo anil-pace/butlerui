@@ -6,7 +6,7 @@ postUrl = function(EndPoint, Data, CallBack) {
       data: Data,
       headers: {
         "Content-Type": "application/json",
-        "Authentication-Token": $("#tokenText").val() //for object property name, use quoted notation shown in second
+        "Authentication-Token": $("#tokenText").val()
       },
       dataType: "json",
       success: CallBack
@@ -108,7 +108,8 @@ var devModeUtils = {
       type: "get",
       headers: {
         "Content-Type": "application/json",
-        "Authentication-Token": $("#tokenText").val() //for object property name, use quoted notation shown in second
+        "Authentication-Token": $("#tokenText").val(),
+        "Authorization": "Basic YnV0bGVyOmJ1dGxlcg=="
       },
       dataType: "json",
       success: CallBack

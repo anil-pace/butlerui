@@ -22,19 +22,21 @@ var DevMode = React.createClass({
     return {
       interfaceEnabled: this.props.interfaceEnabled,
       toolList: toolList,
-      tools: {}
+      tools: {},
+      latestTool: undefined
     };
   },
 
   isSharedTool(toolName) {
-    return (toolName in ToolConfigs &&
-    "tags" in ToolConfigs[toolName] &&
-    ToolConfigs[toolName]["tags"].indexOf("shared") >= 0
+    return toolName in ToolConfigs &&
+      "tags" in ToolConfigs[toolName] &&
+      ToolConfigs[toolName]["tags"].indexOf("shared") >= 0
       ? true
-      : false);
+      : false;
   },
 
   toolSelect(event) {
+    var SelectionName = event.target.value;
     if (this.isSharedTool(event.target.value)) {
       this.state.tools[event.target.value].show();
     } else {
@@ -48,6 +50,7 @@ var DevMode = React.createClass({
         }
       }
     }
+    this.setState({ latestTool: SelectionName });
   },
 
   render() {
@@ -68,8 +71,16 @@ var DevMode = React.createClass({
         />
 
         <div id="interface">
-          <select className="devmode-select" onChange={this.toolSelect} required value="">
-            <option value="" disabled hidden>
+          <select
+            className="devmode-select"
+            onChange={this.toolSelect}
+            defaultValue={
+              ((this.state.latestTool)
+                ? ""
+                : this.state.latestTool)
+            }
+          >
+            <option value="" hidden>
               Select a tool to add
             </option>
             {this.state.toolList.map(toolName => (

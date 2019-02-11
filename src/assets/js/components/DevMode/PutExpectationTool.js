@@ -14,18 +14,16 @@ var PutExpectationTool = React.createClass({
     };
   },
   ns_createtote() {
-    LineAggregate = this.state.lineContainerRef.getLineAggregate()
+    LineAggregate = this.state.lineContainerRef.getLineAggregate();
     var tote_id = $("#nstote_toteid").val();
-    ProductsJSON = LineAggregate.map(
-      lineData => ({
-          productQuantity: parseInt(lineData.qty),
-          productAttributes: {
-            pdfa_values: {
-              product_sku: lineData.sku
-            }
-          }
-      })
-    )
+    ProductsJSON = LineAggregate.map(lineData => ({
+      productQuantity: parseInt(lineData.qty),
+      productAttributes: {
+        pdfa_values: {
+          product_sku: lineData.sku
+        }
+      }
+    }));
     var data = {
       externalServiceRequestId: tote_id,
       type: "PUT",
@@ -41,8 +39,18 @@ var PutExpectationTool = React.createClass({
       }
     };
     var PlatformSRURL =
-      configConstants.PLATFORM_IP + "/platform-srms/service-request";
-    postUrl(PlatformSRURL, JSON.stringify(data), stdCallBack);
+      configConstants.PLATFORM_IP +
+      "/api-gateway/sr-service/platform-srms/service-request";
+    $.ajax({
+      url: PlatformSRURL,
+      type: "post",
+      data: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      dataType: "json",
+      success: stdCallBack
+    });
   },
 
   randomize() {
@@ -57,7 +65,10 @@ var PutExpectationTool = React.createClass({
           <input type="text" defaultValue="" id="nstote_toteid" />
         </div>
         <br />
-        <ToolLineContainer lineName = "putline" ref = {t => (this.state.lineContainerRef = t)}/>
+        <ToolLineContainer
+          lineName="putline"
+          ref={t => (this.state.lineContainerRef = t)}
+        />
         <br />
         <input
           type="button"

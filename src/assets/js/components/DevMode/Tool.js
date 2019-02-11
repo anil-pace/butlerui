@@ -47,13 +47,11 @@ var Tool = React.createClass({
   },
 
   show() {
-    console.log("showing tool: " + this.state.name);
     this.state.visible = true;
     this.setState(this.state);
   },
 
   closeTool() {
-    console.log("closing tool: " + this.state.name);
     this.state.visible = false;
     this.setState(this.state);
   },
@@ -69,7 +67,6 @@ var Tool = React.createClass({
           className="tool_close_btn"
           onClick={this.closeTool}
         />
-        <br />
         {this.get_tool_markup(this.state.name)}
       </div>
     );

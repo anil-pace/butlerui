@@ -6,7 +6,6 @@ var makeid = DevModeUtils.makeid;
 var getCompositeBarcode = DevModeUtils.getCompositeBarcode;
 
 var SerializedTool = React.createClass({
-  
   createSerials() {
     console.log("Creating Serials");
     var srid = makeid();
@@ -55,8 +54,18 @@ var SerializedTool = React.createClass({
     console.log(toteid);
     console.log(getCompositeBarcode(serials));
     PlatformEndPoint =
-      configConstants.PLATFORM_IP + "/platform-srms/service-request";
-    postUrl(PlatformEndPoint, JSON.stringify(data), PlatformResponseCallBack);
+      configConstants.PLATFORM_IP +
+      "/api-gateway/sr-service/platform-srms/service-request";
+    $.ajax({
+      url: PlatformEndPoint,
+      type: "post",
+      data: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      dataType: "json",
+      success: PlatformResponseCallBack
+    });
   },
 
   render() {
@@ -73,16 +82,15 @@ var SerializedTool = React.createClass({
           <input type="text" id="pd_uid" defaultValue="68" />
           <label htmlFor="pkg_name">Package Name</label>{" "}
           <input type="text" id="pkg_name" defaultValue="Case" />
-          <br/>
-          
+          <br />
         </form>
         <button
-            className="devtoolBtn"
-            id="serialBtn"
-            onClick={this.createSerials}
-          >
-            Create Tote with Serialized Container
-          </button>
+          className="devtoolBtn"
+          id="serialBtn"
+          onClick={this.createSerials}
+        >
+          Create Tote with Serialized Container
+        </button>
       </div>
     );
   }

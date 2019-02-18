@@ -1197,7 +1197,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             if (_seatData.loose_item_barcode_damage) {
                 eachBarcodeDamagedQty = _seatData.loose_item_barcode_damage
             }
-            if (_seatData.box_barcode_damage.length != 0 || _seatData.loose_item_barcode_damage != 0) {
+            if (_seatData.box_barcode_damage.length != 0) {
                 tableRows.push(new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false));
                 if (packBarcodeDamagedQty) {
                     tableRows.push(new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
@@ -1462,6 +1462,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
 
         });
+
         if (_seatData["Loose_sku_list"].length == 0 && _seatData["loose_item_barcode_damage"] > 0 && _seatData["extra_loose_sku_item_list"].length == 0) {
             var tableRows = [new self.tableCol("", "enabled", false, "large", false, true, false, false),
             new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
@@ -1472,6 +1473,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             }
             data["tableRows"].push(tableRows);
         }
+
 
         if (data["tableRows"].length > 0) {
             data["header"].push(new this.tableCol(looseItemScreenName, "header", false, "small", false, true, true, false));

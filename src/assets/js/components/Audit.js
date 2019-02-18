@@ -456,28 +456,28 @@ var Audit = React.createClass({
           };
           if (this.state.AuditReconcileBoxSerialData["tableRows"].length == 0 && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
             AuditMessage = (<Reconcile navMessagesJson={this.props.navMessagesJson} message={mm} />);
-          console.log("1" + JSON.stringify(AuditMessage));
+          console.log("1" );
           if (this.state.AuditReconcilePackData["tableRows"].length == 0 && this.state.AuditReconcileSubPackData["tableRows"].length == 0 && this.state.DamageReconcileData["tableRows"].length == 0 && this.state.AuditSRStatus)
             AuditMessage = (<Reconcile navMessagesJson={this.props.navMessagesJson} message={SRmessage} />);
-          console.log("2" + JSON.stringify(AuditMessage));
+          console.log("2" );
           if (this.state.AuditReconcileBoxSerialData["tableRows"].length != 0)
             BoxSerialData = (<TabularData data={this.state.AuditReconcileBoxSerialData} />);
-          console.log("3" + JSON.stringify(BoxSerialData));
+          console.log("3" );
           if (this.state.AuditReconcileItemInBoxData["tableRows"].length != 0)
             ItemInBoxData = (<TabularData data={this.state.AuditReconcileItemInBoxData} />);
-          console.log("4" + JSON.stringify(ItemInBoxData));
+          console.log("4");
           if (this.state.AuditReconcileLooseItemsData["tableRows"].length != 0)
             LooseItemsData = (<TabularData data={this.state.AuditReconcileLooseItemsData} />);
-          console.log("5" + (LooseItemsData));
+          console.log("5" );
           if (this.state.AuditReconcilePackData["tableRows"].length != 0)
             PackData = (<TabularData className="srTable" data={this.state.AuditReconcilePackData} />);
-          console.log("6" + JSON.stringify(PackData));
+          console.log("6");
           if (this.state.AuditReconcileSubPackData["tableRows"].length != 0)
             SubPackData = (<TabularData className="srTable" data={this.state.AuditReconcileSubPackData} />);
-          console.log("7" + JSON.stringify(SubPackData));
+          console.log("7" );
           if (this.state.DamageReconcileData["tableRows"].length != 0)
             DamageData = (<TabularData className="srTable" data={this.state.DamageReconcileData} />);
-          console.log("8" + DamageData);
+          console.log("8");
           if (!this.state.AuditSRStatus)
             Slot = (<CurrentSlot slotDetails={this.state.AuditSlotDetails} />)
           subComponent = (

@@ -416,7 +416,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function (data) {
     data.state_data = {
-        "seat_name": "front_5",
+        "seat_name": "front_4",
         "notification_list": [],
         "Possible_Container_Names": {
             "container_level_2": "OUTER",
@@ -424,7 +424,7 @@ var putSeatData = function (data) {
             "container_level_1": "INNER"
         },
         "rack_details": {
-            "slot_barcodes": ["133.0.D.01", "133.0.D.02"],
+            "slot_barcodes": ["133.0.B.01", "133.0.B.02"],
             "rack_type_rec": [{
                 "slot_ref": [48, 46, 65, 46, 48, 49, 45, 65, 46, 48, 50],
                 "height": 33,
@@ -555,10 +555,10 @@ var putSeatData = function (data) {
                     "locale": "en-US",
                     "display_name": "Product Barcodes"
                 }],
-                "product_barcodes": ["item_13"]
+                "product_barcodes": ["phone_12aa"]
             }],
             [{
-                "product_sku": "item_13",
+                "product_sku": "phone_12aa",
                 "display_data": [{
                     "locale": "ja-JP",
                     "display_name": "製品SKU"
@@ -575,7 +575,7 @@ var putSeatData = function (data) {
                     "locale": "en-US",
                     "display_name": "Product Dimensions"
                 }],
-                "product_dimensions": [2, 2, 2]
+                "product_dimensions": [4, 3, 4]
             }],
             [{
                 "display_data": [{
@@ -585,27 +585,27 @@ var putSeatData = function (data) {
                 "product_local_image_url": null
             }]
         ],
-        "time_stamp": "2019-02-14T15:57:45Z",
+        "time_stamp": "2019-02-18T12:09:18Z",
         "api_version": "1",
         "mode": "audit",
-        "Box_qty_list": [{
-            "Box_Actual_Qty": 1,
-            "Expected_qty": 8,
-            "Box_Expected_Qty": 1,
-            "Box_serial": "case_13",
-            "Type": "container_level_2",
-            "Actual_qty": 0,
-            "Scan_status": "no_scan"
-        }],
+        "Box_qty_list": [],
         "group_info": {
             "1": "center"
         },
         "scan_allowed": false,
         "Extra_box_list": [],
-        "Sku_Item_List": [],
+        "Sku_Item_List": [{
+            "Sku": "phone_12aa",
+            "Item_Qty_List": [{
+                "Item_Id": "118",
+                "Type": "container_level_0",
+                "Actual_Qty": 5,
+                "Expected_Qty": 5
+            }]
+        }],
         "Current_box_details": [],
         "item_in_box_barcode_damage": [],
-        "selected_uom": "container_level_1",
+        "selected_uom": "container_level_0",
         "error_popup_disabled": false,
         "extra_loose_sku_item_list": [],
         "screen_version": "1",
@@ -614,7 +614,12 @@ var putSeatData = function (data) {
         "docked": [],
         "change_uom_applicable": true,
         "seat_type": "front",
-        "Loose_sku_list": [],
+        "Loose_sku_list": [{
+            "Sku": "phone_12aa",
+            "Type": "container_level_0",
+            "Actual_qty": 5,
+            "Expected_qty": 5
+        }],
         "is_idle": false,
         "box_barcode_damage": [],
         "header_msge_list": [{
@@ -623,7 +628,7 @@ var putSeatData = function (data) {
             "details": [],
             "description": "Check Count"
         }]
-    }
+    };
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

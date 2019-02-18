@@ -1208,7 +1208,7 @@ getOrderID: function () {
             if(_seatData.loose_item_barcode_damage){
                 eachBarcodeDamagedQty = _seatData.loose_item_barcode_damage
             }
-            if(_seatData.box_barcode_damage.length!=0){
+            if(_seatData.box_barcode_damage.length!=0 || _seatData.loose_item_barcode_damage != 0){
                 tableRows.push(new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false));
                 if(packBarcodeDamagedQty){
                     tableRows.push(new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))

@@ -760,5 +760,6 @@ function server_messages_list() {
     _("Scan ID card to login.");
     _("{0} Unscannable");
     _("Scan entities");
+    _("Entity Damaged");
 }
 

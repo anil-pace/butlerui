@@ -2209,7 +2209,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         quantity = value.qty;
                         total_excess += quantity
                         data["tableRows"].push([
-                            new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), 
+                            new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false),
                             new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
                     }
                 });
@@ -2217,10 +2217,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["footer"].push(new this.tableCol(_("Total: ") + total_excess + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([
-                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("dummy data", "enabled", false, "small", false, true, false, false)
+                new self.tableCol(_("dummy_11"), "enabled", false, "small", false, true, false, false),
+                new self.tableCol("dummy-22", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("dummy_33", "enabled", false, "small", false, true, false, false),
+                new self.tableCol("kq", "enabled", false, "small", false, true, false, false, false, "showKQ")
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }

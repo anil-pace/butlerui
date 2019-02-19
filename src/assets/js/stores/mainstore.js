@@ -1222,8 +1222,55 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Eaches") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
                 }
 
+            }
+        }
+        return data;
+    },
 
-
+    getFinalDamageReconcileData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        var packBarcodeDamagedQty = 0;
+        var subPackBarcodeDamagedQty = 0;
+        var eachBarcodeDamagedQty = 0;
+        var tableRows = [];
+        if (_seatData.k_deep_audit) {
+            _seatData.final_damaged_boxes.map(function (val, ind) {
+                if (val.type === appConstants.OUTER_PACK)
+                    packBarcodeDamagedQty += val.damaged_qty;
+                else if (val.type === appConstants.INNER_SUBPACK) {
+                    subPackBarcodeDamagedQty += val.damaged_qty;
+                }
+                else {
+                    eachBarcodeDamagedQty += val.damaged_qty;
+                }
+            });
+            if (_seatData.final_damaged_boxes.length != 0) {
+                tableRows.push(new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false));
+                if (packBarcodeDamagedQty) {
+                    tableRows.push(new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if (subPackBarcodeDamagedQty) {
+                    tableRows.push(new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if (eachBarcodeDamagedQty) {
+                    tableRows.push(new self.tableCol(eachBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true));
+                }
+                data["tableRows"].push(tableRows);
+            }
+            if (data["tableRows"].length > 0) {
+                data["header"].push(new this.tableCol(_("Entity Damaged"), "header", false, "small", false, true, true, false));
+                if (packBarcodeDamagedQty) {
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Packs") : _seatData.Possible_Container_Names.container_level_2, "header", false, "small", false, false, true, false, true));
+                }
+                if (subPackBarcodeDamagedQty) {
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Sub-Packs") : _seatData.Possible_Container_Names.container_level_1, "header", false, "small", false, false, true, false, true));
+                }
+                if (eachBarcodeDamagedQty) {
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Eaches") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
+                }
             }
         }
         return data;
@@ -1562,6 +1609,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
+
+    getDamagedBoxDetails: function () {
+        if (_seatData["damaged_boxes"] !== undefined) {
+            return _seatData["damaged_boxes"];
+        }
+    },
+
+    getAuditDamagedCount: function () {
+        if (_seatData.hasOwnProperty('damaged_boxes')) {
+            return _seatData.damaged_boxes;
+        } else {
+            return null;
+        }
+    },
     setCancelButtonStatus: function (status) {
         _cancelButtonClicked = status;
     },
@@ -1697,7 +1758,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
-        else if (_screenId == appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || _screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
+        else if (_screenId == appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || _screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION)
             _auditExceptionScreen = "first_screen";
         if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 &&
             (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) ||
@@ -2182,6 +2243,48 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else {
             data["tableRows"].push([new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
             new self.tableCol("-", "enabled", false, "small", false, true, false, false)
+            ]);
+            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+        }
+        return data;
+    },
+    _getDamagedItemsDataForAudit: function () {
+        var data = {};
+        data["header"] = [];
+        data["footer"] = [];
+        data["header"].push(new this.tableCol(_("Type"), "header", false, "small", false, true, true, false, true));
+        data["header"].push(new this.tableCol(_("SKU"), "header", false, "small", false, true, true, false, true));
+        data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false, true));
+        data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false, true));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["tableRows"] = [];
+        data["image_url"] = null;
+        var self = this;
+        if (_seatData.damaged_boxes && _seatData.damaged_boxes.length > 0) {
+            var enable_kq_row, product_details, product_sku, type, serial, quantity, total_damaged = 0;
+            _seatData.damaged_boxes.map(function (value, index) {
+                type = value.uom_level;
+                product_sku = value.uid;
+                serial = value.serial === "undefined" ? "--" : value.serial;
+                quantity = value.damaged_qty; //value.qty;
+                isKQEnabled = value.enable_kq_row;
+                total_damaged += quantity;
+
+                data["tableRows"].push([
+                    new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
+                    new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
+                    new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
+                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)]);
+                //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
+            });
+        } else {
+            data["tableRows"].push([
+                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", 0)
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }
@@ -3076,6 +3179,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
 
+
+
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -3594,9 +3699,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditReconcilePackData"] = this.getPackReconcileData();
                 data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
                 data["DamageReconcileData"] = this.getDamageReconcileData();
+                data["FinalDamageReconcileData"] = this.getFinalDamageReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 data["AuditPossibleContainerNames"] = this.getContainerNames();
                 break;
+
             case appConstants.AUDIT_LOCATION_SCAN:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditServerNavData"] = this.getServerNavData();
@@ -3612,6 +3719,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
                 break;
+
+            case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditDamagedItems"] = this._getDamagedItemsDataForAudit();
+                data["AuditExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditDamagedCount"] = this.getAuditDamagedCount();
+                break;
+
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:

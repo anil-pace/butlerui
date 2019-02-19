@@ -2196,6 +2196,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false));
         data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+        data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
@@ -2220,7 +2222,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol(_("dummy_11"), "enabled", false, "small", false, true, false, false),
                 new self.tableCol("dummy-22", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("dummy_33", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("kq", "enabled", false, "small", false, true, false, false, false, "showKQ")
+                new self.tableCol("kq", "enabled", false, "small", false, true, false, false, false, "showNumericIndicator")
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }

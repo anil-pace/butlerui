@@ -90,7 +90,7 @@ var TableRow = React.createClass({
 
             if ((value.type != undefined && value.type == "button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus} /></div>));
-            else if ((value.type != undefined && value.type == "showKQ")) {
+            else if ((value.type != undefined && value.type == "showNumericIndicator")) {
                 console.log("anil, TabularRRow.js" + "======================>");
                 comp.push((<div className={classes} title={value.text}>
                     <NumericIndicator execType={appConstants.DAMAGED_PACK} Formattingclass={"indicator-wrapper-in-tableCol"} inputType={"customType"} />

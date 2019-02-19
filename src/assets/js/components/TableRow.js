@@ -93,7 +93,7 @@ var TableRow = React.createClass({
             else if ((value.type != undefined && value.type == "showKQ")) {
                 console.log("anil, TabularRRow.js" + "======================>");
                 comp.push((<div className={classes} title={value.text}>
-                    <NumericIndicator execType={appConstants.DAMAGED_PACK} />
+                    <NumericIndicator execType={appConstants.DAMAGED_PACK} Formattingclass={"indicator-wrapper-in-tableCol"} inputType={"customType"} />
                 </div>));
             }
             else {

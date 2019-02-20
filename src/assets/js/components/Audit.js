@@ -875,6 +875,51 @@ var Audit = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+
+      case appConstants.AUDIT_SCAN_EXCESS_ITEM:
+        var _button;
+        _button = (
+          <div className='staging-action'>
+            <Button1
+              disabled={this.state.PutBackExceptionFlag}
+              text={_('Next')}
+              module={appConstants.PUT_BACK}
+              action={appConstants.EXCESS_ITEM_BIN}
+              color={'orange'}
+            />
+          </div>
+        );
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.PutBackExceptionData} />
+            <div className='exception-right'>
+              <div className='main-container'>
+                <div className='kq-exception'>
+                  <div className='kq-header'>
+                    {_('Scan all damaged entities')}
+                  </div>
+                  <TabularData
+                    data={this.state.PutBackExcessItems}
+                    className='limit-height width-extra '
+                  />
+                  {_button}
+                </div>
+              </div>
+            </div>
+            <div className='cancel-scan'>
+              <Button1
+                disabled={false}
+                text={_('Cancel Exception')}
+                module={appConstants.PUT_FRONT}
+                action={appConstants.CANCEL_EXCEPTION_MODAL}
+                color={'black'}
+              />
+            </div>
+          </div>
+        );
+        break;
+
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
       case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:

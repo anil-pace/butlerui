@@ -502,15 +502,26 @@ var Audit = React.createClass({
         }
         break;
 
-      case appConstants.AUDIT_SCAN_EXCESS_ITEM:
+      case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         var _button;
-        _button = (<div className="staging-action">
-          <Button1
-            disabled={this.state.AuditExceptionFlag}
-            //disabled={this._disableNext}
-            text={_("Next")} module={appConstants.AUDIT}
-            action={appConstants.AUDIT_NEXT_SCREEN} color={"orange"} />
-        </div>);
+        var headerDataToShow = this.state.AuditServerNavData.code || "";
+        var remainingEntitiesToBeScanned = this.state.AuditServerNavData.details.slice(-1)[0];
+
+        if (!this.state.GetIRTScanStatus) {
+          _button = (<div className="staging-action">
+            <Button1 disabled={this.state.AuditExceptionFlag} text={_("Confirm")}
+              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+              color={"orange"} />
+          </div>);
+
+        }
+        else {
+          _button = (<div className="staging-action">
+            <Button1 disabled={this.state.AuditExceptionFlag} text={_("Next")}
+              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+              color={"orange"} />
+          </div>);
+        }
 
         this._component = (
           <div className='grid-container exception'>
@@ -519,18 +530,15 @@ var Audit = React.createClass({
             <div className="exception-right">
               <div className="main-container">
                 <div className="kq-exception">
-                  <div className="kq-header">{_("Scan all damaged entities")}</div>
-                  <TabularData data={this.state.AuditExcessItems} className='limit-height width-extra ' />
+                  <div className="kq-header">{remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform(headerDataToShow, [remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
+                  <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra ' />
                   {_button}
                 </div>
               </div>
             </div>
             <div className='cancel-scan'>
-              <Button1 disabled={false} text={_("Cancel Exception")}
-                module={appConstants.AUDIT}
-                //action={appConstants.CANCEL_EXCEPTION_MODAL}
-                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                color={"black"} />
+              <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
+                action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
             </div>
           </div>
         );

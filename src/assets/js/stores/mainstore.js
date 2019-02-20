@@ -2155,7 +2155,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return data;
     },
-    _getExcessItemsData_Backup: function () {
+    _getExcessItemsData: function () {
         var data = {};
         data["header"] = [];
         data["footer"] = [];
@@ -2187,7 +2187,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return data;
     },
-    _getExcessItemsData: function () {
+    _getExcessItemsDataForAudit: function () {
         var data = {};
         data["header"] = [];
         data["footer"] = [];
@@ -3117,6 +3117,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
 
+
+
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 data["PickFrontNavData"] = this.getNavData();
                 data["PickFrontServerNavData"] = this.getServerNavData();
@@ -3639,17 +3641,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditPossibleContainerNames"] = this.getContainerNames();
                 break;
 
-            /*
-            case appConstants_ENTITY_DAMAGED:
-                data["PutBackScreenId"] = this.getScreenId();
-                data["PutBackServerNavData"] = this.getServerNavData();
-                data["PutBackExceptionData"] = this.getExceptionData();
-                data["PutBackNotification"] = this.getNotificationData();
-                data["PutBackExcessItems"] = this._getExcessItemsData();
-                data["PutBackExceptionFlag"] = this._getExcessExceptionFlag();
-                break;
-                */
-
             case appConstants.AUDIT_LOCATION_SCAN:
                 data["AuditNavData"] = this.getNavData();
                 data["AuditServerNavData"] = this.getServerNavData();
@@ -3665,6 +3656,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
                 break;
+
+            case appConstants.AUDIT_SCAN_EXCESS_ITEM:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExcessItems"] = this._getExcessItemsDataForAudit();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
+                //data["AuditExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
+
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
             case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
             case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:

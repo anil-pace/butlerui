@@ -301,6 +301,19 @@ var NumericIndicator = React.createClass({
                 </div>
             )
         }
+        else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
+            this.checkKqAllowed();
+            return (
+                <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
+                    <div>
+                        <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+                        <div className={"gor-quantity-text gor_" + this.props.execType}> {this.state.value} </div>
+
+                        <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+                    </div>
+                </div>
+            )
+        }
         else {
             this.checkKqAllowed();
             return (

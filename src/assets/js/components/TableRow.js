@@ -4,8 +4,8 @@ var appConstants = require('../constants/appConstants');
 var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
 var NumericIndicator = require('./ProductDetails/NumericIndicator');
-var GorSelect = require("./gor-select/gor-select");
 var ActionCreators = require('../actions/CommonActions');
+var GorSelect = require("./gor-select/gor-select");
 
 var TableRow = React.createClass({
     _component: [],
@@ -18,19 +18,9 @@ var TableRow = React.createClass({
             customContainerNames: mainstore.getCustomContainerNames(),
             selectedUOM: mainstore.getSelectedUOM() || null,
             isChangeUOMApplicable: mainstore.isChangeUOMApplicable(),
+            isDropDownClicked: false
         }
         return Object.assign({}, screenData, localState);
-    },
-    getUOMDropdownValues: function () {
-        var customContainerNames = this.state.customContainerNames,
-            options = [];
-        for (var k in customContainerNames) {
-            options.push({
-                "value": k,
-                "text": customContainerNames[k]
-            })
-        }
-        return options;
     },
     _onSelect: function (val, txt) {
         var data = {
@@ -41,6 +31,7 @@ var TableRow = React.createClass({
         };
         ActionCreators.postDataToInterface(data);
     },
+
     peripheralAction: function (action, inc) {
         if (action == _('Update') || action == _('Add')) {
             CommonActions.convertTextBox(action, inc)
@@ -94,6 +85,7 @@ var TableRow = React.createClass({
         }, 0);
 
     },
+
     getUOMDropdownValues: function () {
         var customContainerNames = this.state.customContainerNames,
             options = [];
@@ -105,26 +97,48 @@ var TableRow = React.createClass({
         }
         return options;
     },
+
+    /*
+    showDropDown: function () {
+        this.setState({
+            isDropDownClicked: true
+        })
+        console.log("show dropdown");
+    },
+    hideDropDown: function (e) {
+        e.stopPropagation();
+        this.setState({
+            isDropDownClicked: false
+        })
+        console.log("hide dropdown");
+    },
+    */
     getComponent: function () {
         var _this = this;
         var uomOptions = this.getUOMDropdownValues();
         var peripheralAction = this.peripheralAction;
         var openKeyboard_peripheral = this.openKeyboard_peripheral;
         var comp = [];
-        var _languageDropDown = (
-            <div className="selectWrapper">
-                <select className="selectLang" value={this.state.getCurrentLang} ref='language' onChange={this.changeLanguage} >
-                    <option value="en-US">{"English (United States)"}</option>
-                    <option value="ja-JP">{"日本語"}</option>
-                    <option value="de-DE">{"Deutsche"}</option>
-                    <option value="zh-ZH">{"中文"}</option>
-                    <option value="fr-FR">{"Français"}</option>
-                    <option value="es-ES">{"Español"}</option>
-                    <option value="nl">{"Dutch"}</option>
-                </select>
+
+        /*
+        var _dropDown = (
+            <div className="selectWrapper" onClick={this.showDropDown}>
+                <span> SELECT </span>
                 <span className="tiltButton"></span>
             </div>
         );
+        
+
+
+        var _showDropDownList = (
+            <div className="uomDropDownListWrapper">
+
+            </div>
+        )
+        */
+
+
+
         this.props.data.map(function (value, index) {
             var classes = "table-col ";
             var mode = value.mode == 'peripheral' ? classes = classes + "table-col-peripheral " : "";
@@ -158,28 +172,36 @@ var TableRow = React.createClass({
                 </div>));
             }
             else if ((value.type != undefined && value.type == "showUOMDropDown")) {
-                comp.push((<div className={classes}>
-                    {/*{_languageDropDown}*/}
-                    <GorSelect options={uomOptions} customData={true} selectedOption={_this.state.selectedUOM} placeholderPrefix={_("Selected UOM: ")} onSelectHandler={_this._onSelect} placeholder={_this.state.customContainerNames[_this.state.selectedUOM] || _("Select Value")}>
-                        {
-                            function (_this) {
-                                var options = [];
-                                (uomOptions).map(function (el, idx) {
-                                    options.push(<span className="gor-dropdown-option" key={el.value} onClick={function () { _this._onSelect(el.value, el.text) }}>
-                                        <section>
-                                            <span className="icon-cont">
-                                                <img src={"./assets/images/" + el.value + ".png"} height={80} width={80} />
-                                            </span>
-                                            <span className="text-cont">{el.text}</span>
-                                            <span className={_this.state.selectedValue === el.value ? "selected-green sel-icon-cont" : "sel-icon-cont"}></span>
-                                        </section>
-                                    </span>)
-                                })
-                                return options;
+                comp.push((<div className={classes} title={value.text}>
+                    <div className="uomDropDownListWrapper">
+                        <GorSelect options={uomOptions}
+                            customData={true}
+                            selectedOption={_this.state.selectedUOM}
+                            placeholderPrefix={_("Selected UOM: ")}
+                            onSelectHandler={_this._onSelect}
+                            placeholder={_this.state.customContainerNames[_this.state.selectedUOM] || _("Select Value")}>
+                            {
+                                function (_this) {
+                                    var options = [];
+                                    (uomOptions).map(function (el, idx) {
+                                        options.push(<span className="gor-dropdown-option" key={el.value} onClick={function () { _this._onSelect(el.value, el.text) }}>
+                                            <section>
+                                                <span className="icon-cont">
+                                                    <img src={"./assets/images/" + el.value + ".png"} height={80} width={80} />
+                                                </span>
+                                                <span className="text-cont">{el.text}</span>
+                                                <span className={_this.state.selectedValue === el.value ? "selected-green sel-icon-cont" : "sel-icon-cont"}></span>
+                                            </section>
+                                        </span>)
+                                    })
+                                    return options;
+                                }
                             }
-                        }
-                    </GorSelect>
+                        </GorSelect>
+                    </div>
+
                 </div>));
+
             }
             else {
                 if (value.actionButton == true) {

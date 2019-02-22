@@ -2223,7 +2223,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         quantity = value.qty;
                         total_damaged += quantity;
                         serial = value.serial;
-                        data["tableRows"].push([new self.tableCol(type, "enabled", false, "small", false, true, false, false), new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false), new self.tableCol(serial, "enabled", false, "small", false, true, false, false), new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
+                        data["tableRows"].push([
+                            new self.tableCol(type, "enabled", false, "small", false, true, false, false),
+                            new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false),
+                            new self.tableCol(serial, "enabled", false, "small", false, true, false, false),
+                            new self.tableCol(quantity, "enabled", false, "small", false, true, false, false)]);
                     }
                 });
             });

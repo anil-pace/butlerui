@@ -415,44 +415,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
-    data.state_data = {
-        "seat_name": "front_2",
-        "notification_list": [],
-        "exception_allowed": [{
-            "event": "missing_or_unscannable_damaged_item",
-            "exception_id": "PkF001",
-            "details": ["Item"],
-            "exception_name": "Item Missing/Bad Barcode"
-        }],
-        "pick_quantity": 0,
-        "roll_cage_flow": false,
-        "bin_coordinate_plotting": false,
-        "event": "pick_front_physically_damaged",
-        "screen_id": "pick_front_physically_damaged",
-        "logout_allowed": false,
-        "seat_type": "front",
-        "time_stamp": "2019-02-20T16:34:45Z",
-        "api_version": "1",
-        "group_info": {
-            "1": "center"
-        },
-        "is_idle": false,
-        "irt_scan_enabled": true,
-        "exception_type": "missing_or_unscannable_damaged_item",
-        "physically_damaged_items": [],
-        "error_popup_disabled": false,
-        "operator_orientation": "0",
-        "screen_version": "1",
-        "docked": [],
-        "mode": "pick",
-        "scan_allowed": true,
-        "header_msge_list": [{
-            "level": "info",
-            "code": "PkF.H.013",
-            "details": [2],
-            "description": "Scan Damaged Entity"
-        }]
-    }
 
     /*
     data.state_data = {

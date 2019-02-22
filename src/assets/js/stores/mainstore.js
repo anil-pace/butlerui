@@ -3668,7 +3668,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SlotType"] = this.getSlotType();
                 break;
 
-            case appConstants.AUDIT_SCAN_EXCESS_ITEM:
+            case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
                 data["AuditScreenId"] = this.getScreenId();
                 data["AuditServerNavData"] = this.getServerNavData();
                 data["AuditExceptionData"] = this.getExceptionData();

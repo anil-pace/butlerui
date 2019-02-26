@@ -165,10 +165,15 @@ var TableRow = React.createClass({
 
             if ((value.type != undefined && value.type == "button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus} /></div>));
-            else if ((value.type != undefined && value.type == "showNumericIndicator")) {
-                console.log("anil, TabularRRow.js" + "======================>");
+            else if ((value.type != undefined && value.buttonType == "showKQRow")) {
+                console.log("=============>");
+                var btnValue = value.buttonStatus;
                 comp.push((<div className={classes} title={value.text}>
-                    <NumericIndicator execType={appConstants.DAMAGED_QUANTITY} Formattingclass={"indicator-wrapper-in-tableCol"} inputType={"customType"} />
+                    <NumericIndicator
+                        execType={appConstants.DAMAGED_QUANTITY}
+                        Formattingclass={"indicator-wrapper-in-tableCol"}
+                        btnValue={btnValue}
+                        inputType={"customType"} />
                 </div>));
             }
             else if ((value.type != undefined && value.type == "showUOMDropDown")) {

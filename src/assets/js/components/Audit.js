@@ -45,6 +45,7 @@ var Audit = React.createClass({
       this.state.AuditScreenId != appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
       this.state.AuditScreenId != appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId != appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId != appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION &&
       this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION) {
       if (this.state.AuditShowModal["showModal"] != undefined && this.state.AuditShowModal["showModal"] == true /*&& !$('.modal').hasClass('in')*/) {
         var self = this;
@@ -503,45 +504,110 @@ var Audit = React.createClass({
         break;
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
-        var _button;
-        var headerDataToShow = this.state.AuditServerNavData.code || "";
-        var remainingEntitiesToBeScanned = this.state.AuditServerNavData.details.slice(-1)[0];
-
-        if (!this.state.GetIRTScanStatus) {
-          _button = (<div className="staging-action">
-            <Button1 disabled={this.state.AuditExceptionFlag} text={_("Confirm")}
-              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
-              color={"orange"} />
-          </div>);
-
-        }
-        else {
-          _button = (<div className="staging-action">
-            <Button1 disabled={this.state.AuditExceptionFlag} text={_("Next")}
-              module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
-              color={"orange"} />
-          </div>);
-        }
-
-        this._component = (
-          <div className='grid-container exception'>
-            <Modal />
-            <Exception data={this.state.AuditExceptionData} />
-            <div className="exception-right">
-              <div className="main-container">
-                <div className="kq-exception">
-                  <div className="kq-header">{remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform(headerDataToShow, [remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
-                  <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra ' />
-                  {_button}
+        /*
+          var _button;
+          var headerDataToShow = this.state.AuditServerNavData.code || "";
+          var remainingEntitiesToBeScanned = this.state.AuditServerNavData.details.slice(-1)[0];
+  
+          if (!this.state.GetIRTScanStatus) {
+            _button = (<div className="staging-action">
+              <Button1 disabled={this.state.AuditExceptionFlag} text={_("Confirm")}
+                module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                color={"orange"} />
+            </div>);
+  
+          }
+          else {
+            _button = (<div className="staging-action">
+              <Button1 disabled={this.state.AuditExceptionFlag} text={_("Next")}
+                module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                color={"orange"} />
+            </div>);
+          }
+  
+          this._component = (
+            <div className='grid-container exception'>
+              <Modal />
+              <Exception data={this.state.AuditExceptionData} />
+              <div className="exception-right">
+                <div className="main-container">
+                  <div className="kq-exception">
+                    <div className="kq-header">{remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform(headerDataToShow, [remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
+                    <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra ' />
+                    {_button}
+                  </div>
                 </div>
               </div>
+              <div className='cancel-scan'>
+                <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
+                  action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
+              </div>
             </div>
-            <div className='cancel-scan'>
-              <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
+          );
+          break;
+          */
+        this._navigation = '';
+        if (this.state.AuditExceptionScreen == "first_screen") {
+          //this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
+          this._disableNext = true;
+          this._component = (
+            <div className='grid-container exception'>
+              <Modal />
+              <Exception data={this.state.AuditExceptionData} />
+              <div className="exception-right">
+                <ExceptionHeader data={this.state.AuditServerNavData} />
+                <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra ' />
+                <div className="finish-damaged-barcode">
+                  <Button1
+                    disabled={this._disableNext}
+                    text={_("NEXT")}
+                    color={"orange"}
+                    module={appConstants.AUDIT}
+                    action={appConstants.AUDIT_NEXT_SCREEN} />
+                </div>
+              </div>
+              <div className='cancel-scan'>
+                <Button1
+                  disabled={false}
+                  text={_("Cancel Exception")}
+                  module={appConstants.AUDIT}
+                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                  color={"black"} />
+              </div>
             </div>
-          </div>
-        );
+          );
+        }
+        else if (this.state.AuditExceptionScreen == "second_screen") {
+          this._component = (
+            <div className='grid-container exception'>
+              {/*<Modal />*/}
+              <Exception data={this.state.AuditExceptionData} />
+              <div className="exception-right">
+                <div className="main-container exception2">
+                  <div className="kq-exception">
+                    <div className="kq-header">{_("Please put entities in exception area and confirm")}</div>
+                  </div>
+                </div>
+                <div className="finish-damaged-barcode">
+                  <Button1
+                    disabled={false}
+                    text={_("Confirm")}
+                    color={"orange"}
+                    module={appConstants.AUDIT}
+                    action={appConstants.SEND_KQ_QTY} />
+                </div>
+              </div>
+              <div className='cancel-scan'>
+                <Button1
+                  disabled={false}
+                  text={_("Cancel Exception")}
+                  module={appConstants.AUDIT}
+                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                  color={"black"} />
+              </div>
+            </div>
+          );
+        }
         break;
 
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:

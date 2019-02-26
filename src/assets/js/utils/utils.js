@@ -416,65 +416,60 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function (data) {
 
-    /*
     data.state_data = {
-        "error_popup_disabled": false,
-        "seat_name": "back_1",
-        "screen_id": "put_back_scan_excess_item",
-        "screen_version": "1",
+        "seat_name": "front_4",
         "notification_list": [],
-        "seat_type": "back",
-        "docked": [],
+        "exception_allowed": [{
+            "event": "physically_damaged",
+            "exception_id": "AdF009",
+            "details": [],
+            "exception_name": "Entity Damaged"
+        }, {
+            "event": "container_level_1_unscannable",
+            "exception_id": "AdF008",
+            "details": ["INNER"],
+            "exception_name": "INNER Unscannable"
+        }, {
+            "event": "container_level_2_unscannable",
+            "exception_id": "AdF007",
+            "details": ["OUTER"],
+            "exception_name": "OUTER Unscannable"
+        }],
+        "roll_cage_flow": false,
+        "bin_coordinate_plotting": false,
+        "event": "process_barcode",
+        "screen_id": "audit_physically_damaged_exception",
+        "logout_allowed": true,
+        "seat_type": "front",
+        "time_stamp": "2019-02-26T07:39:17Z",
+        "api_version": "1",
         "group_info": {
             "1": "center"
         },
-        "time_stamp": "2019-02-19T14:36:21Z",
+        "scan_allowed": true,
+        "operator_orientation": "0",
+        "exception_type": "physically_damaged",
+        "error_popup_disabled": false,
+        "screen_version": "1",
+        "damaged_boxes": [
+            {
+                "serial": "undefined",
+                "uom_level": "0",
+                "enable_kq_row": true,
+                "uid": "131",
+                "damaged_qty": "1"
+            }
+        ],
+        "docked": [],
+        "mode": "audit",
+        "is_idle": false,
         "header_msge_list": [{
             "level": "info",
-            "code": "PtB.H.010",
+            "code": "AdF.H.015",
             "details": [],
-            "description": "Scan Excess Entity Quantity"
-        }],
-        "exception_type": "extra_items",
-        "logout_allowed": false,
-        "exception_allowed": [{
-            "event": "extra_items",
-            "exception_id": "PtB004",
-            "details": [],
-            "exception_name": "Extra Items In Bin"
-        }, {
-            "event": "physically_damaged",
-            "exception_id": "PtB005",
-            "details": [],
-            "exception_name": "Entity Damaged"
-        }, {
-            "event": "item_unscannable",
-            "exception_id": "PtB003",
-            "details": [],
-            "exception_name": "Item Unscannable"
-        }, {
-            "event": "item_oversized",
-            "exception_id": "PtB002",
-            "details": [],
-            "exception_name": "Item Over Sized"
-        },
-        {
-            "event": "entity_damaged",
-            "exception_id": "PtB002_2",
-            "details": [],
-            "exception_name": "Entity Damaged"
-        }
-        ],
-        "excess_items": [],
-        "mode": "put",
-        "is_idle": false,
-        "operator_orientation": "0",
-        "bin_coordinate_plotting": false,
-        "event": "extra_items_scan",
-        "api_version": "1",
-        "roll_cage_flow": false
-    }
-    */
+            "description": "Scan all damaged entities"
+        }]
+    };
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

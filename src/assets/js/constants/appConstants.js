@@ -180,6 +180,7 @@ var appConstants = {
   AUDIT_PACK_UNSCANNABLE_EXCEPTION: 'audit_pack_unscannable_exception',
   AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION: 'audit_sub_pack_unscannable_exception',
   AUDIT_EACH_UNSCANNABLE_EXCEPTION: 'audit_each_unscannable_exception',
+  AUDIT_DAMAGED_ENTITY_EXCEPTION: 'audit_physically_damaged_exception',
   DEFAULT: 'default',
   AUDIT: 'audit_front',
   SET_AUDIT_DATA: 'SET_AUDIT_DATA',
@@ -305,7 +306,7 @@ var appConstants = {
   PUT_BACK_NO_SCAN_TOTE: 'put_back_no_scan_tote',
   PUT_BACK_UNSCANNABLE: 'put_back_unscannable',
   PUT_BACK_SCAN_EXCESS_ITEM: 'put_back_scan_excess_item',
-  AUDIT_DAMAGED_ENTITY_EXCEPTION: 'audit_physically_damaged',
+
   UNSCANNABLE_TOTE_ENTITY_QUANTITY: 'UNSCANNABLE_TOTE_ENTITY_QUANTITY',
   TOTE_UNSCANNABLE: 'tote_unscannable',
   EXCESS_ITEM_BIN: 'EXCESS_ITEM_BIN',

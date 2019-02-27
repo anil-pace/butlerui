@@ -2205,10 +2205,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var data = {};
         data["header"] = [];
         data["footer"] = [];
-        data["header"].push(new this.tableCol(_("Type"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("SKU"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false));
-        data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false));
+        data["header"].push(new this.tableCol(_("Type"), "header", false, "small", false, true, true, false, true));
+        data["header"].push(new this.tableCol(_("SKU"), "header", false, "small", false, true, true, false, true));
+        data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false, true));
+        data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false, true));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
         data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
@@ -2242,8 +2242,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
                 data["tableRows"].push([
                     new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
-                    new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false),
-                    new self.tableCol(serial, "enabled", false, "small", false, true, false, false),
+                    new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
+                    new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
                     new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
                 //new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
                 //d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
@@ -2254,10 +2254,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([
-                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false),
-                //new self.tableCol("--", "enabled", false, "small", false, true, false, false, false, "showKQRow")
+                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", 0)
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));

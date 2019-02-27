@@ -179,8 +179,24 @@ var NumericIndicator = React.createClass({
             this._appendClassUp = 'gor-plus-sign enable';
             this._enableIncrement = true;
         }
+    },
+
+    checkKqAllowedForAuditDamagedQuantity: function () {
+        if (this.state.value >= 1) {
+            this._appendClassUp = 'gor-plus-sign enable';
+            this._appendClassDown = 'gor-minus-sign enable';
+            this._enableIncrement = true;
+            this._enableDecrement = true;
+        } else {
+            this._appendClassDown = 'gor-minus-sign disable';
+            this._appendClassUp = 'gor-plus-sign disable';
+            this._enableIncrement = false;
+            this._enableDecrement = false;
+        }
+
 
     },
+
     decrementValue: function (event) {
         var self = this;
         if (this._enableDecrement) {
@@ -309,18 +325,18 @@ var NumericIndicator = React.createClass({
                 </div>
             )
         }
-        // else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
-        //     this.checkKqAllowed();
-        //     return (
-        //         <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
-        //             <div>
-        //                 <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
-        //                 <input id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
-        //                 <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
-        //             </div>
-        //         </div>
-        //     )
-        // }
+        else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
+            this.checkKqAllowedForAuditDamagedQuantity();
+            return (
+                <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
+                    <div>
+                        <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+                        <input disabled id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
+                        <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+                    </div>
+                </div>
+            )
+        }
         else {
             this.checkKqAllowed();
             return (

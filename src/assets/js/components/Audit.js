@@ -549,7 +549,7 @@ var Audit = React.createClass({
         this._navigation = '';
         if (this.state.AuditExceptionScreen == "first_screen") {
           //this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
-          this._disableNext = true;
+          this._disableNext = this.state.AuditDamagedCount.length > 0 ? false : true;
           this._component = (
             <div className='grid-container exception'>
               <Modal />
@@ -580,7 +580,7 @@ var Audit = React.createClass({
         else if (this.state.AuditExceptionScreen == "second_screen") {
           this._component = (
             <div className='grid-container exception'>
-              {/*<Modal />*/}
+              {<Modal />}
               <Exception data={this.state.AuditExceptionData} />
               <div className="exception-right">
                 <div className="main-container exception2">
@@ -594,7 +594,7 @@ var Audit = React.createClass({
                     text={_("Confirm")}
                     color={"orange"}
                     module={appConstants.AUDIT}
-                    action={appConstants.SEND_KQ_QTY} />
+                    action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS} />
                 </div>
               </div>
               <div className='cancel-scan'>

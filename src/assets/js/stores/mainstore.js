@@ -1563,18 +1563,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    _getAuditDamagedCount: function(){
-        if (_seatData["damaged_boxes"] == undefined) {
-            var data = {
-                "scan_details": {
-                    "current_qty": this.getkQQuanity(),
-                    "total_qty": 0,
-                    "kq_allowed": this.kQstatus()
-                }
-            };
-            return data.scan_details;
+    getDamagedBoxDetails: function () {
+        if (_seatData["damaged_boxes"] !== undefined) {
+            return _seatData["damaged_boxes"];
+        }
+    },
+
+    getAuditDamagedCount: function () {
+        if (_seatData.hasOwnProperty('damaged_boxes')) {
+            return _seatData.damaged_boxes;
         } else {
-            return _seatData["scan_details"];
+            return null;
         }
     },
     setCancelButtonStatus: function (status) {
@@ -2235,20 +2234,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 //value.product_info.map(function (product_details, index) {
                 //if (product_details[0].product_sku) {
                 //product_sku = product_details[0].product_sku;
-                //type = value.uom_level;
-                if (value.uom_level === "0") type = "EACH"
-                else if (value.uom_level === "1") type = "OUTER"
-                else if (value.uom_level === "common") type = "COMMON_BARCODE"
+                type = value.uom_level;
                 product_sku = value.uid;
                 serial = value.serial === "undefined" ? "--" : value.serial;
                 quantity = value.damaged_qty; //value.qty;
                 total_damaged += quantity;
 
                 data["tableRows"].push([
-                    new self.tableCol(type, "enabled", false, "small", false, true, false, false),
+                    new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
                     new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false),
                     new self.tableCol(serial, "enabled", false, "small", false, true, false, false),
                     new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
+                //new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
                 //d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
                 //}
@@ -2261,7 +2258,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false),
                 //new self.tableCol("--", "enabled", false, "small", false, true, false, false, false, "showKQRow")
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", "0")
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", 0)
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }
@@ -3706,7 +3703,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 //data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
-                //data["AuditDamagedCount"] = this.getAuditDamagedCount();
+                data["AuditDamagedCount"] = this.getAuditDamagedCount();
                 break;
 
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:

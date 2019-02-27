@@ -20,17 +20,7 @@ var NumericIndicator = React.createClass({
     _updatedQtyMissing: 0,
     _qty: 0,
     getInitialState: function () {
-        //this._qty = this.props.execType === appConstants.DEFAULT ? this.props.scanDetails.current_qty : 0;
-        if (this.props.execType === appConstants.DEFAULT) {
-            this._qty = this.props.scanDetails.current_qty;
-        }
-        else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
-            this._qty = this.props.btnValue
-        }
-        else {
-            this._qty = 1;
-        }
-
+        this._qty = this.props.execType === appConstants.DEFAULT ? this.props.scanDetails.current_qty : 0;
         return {
             goodQuantity: mainstore.getGoodQuantity(),
             value: this._qty
@@ -290,6 +280,14 @@ var NumericIndicator = React.createClass({
         }(this))
 
     },
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.btnValue !== this.props.btnValue) {
+            this._updatedQtyDamaged = nextProps.btnValue
+            this.setState({
+                value: nextProps.btnValue
+            })
+        }
+    },
     componentWillMount: function () {
         var self = this;
         /*Using settimeout to overcome the flux issue of Invariant Violation 
@@ -311,19 +309,18 @@ var NumericIndicator = React.createClass({
                 </div>
             )
         }
-        else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
-            this.checkKqAllowed();
-            return (
-                <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
-                    <div>
-                        <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
-                        {/*<div className={"gor-quantity-text gor_" + this.props.execType}> {this.state.value} </div>*/}
-                        <input disabled id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
-                        <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
-                    </div>
-                </div>
-            )
-        }
+        // else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
+        //     this.checkKqAllowed();
+        //     return (
+        //         <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
+        //             <div>
+        //                 <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+        //                 <input id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
+        //                 <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+        //             </div>
+        //         </div>
+        //     )
+        // }
         else {
             this.checkKqAllowed();
             return (

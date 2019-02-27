@@ -176,7 +176,7 @@ var TableRow = React.createClass({
                         inputType={"customType"} />
                 </div>));
             }
-            else if ((value.type != undefined && value.type == "showUOMDropDown")) {
+            else if ((value.type != undefined && value.buttonType == "showUOMDropDown")) {
                 comp.push((<div className={classes} title={value.text}>
                     <div className="uomDropDownListWrapper">
                         <GorSelect options={uomOptions}

@@ -11,8 +11,6 @@ var TabularData = React.createClass({
             comp.push((<TableRow data={value} />));
         })
         this._tableRows = comp;
-        console.log(" anil, tabularData.js" + "=====================>");
-        console.log(this._tableRows);
     },
     render: function () {
         this.getTableRows();

@@ -416,6 +416,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
 var putSeatData = function (data) {
 
+    /*
     data.state_data = {
         "seat_name": "front_4",
         "notification_list": [],
@@ -454,10 +455,10 @@ var putSeatData = function (data) {
         "damaged_boxes": [
             {
                 "serial": "undefined",
-                "uom_level": "0",
+                "uom_level": 0,
                 "enable_kq_row": true,
                 "uid": "131",
-                "damaged_qty": "1"
+                "damaged_qty": 0
             }
         ],
         "docked": [],
@@ -470,6 +471,8 @@ var putSeatData = function (data) {
             "description": "Scan all damaged entities"
         }]
     };
+    */
+
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

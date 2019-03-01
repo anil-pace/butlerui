@@ -2279,7 +2279,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)]);
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
             data["tableRows"].push([
                 new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),

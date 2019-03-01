@@ -415,64 +415,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
-
-    /*
-    data.state_data = {
-        "seat_name": "front_4",
-        "notification_list": [],
-        "exception_allowed": [{
-            "event": "physically_damaged",
-            "exception_id": "AdF009",
-            "details": [],
-            "exception_name": "Entity Damaged"
-        }, {
-            "event": "container_level_1_unscannable",
-            "exception_id": "AdF008",
-            "details": ["INNER"],
-            "exception_name": "INNER Unscannable"
-        }, {
-            "event": "container_level_2_unscannable",
-            "exception_id": "AdF007",
-            "details": ["OUTER"],
-            "exception_name": "OUTER Unscannable"
-        }],
-        "roll_cage_flow": false,
-        "bin_coordinate_plotting": false,
-        "event": "process_barcode",
-        "screen_id": "audit_physically_damaged_exception",
-        "logout_allowed": true,
-        "seat_type": "front",
-        "time_stamp": "2019-02-26T07:39:17Z",
-        "api_version": "1",
-        "group_info": {
-            "1": "center"
-        },
-        "scan_allowed": true,
-        "operator_orientation": "0",
-        "exception_type": "physically_damaged",
-        "error_popup_disabled": false,
-        "screen_version": "1",
-        "damaged_boxes": [
-            {
-                "serial": "undefined",
-                "uom_level": 0,
-                "enable_kq_row": true,
-                "uid": "131",
-                "damaged_qty": 0
-            }
-        ],
-        "docked": [],
-        "mode": "audit",
-        "is_idle": false,
-        "header_msge_list": [{
-            "level": "info",
-            "code": "AdF.H.015",
-            "details": [],
-            "description": "Scan all damaged entities"
-        }]
-    };
-    */
-
     console.log(data);
     switch (data.state_data.mode + "_" + data.state_data.seat_type) {
         case appConstants.PUT_BACK:

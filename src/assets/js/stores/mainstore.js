@@ -2202,6 +2202,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return data;
     },
     _getDamagedItemsDataForAudit: function () {
+        console.log("_getDamagedItemsDataForAudit  is getting called on increment");
+        console.log(mainstore.getDamagedQuantity());
         var data = {};
         data["header"] = [];
         data["footer"] = [];
@@ -2238,13 +2240,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 product_sku = value.uid;
                 serial = value.serial === "undefined" ? "--" : value.serial;
                 quantity = value.damaged_qty; //value.qty;
+                isKQEnabled = value.enable_kq_row;
                 total_damaged += quantity;
 
                 data["tableRows"].push([
                     new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
                     new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
                     new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
-                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
+                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)]);
                 //new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
                 //d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management

@@ -133,11 +133,13 @@ var TableRow = React.createClass({
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus} /></div>));
             else if ((value.type != undefined && value.buttonType == "showKQRow")) {
                 var btnValue = value.buttonStatus;
+                var isKQEnabled = value.mode;
                 comp.push((<div className={classes} title={value.text}>
                     <NumericIndicator
                         execType={appConstants.DAMAGED_QUANTITY}
                         Formattingclass={"indicator-wrapper-in-tableCol"}
                         btnValue={btnValue}
+                        isKQEnabled={isKQEnabled}
                         inputType={"customType"} />
                 </div>));
             }

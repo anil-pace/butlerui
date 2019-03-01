@@ -181,20 +181,29 @@ var NumericIndicator = React.createClass({
         }
     },
 
-    checkKqAllowedForAuditDamagedQuantity: function () {
-        if (this.state.value >= 1) {
-            this._appendClassUp = 'gor-plus-sign enable';
-            this._appendClassDown = 'gor-minus-sign enable';
-            this._enableIncrement = true;
-            this._enableDecrement = true;
-        } else {
-            this._appendClassDown = 'gor-minus-sign disable';
+    checkKqAllowedForAuditDamagedQuantity: function (isKQEnabled) {
+        console.log(this.props.isKQEnabled);
+        if (isKQEnabled) {
+            if (this.state.value >= 1) {
+                this._appendClassUp = 'gor-plus-sign enable';
+                this._appendClassDown = 'gor-minus-sign enable';
+                this._enableIncrement = true;
+                this._enableDecrement = true;
+            } else {
+                this._appendClassDown = 'gor-minus-sign disable';
+                this._appendClassUp = 'gor-plus-sign disable';
+                this._enableIncrement = false;
+                this._enableDecrement = false;
+            }
+        }
+        else { // case for serialised flow => increment should be disabled and decrement is possible till 0
+            if (this.state.value === 0) {
+                this._appendClassDown = 'gor-minus-sign disable';
+                this._enableDecrement = false;
+            }
             this._appendClassUp = 'gor-plus-sign disable';
             this._enableIncrement = false;
-            this._enableDecrement = false;
         }
-
-
     },
 
     decrementValue: function (event) {
@@ -326,7 +335,7 @@ var NumericIndicator = React.createClass({
             )
         }
         else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
-            this.checkKqAllowedForAuditDamagedQuantity();
+            this.checkKqAllowedForAuditDamagedQuantity(this.props.isKQEnabled);
             return (
                 <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
                     <div>

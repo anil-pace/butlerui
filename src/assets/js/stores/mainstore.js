@@ -1222,8 +1222,55 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Eaches") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
                 }
 
+            }
+        }
+        return data;
+    },
 
-
+    getFinalDamageReconcileData: function () {
+        var data = {};
+        data["header"] = [];
+        data["tableRows"] = [];
+        var self = this;
+        var packBarcodeDamagedQty = 0;
+        var subPackBarcodeDamagedQty = 0;
+        var eachBarcodeDamagedQty = 0;
+        var tableRows = [];
+        if (_seatData.k_deep_audit) {
+            _seatData.final_damaged_boxes.map(function (val, ind) {
+                if (val.type === appConstants.OUTER_PACK)
+                    packBarcodeDamagedQty += val.damaged_qty;
+                else if (val.type === appConstants.INNER_SUBPACK) {
+                    subPackBarcodeDamagedQty += val.damaged_qty;
+                }
+                else {
+                    eachBarcodeDamagedQty += val.damaged_qty;
+                }
+            });
+            if (_seatData.final_damaged_boxes.length != 0) {
+                tableRows.push(new self.tableCol(_("Quantity"), "enabled", false, "large", false, true, false, false));
+                if (packBarcodeDamagedQty) {
+                    tableRows.push(new self.tableCol(packBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if (subPackBarcodeDamagedQty) {
+                    tableRows.push(new self.tableCol(subPackBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true))
+                }
+                if (eachBarcodeDamagedQty) {
+                    tableRows.push(new self.tableCol(eachBarcodeDamagedQty, "enabled", false, "large", true, false, false, false, true));
+                }
+                data["tableRows"].push(tableRows);
+            }
+            if (data["tableRows"].length > 0) {
+                data["header"].push(new this.tableCol(_("Entity Damaged"), "header", false, "small", false, true, true, false));
+                if (packBarcodeDamagedQty) {
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Packs") : _seatData.Possible_Container_Names.container_level_2, "header", false, "small", false, false, true, false, true));
+                }
+                if (subPackBarcodeDamagedQty) {
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Sub-Packs") : _seatData.Possible_Container_Names.container_level_1, "header", false, "small", false, false, true, false, true));
+                }
+                if (eachBarcodeDamagedQty) {
+                    data["header"].push(new this.tableCol(!_seatData.k_deep_audit ? _("Eaches") : _seatData.Possible_Container_Names.container_level_0, "header", false, "small", false, false, true, false, true));
+                }
             }
         }
         return data;
@@ -2202,8 +2249,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return data;
     },
     _getDamagedItemsDataForAudit: function () {
-        console.log("_getDamagedItemsDataForAudit  is getting called on increment");
-        console.log(mainstore.getDamagedQuantity());
         var data = {};
         data["header"] = [];
         data["footer"] = [];
@@ -2218,24 +2263,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["image_url"] = null;
         var self = this;
         if (_seatData.damaged_boxes && _seatData.damaged_boxes.length > 0) {
-            //type = _seatData.damaged_boxes[0].type;
-            //serial = _seatData.damaged_boxes[0].serial;
-            // if (serial.length === 0) {
-            //     serial = "-";
-            // }
-            // else {
-            //     for (let j = 0; j < serial.length; j++) {
-            //         if (serial[j].length > 10) {
-            //             serial[j] = serial[j].slice(0, 5) + "..." + serial[j].slice(-5);
-            //         }
-            //     }
-            // }
-
             var enable_kq_row, product_details, product_sku, type, serial, quantity, total_damaged = 0;
             _seatData.damaged_boxes.map(function (value, index) {
-                //value.product_info.map(function (product_details, index) {
-                //if (product_details[0].product_sku) {
-                //product_sku = product_details[0].product_sku;
                 type = value.uom_level;
                 product_sku = value.uid;
                 serial = value.serial === "undefined" ? "--" : value.serial;
@@ -2248,11 +2277,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
                     new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
                     new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)]);
-                //new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity)]);
-                //d.push(new self.tableCol("0", "complete", false, "large", true, false, false, false, true, "button", "action", value.Scan_status == "open"));
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
-                //}
-                //});
             });
             data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" items"), "header", false, "small", false, true, true, false));
         } else {
@@ -3675,6 +3700,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditReconcilePackData"] = this.getPackReconcileData();
                 data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
                 data["DamageReconcileData"] = this.getDamageReconcileData();
+                data["FinalDamageReconcileData"] = this.getFinalDamageReconcileData();
                 data["AuditSlotDetails"] = this.getCurrentSlot();
                 data["AuditPossibleContainerNames"] = this.getContainerNames();
                 break;

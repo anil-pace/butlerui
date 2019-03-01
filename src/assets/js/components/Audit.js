@@ -439,6 +439,7 @@ var Audit = React.createClass({
           var PackData = '';
           var SubPackData = '';
           var DamageData = '';
+          var FinalDamageData = '';
           var Slot = '';
           var displayStyle;
           var auditPossibleContainerNames = this.state.AuditPossibleContainerNames;
@@ -471,6 +472,8 @@ var Audit = React.createClass({
             SubPackData = (<TabularData className="srTable" data={this.state.AuditReconcileSubPackData} />);
           if (this.state.DamageReconcileData["tableRows"].length != 0)
             DamageData = (<TabularData className="srTable" data={this.state.DamageReconcileData} />);
+          if (this.state.FinalDamageReconcileData["tableRows"].length != 0)
+            FinalDamageData = (<TabularData className="srTable" data={this.state.FinalDamageReconcileData} />);
           if (!this.state.AuditSRStatus)
             Slot = (<CurrentSlot slotDetails={this.state.AuditSlotDetails} />)
           subComponent = (
@@ -483,6 +486,7 @@ var Audit = React.createClass({
                 {PackData}
                 {SubPackData}
                 {DamageData}
+                {FinalDamageData}
               </div>
             </div>
           );
@@ -506,7 +510,6 @@ var Audit = React.createClass({
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
         if (this.state.AuditExceptionScreen == "first_screen") {
-          //this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
           this._disableNext = this.state.AuditDamagedCount.length > 0 ? false : true;
           this._component = (
             <div className='grid-container exception'>
@@ -536,7 +539,6 @@ var Audit = React.createClass({
           );
         }
         else if (this.state.AuditExceptionScreen == "second_screen") {
-
           if (!this.state.GetIRTScanStatus) {
             _button = (
               <div className="exception-right">

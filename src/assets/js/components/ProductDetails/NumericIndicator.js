@@ -182,7 +182,6 @@ var NumericIndicator = React.createClass({
     },
 
     checkKqAllowedForAuditDamagedQuantity: function (isKQEnabled) {
-        console.log(this.props.isKQEnabled);
         if (isKQEnabled) {
             if (this.state.value >= 1) {
                 this._appendClassUp = 'gor-plus-sign enable';

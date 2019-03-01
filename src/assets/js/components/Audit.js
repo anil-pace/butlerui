@@ -504,48 +504,6 @@ var Audit = React.createClass({
         break;
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
-        /*
-          var _button;
-          var headerDataToShow = this.state.AuditServerNavData.code || "";
-          var remainingEntitiesToBeScanned = this.state.AuditServerNavData.details.slice(-1)[0];
-  
-          if (!this.state.GetIRTScanStatus) {
-            _button = (<div className="staging-action">
-              <Button1 disabled={this.state.AuditExceptionFlag} text={_("Confirm")}
-                module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
-                color={"orange"} />
-            </div>);
-  
-          }
-          else {
-            _button = (<div className="staging-action">
-              <Button1 disabled={this.state.AuditExceptionFlag} text={_("Next")}
-                module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
-                color={"orange"} />
-            </div>);
-          }
-  
-          this._component = (
-            <div className='grid-container exception'>
-              <Modal />
-              <Exception data={this.state.AuditExceptionData} />
-              <div className="exception-right">
-                <div className="main-container">
-                  <div className="kq-exception">
-                    <div className="kq-header">{remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform(headerDataToShow, [remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
-                    <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra ' />
-                    {_button}
-                  </div>
-                </div>
-              </div>
-              <div className='cancel-scan'>
-                <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                  action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
-              </div>
-            </div>
-          );
-          break;
-          */
         this._navigation = '';
         if (this.state.AuditExceptionScreen == "first_screen") {
           //this._disableNext = this.state.AuditKQDetails.current_qty ? false : true;
@@ -578,10 +536,9 @@ var Audit = React.createClass({
           );
         }
         else if (this.state.AuditExceptionScreen == "second_screen") {
-          this._component = (
-            <div className='grid-container exception'>
-              {<Modal />}
-              <Exception data={this.state.AuditExceptionData} />
+
+          if (!this.state.GetIRTScanStatus) {
+            _button = (
               <div className="exception-right">
                 <div className="main-container exception2">
                   <div className="kq-exception">
@@ -597,6 +554,25 @@ var Audit = React.createClass({
                     action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS} />
                 </div>
               </div>
+            )
+          }
+          else {
+            _button = (
+              <div className="exception-right">
+                <div className="main-container exception2">
+                  <div className="kq-exception">
+                    <div className="kq-header">{_("Please put entities in exception area and scan the bin")}</div>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+
+          this._component = (
+            <div className='grid-container exception'>
+              {<Modal />}
+              <Exception data={this.state.AuditExceptionData} />
+              {_button}
               <div className='cancel-scan'>
                 <Button1
                   disabled={false}

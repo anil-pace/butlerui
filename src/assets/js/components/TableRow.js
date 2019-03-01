@@ -98,46 +98,12 @@ var TableRow = React.createClass({
         return options;
     },
 
-    /*
-    showDropDown: function () {
-        this.setState({
-            isDropDownClicked: true
-        })
-        console.log("show dropdown");
-    },
-    hideDropDown: function (e) {
-        e.stopPropagation();
-        this.setState({
-            isDropDownClicked: false
-        })
-        console.log("hide dropdown");
-    },
-    */
     getComponent: function () {
         var _this = this;
         var uomOptions = this.getUOMDropdownValues();
         var peripheralAction = this.peripheralAction;
         var openKeyboard_peripheral = this.openKeyboard_peripheral;
         var comp = [];
-
-        /*
-        var _dropDown = (
-            <div className="selectWrapper" onClick={this.showDropDown}>
-                <span> SELECT </span>
-                <span className="tiltButton"></span>
-            </div>
-        );
-        
-
-
-        var _showDropDownList = (
-            <div className="uomDropDownListWrapper">
-
-            </div>
-        )
-        */
-
-
 
         this.props.data.map(function (value, index) {
             var classes = "table-col ";
@@ -166,7 +132,6 @@ var TableRow = React.createClass({
             if ((value.type != undefined && value.type == "button"))
                 comp.push((<div className={classes}><IconButton type={value.buttonType} module={appConstants.AUDIT} action={appConstants.FINISH_BOX} status={value.buttonStatus} /></div>));
             else if ((value.type != undefined && value.buttonType == "showKQRow")) {
-                console.log("=============>");
                 var btnValue = value.buttonStatus;
                 comp.push((<div className={classes} title={value.text}>
                     <NumericIndicator

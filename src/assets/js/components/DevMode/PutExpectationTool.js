@@ -14,16 +14,46 @@ var PutExpectationTool = React.createClass({
     };
   },
   ns_createtote() {
-    LineAggregate = this.state.lineContainerRef.getLineAggregate();
+    var LineAggregate = this.state.lineContainerRef.getLineAggregate();
     var tote_id = $("#nstote_toteid").val();
-    ProductsJSON = LineAggregate.map(lineData => ({
-      productQuantity: parseInt(lineData.qty),
-      productAttributes: {
-        pdfa_values: {
-          product_sku: lineData.sku
+    var invList = []; // Used for pushing serials to core
+    var compositeBarcodes = [];
+    var ProductsJSON = LineAggregate.map(lineData => {
+      var LineJson = {
+        productQuantity: parseInt(lineData.qty),
+        productAttributes: {
+          pdfa_values: {
+            product_sku: lineData.sku
+          },
+          package_name: lineData.package_name
+        }
+      };
+      if (Globals.serializedPutEnabled) {
+        LineJson["productAttributes"]["skipSerialValidationLabels"] =
+          lineData.skipSerialValidationLabels;
+        LineJson["productAttributes"]["serialized_content"] = lineData.serials;
+        compositeBarcodes.push(
+          this.getCompositeBarcode(lineData.sku, lineData.serials)
+        );
+        if (Globals.serialCoreInsertionEnabled) {
+          for (var i2 = 0; i2 < parseInt(lineData.qty); i2++) {
+            invList.push({
+              barcodes: lineData.serials[i2].package_serials,
+              event: "put_expectation_creation",
+              location: "put_expectation",
+              children: [],
+              master_data_id: lineData.uid,
+              master_data_type: "item",
+              transaction_request: {
+                service_request: tote_id
+              },
+              sub_location: {}
+            });
+          }
         }
       }
-    }));
+      return LineJson;
+    });
     var data = {
       externalServiceRequestId: tote_id,
       type: "PUT",
@@ -41,6 +71,36 @@ var PutExpectationTool = React.createClass({
     var PlatformSRURL =
       configConstants.PLATFORM_IP +
       "/api-gateway/sr-service/platform-srms/service-request";
+
+    var Callback = undefined;
+    if (Globals.serializedPutEnabled) {
+      if (Globals.serialCoreInsertionEnabled) {
+        Callback = function(response, responseStatus, xhr) {
+          var serialInsertionURL =
+            configConstants.CORE_IP +
+            "/api/inventory_tracker/serialized_barcodes?create_partially=false";
+          $.ajax({
+            url: serialInsertionURL,
+            type: "post",
+            data: JSON.stringify(invList),
+            headers: {
+              "Content-Type": "application/json"
+            },
+            dataType: "json",
+            success: stdCallBack
+          });
+          devlog("Got response: " + responseStatus);
+          console.log(JSON.stringify(response));
+        };
+      } else {
+        Callback = stdCallBack;
+      }
+      console.log(tote_id);
+      console.log(compositeBarcodes);
+    } else {
+      Callback = stdCallBack;
+    }
+
     $.ajax({
       url: PlatformSRURL,
       type: "post",
@@ -49,10 +109,23 @@ var PutExpectationTool = React.createClass({
         "Content-Type": "application/json"
       },
       dataType: "json",
-      success: stdCallBack
+      success: Callback
     });
   },
-
+  getCompositeBarcode(sku, serials) {
+    var Result = sku + ",4234234," + serials.length;
+    for (var i = 0; i < serials.length; ++i) {
+      Result += "," + serials[i].package_serials;
+    }
+    return Result;
+  },
+  getPostSrCreationCallBack() {
+    if (Globals.serializedPutEnabled && Globals.serialCoreInsertionEnabled) {
+      return stdCallBack;
+    } else {
+      return stdCallBack;
+    }
+  },
   randomize() {
     $("#nstote_toteid").val(makeid());
   },

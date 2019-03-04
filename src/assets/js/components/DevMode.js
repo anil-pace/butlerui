@@ -2,7 +2,7 @@ var React = require("react");
 
 var Tool = require("./DevMode/Tool.js");
 var DevModeUtils = require("./DevMode/DevModeUtils");
-
+Globals = require("./DevMode/Globals");
 var ToolConfigs = require("./DevMode/ToolConfig");
 
 var DevMode = React.createClass({
@@ -66,7 +66,7 @@ var DevMode = React.createClass({
           type="button"
           className="devtoolBtn"
           onClick={this.toggleInterface}
-          defaultValue="Toggle Interface"
+          defaultValue="Toggle Devtools"
           id="toggleinterface"
         />
 
@@ -74,11 +74,7 @@ var DevMode = React.createClass({
           <select
             className="devmode-select"
             onChange={this.toolSelect}
-            defaultValue={
-              ((this.state.latestTool)
-                ? ""
-                : this.state.latestTool)
-            }
+            defaultValue={this.state.latestTool ? "" : this.state.latestTool}
           >
             <option value="" hidden>
               Select a tool to add

@@ -10,6 +10,10 @@ var PutExpectionTool = require("./PutExpectationTool.js");
 var OrderCreator = require("./OrderCreator.js");
 var ImageScannerEmulator = require("./ImageScannerEmulator.js");
 var PPSModeManager = require("./PPSModeManager.js");
+var SysConfig = require("./SysConfig.js");
+var PutExpecationConfiguration = require("./PutExpectationConfiguration.js");
+var Remexec = require("./Remexec.js");
+var OrderConfig = require("./OrderConfig.js");
 
 var ToolConfigs = require("./ToolConfig");
 
@@ -43,6 +47,14 @@ var Tool = React.createClass({
         return <PPSModeManager />;
       case "image_scanner":
         return <ImageScannerEmulator />;
+      case "sys_config":
+        return <SysConfig />;
+      case "put_config":
+        return <PutExpecationConfiguration />;
+      case "remexec":
+        return <Remexec />;
+      case "order_config":
+        return <OrderConfig/>;
     }
   },
 

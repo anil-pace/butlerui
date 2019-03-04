@@ -14,7 +14,7 @@ postUrl = function(EndPoint, Data, CallBack) {
 };
 
 getAuthToken = function() {
-  var EndPoint = configConstants.INTERFACE_IP +"/api/auth/token";
+  var EndPoint = configConstants.INTERFACE_IP + "/api/auth/token";
   var Data = {
     username: "admin",
     password: "apj0702",
@@ -29,10 +29,19 @@ getAuthToken = function() {
   postUrl(EndPoint, JSON.stringify(Data), CallBack);
 };
 
-devlog = function(text){
-  prevText = $("#devconsole_ta").val()
-  $("#devconsole_ta").val(prevText + text + "\n")
-  console.log(text) 
+devlog = function(text) {
+  prevText = $("#devconsole_ta").val();
+  $("#devconsole_ta").val(prevText + text + "\n");
+  console.log(text);
+//   var textarea = document.getElementById('devconsole_ta');
+//     textarea.scrollTop = textarea.scrollHeight;
+      var $devconsole_ta = $("#devconsole_ta");
+  $devconsole_ta.scrollTop($devconsole_ta[0].scrollHeight);
+};
+
+stdCallBack = function(response, responseStatus, xhr) {
+  devlog("Got response: " + responseStatus);
+  console.log(JSON.stringify(response));
 };
 
 var devModeUtils = {
@@ -64,16 +73,14 @@ var devModeUtils = {
   },
   getSeatEndpoint: function() {
     return (
-      configConstants.INTERFACE_IP + "/api/pps_seats/" +
+      configConstants.INTERFACE_IP +
+      "/api/pps_seats/" +
       StateDataJson.state_data.seat_name +
       "/send_data"
     );
   },
 
-  stdCallBack: function(response, responseStatus, xhr) {
-    devlog("Got response: " + responseStatus);
-    console.log(JSON.stringify(response));
-  },
+  stdCallBack: stdCallBack,
 
   devlog: devlog,
 
@@ -85,35 +92,56 @@ var devModeUtils = {
     return Result;
   },
 
-  load_config: function(){
-    if (typeof(configConstants) == "undefined"){
-      if (sessionStorage.getItem("configConstants")){
-          configConstants = JSON.parse(sessionStorage.getItem("configConstants")); 
-      }else{
-          configConstants = require('../../constants/configConstants');
-          sessionStorage.setItem("configConstants", JSON.stringify(configConstants));
-      } 
-  }
-  
+  load_config: function() {
+    if (typeof configConstants == "undefined") {
+      if (sessionStorage.getItem("configConstants")) {
+        configConstants = JSON.parse(sessionStorage.getItem("configConstants"));
+      } else {
+        configConstants = require("../../constants/configConstants");
+        sessionStorage.setItem(
+          "configConstants",
+          JSON.stringify(configConstants)
+        );
+      }
+    }
   },
 
   getAuthToken: getAuthToken,
 
   postUrl: postUrl,
 
-  getUrl: function(EndPoint, CallBack){
-    console.log("Get @ " + EndPoint),
+  coreCall: function(Module, Fun, Args, CallBack) {
+    var EndPoint = configConstants.CORE_IP + "/devtools/remexec";
+    Data = {
+      module: Module,
+      function: Fun,
+      args: Args
+    };
     $.ajax({
       url: EndPoint,
-      type: "get",
+      type: "post",
+      data: JSON.stringify(Data),
       headers: {
-        "Content-Type": "application/json",
-        "Authentication-Token": $("#tokenText").val(),
-        "Authorization": "Basic YnV0bGVyOmJ1dGxlcg=="
+        "Content-Type": "application/json"
       },
       dataType: "json",
       success: CallBack
-    }); 
+    });
+  },
+
+  getUrl: function(EndPoint, CallBack) {
+    console.log("Get @ " + EndPoint),
+      $.ajax({
+        url: EndPoint,
+        type: "get",
+        headers: {
+          "Content-Type": "application/json",
+          "Authentication-Token": $("#tokenText").val(),
+          Authorization: "Basic YnV0bGVyOmJ1dGxlcg=="
+        },
+        dataType: "json",
+        success: CallBack
+      });
   }
 };
 

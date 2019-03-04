@@ -2,11 +2,15 @@ ToolConfigs = {
   toolList: [
     "common",
     "config",
+    "put_config",
     "put_expectation",
+    "order_config",
     "order_creator",
     "serialized",
     "image_scanner",
     "pps_mode_manager",
+    "sys_config",
+    "remexec",
     "devconsole"
   ],
   common: {
@@ -18,7 +22,7 @@ ToolConfigs = {
     visible: true
   },
   order_creator: {
-    visible: true
+    visible: false
   },
   put_expectation: {
     visible: false
@@ -28,6 +32,18 @@ ToolConfigs = {
   },
   pps_mode_manager: {
     visible: false
+  },
+  sys_config: {
+    visible: false
+  },
+  put_config: {
+    visible: false
+  },
+  order_config: {
+    visible: false
+  },
+  remexec: {
+    visible: true
   }
 };
 module.exports = ToolConfigs;

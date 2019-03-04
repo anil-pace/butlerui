@@ -62,7 +62,6 @@ var ImageScannerEmulator = React.createClass({
           type="button"
           className="devtoolBtn"
           defaultValue="Burst Barcodes"
-          id="totbtn"
           onClick={this.sendBarcodes}
         />
       </div>

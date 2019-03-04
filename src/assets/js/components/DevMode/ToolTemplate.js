@@ -3,7 +3,9 @@ var React = require("react");
 var ToolName = React.createClass({
   render() {
     return (
-      <p>Hello World</p>
+      <div classNam="toolcontent">
+        <p>Hello World</p>
+      </div>
     );
   }
 });

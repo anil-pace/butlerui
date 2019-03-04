@@ -11,7 +11,7 @@ var ToolName = React.createClass({
       lineContainerRef: undefined
     };
   },
-  createOrder() {
+  createOrder() { // TODO: Support order on platform
     OrderLineAggregate = this.state.lineContainerRef.getLineAggregate() 
     console.log("Creating Order at Core");
     var order_id = parseInt($("#slo_order_id").val());
@@ -89,7 +89,7 @@ var ToolName = React.createClass({
     postUrl(CoreOrderURL, JSON.stringify(data), DevModeUtils.stdCallBack);
   },
   randomize() {
-    $("#slo_order_id").val(Math.floor(Math.random() * 1000000));
+    $("#slo_order_id").val(Math.floor(Math.random() * 1000000)); // TODO: Make integers only in case of core target
   },
   render() {
     return (

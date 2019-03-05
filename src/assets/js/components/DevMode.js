@@ -1,7 +1,7 @@
 var React = require("react");
 
 var Tool = require("./DevMode/Tool.js");
-var DevModeUtils = require("./DevMode/DevModeUtils");
+DevModeUtils = require("./DevMode/DevModeUtils");
 Globals = require("./DevMode/Globals");
 var ToolConfigs = require("./DevMode/ToolConfig");
 

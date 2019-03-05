@@ -32,9 +32,16 @@ var PutExpectationTool = React.createClass({
         LineJson["productAttributes"]["skipSerialValidationLabels"] =
           lineData.skipSerialValidationLabels;
         LineJson["productAttributes"]["serialized_content"] = lineData.serials;
-        compositeBarcodes.push(
-          this.getCompositeBarcode(lineData.sku, lineData.serials)
-        );
+        
+        var lineQty = parseInt(lineData.qty);
+        var qtyInEachCase = parseInt(lineData.qtyineachcase);
+        var caseCount = lineQty/qtyInEachCase;
+        
+        for(var case_i = 0; case_i < caseCount; case_i++){
+            compositeBarcodes.push(
+                this.getCompositeBarcode(lineData.sku, lineData.serials.slice(case_i * qtyInEachCase, (case_i + 1)  * qtyInEachCase))
+              );
+        }
         if (Globals.serialCoreInsertionEnabled) {
           for (var i2 = 0; i2 < parseInt(lineData.qty); i2++) {
             invList.push({

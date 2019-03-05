@@ -56,6 +56,7 @@ var DevMode = React.createClass({
   render() {
     return (
       <div id="CP">
+        <div id="versionBox" align = "right">v0.75.0 beta (by Hritik)</div>
         <img
           className="imgLogo"
           src="assets/images/GO_White_Horizontal.svg"

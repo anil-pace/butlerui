@@ -33,9 +33,7 @@ devlog = function(text) {
   prevText = $("#devconsole_ta").val();
   $("#devconsole_ta").val(prevText + text + "\n");
   console.log(text);
-//   var textarea = document.getElementById('devconsole_ta');
-//     textarea.scrollTop = textarea.scrollHeight;
-      var $devconsole_ta = $("#devconsole_ta");
+  var $devconsole_ta = $("#devconsole_ta");
   $devconsole_ta.scrollTop($devconsole_ta[0].scrollHeight);
 };
 
@@ -65,7 +63,7 @@ var devModeUtils = {
     var possible =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 8; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 

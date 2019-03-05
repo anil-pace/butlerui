@@ -6,7 +6,6 @@ ToolConfigs = {
     "put_expectation",
     "order_config",
     "order_creator",
-    "serialized",
     "image_scanner",
     "pps_mode_manager",
     "sys_config",

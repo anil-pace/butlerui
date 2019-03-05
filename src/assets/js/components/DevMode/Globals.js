@@ -3,7 +3,7 @@ Globals = {
   serializedPutEnabled: true,
   putLineDefaultSKU: "XPO6",
   putLineDefaultQty: "10",
-  putLineDefaultPkgName: "Case",
+  putLineDefaultPkgName: "Item",
   putLineDefaultQtyInEachCase: "10",
   putLineDefaultUid: "68",
 

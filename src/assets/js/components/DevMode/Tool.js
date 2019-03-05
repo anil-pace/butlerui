@@ -5,7 +5,6 @@ var React = require("react");
 var CommonTool = require("./CommonTool.js");
 var DevConsoleTool = require("./DevConsoleTool.js");
 var ConfigTool = require("./ConfigTool.js");
-var SerializedTool = require("./SerializedTool.js");
 var PutExpectionTool = require("./PutExpectationTool.js");
 var OrderCreator = require("./OrderCreator.js");
 var ImageScannerEmulator = require("./ImageScannerEmulator.js");

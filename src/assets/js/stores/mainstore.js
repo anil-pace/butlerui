@@ -2277,15 +2277,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                     new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
                     new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
                     new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
-                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)]);
+                    //new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)
+                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled)
+                ]);
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
         } else {
+            var isKQEnabled = false;
             data["tableRows"].push([
                 new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", 0)
+                //new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", 0, isKQEnabled)
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled)
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }
@@ -3726,7 +3730,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditServerNavData"] = this.getServerNavData();
                 data["AuditExceptionData"] = this.getExceptionData();
                 data["AuditNotification"] = this.getNotificationData();
-                data["AuditDamagedItems"] = this._getDamagedItemsDataForAudit();
+                data["AuditDamagedItems"] = this._getDamagedItemsDataForAudit(); // post scan
                 data["AuditExceptionFlag"] = this._getDamagedExceptionFlag();
                 data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();

@@ -183,12 +183,20 @@ var NumericIndicator = React.createClass({
 
     checkKqAllowedForAuditDamagedQuantity: function (isKQEnabled) {
         if (isKQEnabled) {
+            //if (this.state.value >= 1) {
             if (this.state.value >= 1) {
                 this._appendClassUp = 'gor-plus-sign enable';
                 this._appendClassDown = 'gor-minus-sign enable';
                 this._enableIncrement = true;
                 this._enableDecrement = true;
-            } else {
+            } else if (this.state.value === 0) {
+                this._appendClassUp = 'gor-plus-sign enable';
+                this._appendClassDown = 'gor-minus-sign disable';
+                this._enableIncrement = true;
+                this._enableDecrement = false;
+            }
+
+            else {
                 this._appendClassDown = 'gor-minus-sign disable';
                 this._appendClassUp = 'gor-plus-sign disable';
                 this._enableIncrement = false;

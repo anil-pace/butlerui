@@ -333,32 +333,32 @@ var NumericIndicator = React.createClass({
                 </div>
             )
         }
-        else if (this.props.execType === appConstants.DAMAGED_QUANTITY) {
-            this.checkKqAllowedForAuditDamagedQuantity(this.props.isKQEnabled);
-            return (
-                <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
-                    <div>
-                        <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
-                        <input disabled id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
-                        <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
-                    </div>
-                </div>
-            )
-        }
         else {
-            this.checkKqAllowed();
-            return (
-                <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
-                    <div>
-                        <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
-                        <input id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
-                        <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+            if (this.props.isKQEnabled !== undefined && this.props.execType === appConstants.DAMAGED_QUANTITY) {
+                this.checkKqAllowedForAuditDamagedQuantity(this.props.isKQEnabled);
+                return (
+                    <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
+                        <div>
+                            <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+                            <input disabled id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
+                            <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+                        </div>
                     </div>
-                </div>
-            )
+                )
+            }
+            else {
+                this.checkKqAllowed();
+                return (
+                    <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
+                        <div>
+                            <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+                            <input id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
+                            <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+                        </div>
+                    </div>
+                )
+            }
         }
-
-
     }
 });
 

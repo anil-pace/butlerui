@@ -510,7 +510,23 @@ var Audit = React.createClass({
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
         if (this.state.AuditExceptionScreen == "first_screen") {
-          this._disableNext = this.state.AuditDamagedCount.length > 0 ? false : true;
+          //this._disableNext = this.state.AuditDamagedCount.length > 0 ? false : true;
+
+          var staticCountFlag = this.state.AuditDamagedItems.tableRows[0][3].buttonStatus;
+          if (staticCountFlag === true) {
+            var dynamicCount = mainstore.getDamagedQuantity();
+            if (dynamicCount <= 0) {
+              var dynamicCountFlag = false;
+            }
+            else {
+              var dynamicCountFlag = true;
+            }
+            this._disableNext = !(staticCountFlag && dynamicCountFlag);
+          }
+          else {
+            this._disableNext = !staticCountFlag;
+          }
+
           this._component = (
             <div className='grid-container exception'>
               <Modal />

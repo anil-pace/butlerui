@@ -456,24 +456,51 @@ var Audit = React.createClass({
             "description": "No entities to reconcile",
             "level": "info"
           };
-          if (this.state.AuditReconcileBoxSerialData["tableRows"].length == 0 && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus)
+          if (this.state.AuditReconcileBoxSerialData["tableRows"].length == 0 && this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 && this.state.AuditReconcileLooseItemsData["tableRows"].length == 0 && !this.state.AuditSRStatus) {
+            console.log("1");
             AuditMessage = (<Reconcile navMessagesJson={this.props.navMessagesJson} message={mm} />);
-          if (this.state.AuditReconcilePackData["tableRows"].length == 0 && this.state.AuditReconcileSubPackData["tableRows"].length == 0 && this.state.DamageReconcileData["tableRows"].length == 0 && this.state.AuditSRStatus)
+          }
+
+          if (this.state.AuditReconcilePackData["tableRows"].length == 0 && this.state.AuditReconcileSubPackData["tableRows"].length == 0 && this.state.DamageReconcileData["tableRows"].length == 0 && this.state.AuditSRStatus) {
+            console.log("2");
             AuditMessage = (<Reconcile navMessagesJson={this.props.navMessagesJson} message={SRmessage} />);
-          if (this.state.AuditReconcileBoxSerialData["tableRows"].length != 0)
+          }
+
+          if (this.state.AuditReconcileBoxSerialData["tableRows"].length != 0) {
+            console.log("3");
             BoxSerialData = (<TabularData data={this.state.AuditReconcileBoxSerialData} />);
-          if (this.state.AuditReconcileItemInBoxData["tableRows"].length != 0)
+          }
+
+          if (this.state.AuditReconcileItemInBoxData["tableRows"].length != 0) {
+            console.log("4");
             ItemInBoxData = (<TabularData data={this.state.AuditReconcileItemInBoxData} />);
-          if (this.state.AuditReconcileLooseItemsData["tableRows"].length != 0)
+          }
+
+          if (this.state.AuditReconcileLooseItemsData["tableRows"].length != 0) {
+            console.log("5");
             LooseItemsData = (<TabularData data={this.state.AuditReconcileLooseItemsData} />);
-          if (this.state.AuditReconcilePackData["tableRows"].length != 0)
+          }
+
+          if (this.state.AuditReconcilePackData["tableRows"].length != 0) {
+            console.log("6");
             PackData = (<TabularData className="srTable" data={this.state.AuditReconcilePackData} />);
-          if (this.state.AuditReconcileSubPackData["tableRows"].length != 0)
+          }
+
+          if (this.state.AuditReconcileSubPackData["tableRows"].length != 0) {
+            console.log("7");
             SubPackData = (<TabularData className="srTable" data={this.state.AuditReconcileSubPackData} />);
-          if (this.state.DamageReconcileData["tableRows"].length != 0)
+          }
+
+          if (this.state.DamageReconcileData["tableRows"].length != 0) {
+            console.log("8");
             DamageData = (<TabularData className="srTable" data={this.state.DamageReconcileData} />);
-          if (this.state.FinalDamageReconcileData["tableRows"].length != 0)
+          }
+
+          if (this.state.FinalDamageReconcileData["tableRows"].length != 0) {
+            console.log("9");
             FinalDamageData = (<TabularData className="srTable" data={this.state.FinalDamageReconcileData} />);
+          }
+
           if (!this.state.AuditSRStatus)
             Slot = (<CurrentSlot slotDetails={this.state.AuditSlotDetails} />)
           subComponent = (

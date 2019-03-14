@@ -1239,9 +1239,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var tableRows = [];
         if (_seatData.k_deep_audit) {
             _seatData.final_damaged_boxes.map(function (val, ind) {
-                if (val.type === appConstants.OUTER_PACK)
+                if (val.uom_level === appConstants.OUTER_PACK)
                     packBarcodeDamagedQty += val.damaged_qty;
-                else if (val.type === appConstants.INNER_SUBPACK) {
+                else if (val.uom_level === appConstants.INNER_SUBPACK) {
                     subPackBarcodeDamagedQty += val.damaged_qty;
                 }
                 else {

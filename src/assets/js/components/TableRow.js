@@ -134,13 +134,15 @@ var TableRow = React.createClass({
             else if ((value.type != undefined && value.buttonType == "showKQRow")) {
                 var btnValue = value.text;
                 var isKQEnabled = value.buttonStatus;
+                var key = value.mode;
                 comp.push((<div className={classes} title={value.text}>
                     <NumericIndicator
                         execType={appConstants.DAMAGED_QUANTITY}
                         Formattingclass={"indicator-wrapper-in-tableCol"}
                         btnValue={btnValue}
                         isKQEnabled={isKQEnabled}
-                        inputType={"customType"} />
+                        inputType={"customType"}
+                        rowId={key} />
                 </div>));
             }
             else if ((value.type != undefined && value.buttonType == "showUOMDropDown")) {

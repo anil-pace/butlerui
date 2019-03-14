@@ -536,26 +536,29 @@ var Audit = React.createClass({
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
+
+        var staticCountFlagArray = [];
         if (this.state.AuditExceptionScreen == "first_screen") {
           //this._disableNext = this.state.AuditDamagedCount.length > 0 ? false : true;
           for (var i = 0; i < this.state.AuditDamagedItems.tableRows.length; i++) {
             var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3].buttonStatus;
-            console.log("static count flag" + staticCountFlag);
-            //var staticCountFlag = this.state.AuditDamagedItems.tableRows[0][3].buttonStatus;
-            if (staticCountFlag === true) {
-              var dynamicCount = mainstore.getDamagedQuantity();
-              if (dynamicCount <= 0) {
-                var dynamicCountFlag = false;
-              }
-              else {
-                var dynamicCountFlag = true;
-              }
-              this._disableNext = !(staticCountFlag && dynamicCountFlag);
-            }
-            else {
-              this._disableNext = !staticCountFlag;
-            }
+
+            staticCountFlagArray.push(staticCountFlag);
+            // if (staticCountFlag === true) {
+            //   var dynamicCount = mainstore.getDamagedQuantity();
+            //   if (dynamicCount <= 0) {
+            //     var dynamicCountFlag = false;
+            //   }
+            //   else {
+            //     var dynamicCountFlag = true;
+            //   }
+            //   this._disableNext = !(staticCountFlag && dynamicCountFlag);
+            // }
+            // else {
+            //   this._disableNext = !staticCountFlag;
+            // }
           }
+          console.log("static count flag" + staticCountFlagArray);
 
           this._component = (
             <div className='grid-container exception'>

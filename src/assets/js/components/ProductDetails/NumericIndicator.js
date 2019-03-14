@@ -342,6 +342,7 @@ var NumericIndicator = React.createClass({
         }
         else {
             if (this.props.isKQEnabled !== undefined && this.props.execType === appConstants.DAMAGED_QUANTITY) {
+                console.log("this.props.key" + this.props.key);
                 this.checkKqAllowedForAuditDamagedQuantity(this.props.isKQEnabled);
                 return (
                     <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >

@@ -2269,7 +2269,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0;
             _seatData.damaged_boxes.map(function (value, index) {
                 type = value.uom_level;
-                product_sku = value.uid;
+                product_sku = value.sku; //value.uid;
                 serial = value.serial === "undefined" ? "--" : value.serial;
                 quantity = value.damaged_qty; //value.qty;
                 isKQEnabled = value.enable_kq_row;

@@ -188,10 +188,11 @@ var NumericIndicator = React.createClass({
                 this._appendClassDown = 'gor-minus-sign enable';
                 this._enableIncrement = true;
                 this._enableDecrement = true;
-            } else {
+            }
+            else {
                 this._appendClassDown = 'gor-minus-sign disable';
-                this._appendClassUp = 'gor-plus-sign disable';
-                this._enableIncrement = false;
+                this._appendClassUp = 'gor-plus-sign enabled';
+                this._enableIncrement = true;
                 this._enableDecrement = false;
             }
         }
@@ -304,12 +305,18 @@ var NumericIndicator = React.createClass({
         }(this))
 
     },
+    callBackForAuditDamagedException: function () {
+        //update damaged Quantity in store.
+        mainstore.setDamagedQuanity(this._updatedQtyDamaged);
+    },
     componentWillReceiveProps(nextProps) {
         if (nextProps.btnValue !== this.props.btnValue) {
             this._updatedQtyDamaged = nextProps.btnValue
             this.setState({
                 value: nextProps.btnValue
-            })
+            },
+                this.callBackForAuditDamagedException()
+            )
         }
     },
     componentWillMount: function () {

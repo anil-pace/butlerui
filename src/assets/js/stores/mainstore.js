@@ -1139,7 +1139,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.Box_qty_list.map(function (value, index) {
                 if (value.Scan_status == "no_scan") {
                     missingDamagedBoxSerials = missingDamagedBoxSerials + value.Box_serial + " , ";
-                    countMissingDamagedBoxSerials = value.Box_Expected_Qty - value.Box_Actual_Qty;
+                    countMissingDamagedBoxSerials = value.Box_Expected_Qty - value.Box_Actual_Qty - value.Box_Damaged_Qty;
                 }
             });
             countMissingDamagedBoxSerials = countMissingDamagedBoxSerials < 0 ? 0 : countMissingDamagedBoxSerials;
@@ -1154,10 +1154,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["header"].push(new this.tableCol(_("Unscannable"), "header", false, "small", false, false, true, false, true));
             }
             if (missingDamagedBoxSerials != 0)
-                data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
-                new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
-                new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
+                data["tableRows"].push([
+                    new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
+                    new self.tableCol(Math.max(countMissingDamagedBoxSerials - _seatData["box_barcode_damage"], 0), "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(0, "enabled", false, "large", true, false, false, false, true),
+                    new self.tableCol(_seatData["box_barcode_damage"], "enabled", false, "large", true, false, false, false, true)
                 ]);
             else if ((_seatData["box_barcode_damage"] != undefined && _seatData["box_barcode_damage"] > 0) /*&& _seatData.Box_qty_list.length == 0*/) {
                 data["tableRows"].push([new self.tableCol(missingDamagedBoxSerials, "enabled", false, "large", false, true, false, false),
@@ -1238,9 +1239,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var tableRows = [];
         if (_seatData.k_deep_audit) {
             _seatData.final_damaged_boxes.map(function (val, ind) {
-                if (val.type === appConstants.OUTER_PACK)
+                if (val.uom_level === appConstants.OUTER_PACK)
                     packBarcodeDamagedQty += val.damaged_qty;
-                else if (val.type === appConstants.INNER_SUBPACK) {
+                else if (val.uom_level === appConstants.INNER_SUBPACK) {
                     subPackBarcodeDamagedQty += val.damaged_qty;
                 }
                 else {
@@ -1296,10 +1297,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
             _seatData.Box_qty_list.map(function (value, index) {
 
-                if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0) {
+                if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty - value.Box_Damaged_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0) {
                     if (value.Type === appConstants.OUTER_PACK) {
                         data["tableRows"].push([new self.tableCol(value.Type === appConstants.OUTER_PACK ? value.Box_serial : "-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(value.Type === appConstants.OUTER_PACK ? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) : 0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type === appConstants.OUTER_PACK ? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty - value.Box_Damaged_Qty, 0) : 0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(value.Type === appConstants.OUTER_PACK ? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) : 0, "enabled", false, "large", true, false, false, false, true)
 
                         ]);
@@ -1352,10 +1353,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
             _seatData.Box_qty_list.map(function (value, index) {
 
-                if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0)
+                if (Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty - value.Box_Damaged_Qty, 0) != 0 || Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0)
                     if (value.Type === appConstants.INNER_SUBPACK) {
                         data["tableRows"].push([new self.tableCol(value.Type === appConstants.INNER_SUBPACK ? value.Box_serial : "-", "enabled", false, "large", false, true, false, false),
-                        new self.tableCol(value.Type === appConstants.INNER_SUBPACK ? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty, 0) : 0, "enabled", false, "large", true, false, false, false, true),
+                        new self.tableCol(value.Type === appConstants.INNER_SUBPACK ? Math.max(value.Box_Expected_Qty - value.Box_Actual_Qty - value.Box_Damaged_Qty, 0) : 0, "enabled", false, "large", true, false, false, false, true),
                         new self.tableCol(value.Type === appConstants.INNER_SUBPACK ? Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) : 0, "enabled", false, "large", true, false, false, false, true)
                         ]);
 
@@ -1484,7 +1485,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         var looseItemScreenName = _("Loose Items Serial Numbers");
 
         _seatData.Loose_sku_list.map(function (value, index) {
-            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
+            if (Math.max(value.Expected_qty - value.Actual_qty - value.Damaged_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 || _seatData.loose_item_barcode_damage != 0)
                 c = c + 1;
             if (_seatData.k_deep_audit) {
                 looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
@@ -1497,9 +1498,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
 
         _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(function (value, index) {
-            if (Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0) {
+            if (Math.max(value.Expected_qty - value.Actual_qty - value.Damaged_qty, 0) != 0 || Math.max(value.Actual_qty - value.Expected_qty, 0) != 0) {
                 var tableRows = [new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, false),
-                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty, 0), "enabled", false, "large", true, false, false, false, true),
+                new self.tableCol(Math.max(value.Expected_qty - value.Actual_qty - value.Damaged_qty, 0), "enabled", false, "large", true, false, false, false, true),
                 new self.tableCol(Math.max(value.Actual_qty - value.Expected_qty, 0), "enabled", false, "large", true, false, false, false, true)
                 ];
                 if (!_seatData.k_deep_audit) {
@@ -2250,6 +2251,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return data;
     },
     _getDamagedItemsDataForAudit: function () {
+        var _damagedQuantity = 0;
         var data = {};
         data["header"] = [];
         data["footer"] = [];
@@ -2267,26 +2269,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0;
             _seatData.damaged_boxes.map(function (value, index) {
                 type = value.uom_level;
-                product_sku = value.uid;
+                product_sku = value.sku;
                 serial = value.serial === "undefined" ? "--" : value.serial;
                 quantity = value.damaged_qty; //value.qty;
                 isKQEnabled = value.enable_kq_row;
-                total_damaged += quantity;
+                //total_damaged += quantity ;
+                total_damaged = mainstore.getDamagedQuantity();
 
                 data["tableRows"].push([
                     new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
                     new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
                     new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
-                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", quantity, isKQEnabled)]);
+                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled)
+                ]);
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
+            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" entities"), "header", false, "small", false, true, true, false));
         } else {
             var isKQEnabled = false;
             data["tableRows"].push([
                 new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", 0, isKQEnabled)
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled)
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }

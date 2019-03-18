@@ -8,7 +8,7 @@ var TabularData = React.createClass({
     getTableRows: function () {
         var comp = [];
         this.props.data.tableRows.map(function (value, index) {
-            comp.push((<TableRow data={value} />));
+            comp.push((<TableRow data={value} rowId={index} />));
         })
         this._tableRows = comp;
     },

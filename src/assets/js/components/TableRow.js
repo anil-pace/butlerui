@@ -191,7 +191,7 @@ var TableRow = React.createClass({
     render: function () {
         this.getComponent();
         return (
-            <div className="table-row">
+            <div className="table-row" key={this.props.rowId}>
                 {this._component}
             </div>
         );

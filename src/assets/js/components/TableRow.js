@@ -104,6 +104,7 @@ var TableRow = React.createClass({
         var peripheralAction = this.peripheralAction;
         var openKeyboard_peripheral = this.openKeyboard_peripheral;
         var comp = [];
+        var rowId = _this.props.rowId;
 
         this.props.data.map(function (value, index) {
             var classes = "table-col ";
@@ -140,6 +141,7 @@ var TableRow = React.createClass({
                         Formattingclass={"indicator-wrapper-in-tableCol"}
                         btnValue={btnValue}
                         isKQEnabled={isKQEnabled}
+                        rowId={rowId}
                         inputType={"customType"} />
                 </div>));
             }

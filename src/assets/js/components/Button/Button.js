@@ -576,9 +576,22 @@ var Button1 = React.createClass({
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "exception_response";
                         data["event_data"]["event"] = mainstore.getExceptionType();
-                        var damagedQtyCount = mainstore.getDamagedQuantity();
+                        // var damagedQtyCount = mainstore.getDamagedQuantity();
+                        // var damagedBoxDetails = mainstore.getDamagedBoxDetails();
+                        // damagedBoxDetails[0].damaged_qty = damagedQtyCount;
+
+                        var damagedQtyCount = mainstore.getDamagedQuantityList();
+                        let damagedQuantityList = [11, 22, 33, 44];
                         var damagedBoxDetails = mainstore.getDamagedBoxDetails();
-                        damagedBoxDetails[0].damaged_qty = damagedQtyCount;
+                        damagedBoxDetails.map(function (value, index) {
+                            console.log("===============================> ");
+                            console.log(value);
+                            value.damaged_qty = damagedQuantityList[index];
+                        });
+                        console.log("===============>");
+                        console.log(damagedBoxDetails);
+
+
                         data["event_data"]["damaged_boxes"] = damagedBoxDetails;
                         ActionCreators.postDataToInterface(data);
                         break;

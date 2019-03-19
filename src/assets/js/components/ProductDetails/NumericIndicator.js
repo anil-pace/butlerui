@@ -146,7 +146,7 @@ var NumericIndicator = React.createClass({
 
         }
     },
-    incrementValue: function (event) {
+    incrementValue: function (rowId, event) {
         var total_entered = parseInt(this._updatedQtyGood) + parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) + parseInt(this._updatedQtyUnscannble);
         if (parseInt(total_entered, 10) > 9999) {
             this.generateExcessNotification();
@@ -206,7 +206,7 @@ var NumericIndicator = React.createClass({
         }
     },
 
-    decrementValue: function (event) {
+    decrementValue: function (rowId, event) {
         var self = this;
         if (this._enableDecrement) {
             _keypress = true;
@@ -329,6 +329,8 @@ var NumericIndicator = React.createClass({
     },
     render: function (data) {
         var inputType = this.props.inputType ? this.props.inputType : "text";
+        var rowId = this.props.rowId;
+        console.log("rowId in numeric indicator" + rowId);
         if (this.props.execType === appConstants.GOOD_QUANTITY) {
             return (
                 <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
@@ -346,9 +348,9 @@ var NumericIndicator = React.createClass({
                 return (
                     <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
                         <div>
-                            <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+                            <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue.bind(this, rowId)} onMouseDown={this.decrementValue.bind(this, rowId)} ></span>
                             <input disabled id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
-                            <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+                            <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue.bind(this, rowId)} onMouseDown={this.incrementValue.bind(this, rowId)} ></span>
                         </div>
                     </div>
                 )

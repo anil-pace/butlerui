@@ -509,7 +509,7 @@ var PutBack = React.createClass({
             <div className="exception-right">
               <div className="main-container">
                 <div className="kq-exception">
-                  <div className="kq-header">{_("Scan all damaged entities")}</div>
+                  <div className="kq-header">{_("Scan excess entities")}</div>
                   <TabularData data={this.state.PutBackExcessItems} className='limit-height width-extra ' />
                   {_button}
                 </div>

@@ -463,13 +463,15 @@ var putSeatData = function (data) {
             "enable_kq_row": true,
             "uid": "fe09ac48-7eae-4199-92cb-4320431fde34",
             "damaged_qty": 1
-        }, {
+        },
+        {
             "serial": "undefined",
             "uom_level": "INNER",
             "enable_kq_row": true,
             "uid": "131",
             "damaged_qty": 1
-        }],
+        }
+        ],
         "docked": [],
         "mode": "audit",
         "scan_allowed": true,

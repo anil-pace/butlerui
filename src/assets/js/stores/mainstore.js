@@ -26,6 +26,7 @@ var _seatData, _currentSeat, _peripheralScreen = false, _seatMode, _seatType, _s
     _showSpinner = true,
     _goodQuantity = 0,
     _damagedQuantity = 0,
+    _damagedQuantityList = [],
     _putFrontExceptionScreen = "good",
     _pickFrontExceptionScreen = "good",
     _missingQuantity = 0,
@@ -1917,7 +1918,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _KQQty = data;
     },
     getDamagedQuantity: function () {
-        return _damagedQuantity;
+        return _damagedQuantityList;
     },
     setGoodQuanity: function (data) {
         _goodQuantity = data;
@@ -1928,8 +1929,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     setUnscannableQuanity: function (data) {
         _unscannableQuantity = data;
     },
-    setDamagedQuanity: function (data) {
-        _damagedQuantity = data;
+    setDamagedQuanity: function (data, rowId) {
+        if (rowId !== undefined) {
+            _damagedQuantityList[rowId] = data;
+        }
+        else {
+            _damagedQuantity = data;
+        }
+        console.log("_damagedQuantityList");
+        console.log(_damagedQuantityList);
     },
     getExeptionQuanity: function () {
         var data = (_goodQuantity !== 0 || _missingQuantity !== 0 || _damagedQuantity !== 0 || _unscannableQuantity !== 0) ? false : true;
@@ -2265,15 +2273,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
+        var sumTotalOfDamagedList = 0;
         if (_seatData.damaged_boxes && _seatData.damaged_boxes.length > 0) {
             var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0, rowId;
             _seatData.damaged_boxes.map(function (value, index) {
                 type = value.uom_level;
                 product_sku = value.sku;
                 serial = value.serial === "undefined" ? "--" : value.serial;
-                quantity = value.damaged_qty; //value.qty;
+                quantity = value.damaged_qty;
                 isKQEnabled = value.enable_kq_row;
-                total_damaged = mainstore.getDamagedQuantity();
+                damagedList = mainstore.getDamagedQuantity();
                 rowId = index;
 
                 data["tableRows"].push([
@@ -2284,7 +2293,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 ]);
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
-            data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" entities"), "header", false, "small", false, true, true, false));
+            for (var i = 0; i < damagedList.length; i++) {
+                sumTotalOfDamagedList += damagedList[i];
+            }
+            data["footer"].push(new this.tableCol(_("Total: ") + sumTotalOfDamagedList + _(" entities"), "header", false, "small", false, true, true, false));
         } else {
             var isKQEnabled = false;
             data["tableRows"].push([
@@ -3970,7 +3982,7 @@ AppDispatcher.register(function (payload) {
             mainstore.emitChange();
             break;
         case appConstants.UPDATE_DAMAGED_QUANTITY:
-            mainstore.setDamagedQuanity(action.data);
+            mainstore.setDamagedQuanity(action.data, action.rowId);
             mainstore.emitChange();
             break;
         case appConstants.UPDATE_MISSING_QUANTITY:

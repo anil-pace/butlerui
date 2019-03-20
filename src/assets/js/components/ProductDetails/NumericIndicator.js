@@ -112,7 +112,7 @@ var NumericIndicator = React.createClass({
 
     },
 
-    updateStore: function (event, qty) {
+    updateStore: function (rowId) {
         var total_entered = this._updatedQtyGood + this._updatedQtyMissing + this._updatedQtyDamaged + this._updatedQtyUnscannble;
         if (this._enableIncrement === true && _keypress === true) {
 
@@ -131,7 +131,7 @@ var NumericIndicator = React.createClass({
                 case appConstants.DAMAGED_QUANTITY:
                 case appConstants.DAMAGED_PACK:
                 case appConstants.DAMAGED_SUB_PACK:
-                    CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged));
+                    CommonActions.updateDamagedQuantity(parseInt(this._updatedQtyDamaged), parseInt(rowId));
                     break;
                 case appConstants.UNSCANNABLE_QUANTITY:
                 case appConstants.BAD_BARCODE_PACK:
@@ -146,7 +146,7 @@ var NumericIndicator = React.createClass({
 
         }
     },
-    incrementValue: function (rowId, event) {
+    incrementValue: function (rowId = undefined, event) {
         var total_entered = parseInt(this._updatedQtyGood) + parseInt(this._updatedQtyMissing) + parseInt(this._updatedQtyDamaged) + parseInt(this._updatedQtyUnscannble);
         if (parseInt(total_entered, 10) > 9999) {
             this.generateExcessNotification();
@@ -159,7 +159,7 @@ var NumericIndicator = React.createClass({
                     this.changeValueIncrement(event);
                 }
             }
-            self.updateStore();
+            self.updateStore(rowId);
         }
     },
 
@@ -206,7 +206,7 @@ var NumericIndicator = React.createClass({
         }
     },
 
-    decrementValue: function (rowId, event) {
+    decrementValue: function (rowId = undefined, event) {
         var self = this;
         if (this._enableDecrement) {
             _keypress = true;
@@ -214,7 +214,7 @@ var NumericIndicator = React.createClass({
                 this.changeValueDecrement(event);
             }
 
-            self.updateStore();
+            self.updateStore(rowId);
         }
 
     },
@@ -348,9 +348,9 @@ var NumericIndicator = React.createClass({
                 return (
                     <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
                         <div>
-                            <span className={this._appendClassDown} action={this.props.action} onClick={this.decrementValue.bind(this, rowId)} onMouseDown={this.decrementValue.bind(this, rowId)} ></span>
+                            <span className={this._appendClassDown} action={this.props.action} onClick={(e) => this.decrementValue(rowId, e)} onMouseDown={(e) => this.decrementValue(rowId, e)} ></span>
                             <input disabled id="keyboard" value={this.state.value} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
-                            <span className={this._appendClassUp} action={this.props.action} onClick={this.incrementValue.bind(this, rowId)} onMouseDown={this.incrementValue.bind(this, rowId)} ></span>
+                            <span className={this._appendClassUp} action={this.props.action} onClick={(e) => this.incrementValue(rowId, e)} onMouseDown={(e) => this.incrementValue(rowId, e)} ></span>
                         </div>
                     </div>
                 )

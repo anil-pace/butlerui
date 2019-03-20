@@ -509,23 +509,37 @@ var Audit = React.createClass({
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
+        var sumTotalOfDamagedList = 0;
         if (this.state.AuditExceptionScreen == "first_screen") {
-          for (var i = 0; i < this.state.AuditDamagedItems.tableRows.length; i++) {
-            var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3].buttonStatus;
-            if (staticCountFlag === true) {
-              var dynamicCount = mainstore.getDamagedQuantity();
-              if (dynamicCount <= 0) {
-                var dynamicCountFlag = false;
-              }
-              else {
-                var dynamicCountFlag = true;
-              }
-              this._disableNext = !(staticCountFlag && dynamicCountFlag);
-            }
-            else {
-              this._disableNext = !staticCountFlag;
-            }
+          // for (var i = 0; i < this.state.AuditDamagedItems.tableRows.length; i++) {
+          //   var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3].buttonStatus;
+          //   if (staticCountFlag === true) {
+          //     var dynamicCount = mainstore.getDamagedQuantity();
+          //     if (dynamicCount <= 0) {
+          //       var dynamicCountFlag = false;
+          //     }
+          //     else {
+          //       var dynamicCountFlag = true;
+          //     }
+          //     this._disableNext = !(staticCountFlag && dynamicCountFlag);
+          //   }
+          //   else {
+          //     this._disableNext = !staticCountFlag;
+          //   }
+          // }
+
+          var damagedList = mainstore.getDamagedQuantity();
+          for (var i = 0; i < damagedList.length; i++) {
+            sumTotalOfDamagedList += damagedList[i];
           }
+
+          if (sumTotalOfDamagedList <= 0) {
+            var dynamicCountFlag = false;
+          }
+          else {
+            var dynamicCountFlag = true;
+          }
+          this._disableNext = !(dynamicCountFlag);
 
           this._component = (
             <div className='grid-container exception'>
@@ -533,7 +547,7 @@ var Audit = React.createClass({
               <Exception data={this.state.AuditExceptionData} />
               <div className="exception-right">
                 <ExceptionHeader data={this.state.AuditServerNavData} />
-                <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra ' />
+                <TabularData data={this.state.AuditDamagedItems} className='limit-height width-extra height-extra' tbodyClassName='customHeight' />
                 <div className="finish-damaged-barcode">
                   <Button1
                     disabled={this._disableNext}

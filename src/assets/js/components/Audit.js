@@ -509,7 +509,7 @@ var Audit = React.createClass({
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
-        var sumTotalOfDamagedList = 0;
+        var sumTotalOfDamagedQuantityList = 0;
         if (this.state.AuditExceptionScreen == "first_screen") {
           // for (var i = 0; i < this.state.AuditDamagedItems.tableRows.length; i++) {
           //   var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3].buttonStatus;
@@ -528,16 +528,12 @@ var Audit = React.createClass({
           //   }
           // }
 
-          var damagedList = mainstore.getDamagedQuantityList();
-          console.log("damagedQuantityList in Audit.js ==========> " + damagedQuantityList);
-          for (var i = 0; i < damagedList.length; i++) {
-            sumTotalOfDamagedList += damagedList[i];
+          var damagedQuantityList = mainstore.getDamagedQuantityList();
+          for (var i = 0; i < damagedQuantityList.length; i++) {
+            sumTotalOfDamagedQuantityList += damagedQuantityList[i];
           }
 
-          console.log("  sumTotalOfDamagedList in Audit.js" + sumTotalOfDamagedList);
-
-
-          if (sumTotalOfDamagedList <= 0) {
+          if (sumTotalOfDamagedQuantityList <= 0) {
             var dynamicCountFlag = false;
           }
           else {

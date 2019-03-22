@@ -2274,18 +2274,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["tableRows"] = [];
         data["image_url"] = null;
         var self = this;
-        var sumTotalOfDamagedList = 0;
+        var sumTotalOfDamagedQuantityList = 0;
         if (_seatData.damaged_boxes && _seatData.damaged_boxes.length > 0) {
-            var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0, rowId;
+            var isKQEnabled, product_sku, type, serial, quantity;
             _seatData.damaged_boxes.map(function (value, index) {
                 type = value.uom_level;
                 product_sku = value.sku;
                 serial = value.serial === "undefined" ? "--" : value.serial;
                 quantity = value.damaged_qty;
                 isKQEnabled = value.enable_kq_row;
-                damagedList = mainstore.getDamagedQuantityList();
-                console.log("damagedQuantityList in mainstore.js ==========> " + damagedQuantityList);
-                rowId = index;
+                damagedQuantityList = mainstore.getDamagedQuantityList();
 
                 data["tableRows"].push([
                     new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
@@ -2295,16 +2293,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 ]);
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
-            for (var i = 0; i < damagedList.length; i++) {
-                console.log("================>");
-                console.log(damagedList[i]);
-                if (damagedList[i] === undefined) {
-                    damagedList[i] = 1;
+            for (var i = 0; i < damagedQuantityList.length; i++) {
+                if (damagedQuantityList[i] === undefined) {
+                    damagedQuantityList[i] = 1;
                 }
-                sumTotalOfDamagedList += damagedList[i];
+                sumTotalOfDamagedQuantityList += damagedQuantityList[i];
             }
-            console.log("  sumTotalOfDamagedList in mainstore.js" + sumTotalOfDamagedList);
-            data["footer"].push(new this.tableCol(_("Total: ") + sumTotalOfDamagedList + _(" entities"), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total: ") + sumTotalOfDamagedQuantityList + _(" entities"), "header", false, "small", false, true, true, false));
         } else {
             var isKQEnabled = false;
             data["tableRows"].push([

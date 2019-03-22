@@ -581,15 +581,14 @@ var Button1 = React.createClass({
                         // damagedBoxDetails[0].damaged_qty = damagedQtyCount;
 
                         var damagedQuantityList = mainstore.getDamagedQuantityList();
-                        console.log("damagedQuantityList in Button.js ==========> " + damagedQuantityList);
                         var damagedBoxDetails = mainstore.getDamagedBoxDetails();
                         damagedBoxDetails.map(function (value, index) {
-                            if (damagedQuantityList[index] === undefined) {
-                                value.damaged_qty = 1;
-                            }
-                            else {
-                                value.damaged_qty = damagedQuantityList[index];
-                            }
+                            // if (damagedQuantityList[index] === undefined) {
+                            //     value.damaged_qty = 1;
+                            // }
+                            // else {
+                            value.damaged_qty = damagedQuantityList[index];
+                            //}
                         });
                         data["event_data"]["damaged_boxes"] = damagedBoxDetails;
                         ActionCreators.postDataToInterface(data);

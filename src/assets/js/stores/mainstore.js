@@ -1918,6 +1918,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _KQQty = data;
     },
     getDamagedQuantity: function () {
+        return _damagedQuantity;
+    },
+    getDamagedQuantityList: function () {
         return _damagedQuantityList;
     },
     setGoodQuanity: function (data) {
@@ -1936,8 +1939,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         else {
             _damagedQuantity = data;
         }
-        console.log("_damagedQuantityList");
-        console.log(_damagedQuantityList);
     },
     getExeptionQuanity: function () {
         var data = (_goodQuantity !== 0 || _missingQuantity !== 0 || _damagedQuantity !== 0 || _unscannableQuantity !== 0) ? false : true;
@@ -2282,7 +2283,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 serial = value.serial === "undefined" ? "--" : value.serial;
                 quantity = value.damaged_qty;
                 isKQEnabled = value.enable_kq_row;
-                damagedList = mainstore.getDamagedQuantity();
+                damagedList = mainstore.getDamagedQuantityList();
+                console.log("damagedQuantityList in mainstore.js ==========> " + damagedQuantityList);
                 rowId = index;
 
                 data["tableRows"].push([
@@ -2294,15 +2296,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
             for (var i = 0; i < damagedList.length; i++) {
+                console.log("================>");
+                console.log(damagedList[i]);
+                if (damagedList[i] === undefined) {
+                    damagedList[i] = 1;
+                }
                 sumTotalOfDamagedList += damagedList[i];
             }
+            console.log("  sumTotalOfDamagedList in mainstore.js" + sumTotalOfDamagedList);
             data["footer"].push(new this.tableCol(_("Total: ") + sumTotalOfDamagedList + _(" entities"), "header", false, "small", false, true, true, false));
         } else {
             var isKQEnabled = false;
             data["tableRows"].push([
-                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));

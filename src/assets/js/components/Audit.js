@@ -528,10 +528,14 @@ var Audit = React.createClass({
           //   }
           // }
 
-          var damagedList = mainstore.getDamagedQuantity();
+          var damagedList = mainstore.getDamagedQuantityList();
+          console.log("damagedQuantityList in Audit.js ==========> " + damagedQuantityList);
           for (var i = 0; i < damagedList.length; i++) {
             sumTotalOfDamagedList += damagedList[i];
           }
+
+          console.log("  sumTotalOfDamagedList in Audit.js" + sumTotalOfDamagedList);
+
 
           if (sumTotalOfDamagedList <= 0) {
             var dynamicCountFlag = false;

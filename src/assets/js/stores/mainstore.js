@@ -1696,13 +1696,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData["scan_details"];
         }
     },
-    getAuditDamagedCount: function () {
-        if (_seatData.hasOwnProperty('damaged_boxes')) {
-            return _seatData.damaged_boxes;
-        } else {
-            return null;
-        }
-    },
+    // getAuditDamagedCount: function () {
+    //     if (_seatData.hasOwnProperty('damaged_boxes')) {
+    //         return _seatData.damaged_boxes;
+    //     } else {
+    //         return null;
+    //     }
+    // },
     getPhysicallyDamagedScanDetails: function () {
         if (_seatData["scan_details"] == undefined) {
             var data = {
@@ -3752,7 +3752,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
                 data["AuditExceptionStatus"] = this.getExceptionStatus();
-                data["AuditDamagedCount"] = this.getAuditDamagedCount();
+                //data["AuditDamagedCount"] = this.getAuditDamagedCount();
                 break;
 
             case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:

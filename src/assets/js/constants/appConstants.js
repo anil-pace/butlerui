@@ -7,6 +7,7 @@ var appConstants = {
   TOKEN: '/token',
   LOGOUT: '/logout',
   PPS_SEATS: '/pps_seats/',
+  MODE: '/mode',
   SEND_DATA: '/send_data',
   COMPONENT: '/components',
   LANG: '/language', //Language from api

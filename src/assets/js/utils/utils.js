@@ -233,8 +233,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         grant_type: 'password',
         action: 'LOGIN',
         role: [data.data.role],
-        client_secret: 'rubix',
-        client_id: 'wms',
         context: {
           entity_id: '1',
           barcode: data.data.barcode,
@@ -248,8 +246,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         grant_type: 'password',
         role: [data.data.role],
         action: 'LOGIN',
-        client_secret: 'rubix',
-        client_id: 'wms',
         context: {
           entity_id: '1',
           app_name: 'boi_ui'

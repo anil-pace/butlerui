@@ -903,7 +903,7 @@ var Audit = React.createClass({
               } else {
                 var dynamicCountFlag = true;
               }
-              this._disableNext = !(staticCountFlag && dynamicCountFlag); //Sudivya
+              this._disableNext = !(staticCountFlag && dynamicCountFlag);
             } else {
               this._disableNext = !staticCountFlag;
             }

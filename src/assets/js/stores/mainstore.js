@@ -3519,6 +3519,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+                data["BinMapDetails"] = this.getUDPMapDetails();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:

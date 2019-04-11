@@ -42,10 +42,11 @@ var checkListOpen = false;
 
 function getStateData() {
     var screenData = mainstore.getScreenData();
+    
     var splitPPSData = {
         groupInfo: mainstore._getBinMapDetails(),
-        groupOrientation: mainstore._getBinMapOrientation()
-        
+        groupOrientation: mainstore._getBinMapOrientation(),
+        MobileFlag: mainstore._getMobileFlag()
     }
     
     return Object.assign({}, screenData, splitPPSData);
@@ -630,7 +631,12 @@ else {
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-                                <Spinner />
+                            {this.state.MobileFlag ? 
+                                <SplitPPS 
+                                orientation={this.state.groupOrientation} 
+                                groupInfo={this.state.BinMapDetails} 
+                                undockAwaited={this.state.UndockAwaited} 
+                                docked={this.state.DockedGroup} /> : <Spinner />}
                             </div>
                             <div className='btn-actions-skip-docking'>
                                 {skipDockingButton}

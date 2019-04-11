@@ -28,27 +28,26 @@ var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
 var TabularData = require('./TabularData');
 var OrderDetails = require('./OrderDetails/OrderDetails.js');
-var Pallet=require("./Pallet/pallet");
-var CheckList=require("./CheckList.js");
+var Pallet = require("./Pallet/pallet");
+var CheckList = require("./CheckList.js");
 var utils = require('../utils/utils.js');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
-var TextEditor=require('./ProductDetails/textEditor');
-var ItemTable= require('./itemTable');
+var TextEditor = require('./ProductDetails/textEditor');
+var ItemTable = require('./itemTable');
 
 
 var checkListOpen = false;
 
 function getStateData() {
     var screenData = mainstore.getScreenData();
-    
+
     var splitPPSData = {
         groupInfo: mainstore._getBinMapDetails(),
         groupOrientation: mainstore._getBinMapOrientation(),
-        MobileFlag: mainstore._getMobileFlag()
     }
-    
+
     return Object.assign({}, screenData, splitPPSData);
 };
 
@@ -74,34 +73,34 @@ var PickFront = React.createClass({
             this.showModal(this.state.PickFrontChecklistDetails, this.state.PickFrontChecklistIndex);
         }
     },
-    
+
     getNotificationComponent: function () {
-        if (this.state.PickFrontNotification != undefined){
-            this._notification = <Notification notification={this.state.PickFrontNotification} navMessagesJson={this.props.navMessagesJson}/>
+        if (this.state.PickFrontNotification != undefined) {
+            this._notification = <Notification notification={this.state.PickFrontNotification} navMessagesJson={this.props.navMessagesJson} />
         }
-        else{
-            if($(".modal.notification-error").is(":visible")){
-                setTimeout((function(){
-                    $('.modal.notification-error').data('bs.modal').options.backdrop=true
+        else {
+            if ($(".modal.notification-error").is(":visible")) {
+                setTimeout((function () {
+                    $('.modal.notification-error').data('bs.modal').options.backdrop = true
                     $(".modal-backdrop").remove()
                     $(".modal.notification-error").modal("hide");
                     $(".modal").removeClass("notification-error")
 
-                }),0)
+                }), 0)
 
                 return null
             }
-            else if($(".modal.in").is(":visible")){
-                setTimeout((function(){
-                  if($('.modal.in').find("div").hasClass("modal-footer")){
-                      //check when errorcode is true and modal has buttons
-                      $('.modal.in').data('bs.modal').options.backdrop='static';
-                  }
-                  else{
-                      //check when errorcode is true and modal has NO buttons
-                      $('.modal.in').data('bs.modal').options.backdrop=true;
-                  }
-              }),0)
+            else if ($(".modal.in").is(":visible")) {
+                setTimeout((function () {
+                    if ($('.modal.in').find("div").hasClass("modal-footer")) {
+                        //check when errorcode is true and modal has buttons
+                        $('.modal.in').data('bs.modal').options.backdrop = 'static';
+                    }
+                    else {
+                        //check when errorcode is true and modal has NO buttons
+                        $('.modal.in').data('bs.modal').options.backdrop = true;
+                    }
+                }), 0)
                 return null
             }
             this._notification = "";
@@ -152,31 +151,31 @@ var PickFront = React.createClass({
         return (
             <div className='grid-container exception'>
                 <Modal />
-                <Exception data={this.state.PickFrontExceptionData} action={true}/>
+                <Exception data={this.state.PickFrontExceptionData} action={true} />
                 <div className="exception-right"></div>
                 <div className='cancel-scan'>
                     <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT}
-                             action={appConstants.CANCEL_EXCEPTION} color={"black"}/>
+                        action={appConstants.CANCEL_EXCEPTION} color={"black"} />
                 </div>
             </div>
         );
     },
-callAPItoGetData:function(data){
-    CommonActions.getOrphanItemData(data);
-},
-    
+    callAPItoGetData: function (data) {
+        CommonActions.getOrphanItemData(data);
+    },
+
     getScreenComponent: function (screen_id) {
         switch (screen_id) {
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-            var previousPickDetails="";
-            if(this.state.PreviousDetails){
-            previousPickDetails= <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick"/>
-            }   
-            if (this.state.PickFrontExceptionStatus == false) {
+                var previousPickDetails = "";
+                if (this.state.PreviousDetails) {
+                    previousPickDetails = <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick" />
+                }
+                if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
@@ -190,23 +189,23 @@ callAPItoGetData:function(data){
                     this._component = this.getExceptionComponent();
                 }
                 break;
-            
+
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
             case appConstants.PICK_FRONT_LOCATION_SCAN:
                 var locationBtnEnable = this.state.PickFrontLocationButtonEnable ? false : true;
                 var locationButton = (
                     <Button1 disabled={locationBtnEnable} text={_("Confirm")} module={appConstants.PICK_FRONT}
-                             action={appConstants.CONFIRM_LOCATION} color={"orange"}/>);
+                        action={appConstants.CONFIRM_LOCATION} color={"orange"} />);
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
-                                      rackData={this.state.PickFrontRackDetails}/>
+                                    rackData={this.state.PickFrontRackDetails} />
                             </div>
                             {locationButton}
                         </div>
@@ -216,38 +215,37 @@ callAPItoGetData:function(data){
                 }
                 break;
             case appConstants.PICK_FRONT_CONTAINER_BREAK:
-             case appConstants.PICK_FRONT_ITEM_SCAN:
+            case appConstants.PICK_FRONT_ITEM_SCAN:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelButton;
-                var rackType="";
+                var rackType = "";
                 if (cancelScanFlag) {
-                        cancelButton = (
-                            <div ><Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
-                                           action={appConstants.CANCEL_SCAN} color={"black"}/></div>);
-                    }
-                    else {
-                        cancelButton = (<div ></div>);
-                    }
+                    cancelButton = (
+                        <div ><Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
+                            action={appConstants.CANCEL_SCAN} color={"black"} /></div>);
+                }
+                else {
+                    cancelButton = (<div ></div>);
+                }
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
-                    
-                                                    if(this.state.PickFrontRackTypeMPU)
-                                                    {
-                                                        rackType=     <Pallet/>;     
-                                                    }                       
-                                   else{
-                                   rackType =   <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
-                                   rackData={this.state.PickFrontRackDetails} putDirection={this.state.PickFrontPickDirection}/>
-                                   }
-                    
-                                                    this._component = (
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
+
+                    if (this.state.PickFrontRackTypeMPU) {
+                        rackType = <Pallet />;
+                    }
+                    else {
+                        rackType = <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
+                            rackData={this.state.PickFrontRackDetails} putDirection={this.state.PickFrontPickDirection} />
+                    }
+
+                    this._component = (
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-                               {rackType}
-                                <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
+                                {rackType}
+                                <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
                             </div>
                             <div className='actions'>
                                 {cancelButton}
@@ -259,39 +257,39 @@ callAPItoGetData:function(data){
                 }
                 break;
 
-                case appConstants.PICK_FRONT_CHECKLIST:
+            case appConstants.PICK_FRONT_CHECKLIST:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelButton;
                 if (cancelScanFlag) {
                     cancelButton = (
                         <div ><Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
-                                       action={appConstants.CANCEL_SCAN} color={"black"}/></div>);
+                            action={appConstants.CANCEL_SCAN} color={"black"} /></div>);
                 }
                 else {
                     cancelButton = (<div ></div>);
                 }
-                var checklistData="";
+                var checklistData = "";
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
 
-                        checklistData = <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                                   checklistIndex = {this.state.PickFrontChecklistIndex} 
-                                                    />
-            
-                        this._component = (
-                            <div className='grid-container'>
-                                <Modal />
-                                <div className='main-container'>
-                                   {checklistData}
-                                    <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
-                                </div>
-                                <div className='actions'>
-                                    {cancelButton}
-                                </div>
+                    checklistData = <CheckList checklistData={this.state.PickFrontChecklistData}
+                        checklistIndex={this.state.PickFrontChecklistIndex}
+                    />
+
+                    this._component = (
+                        <div className='grid-container'>
+                            <Modal />
+                            <div className='main-container'>
+                                {checklistData}
+                                <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
                             </div>
-                        );
+                            <div className='actions'>
+                                {cancelButton}
+                            </div>
+                        </div>
+                    );
                 } else {
                     this._component = this.getExceptionComponent();
                 }
@@ -301,14 +299,14 @@ callAPItoGetData:function(data){
             case appConstants.PICK_FRONT_CONTAINER_SCAN:
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-                                <BoxSerial boxData={this.state.PickFrontBoxDetails}/>
-                                <Rack rackData={this.state.PickFrontRackDetails} slotType={this.state.SlotType}/>
+                                <BoxSerial boxData={this.state.PickFrontBoxDetails} />
+                                <Rack rackData={this.state.PickFrontRackDetails} slotType={this.state.SlotType} />
                             </div>
                         </div>
                     );
@@ -317,48 +315,47 @@ callAPItoGetData:function(data){
                 }
                 break;
 
-                case appConstants.PER_ITEM_PRINT:
-                if(this.state.PickFrontExceptionStatus == false)
-                {
-                var cancelScanFlag = this.state.PrintCancelScan;
-                var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
-                  var binComponent;
-                  this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
-                 binComponent=(<div className='main-container'> 
-                    <div className='printImage'></div>
-                    <KQ scanDetails = {this.state.PrintScanDetails}  hideCounters={true}/>
-                    </div> 
+            case appConstants.PER_ITEM_PRINT:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    var cancelScanFlag = this.state.PrintCancelScan;
+                    var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
+                    var binComponent;
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
+                    binComponent = (<div className='main-container'>
+                        <div className='printImage'></div>
+                        <KQ scanDetails={this.state.PrintScanDetails} hideCounters={true} />
+                    </div>
                     );
-                   this._component = (
+                    this._component = (
                         <div className='grid-container'>
-                       <Modal/>
-                              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='putFrontFlow'/>}
+                            <Modal />
+                            {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                screenClass='putFrontFlow' />}
 
-                              <div className={"single-bin "+(this.state.SplitScreenFlag?' gor-fixed-position':'fix-top')}>
-            <Bins binsData={this.state.PickCurrentBin} screenId = {this.state.PickFrontScreenId}/>
-            <div className="text">{_("CURRENT BIN")}</div>
-            </div>
+                            <div className={"single-bin " + (this.state.SplitScreenFlag ? ' gor-fixed-position' : 'fix-top')}>
+                                <Bins binsData={this.state.PickCurrentBin} screenId={this.state.PickFrontScreenId} />
+                                <div className="text">{_("CURRENT BIN")}</div>
+                            </div>
                             {binComponent}
-                             <Button1  text={_("Confirm")} disabled={false}  module={appConstants.PICK_FRONT} action={appConstants.PRINT_CONFIRM}
-                             color={"orange"}/>
+                            <Button1 text={_("Confirm")} disabled={false} module={appConstants.PICK_FRONT} action={appConstants.PRINT_CONFIRM}
+                                color={"orange"} />
                             <div className='actions'>
                                 <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}
-                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN_MODAL}
-                                         color={"black"}/>
+                                    module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN_MODAL}
+                                    color={"black"} />
                             </div>
-                       </div>
+                        </div>
 
                     );
-}
-else {
+                }
+                else {
                     this._component = this.getExceptionComponent();
                 }
-              
-                                    
-            break;  
+
+
+                break;
 
             case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
             case appConstants.PICK_FRONT_WORKING_TABLE:
@@ -367,78 +364,75 @@ else {
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
                             <Button1 disabled={false} text={_("Edit Details")} module={appConstants.PICK_FRONT}
-                                     action={appConstants.EDIT_DETAILS} color={"orange"}/> );
+                                action={appConstants.EDIT_DETAILS} color={"orange"} />);
                     } else {
                         var editButton = '';
                     }
                     var BinFull = (<Button1 disabled={false} text={_("Bin full")} module={appConstants.PICK_FRONT}
-                                            action={appConstants.BIN_FULL} color={"black"}/> );
+                        action={appConstants.BIN_FULL} color={"black"} />);
                     var binComponent = "";
 
-        if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
-     if (this.state.OrigBinUse)
-     {
-     binComponent=(<div className="binsFlexWrapperContainer"> 
-        <div className="workingTableFlex"></div>
-        <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
-                                              productDetails={this.state.PickFrontProductDetails}
-                                              itemUid={this.state.PickFrontItemUid}/>
-                                              </div>)
- }
- else
- {
-    binComponent=(<div className='main-container'> 
-        <div className="workingTable"></div>
-    <Wrapper scanDetails={this.state.PickFrontScanDetails}
-                                     productDetails={this.state.PickFrontProductDetails}
-                                     itemUid={this.state.PickFrontItemUid}/>
-                                     </div>);
- }
-    }
-        else
-        {
-                    if (this.state.OrigBinUse) {
-                        binComponent = (<div className="binsFlexWrapperContainer">
-                            <BinsFlex binsData={this.state.PickFrontBinData}
-                                      screenId={screen_id} seatType={this.state.SeatType}/>
-                            <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
-                                              productDetails={this.state.PickFrontProductDetails}
-                                              itemUid={this.state.PickFrontItemUid}/>
-                        </div>)
-                    } else {
-                        binComponent = (<div className='main-container'>
-                            <Bins binsData={this.state.PickFrontBinData}
-                                  screenId={screen_id}/>
-                            <Wrapper scanDetails={this.state.PickFrontScanDetails}
-                                     productDetails={this.state.PickFrontProductDetails}
-                                     itemUid={this.state.PickFrontItemUid}/>
-                        </div>);
+                    if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
+                        if (this.state.OrigBinUse) {
+                            binComponent = (<div className="binsFlexWrapperContainer">
+                                <div className="workingTableFlex"></div>
+                                <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
+                                    productDetails={this.state.PickFrontProductDetails}
+                                    itemUid={this.state.PickFrontItemUid} />
+                            </div>)
+                        }
+                        else {
+                            binComponent = (<div className='main-container'>
+                                <div className="workingTable"></div>
+                                <Wrapper scanDetails={this.state.PickFrontScanDetails}
+                                    productDetails={this.state.PickFrontProductDetails}
+                                    itemUid={this.state.PickFrontItemUid} />
+                            </div>);
+                        }
                     }
+                    else {
+                        if (this.state.OrigBinUse) {
+                            binComponent = (<div className="binsFlexWrapperContainer">
+                                <BinsFlex binsData={this.state.PickFrontBinData}
+                                    screenId={screen_id} seatType={this.state.SeatType} />
+                                <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
+                                    productDetails={this.state.PickFrontProductDetails}
+                                    itemUid={this.state.PickFrontItemUid} />
+                            </div>)
+                        } else {
+                            binComponent = (<div className='main-container'>
+                                <Bins binsData={this.state.PickFrontBinData}
+                                    screenId={screen_id} />
+                                <Wrapper scanDetails={this.state.PickFrontScanDetails}
+                                    productDetails={this.state.PickFrontProductDetails}
+                                    itemUid={this.state.PickFrontItemUid} />
+                            </div>);
+                        }
 
-}
+                    }
                     this._component = (
                         <div className='grid-container'>
-                            <Modal cancelClicked={cancelClicked}/>
+                            <Modal cancelClicked={cancelClicked} />
 
-                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
+                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
 
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>}
+                                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFlow' />}
                             {binComponent}
                             <div className='actions'>
                                 <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}
-                                         module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
-                                         color={"black"}/>
+                                    module={appConstants.PICK_FRONT} action={appConstants.CANCEL_SCAN}
+                                    color={"black"} />
                                 {editButton}
 
-                                {(this.state.PickFrontScreenId!==appConstants.PICK_FRONT_WORKING_TABLE && this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''}
-                            
+                                {(this.state.PickFrontScreenId !== appConstants.PICK_FRONT_WORKING_TABLE && this.state.PickFrontButtonStatus == true && this.state.PickFrontButtonType == "bin_full") ? BinFull : ''}
+
                             </div>
 
                         </div>
@@ -452,52 +446,51 @@ else {
             case appConstants.PICK_FRONT_PACKING_BOX:
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     var binComponent = "";
 
-                    if(screen_id==appConstants.PICK_FRONT_WORKING_TABLE){
-                        if (this.state.OrigBinUse){
-                             binComponent=(<div className="binsFlexWrapperContainer"> 
+                    if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
+                        if (this.state.OrigBinUse) {
+                            binComponent = (<div className="binsFlexWrapperContainer">
                                 <div className="workingTableFlex"></div>
                                 <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
-                                                                      productDetails={this.state.PickFrontProductDetails}
-                                                                      itemUid={this.state.PickFrontItemUid}/>
-                                                                      </div>)
+                                    productDetails={this.state.PickFrontProductDetails}
+                                    itemUid={this.state.PickFrontItemUid} />
+                            </div>)
                         } else {
-                            binComponent=(<div className='main-container adjust-main-container'> 
+                            binComponent = (<div className='main-container adjust-main-container'>
                                 <div className="workingTable"></div>
-                            <Wrapper scanDetails={this.state.PickFrontScanDetails}
-                                                             productDetails={this.state.PickFrontProductDetails}
-                                                             itemUid={this.state.PickFrontItemUid}/>
-                                                             </div>);
+                                <Wrapper scanDetails={this.state.PickFrontScanDetails}
+                                    productDetails={this.state.PickFrontProductDetails}
+                                    itemUid={this.state.PickFrontItemUid} />
+                            </div>);
                         }
                     }
-                    else
-                    {
+                    else {
                         if (this.state.OrigBinUse) {
-                            binComponent = (<div className="binsFlexWrapperContainer" style={{"display": "flex"}}>
+                            binComponent = (<div className="binsFlexWrapperContainer" style={{ "display": "flex" }}>
                                 <BinsFlex binsData={this.state.PickFrontBinData}
-                                          screenId={screen_id} seatType={this.state.SeatType}/>
-                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
-                                
+                                    screenId={screen_id} seatType={this.state.SeatType} />
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType} />
+
                             </div>)
                         } else {
                             binComponent = (<div className='main-container adjust-main-container'>
                                 <Bins binsData={this.state.PickFrontBinData}
-                                      screenId={screen_id}/>
-                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType}/>
+                                    screenId={screen_id} />
+                                <PackingDetails boxTypeInfo={this.state.PickFrontPackingBoxType} />
                             </div>);
                         }
                     }
                     this._component = (
                         <div className='grid-container'>
-                            <Modal cancelClicked={cancelClicked}/>
+                            <Modal cancelClicked={cancelClicked} />
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} 
-                                    mapDetails={this.state.BinMapDetails} 
+                                <BinMap orientation={this.state.groupOrientation}
+                                    mapDetails={this.state.BinMapDetails}
                                     selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFLowPackingBox'/>}
+                                    screenClass='frontFLowPackingBox' />}
                             {binComponent}
                         </div>
                     );
@@ -507,69 +500,69 @@ else {
                 break;
 
 
-                case appConstants.ITEM_SEARCH:
+            case appConstants.ITEM_SEARCH:
                 this._navigation = '';
-                this._component=(
+                this._component = (
                     <div>
-                    <div className="outerWrapperItemSearch">
-                        <div className="subHeaderItemDetails">{_("Item details")}</div>
-                        <div className="innerWrapperItemSearch">
-                        <div className="textBoxContainer">
-                         <span className="barcode"></span>
-                          <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)}/>
+                        <div className="outerWrapperItemSearch">
+                            <div className="subHeaderItemDetails">{_("Item details")}</div>
+                            <div className="innerWrapperItemSearch">
+                                <div className="textBoxContainer">
+                                    <span className="barcode"></span>
+                                    <TextEditor callAPItoGetData={this.callAPItoGetData.bind(this)} />
+                                </div>
+                            </div>
                         </div>
+                        <div className="itemSearchfooter">
+                            <Button1 disabled={false} text={_("Close")} module={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK} color={"black"} />
                         </div>
-                    </div>
-                    <div className="itemSearchfooter">
-                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
-                    </div> 
                     </div>
                 )
                 break;
-                case appConstants.ITEM_SEARCH_RESULT:
+            case appConstants.ITEM_SEARCH_RESULT:
                 this._navigation = '';
-                this._component=(
+                this._component = (
                     <div>
-                    <div className="outerWrapperItemSearch">
-                        <div className="subHeaderItemDetails">{_("Item details")}</div>
-                        <div className="innerWrapperItemResult">
-                      
-                        {this.state.loaderState?<div className="spinnerDiv"><Spinner /></div>:<ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig}/>}
-                        
+                        <div className="outerWrapperItemSearch">
+                            <div className="subHeaderItemDetails">{_("Item details")}</div>
+                            <div className="innerWrapperItemResult">
+
+                                {this.state.loaderState ? <div className="spinnerDiv"><Spinner /></div> : <ItemTable data={this.state.ItemSearchData} rowconfig={this.state.rowconfig} />}
+
+                            </div>
+
                         </div>
-                        
+                        <div className="itemSearchfooter">
+                            <Button1 disabled={false} text={_("Close")} module={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK} color={"black"} />
+                        </div>
                     </div>
-                    <div className="itemSearchfooter">
-                    <Button1 disabled={false} text={_("Close")} module ={appConstants.SEARCH_MANAGEMENT} status={true} action={appConstants.BACK}color={"black"}/>
-                    </div> 
-                      </div>   
                 )
                 break;
 
 
-                case appConstants.PICK_FRONT_PPTL_PRESS:
+            case appConstants.PICK_FRONT_PPTL_PRESS:
                 var cancelScanFlag = this.state.PickFrontCancelScan;
                 var cancelScanDisabled = (cancelScanFlag || cancelScanFlag === undefined) ? false : true;
                 var cancelButton;
                 var cancelClicked = mainstore.getCancelButtonStatus();
                 var BinFull = (<Button1 disabled={false} text={_("Bin full")} module={appConstants.PICK_FRONT}
-                                        action={appConstants.BIN_FULL} color={"black"}/> );
+                    action={appConstants.BIN_FULL} color={"black"} />);
                 if (this.state.PickFrontExceptionStatus == false) {
 
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
                             <Button1 disabled={false} text={_("Edit Details")} module={appConstants.PICK_FRONT}
-                                     action={appConstants.EDIT_DETAILS} color={"orange"}/> );
+                                action={appConstants.EDIT_DETAILS} color={"orange"} />);
                     } else {
                         var editButton = '';
                     }
                     if (!cancelScanDisabled) {
                         cancelButton = (
                             <div ><Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
-                                           action={appConstants.CANCEL_SCAN} color={"black"}/> {editButton}</div>);
+                                action={appConstants.CANCEL_SCAN} color={"black"} /> {editButton}</div>);
                     }
                     else {
                         cancelButton = (<div ></div>);
@@ -579,23 +572,23 @@ else {
 
                         binComponent = (
                             <BinsFlex binsData={this.state.PickFrontBinData}
-                                                  screenId={appConstants.PICK_FRONT_PPTL_PRESS}
-                                                  seatType={this.state.SeatType}/>);
+                                screenId={appConstants.PICK_FRONT_PPTL_PRESS}
+                                seatType={this.state.SeatType} />);
                     } else {
                         binComponent = (<div className='main-container'>
-                            <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_PPTL_PRESS}/>
-                                     </div>);
+                            <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_PPTL_PRESS} />
+                        </div>);
 
-                        
+
                     }
                     this._component = (
                         <div className='grid-container'>
-                            <Modal cancelClicked={cancelClicked}/>
+                            <Modal cancelClicked={cancelClicked} />
 
-                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
+                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>}
+                                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFlow' />}
                             {binComponent}
                             <div className='actions'>
                                 {cancelButton}
@@ -608,35 +601,48 @@ else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
-            
+
             case appConstants.PICK_FRONT_SKIP_BIN:
             case appConstants.PICK_FRONT_NO_FREE_BIN:
                 var skipDockingButton;
                 var skipDockingBtnEnable = this.state.PickFrontSkipDockingBtnEnable;
-                if(skipDockingBtnEnable) {
-                    skipDockingButton = (<Button1 disabled={!skipDockingBtnEnable} 
-                                                    text={_("Skip docking")} 
-                                                    module={appConstants.PICK_FRONT} 
-                                                    action={appConstants.SKIP_DOCKING} 
-                                                    color={"black"}/>);
+                if (skipDockingBtnEnable) {
+                    skipDockingButton = (<Button1 disabled={!skipDockingBtnEnable}
+                        text={_("Skip docking")}
+                        module={appConstants.PICK_FRONT}
+                        action={appConstants.SKIP_DOCKING}
+                        color={"black"} />);
                 }
-                else{
+                else {
                     skipDockingButton = "";
                 }
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-                            {this.state.MobileFlag ? 
-                                <SplitPPS 
-                                orientation={this.state.groupOrientation} 
-                                groupInfo={this.state.BinMapDetails} 
-                                undockAwaited={this.state.UndockAwaited} 
-                                docked={this.state.DockedGroup} /> : <Spinner />}
+
+                                <SplitPPS
+                                    orientation={this.state.groupOrientation}
+                                    groupInfo={this.state.BinMapDetails}
+                                    undockAwaited={this.state.UndockAwaited}
+                                    docked={this.state.DockedGroup} />
+
+
+                                {/*<SplitPPS
+                                    orientation={this.state.groupOrientation}
+                                    groupInfo={this.state.udpBinMapDetails}
+                                    undockAwaited={this.state.undockAwaited}
+                                    docked={this.state.selectedTotes}
+                                    displayBinId={true}
+                                    //undockAwaited={null}
+                                    customizeClassSplitPPS={"centerAlignSplitPPS"}
+                                    ruleset={'withBorder'}
+                                    selectedbin={this.state.PickCurrentBin} />
+                                */}
                             </div>
                             <div className='btn-actions-skip-docking'>
                                 {skipDockingButton}
@@ -651,45 +657,43 @@ else {
             case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
 
                 var _button;
-                var headerDataToShow=this.state.PickFrontServerNavData.code||"";
-                 var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0];
+                var headerDataToShow = this.state.PickFrontServerNavData.code || "";
+                var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(-1)[0];
 
-                if(!this.state.GetIRTScanStatus)
-          {
+                if (!this.state.GetIRTScanStatus) {
                     _button = (<div className="staging-action">
-                    <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Confirm")}
-                             module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
-                             color={"orange"}/>
-                </div>);
+                        <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Confirm")}
+                            module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                            color={"orange"} />
+                    </div>);
 
-          }
-      else
-      {
+                }
+                else {
                     _button = (<div className="staging-action">
-                    <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Next")}
-                             module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
-                             color={"orange"}/>
-                </div>);
-      }
+                        <Button1 disabled={this.state.PickFrontExceptionFlag} text={_("Next")}
+                            module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_PHYSICALLY_DAMAGED_ITEMS}
+                            color={"orange"} />
+                    </div>);
+                }
 
-                
+
 
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
-                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <Exception data={this.state.PickFrontExceptionData} />
                         <div className="exception-right">
                             <div className="main-container">
                                 <div className="kq-exception">
-                                    <div className="kq-header">{remainingEntitiesToBeScanned!==0 ? utils.frntStringTransform(headerDataToShow,[remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
-                                    <TabularData data={this.state.PickFrontDamagedItems} className='limit-height width-extra '/>
+                                    <div className="kq-header">{remainingEntitiesToBeScanned !== 0 ? utils.frntStringTransform(headerDataToShow, [remainingEntitiesToBeScanned]) : _("No more entities to be scanned")}</div>
+                                    <TabularData data={this.state.PickFrontDamagedItems} className='limit-height width-extra ' />
                                     {_button}
                                 </div>
                             </div>
                         </div>
                         <div className='cancel-scan'>
                             <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                                action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
                         </div>
                     </div>
                 );
@@ -699,48 +703,48 @@ else {
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
-                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <Exception data={this.state.PickFrontExceptionData} />
                         <div className="exception-right">
-                            <ExceptionHeader data={this.state.PickFrontServerNavData}/>
+                            <ExceptionHeader data={this.state.PickFrontServerNavData} />
 
                             <div className="main-container exception1 displayBlocked">
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Good Quantity")}</div>
-                                    <NumericIndicator execType={appConstants.GOOD_QUANTITY}/>
+                                    <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
                                 </div>
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Missing Quantity")}</div>
-                                    <NumericIndicator execType={appConstants.MISSING_QUANTITY}/>
+                                    <NumericIndicator execType={appConstants.MISSING_QUANTITY} />
                                 </div>
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
-                                    <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY}/>
+                                    <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
                                 </div>
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Damaged Quantity")}</div>
-                                    <NumericIndicator execType={appConstants.DAMAGED_QUANTITY}/>
-                                    <hr/>
+                                    <NumericIndicator execType={appConstants.DAMAGED_QUANTITY} />
+                                    <hr />
                                 </div>
 
                             </div>
                             <div className="finish-damaged-barcode padding">
                                 <Button1 disabled={buttonActivateFlag} text={_("Validate and Confirm")} color={"orange"}
-                                         module={appConstants.PICK_FRONT}
-                                         action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}/>
+                                    module={appConstants.PICK_FRONT}
+                                    action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
 
                             </div>
                         </div>
                         <div className='cancel-scan'>
                             <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                                action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
                         </div>
                     </div>
                 );
@@ -752,47 +756,47 @@ else {
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
-                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <Exception data={this.state.PickFrontExceptionData} />
                         <div className="exception-right">
-                            <ExceptionHeader data={this.state.PickFrontServerNavData}/>
+                            <ExceptionHeader data={this.state.PickFrontServerNavData} />
 
                             <div className="main-container exception1 displayBlocked">
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Bad barcode on pack")}</div>
-                                    <NumericIndicator execType={appConstants.BAD_BARCODE_PACK}/>
+                                    <NumericIndicator execType={appConstants.BAD_BARCODE_PACK} />
                                 </div>
 
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Pack missing")}</div>
-                                    <NumericIndicator execType={appConstants.PACK_MISSING}/>
+                                    <NumericIndicator execType={appConstants.PACK_MISSING} />
                                 </div>
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Damaged pack")}</div>
-                                    <NumericIndicator execType={appConstants.DAMAGED_PACK}/>
+                                    <NumericIndicator execType={appConstants.DAMAGED_PACK} />
                                 </div>
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Good pack")}</div>
-                                    <NumericIndicator execType={appConstants.GOOD_PACK}/>
-                                    <hr/>
+                                    <NumericIndicator execType={appConstants.GOOD_PACK} />
+                                    <hr />
                                 </div>
                             </div>
                             <div className="finish-damaged-barcode padding">
                                 <Button1 disabled={buttonActivateFlag} text={_("Validate and Confirm")} color={"orange"}
-                                         module={appConstants.PICK_FRONT}
-                                         action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}/>
+                                    module={appConstants.PICK_FRONT}
+                                    action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
 
                             </div>
                         </div>
                         <div className='cancel-scan'>
                             <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                                action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
                         </div>
                     </div>
                 );
@@ -803,47 +807,47 @@ else {
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
-                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <Exception data={this.state.PickFrontExceptionData} />
                         <div className="exception-right">
-                            <ExceptionHeader data={this.state.PickFrontServerNavData}/>
+                            <ExceptionHeader data={this.state.PickFrontServerNavData} />
 
                             <div className="main-container exception1 displayBlocked">
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Bad barcode on sub pack")}</div>
-                                    <NumericIndicator execType={appConstants.BAD_BARCODE_SUB_PACK}/>
+                                    <NumericIndicator execType={appConstants.BAD_BARCODE_SUB_PACK} />
                                 </div>
 
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Sub pack missing")}</div>
-                                    <NumericIndicator execType={appConstants.SUB_PACK_MISSING}/>
+                                    <NumericIndicator execType={appConstants.SUB_PACK_MISSING} />
                                 </div>
 
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Damaged sub pack")}</div>
-                                    <NumericIndicator execType={appConstants.DAMAGED_SUB_PACK}/>
-                                    <hr/>
+                                    <NumericIndicator execType={appConstants.DAMAGED_SUB_PACK} />
+                                    <hr />
                                 </div>
                                 <div className="gor-NI-wrapper">
-                                    <hr/>
+                                    <hr />
                                     <div className="exception-qty-title">{_("Good sub pack")}</div>
-                                    <NumericIndicator execType={appConstants.GOOD_SUB_PACK}/>
+                                    <NumericIndicator execType={appConstants.GOOD_SUB_PACK} />
                                 </div>
                             </div>
                             <div className="finish-damaged-barcode padding">
                                 <Button1 disabled={buttonActivateFlag} text={_("Validate and Confirm")} color={"orange"}
-                                         module={appConstants.PICK_FRONT}
-                                         action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER}/>
+                                    module={appConstants.PICK_FRONT}
+                                    action={appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER} />
 
                             </div>
                         </div>
                         <div className='cancel-scan'>
                             <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT}
-                                     action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                                action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
                         </div>
                     </div>
                 );
@@ -851,60 +855,59 @@ else {
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-            var selected_screen;
-          if(!this.state.GetIRTScanStatus)
-          {
-                  selected_screen=(
-                   <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>     
-                  <div className = "finish-damaged-barcode align-button">
-                    <Button1 disabled = {false} text = {_("Confirm")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />  
-                  </div>
-                  </div>
-          );
-              }
-              else{
-                selected_screen=(
-                   <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
-                  </div>
-          );
-              }
+                var selected_screen;
+                if (!this.state.GetIRTScanStatus) {
+                    selected_screen = (
+                        <div className="gor-exception-align">
+                            <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>
+                            <div className="finish-damaged-barcode align-button">
+                                <Button1 disabled={false} text={_("Confirm")} color={"orange"} module={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />
+                            </div>
+                        </div>
+                    );
+                }
+                else {
+                    selected_screen = (
+                        <div className="gor-exception-align">
+                            <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
+                        </div>
+                    );
+                }
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
-                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <Exception data={this.state.PickFrontExceptionData} />
                         <div className="exception-right">
-                        {selected_screen}
+                            {selected_screen}
                         </div>
                         <div className='cancel-scan'>
-                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
                         </div>
                     </div>
                 );
                 break;
 
-  case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
-            var selected_screen;
-         
-                selected_screen=(
-                   <div className="gor-exception-align">
-                    <div className="gor-exceptionConfirm-text">{_("Press print button to reprint label for current item")}</div>
-                  <div className = "finish-damaged-barcode align-button">
-                    <Button1 disabled = {false} text = {_("Reprint")} color={"orange"} module ={appConstants.PICK_FRONT} action={appConstants.PICK_FRONT_REPRINT} />  
-                  </div>
-                  </div>
-          );
-              
+            case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
+                var selected_screen;
+
+                selected_screen = (
+                    <div className="gor-exception-align">
+                        <div className="gor-exceptionConfirm-text">{_("Press print button to reprint label for current item")}</div>
+                        <div className="finish-damaged-barcode align-button">
+                            <Button1 disabled={false} text={_("Reprint")} color={"orange"} module={appConstants.PICK_FRONT} action={appConstants.PICK_FRONT_REPRINT} />
+                        </div>
+                    </div>
+                );
+
                 this._component = (
                     <div className='grid-container exception'>
                         <Modal />
-                        <Exception data={this.state.PickFrontExceptionData}/>
+                        <Exception data={this.state.PickFrontExceptionData} />
                         <div className="exception-right">
-                        {selected_screen}
+                            {selected_screen}
                         </div>
                         <div className='cancel-scan'>
-                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"}/>
+                            <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
                         </div>
                     </div>
                 );
@@ -916,37 +919,37 @@ else {
                 if (this.state.PickFrontExceptionScreen == "box_serial") {
                     this._component = (
                         <div className='grid-container exception'>
-                            <Modal/>
-                            <Exception data={this.state.PickFrontExceptionData}/>
+                            <Modal />
+                            <Exception data={this.state.PickFrontExceptionData} />
                             <div className="exception-right">
                                 <div className="main-container">
                                     <div className="kq-exception">
                                         <div className="kq-header">{_("Missing Boxes")}</div>
-                                        <BoxSerial boxData={this.state.PickFrontBoxDetails}/>
+                                        <BoxSerial boxData={this.state.PickFrontBoxDetails} />
                                     </div>
                                     <div className="kq-exception">
                                         <div className="kq-header">{_("Unscannable Boxes")}</div>
                                         <KQExceptionDamaged scanDetailsDamaged={this.state.PickFrontDamagedQuantity}
-                                                            type={appConstants.UNSCANNABLE}
-                                                            action={appConstants.UNSCANNABLE}/>
+                                            type={appConstants.UNSCANNABLE}
+                                            action={appConstants.UNSCANNABLE} />
                                     </div>
                                 </div>
                                 <div className="finish-damaged-barcode">
                                     <Button1 disabled={false} text={_("NEXT")} color={"orange"}
-                                             module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER}/>
+                                        module={appConstants.PICK_FRONT} action={appConstants.CONFIRM_FROM_USER} />
                                 </div>
                             </div>
                             <div className='cancel-scan'>
                                 <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT}
-                                         action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                                    action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"} />
                             </div>
                         </div>
                     );
                 } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
                     this._component = (
                         <div className='grid-container exception'>
-                            <Modal/>
-                            <Exception data={this.state.PickFrontExceptionData}/>
+                            <Modal />
+                            <Exception data={this.state.PickFrontExceptionData} />
                             <div className="exception-right">
                                 <div className="main-container exception2">
                                     <div className="kq-exception">
@@ -956,13 +959,13 @@ else {
                                 </div>
                                 <div className="finish-damaged-barcode">
                                     <Button1 disabled={false} text={_("CONFIRM")} color={"orange"}
-                                             module={appConstants.PICK_FRONT}
-                                             action={appConstants.SEND_MISSING_BOX_EXCEPTION}/>
+                                        module={appConstants.PICK_FRONT}
+                                        action={appConstants.SEND_MISSING_BOX_EXCEPTION} />
                                 </div>
                             </div>
                             <div className='cancel-scan'>
                                 <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PICK_FRONT}
-                                         action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"}/>
+                                    action={appConstants.CANCEL_EXCEPTION_TO_SERVER} color={"black"} />
                             </div>
                         </div>
                     );
@@ -973,21 +976,21 @@ else {
             case appConstants.SCANNER_MANAGEMENT:
                 this._navigation = (
                     <Navigation navData={this.state.PickFrontNavData} serverNavData={this.state.PickFrontServerNavData}
-                                navMessagesJson={this.props.navMessagesJson}/>)
+                        navMessagesJson={this.props.navMessagesJson} />)
                 var _button;
                 if (this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT) {
                     _button = (<div className='staging-action'>
                         <Button1 disabled={false} text={_("BACK")} module={appConstants.PERIPHERAL_MANAGEMENT}
-                                 status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"}/>
+                            status={true} action={appConstants.CANCEL_ADD_SCANNER} color={"black"} />
                         <Button1 disabled={false} text={_("Add Scanner")} module={appConstants.PERIPHERAL_MANAGEMENT}
-                                 status={true} action={appConstants.ADD_SCANNER} color={"orange"}/>
+                            status={true} action={appConstants.ADD_SCANNER} color={"orange"} />
                     </div>)
                 }
                 else {
                     _button = (<div className='staging-action'><Button1 disabled={false} text={_("BACK")}
-                                                                        module={appConstants.PERIPHERAL_MANAGEMENT}
-                                                                        status={true} action={appConstants.CANCEL_PPTL}
-                                                                        color={"black"}/></div>)
+                        module={appConstants.PERIPHERAL_MANAGEMENT}
+                        status={true} action={appConstants.CANCEL_PPTL}
+                        color={"black"} /></div>)
                 }
                 this._component = (
                     <div className='grid-container audit-reconcilation'>
@@ -1000,7 +1003,7 @@ else {
                                     : {this.state.PickFrontSeatType.toUpperCase()}</div>
                             </div>
                         </div>
-                        <TabularData data={this.state.utility}/>
+                        <TabularData data={this.state.utility} />
                         {_button}
                         <Modal />
                     </div>
@@ -1013,13 +1016,13 @@ else {
 
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     var _button = (<div className='staging-action'>
                         <Button1 disabled={false} text={_("BACK")} module={appConstants.PICK_FRONT} status={true}
-                                 action={appConstants.CANCEL_BOX_FULL} color={"black"}/>
+                            action={appConstants.CANCEL_BOX_FULL} color={"black"} />
                         <Button1 disabled={false} text={_("Box Full")} module={appConstants.PICK_FRONT} status={true}
-                                 action={appConstants.BOX_FULL} color={"black"}/>
+                            action={appConstants.BOX_FULL} color={"black"} />
                     </div>);
                     this._component = (
 
@@ -1028,9 +1031,9 @@ else {
 
                             <div className='main-container'>
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
-                                      rackData={this.state.PickFrontRackDetails}/>
-                                <BoxSerial boxData={this.state.PickFrontBoxDetails}/>
-                                <OrderDetails orderData={this.state.PickFrontBoxOrderDetails}/>
+                                    rackData={this.state.PickFrontRackDetails} />
+                                <BoxSerial boxData={this.state.PickFrontBoxDetails} />
+                                <OrderDetails orderData={this.state.PickFrontBoxOrderDetails} />
                             </div>
 
                         </div>
@@ -1043,34 +1046,34 @@ else {
                 var cancelClicked = mainstore.getCancelButtonStatus();
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
                             <Button1 disabled={false} text={_("Edit Details")} module={appConstants.PICK_FRONT}
-                                     action={appConstants.EDIT_DETAILS} color={"orange"}/> );
+                                action={appConstants.EDIT_DETAILS} color={"orange"} />);
                     } else {
                         var editButton = '';
                     }
                     var BinFull = (<Button1 disabled={false} text={_("Bin full")} module={appConstants.PICK_FRONT}
-                                            action={appConstants.BIN_FULL} color={"black"}/> );
+                        action={appConstants.BIN_FULL} color={"black"} />);
                     var binComponent = "";
                     if (this.state.OrigBinUse) {
                         binComponent = (<div className="binsFlexWrapperContainer">
                             <BinsFlex binsData={this.state.PickFrontBinData}
-                                      screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType={this.state.SeatType}/>
+                                screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN} seatType={this.state.SeatType} />
                             <WrapperSplitRoll scanDetails={this.state.PickFrontScanDetails}
-                                              productDetails={this.state.PickFrontProductDetails}
-                                              itemUid={this.state.PickFrontItemUid}/>
+                                productDetails={this.state.PickFrontProductDetails}
+                                itemUid={this.state.PickFrontItemUid} />
 
                         </div>)
                     } else {
                         binComponent = (<div className='main-container'>
                             <Bins binsData={this.state.PickFrontBinData}
-                                  screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN}/>
+                                screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN} />
                             <Wrapper scanDetails={this.state.PickFrontScanDetails}
-                                     productDetails={this.state.PickFrontProductDetails}
-                                     itemUid={this.state.PickFrontItemUid}/>
+                                productDetails={this.state.PickFrontProductDetails}
+                                itemUid={this.state.PickFrontItemUid} />
 
                         </div>);
                     }
@@ -1082,22 +1085,22 @@ else {
                         action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
                         actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
                         actionBtn = (<Button1 disabled={actionBtnStatus} text={btnName} module={appConstants.PICK_FRONT}
-                                              action={action} color={"black"}/>)
+                            action={action} color={"black"} />)
                     }
                     if (cancelButtonStatus) {
                         cancelButton =
                             <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_FRONT}
-                                     action={appConstants.CANCEL_SCAN} color={"black"}/>
+                                action={appConstants.CANCEL_SCAN} color={"black"} />
                     }
                     this._component = (
                         <div className='grid-container gor-pck-itm-scn'>
-                            <Modal cancelClicked={cancelClicked}/>
+                            <Modal cancelClicked={cancelClicked} />
 
-                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
-                            <OrderDetails orderData={this.state.PickFrontBoxOrderDetails}/>
+                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+                            <OrderDetails orderData={this.state.PickFrontBoxOrderDetails} />
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>}
+                                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFlow' />}
                             {binComponent}
                             <div className='actions'>
 
@@ -1122,20 +1125,20 @@ else {
                 if (this.state.PickFrontExceptionStatus == false) {
 
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     if (this.state.PickFrontScanDetails.current_qty > 0 && this.state.PickFrontChecklistDetails.length > 0) {
                         var editButton = (
                             <Button1 disabled={false} text={_("Edit Details")} module={appConstants.PICK_FRONT}
-                                     action={appConstants.EDIT_DETAILS} color={"orange"}/> );
+                                action={appConstants.EDIT_DETAILS} color={"orange"} />);
                     } else {
                         var editButton = '';
                     }
                     if (!cancelScanDisabled) {
                         cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
-                                                                              module={appConstants.PICK_FRONT}
-                                                                              action={appConstants.CANCEL_SCAN}
-                                                                              color={"black"}/> {editButton}</div>);
+                            module={appConstants.PICK_FRONT}
+                            action={appConstants.CANCEL_SCAN}
+                            color={"black"} /> {editButton}</div>);
                     }
                     else {
                         cancelButton = (<div className='cancel-scan'></div>);
@@ -1144,11 +1147,11 @@ else {
                     if (this.state.OrigBinUse) {
 
                         binComponent = (<BinsFlex binsData={this.state.PickFrontBinData}
-                                                  screenId={appConstants.PICK_FRONT_PPTL_PRESS}
-                                                  seatType={this.state.SeatType}/>)
+                            screenId={appConstants.PICK_FRONT_PPTL_PRESS}
+                            seatType={this.state.SeatType} />)
                     } else {
                         binComponent = (<div className='main-container'>
-                            <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_PPTL_PRESS}/>
+                            <Bins binsData={this.state.PickFrontBinData} screenId={appConstants.PICK_FRONT_PPTL_PRESS} />
                         </div>)
                     }
                     var btnId = this.state.PickFrontPackingButtonType, btnName, actionBtn, action, actionBtnStatus;
@@ -1157,16 +1160,16 @@ else {
                         action = btnId === "box_discard" ? appConstants.DISCARD_PACKING_BOX : appConstants.BOX_FULL;
                         actionBtnStatus = this.state.PickFrontPackingButtonDisable ? false : true;
                         actionBtn = (<Button1 disabled={actionBtnStatus} text={btnName} module={appConstants.PICK_FRONT}
-                                              action={action} color={"black"}/>)
+                            action={action} color={"black"} />)
                     }
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
 
-                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails}/>
+                            <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='frontFlow'/>}
+                                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='frontFlow' />}
                             {binComponent}
 
                             {cancelButton}
@@ -1179,29 +1182,29 @@ else {
                 break;
             case appConstants.PICK_FRONT_BIN_PRINTOUT:
             case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
-            var reprintButton='';
+                var reprintButton = '';
                 if (!this.state.PickFrontExceptionStatus) {
                     if (this.state.OrigBinUse) {
                         binComponent = (
                             <BinsFlex binsData={this.state.PickFrontBinData} screenId={screen_id}
-                                      seatType={this.state.SeatType}/>);
+                                seatType={this.state.SeatType} />);
                     } else {
                         binComponent = (<div className='main-container'>
-                            <Bins binsData={this.state.PickFrontBinData} screenId={screen_id}/>
+                            <Bins binsData={this.state.PickFrontBinData} screenId={screen_id} />
                         </div>)
                     }
-                    reprintButton=this.state.PickFrontScreenId===appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT?(<Button1 disabled={false} text={_("Reprint")} module={appConstants.PICK_FRONT}
-                             action={appConstants.REPRINT} color={"black"}/>):'';
+                    reprintButton = this.state.PickFrontScreenId === appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT ? (<Button1 disabled={false} text={_("Reprint")} module={appConstants.PICK_FRONT}
+                        action={appConstants.REPRINT} color={"black"} />) : '';
 
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
                     this._component = (
                         <div className='grid-container'>
                             <Modal />
                             {this.state.SplitScreenFlag &&
-                            <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                                    screenClass='putFrontFlow'/>}
+                                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+                                    screenClass='putFrontFlow' />}
                             {binComponent}
                             {reprintButton}
                         </div>
@@ -1211,111 +1214,115 @@ else {
                     this._component = this.getExceptionComponent();
                 }
                 break;
-                
-                case appConstants.PICK_FRONT_DOCK_TOTE:
-                case appConstants.PICK_FRONT_SKIP_TOTE: 
-                    var rackType = "";
-                    var adjustStyleOnSplitPPS = "";
-                    var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
-                    var cancelButton;
-                    if (cancelScanDisabled) {
-                        cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
-                                                                              module={appConstants.PICK_FRONT}
-                                                                              action={appConstants.CANCEL_SCAN}
-                                                                              color={"black"}/></div>);
-                    }
-                    else {
-                        cancelButton = "";
-                    }
 
-                    if (!this.state.PickFrontExceptionStatus) {
-                        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                        serverNavData={this.state.PickFrontServerNavData}
-                                                        navMessagesJson={this.props.navMessagesJson}/>);
-                        if(this.state.PickFrontChecklistData){
-                            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
-                        }
-                        this._component = (
-                            <div className='grid-container'>
-                                <Modal />
-                                <div className='main-container'>
-                                <CheckList checklistData = {this.state.PickFrontChecklistData}
-                                           checklistIndex = {this.state.PickFrontChecklistIndex} 
-                                           skipDockingBtnStatus = {this.state.PickFrontSkipDockingBtnEnable}
-                                            />
-                                <SplitPPS orientation={this.state.groupOrientation} displayBinId={true} 
-                                            groupInfo = {this.state.udpBinMapDetails} undockAwaited = {null} 
-                                            customizeClassSplitPPS={adjustStyleOnSplitPPS}
-                                            docked = {this.state.selectedTotes} ruleset={'withBorder'} 
-                                            selectedbin={this.state.PickCurrentBin}/>
-                                </div>
-                                <div className='actions'>
-                                {cancelButton}
-                                </div>
-                            </div>
-                        );
-                    } else {
-                        this._component = this.getExceptionComponent();
-                    }
-                break;
+            case appConstants.PICK_FRONT_DOCK_TOTE:
+            case appConstants.PICK_FRONT_SKIP_TOTE:
+                var rackType = "";
+                var adjustStyleOnSplitPPS = "";
+                var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
+                var cancelButton;
+                if (cancelScanDisabled) {
+                    cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
+                        module={appConstants.PICK_FRONT}
+                        action={appConstants.CANCEL_SCAN}
+                        color={"black"} /></div>);
+                }
+                else {
+                    cancelButton = "";
+                }
 
-                
-                case appConstants.PICK_FRONT_SLOT_SCAN:
-                case appConstants.PICK_FRONT_TOTE_CONFIRM:
-                    if (this.state.PickFrontExceptionStatus == false) {
-                        var carryingUnitBtnEnable = this.state.PickFrontCarryingUnitBtnEnable ? false : true;
-                        var carryingUnitButton = (
-                            <Button1 disabled={carryingUnitBtnEnable} 
-                                     text={_("New carrying unit")} 
-                                     module={appConstants.PICK_FRONT} 
-                                     action={appConstants.NEW_CARRYING_UNIT} 
-                                     color={"black"}/>);
-                        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                        serverNavData={this.state.PickFrontServerNavData}
-                                                        navMessagesJson={this.props.navMessagesJson}/>);
-                        this._component = (
-                            <div className='grid-container'>
-                                <Modal />
-                                <div className='main-container'>
-                                    <Rack isDrawer={this.state.isDrawer} 
-                                          slotType={this.state.SlotType}
-                                          rackData={this.state.PickFrontRackDetails}/>
-                                </div>
-                                <div className='actions'>
-                                    {carryingUnitButton}
-                                </div>
-                            </div>
-                        );
-                    } else {
-                        this._component = this.getExceptionComponent();
-                    }
-                break;
-
-                case appConstants.PICK_FRONT_ONE_STEP_SCAN:
-                var  rackType="";
                 if (!this.state.PickFrontExceptionStatus) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
-                                     
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
+                    if (this.state.PickFrontChecklistData) {
+                        adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+                    }
+                    this._component = (
+                        <div className='grid-container'>
+                            <Modal />
+                            <div className='main-container'>
+                                <CheckList checklistData={this.state.PickFrontChecklistData}
+                                    checklistIndex={this.state.PickFrontChecklistIndex}
+                                    skipDockingBtnStatus={this.state.PickFrontSkipDockingBtnEnable}
+                                />
+                                <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}
+                                    groupInfo={this.state.udpBinMapDetails} undockAwaited={null}
+                                    customizeClassSplitPPS={adjustStyleOnSplitPPS}
+                                    docked={this.state.selectedTotes} ruleset={'withBorder'}
+                                    selectedbin={this.state.PickCurrentBin} />
+                            </div>
+                            <div className='actions'>
+                                {cancelButton}
+                            </div>
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+
+            case appConstants.PICK_FRONT_SLOT_SCAN:
+            case appConstants.PICK_FRONT_TOTE_CONFIRM:
+                if (this.state.PickFrontExceptionStatus == false) {
+                    var carryingUnitBtnEnable = this.state.PickFrontCarryingUnitBtnEnable ? false : true;
+                    var carryingUnitButton = (
+                        <Button1 disabled={carryingUnitBtnEnable}
+                            text={_("New carrying unit")}
+                            module={appConstants.PICK_FRONT}
+                            action={appConstants.NEW_CARRYING_UNIT}
+                            color={"black"} />);
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
+                    this._component = (
+                        <div className='grid-container'>
+                            <Modal />
+                            <div className='main-container'>
+                                <Rack isDrawer={this.state.isDrawer}
+                                    slotType={this.state.SlotType}
+                                    rackData={this.state.PickFrontRackDetails} />
+                            </div>
+                            <div className='actions'>
+                                {carryingUnitButton}
+                            </div>
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
+                break;
+
+            case appConstants.PICK_FRONT_ONE_STEP_SCAN:
+                var rackType = "";
+                if (!this.state.PickFrontExceptionStatus) {
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
+
                     this._component = (
 
                         <div className='grid-container'>
                             <Modal />
-                            <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick"/>
-                           
-                            
+                            <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick" />
+
+
                             <div className='main-container leftJustify'>
-                            
-                            <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
-                                   rackData={this.state.PickFrontRackDetails}  QLCodeDetails={true}/>
-                            <SplitPPS orientation={this.state.groupOrientation}  customizeClassSplitPPS="rightAligned"
-                            displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
-                            undockAwaited = {null} docked = {this.state.selectedTotes} 
-                            ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+
+                                <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
+                                    rackData={this.state.PickFrontRackDetails} QLCodeDetails={true} />
+                                <SplitPPS orientation={this.state.groupOrientation} customizeClassSplitPPS="rightAligned"
+                                    displayBinId={true}
+                                    groupInfo={this.state.udpBinMapDetails}
+                                    undockAwaited={null}
+                                    docked={this.state.selectedTotes}
+                                    ruleset={'withBorder'}
+                                //selectedbin={this.state.PickCurrentBin}
+                                />
 
                             </div>
-                            
+
 
                         </div>
                     );
@@ -1324,53 +1331,52 @@ else {
                 }
                 break;
 
-                
-                case appConstants.PICK_FRONT_UNDOCK_TOTE:
-                    if (!this.state.PickFrontExceptionStatus) {
-                        var subMessage = (this.state.PickFrontServerNavData.details ? this.state.PickFrontServerNavData.details[0] : "");
-                        this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                        serverNavData={this.state.PickFrontServerNavData} 
-                                                        subMessage={"Scan " + subMessage + " and gently push it away"}
-                                                        navMessagesJson={this.props.navMessagesJson}/>);
-                                         
-                        this._component = (
 
-                            <div className='grid-container'>
-                                <Modal />
-                               
-                                <SplitPPS orientation={this.state.groupOrientation}
-                                displayBinId={true} groupInfo = {this.state.udpBinMapDetails} 
-                                undockAwaited = {this.state.undockAwaited} docked = {this.state.selectedTotes} 
-                                ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin}/>
+            case appConstants.PICK_FRONT_UNDOCK_TOTE:
+                if (!this.state.PickFrontExceptionStatus) {
+                    var subMessage = (this.state.PickFrontServerNavData.details ? this.state.PickFrontServerNavData.details[0] : "");
+                    this._navigation = (<Navigation navData={this.state.PickFrontNavData}
+                        serverNavData={this.state.PickFrontServerNavData}
+                        subMessage={"Scan " + subMessage + " and gently push it away"}
+                        navMessagesJson={this.props.navMessagesJson} />);
 
-                            </div>
-                        );
-                    } else {
-                        this._component = this.getExceptionComponent();
-                    }
+                    this._component = (
+
+                        <div className='grid-container'>
+                            <Modal />
+
+                            <SplitPPS orientation={this.state.groupOrientation}
+                                displayBinId={true} groupInfo={this.state.udpBinMapDetails}
+                                undockAwaited={this.state.undockAwaited} docked={this.state.selectedTotes}
+                                ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin} />
+
+                        </div>
+                    );
+                } else {
+                    this._component = this.getExceptionComponent();
+                }
                 break;
 
             case appConstants.PICK_FRONT_SCAN_PACKS:
-            var  rackType="";
+                var rackType = "";
                 if (!this.state.PickFrontExceptionStatus) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-                                                    serverNavData={this.state.PickFrontServerNavData}
-                                                    navMessagesJson={this.props.navMessagesJson}/>);
-                 if(this.state.PickFrontRackTypeMPU)
-                 {
-                     rackType=     <Pallet/>;     
-                 }                       
-else{
-rackType =  <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
-rackData={this.state.PickFrontRackDetails}/> 
-}
+                        serverNavData={this.state.PickFrontServerNavData}
+                        navMessagesJson={this.props.navMessagesJson} />);
+                    if (this.state.PickFrontRackTypeMPU) {
+                        rackType = <Pallet />;
+                    }
+                    else {
+                        rackType = <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType}
+                            rackData={this.state.PickFrontRackDetails} />
+                    }
                     this._component = (
 
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
                                 {rackType}
-                              <PrdtDetails productInfo={this.state.PickFrontProductDetails}/>
+                                <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
                             </div>
 
                         </div>

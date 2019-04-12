@@ -413,8 +413,8 @@ var serverMessages = {
     //SR PICK FLOW
     "PkF.H.017": "Scan {0} {1}",
     "PkF.H.018": "Scan {0} {1} and place in Bin {2}",
-    "PkF.H.021": "Put Pack list in trolley and press PPTL to confirm",
-    "PkF.H.022": "Waiting for roll cage to be docked",
+    "PkF.H.021": "Put Pack list in {0} and press PPTL to confirm",
+    "PkF.H.022": "Waiting for {0} to be docked",
     "PtB.H.020": "Waiting for put_away to complete from front",
     "UdpF.I.001": "{0} scan successful",
     "UdpF.I.002": "Entity scan successful",

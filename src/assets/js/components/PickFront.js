@@ -638,7 +638,7 @@ var PickFront = React.createClass({
                                     orientation={this.state.groupOrientation}
                                     groupInfo={this.state.BinMapDetails}
                                     undockAwaited={this.state.UndockAwaited}
-                                    docked={this.state.DockedGroup} />
+                                    docked={this.state.DockedGroup} displayBinId={true} />
                             </div>
                             <div className='btn-actions-skip-docking'>
                                 {skipDockingButton}

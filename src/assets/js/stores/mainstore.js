@@ -3196,6 +3196,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PreviousDetails"] = this.getPreviousPickDetails();
+                data["BinMapDetails"] = this._getBinMapDetails();
                 break;
 
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:

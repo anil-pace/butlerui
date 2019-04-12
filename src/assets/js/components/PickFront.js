@@ -169,8 +169,18 @@ var PickFront = React.createClass({
 
             case appConstants.PICK_FRONT_WAITING_FOR_MSU:
                 var previousPickDetails = "";
+                var loader = <Spinner />;
                 if (this.state.PreviousDetails) {
                     previousPickDetails = <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick" />
+                }
+                if (this.state.BinMapDetails) {
+                    loader = (
+                        <SplitPPS
+                            orientation={this.state.groupOrientation}
+                            groupInfo={this.state.BinMapDetails}
+                            undockAwaited={this.state.UndockAwaited}
+                            docked={this.state.DockedGroup} />
+                    )
                 }
                 if (this.state.PickFrontExceptionStatus == false) {
                     this._navigation = (<Navigation navData={this.state.PickFrontNavData}
@@ -181,7 +191,7 @@ var PickFront = React.createClass({
                             <Modal />
                             {previousPickDetails}
                             <div className='main-container'>
-                                <Spinner />
+                                {loader}
                             </div>
                         </div>
                     );

@@ -42,10 +42,10 @@ var checkListOpen = false;
 
 function getStateData() {
     var screenData = mainstore.getScreenData();
-
     var splitPPSData = {
         groupInfo: mainstore._getBinMapDetails(),
-        groupOrientation: mainstore._getBinMapOrientation(),
+        groupOrientation: mainstore._getBinMapOrientation()
+
     }
 
     return Object.assign({}, screenData, splitPPSData);
@@ -624,25 +624,11 @@ var PickFront = React.createClass({
                         <div className='grid-container'>
                             <Modal />
                             <div className='main-container'>
-
                                 <SplitPPS
                                     orientation={this.state.groupOrientation}
                                     groupInfo={this.state.BinMapDetails}
                                     undockAwaited={this.state.UndockAwaited}
                                     docked={this.state.DockedGroup} />
-
-
-                                {/*<SplitPPS
-                                    orientation={this.state.groupOrientation}
-                                    groupInfo={this.state.udpBinMapDetails}
-                                    undockAwaited={this.state.undockAwaited}
-                                    docked={this.state.selectedTotes}
-                                    displayBinId={true}
-                                    //undockAwaited={null}
-                                    customizeClassSplitPPS={"centerAlignSplitPPS"}
-                                    ruleset={'withBorder'}
-                                    selectedbin={this.state.PickCurrentBin} />
-                                */}
                             </div>
                             <div className='btn-actions-skip-docking'>
                                 {skipDockingButton}
@@ -1313,13 +1299,9 @@ var PickFront = React.createClass({
                                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} PickFrontProductDetails={this.state.PickFrontProductDetails}
                                     rackData={this.state.PickFrontRackDetails} QLCodeDetails={true} />
                                 <SplitPPS orientation={this.state.groupOrientation} customizeClassSplitPPS="rightAligned"
-                                    displayBinId={true}
-                                    groupInfo={this.state.udpBinMapDetails}
-                                    undockAwaited={null}
-                                    docked={this.state.selectedTotes}
-                                    ruleset={'withBorder'}
-                                //selectedbin={this.state.PickCurrentBin}
-                                />
+                                    displayBinId={true} groupInfo={this.state.udpBinMapDetails}
+                                    undockAwaited={null} docked={this.state.selectedTotes}
+                                    ruleset={'withBorder'} selectedbin={this.state.PickCurrentBin} />
 
                             </div>
 

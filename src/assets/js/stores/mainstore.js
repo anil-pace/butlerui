@@ -3520,19 +3520,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
 
-
-
                 data["groupOrientation"] = this._getBinMapOrientation();
-                data["BinMapDetails"] = this.getUDPMapDetails();
+                data["BinMapDetails"] = this._getBinMapDetails();
                 data["UndockAwaited"] = this._getUndockAwaitedGroup();
                 data["DockedGroup"] = this._getDockedGroup();
-
-
-                // data["groupOrientation"] = this._getBinMapOrientation();
-                // data["udpBinMapDetails"] = this.getUDPMapDetails();
-                // data["undockAwaited"] = this._getUndockAwaitedGroup();
-                // data["selectedTotes"] = this.getSelectedTotes();
-                // data["PickCurrentBin"] = this._getSelectedBinID();
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:

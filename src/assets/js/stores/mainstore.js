@@ -2151,6 +2151,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return bIsMobile;
     },
+
     _getDockedGroup: function () {
         return (_seatData && _seatData.docked ? Object.keys(_seatData.docked) : []);
 
@@ -2774,6 +2775,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return selectedBin;
     },
 
+    _getRollCageStatus: function () {
+        var rollCageStatus = false;
+        if (_seatData) {
+            rollCageStatus = _seatData.roll_cage_flow && _currentSeat == appConstants.PICK_FRONT;
+        }
+        return rollCageStatus;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -3196,7 +3205,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PreviousDetails"] = this.getPreviousPickDetails();
+                //data["BinMapDetails"] = this._getBinMapDetails();
+                data["rollCageStatus"] = this._getRollCageStatus();
+
+                data["groupOrientation"] = this._getBinMapOrientation();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
                 break;
 
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:

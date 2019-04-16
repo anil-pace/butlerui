@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-16 03:57+0000\n"
+"POT-Creation-Date: 2019-04-16 05:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3609,4 +3609,12 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:762
 msgid "Scan entities"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:764
+msgid "Waiting for {0} to be docked"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:765
+msgid "Put Pack list in {0} and press PPTL to confirm"
 msgstr ""

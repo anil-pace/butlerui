@@ -3205,9 +3205,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PreviousDetails"] = this.getPreviousPickDetails();
-                //data["BinMapDetails"] = this._getBinMapDetails();
                 data["rollCageStatus"] = this._getRollCageStatus();
-
                 data["groupOrientation"] = this._getBinMapOrientation();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["UndockAwaited"] = this._getUndockAwaitedGroup();
@@ -3535,7 +3533,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
-
                 data["groupOrientation"] = this._getBinMapOrientation();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["UndockAwaited"] = this._getUndockAwaitedGroup();

@@ -173,7 +173,7 @@ var PickFront = React.createClass({
                 if (this.state.PreviousDetails) {
                     previousPickDetails = <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick" />
                 }
-                if (this.state.BinMapDetails) {
+                if (this.state.BinMapDetails && this.state.rollCageStatus) {
                     loader = (
                         <SplitPPS
                             orientation={this.state.groupOrientation}

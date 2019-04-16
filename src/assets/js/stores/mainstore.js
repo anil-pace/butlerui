@@ -3196,6 +3196,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PreviousDetails"] = this.getPreviousPickDetails();
+                data["BinMapDetails"] = this._getBinMapDetails();
                 break;
 
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
@@ -3519,6 +3520,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:

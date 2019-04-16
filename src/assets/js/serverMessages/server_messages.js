@@ -190,6 +190,7 @@ var serverMessages = {
     "Common.E.019": "Wrong scan. Please Scan item or {0}",
     "Common.E.020": "{0} unexpected. {0} is not empty.",
     "Common.E.021": "Bin barcode of other PPS scanned",
+    "Common.H.001": "System is Idle",
     "AdF.I.003": "Item scan successful",
     "AdF.I.004": "Box Completed",
     "AdF.I.006": "Extra Box",

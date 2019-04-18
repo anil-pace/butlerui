@@ -909,11 +909,13 @@ var Audit = React.createClass({
             }
             // Serialised flow specific sceanrio
             let isDamagedQuantityOne =
-              this.state.AuditDamagedCount[0].damaged_qty === 1 ? true : false;
-            let isKQDisabled = !this.state.AuditDamagedCount[0].enable_kq_row;
-            if (isDamagedQuantityOne && isKQDisabled) {
-              this._disableNext = false;
-            }
+              this.state.AuditDamagedCount.length &&
+              this.state.AuditDamagedCount[0].damaged_qty === 1
+                ? true
+                : false;
+                let isKQDisabled = this.state.AuditDamagedCount.length ? !this.state.AuditDamagedCount[0].enable_kq_row : false;
+              if (isDamagedQuantityOne && isKQDisabled) {
+               this._disableNext = false;
           }
 
           this._component = (

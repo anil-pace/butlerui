@@ -763,5 +763,6 @@ function server_messages_list() {
     _("Entity Damaged");
     _("Waiting for {0} to be docked");
     _("Put Pack list in {0} and press PPTL to confirm");
+    _("System is Idle");
 }
 

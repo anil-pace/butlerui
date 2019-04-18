@@ -31,19 +31,20 @@ var SplitPPS = React.createClass({
 				height: (maxBlockHeight >= 50 ? 25 : maxBlockHeight)+"%",
 				width: (maxWidth <= 100 ? maxWidth : 100)+'px'
 			}
-		if(this.props.displayBinId){
-			fontSize=maxCenterCount>0?((70/28) * maxBlockHeight)+'px':((50/28) * maxBlockHeight)+'px';
-
-			/* Start =>special condition for pick_front_slot_scan to limit font size when only one bin is there */
-				if(parseInt(fontSize,10) > parseInt("100px",10)){fontSize = 62.5+'px';}
-			/* End */
-
-			style = Object.assign({},style,{
-					    color: '#fff',
-						'fontSize': fontSize,
-						
-					})
-		}
+			if (this.props.displayBinId) {
+				fontSize = maxCenterCount > 0 ? ((70 / 28) * maxBlockHeight) + 'px' : ((50 / 28) * maxBlockHeight) + 'px';
+				padding = "10%";
+	
+				/* Start =>special condition for pick_front_slot_scan to limit font size when only one bin is there */
+				if (parseInt(fontSize, 10) > parseInt("88px", 10)) { fontSize = 62.5 + 'px', padding = 0 + '%'; }
+				/* End */
+	
+				style = Object.assign({}, style, {
+					color: '#fff',
+					'fontSize': fontSize,
+					'padding': padding
+				})
+			}
 		var dockedclassName=this.props.ruleset==='withBorder'?"dockedCont bottomBorderLeft":"dockedCont";
 		var undockclassName=this.props.ruleset==='withBorder'?"undockedCont bottomBorderLeft":"undockedCont";
 		var wrongUndockclassName=this.props.ruleset==='withBorder'?"wrongUndockCont bottomBorderLeft":"wrongUndockCont";

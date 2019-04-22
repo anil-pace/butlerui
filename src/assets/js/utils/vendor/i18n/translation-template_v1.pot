@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-16 07:56+0000\n"
+"POT-Creation-Date: 2019-04-22 09:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1291,6 +1291,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:259
 #: src/assets/js/serverMessages/server_messages_lang.js:264
+#: src/assets/js/serverMessages/server_messages_lang.js:766
 msgid "System is Idle"
 msgstr ""
 

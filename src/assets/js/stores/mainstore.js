@@ -1760,7 +1760,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _putBackExceptionScreen = "oversized";
         else if (_screenId == appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE)
             _putBackExceptionScreen = "extra_quantity";
-        else if (_screenId == appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || _screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION)
+        else if (_screenId == appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE || _screenId == appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION || _screenId == appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION || _screenId == appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION || _screenId == appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION)
             _auditExceptionScreen = "first_screen";
         if ((_seatData["last_finished_box"] != undefined && _seatData["last_finished_box"].length > 0 &&
             (_seatData["last_finished_box"][0]["Actual_qty"] > _seatData["last_finished_box"][0]["Expected_qty"])) ||
@@ -2151,6 +2151,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return bIsMobile;
     },
+
     _getDockedGroup: function () {
         return (_seatData && _seatData.docked ? Object.keys(_seatData.docked) : []);
 
@@ -2774,6 +2775,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return selectedBin;
     },
 
+    _getRollCageStatus: function () {
+        var rollCageStatus = false;
+        if (_seatData) {
+            rollCageStatus = _seatData.roll_cage_flow && _currentSeat == appConstants.PICK_FRONT;
+        }
+        return rollCageStatus;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -3196,6 +3205,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PreviousDetails"] = this.getPreviousPickDetails();
+                data["rollCageStatus"] = this._getRollCageStatus();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
                 break;
 
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
@@ -3519,6 +3533,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
                 break;
 
             case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
@@ -3724,6 +3742,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditPickDirection"] = this.getDirectionDetails();
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
+                break;
+
+            case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
 
             case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:

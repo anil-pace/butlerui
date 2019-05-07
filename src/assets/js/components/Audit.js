@@ -888,126 +888,70 @@ var Audit = React.createClass({
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
-        if (this.state.AuditExceptionScreen == 'first_screen') {
-          for (
-            var i = 0;
-            i < this.state.AuditDamagedItems.tableRows.length;
-            i++
-          ) {
-            var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
-              .buttonStatus;
-            if (staticCountFlag === true) {
-              var dynamicCount = mainstore.getDamagedQuantity();
-              if (dynamicCount <= 0) {
-                var dynamicCountFlag = false;
-              } else {
-                var dynamicCountFlag = true;
-              }
-              this._disableNext = !(staticCountFlag && dynamicCountFlag);
+        for (
+          var i = 0;
+          i < this.state.AuditDamagedItems.tableRows.length;
+          i++
+        ) {
+          var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
+            .buttonStatus;
+          if (staticCountFlag === true) {
+            var dynamicCount = mainstore.getDamagedQuantity();
+            if (dynamicCount <= 0) {
+              var dynamicCountFlag = false;
             } else {
-              this._disableNext = !staticCountFlag;
+              var dynamicCountFlag = true;
             }
-            // Serialised flow specific sceanrio
-            let isDamagedQuantityOne =
-              this.state.AuditDamagedCount.length &&
-                this.state.AuditDamagedCount[0].damaged_qty === 1
-                ? true
-                : false;
-            let isKQDisabled = this.state.AuditDamagedCount.length
-              ? !this.state.AuditDamagedCount[0].enable_kq_row
-              : false;
-            if (isDamagedQuantityOne && isKQDisabled) {
-              this._disableNext = false;
-            }
+            this._disableNext = !(staticCountFlag && dynamicCountFlag);
+          } else {
+            this._disableNext = !staticCountFlag;
           }
+          // Serialised flow specific sceanrio
+          let isDamagedQuantityOne =
+            this.state.AuditDamagedCount.length &&
+              this.state.AuditDamagedCount[0].damaged_qty === 1
+              ? true
+              : false;
+          let isKQDisabled = this.state.AuditDamagedCount.length
+            ? !this.state.AuditDamagedCount[0].enable_kq_row
+            : false;
+          if (isDamagedQuantityOne && isKQDisabled) {
+            this._disableNext = false;
+          }
+        }
 
-          this._component = (
-            <div className='grid-container exception'>
-              <Modal />
-              <Exception data={this.state.AuditExceptionData} />
-              <div className='exception-right'>
-                <ExceptionHeader data={this.state.AuditServerNavData} />
-                <TabularData
-                  data={this.state.AuditDamagedItems}
-                  className='limit-height width-extra '
-                />
-                <div className='finish-damaged-barcode'>
-                  <Button1
-                    disabled={this._disableNext}
-                    text={_('NEXT')}
-                    color={'orange'}
-                    module={appConstants.AUDIT}
-                    action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
-                  />
-                </div>
-              </div>
-              <div className='cancel-scan'>
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.AuditExceptionData} />
+            <div className='exception-right'>
+              <ExceptionHeader data={this.state.AuditServerNavData} />
+              <TabularData
+                data={this.state.AuditDamagedItems}
+                className='limit-height width-extra '
+              />
+              <div className='finish-damaged-barcode'>
                 <Button1
-                  disabled={false}
-                  text={_('Cancel Exception')}
+                  disabled={this._disableNext}
+                  text={_('NEXT')}
+                  color={'orange'}
                   module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                  color={'black'}
+                  action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
                 />
               </div>
             </div>
-          );
-        }
-        //  else if (this.state.AuditExceptionScreen == 'second_screen') {
-        //   if (!this.state.GetIRTScanStatus) {
-        //     _button = (
-        //       <div className='exception-right'>
-        //         <div className='main-container exception2'>
-        //           <div className='kq-exception'>
-        //             <div className='kq-header'>
-        //               {_('Please put entities in exception area and confirm')}
-        //             </div>
-        //           </div>
-        //         </div>
-        //         <div className='finish-damaged-barcode'>
-        //           <Button1
-        //             disabled={false}
-        //             text={_('Confirm')}
-        //             color={'orange'}
-        //             module={appConstants.AUDIT}
-        //             action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
-        //           />
-        //         </div>
-        //       </div>
-        //     );
-        //   } else {
-        //     _button = (
-        //       <div className='exception-right'>
-        //         <div className='main-container exception2'>
-        //           <div className='kq-exception'>
-        //             <div className='kq-header'>
-        //               {_(
-        //                 'Please put entities in exception area and scan the bin'
-        //               )}
-        //             </div>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     );
-        //   }
+            <div className='cancel-scan'>
+              <Button1
+                disabled={false}
+                text={_('Cancel Exception')}
+                module={appConstants.AUDIT}
+                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                color={'black'}
+              />
+            </div>
+          </div>
+        );
 
-        //   this._component = (
-        //     <div className='grid-container exception'>
-        //       {<Modal />}
-        //       <Exception data={this.state.AuditExceptionData} />
-        //       {_button}
-        //       <div className='cancel-scan'>
-        //         <Button1
-        //           disabled={false}
-        //           text={_('Cancel Exception')}
-        //           module={appConstants.AUDIT}
-        //           action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-        //           color={'black'}
-        //         />
-        //       </div>
-        //     </div>
-        //   );
-        // }
         break;
 
       case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
@@ -1022,7 +966,7 @@ var Audit = React.createClass({
                   text={_("Confirm")}
                   color={"orange"}
                   module={appConstants.AUDIT}
-                  action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS} />
+                  action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM} />
               </div>
             </div>
           );

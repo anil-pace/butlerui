@@ -575,7 +575,7 @@ var Button1 = React.createClass({
                     case appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS:
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "exception_response";
-                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["event"] = "process_damaged_boxes";
                         var damagedQtyCount = mainstore.getDamagedQuantity();
                         var damagedBoxDetails = mainstore.getDamagedBoxDetails();
                         damagedBoxDetails[0].damaged_qty = damagedQtyCount;

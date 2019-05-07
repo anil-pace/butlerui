@@ -182,6 +182,7 @@ var appConstants = {
   AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION: 'audit_sub_pack_unscannable_exception',
   AUDIT_EACH_UNSCANNABLE_EXCEPTION: 'audit_each_unscannable_exception',
   AUDIT_DAMAGED_ENTITY_EXCEPTION: 'audit_physically_damaged_exception',
+  AUDIT_FRONT_IRT_BIN_CONFIRM: "audit_front_irt_bin_confirm",
   DEFAULT: 'default',
   AUDIT: 'audit_front',
   SET_AUDIT_DATA: 'SET_AUDIT_DATA',

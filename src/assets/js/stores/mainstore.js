@@ -3744,6 +3744,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["SlotType"] = this.getSlotType();
                 break;
 
+            case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                break;
+
             case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
                 data["AuditScreenId"] = this.getScreenId();
                 data["AuditServerNavData"] = this.getServerNavData();

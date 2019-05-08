@@ -1441,14 +1441,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var itemList = value.Item_Qty_List;
                 if (itemList) {
                     for (var i = 0, listLen = itemList.length; i < listLen; i++) {
-                        itemActualQty.push(itemList[i].Actual_Qty);
                         itemExpectedQty.push(itemList[i].Expected_qty);
+                        itemActualQty.push(itemList[i].Actual_Qty);
                     }
                 }
                 d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(itemActualQty.toString(), "enabled", false, "large", true, false, false, disabledStatus, true));
-                d.push(new self.tableCol(itemExpectedQty.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+                    d.push(new self.tableCol(itemExpectedQty.toString(), "enabled", false, "large", true, false, false, disabledStatus, true));
+                d.push(new self.tableCol(itemActualQty.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
                 data["tableRows"].push(d);
             });
         }

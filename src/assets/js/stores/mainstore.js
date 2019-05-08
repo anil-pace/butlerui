@@ -1441,8 +1441,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 var itemList = value.Item_Qty_List;
                 if (itemList) {
                     for (var i = 0, listLen = itemList.length; i < listLen; i++) {
-                        itemExpectedQty.push(itemList[i].Actual_Qty);
-                        itemActualQty.push(itemList[i].Expected_qty);
+                        itemActualQty.push(itemList[i].Actual_Qty);
+                        itemExpectedQty.push(itemList[i].Expected_qty);
                     }
                 }
                 d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));

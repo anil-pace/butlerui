@@ -51,7 +51,8 @@ var Audit = React.createClass({
       this.state.AuditScreenId !=
       appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId != appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION &&
-      this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION
+      this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId !== appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM
     ) {
       if (
         this.state.AuditShowModal['showModal'] != undefined &&

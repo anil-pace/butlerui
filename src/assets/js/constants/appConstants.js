@@ -369,7 +369,8 @@ var appConstants = {
   PICK_FRONT_SKIP_BIN: 'pick_front_skip_bin',
   GET_BOI_CONFIG: 'GET_BOI_CONFIG',
   KEYBOARD: 'KEYBOARD',
-  SCANNER: 'SCANNER'
+  SCANNER: 'SCANNER',
+  UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock"
 };
 
 module.exports = appConstants;

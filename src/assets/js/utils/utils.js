@@ -8,7 +8,7 @@ var serverMessages = require('../serverMessages/server_messages');
 var ws, self;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-  enableKeyboard: function() {
+  enableKeyboard: function () {
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -38,12 +38,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       reposition: true,
       alwaysOpen: false,
       initialFocus: true,
-      visible: function(e, keypressed, el) {
+      visible: function (e, keypressed, el) {
         el.value = '';
         //$(".authNotify").css("display","none");
       },
 
-      accepted: function(e, keypressed, el) {
+      accepted: function (e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if (
@@ -59,17 +59,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       }
     });
   },
-  connectToWebSocket: function(data) {
+  connectToWebSocket: function (data) {
     self = this;
     ws = new WebSocket(configConstants.WEBSOCKET_IP);
     if ('WebSocket' in window) {
-      ws.onopen = function() {
+      ws.onopen = function () {
         $('#username, #password').prop('disabled', false);
         console.log('connected');
         utils.checkSessionStorage();
         clearTimeout(utils.connectToWebSocket);
       };
-      ws.onmessage = function(evt) {
+      ws.onmessage = function (evt) {
         if (
           evt.data == 'CLIENTCODE_409' ||
           evt.data == 'CLIENTCODE_412' ||
@@ -106,7 +106,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           CommonActions.setServerMessages();
         }
       };
-      ws.onclose = function() {
+      ws.onclose = function () {
         //serverMessages.CLIENTCODE_003;
         /* alert(JSON.stringify(evt));
                  if(evt == "CLIENTCODE_409" || evt == "CLIENTCODE_503"){
@@ -123,13 +123,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       alert('WebSocket NOT supported by your Browser!');
     }
   },
-  getCurrentLang: function() {
+  getCurrentLang: function () {
     var localeStr = window.sessionStorage.getItem('localeData'),
       localeObj = localeStr ? JSON.parse(localeStr) : {},
       localeLang = localeObj && localeObj.data ? localeObj.data.locale : null;
     return localeLang;
   },
-  get3dotTrailedText: function(
+  get3dotTrailedText: function (
     serial,
     frontlimit = 5,
     rearLimit = 5,
@@ -144,7 +144,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     }
     return trailedText;
   },
-  displayData: function(data, serial) {
+  displayData: function (data, serial) {
     product_info_locale = {};
     image_url = {};
     var language_locale = sessionStorage.getItem('localeData');
@@ -154,7 +154,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     } else {
       locale = JSON.parse(language_locale)['data']['locale'];
     }
-    data.map(function(value, index) {
+    data.map(function (value, index) {
       var keyValue = '';
       var imageKey;
       for (var key in value[0]) {
@@ -173,7 +173,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           imageKey = value[0][key];
         }
       }
-      value[0].display_data.map(function(data_locale, index1) {
+      value[0].display_data.map(function (data_locale, index1) {
         if (data_locale.locale == locale) {
           if (data_locale.display_name != 'product_local_image_url') {
             product_info_locale[data_locale.display_name] = keyValue;
@@ -199,7 +199,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     }
     return product_info_locale;
   },
-  checkSessionStorage: function() {
+  checkSessionStorage: function () {
     var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
     if (sessionData === null) {
     } else {
@@ -213,16 +213,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       utils.postDataToWebsockets(webSocketData);
     }
   },
-  postDataToWebsockets: function(data) {
+  postDataToWebsockets: function (data) {
     console.log(JSON.stringify(data));
     ws.send(JSON.stringify(data));
     setTimeout(CommonActions.operatorSeat, 0, true);
   },
-  storeSession: function(data) {
+  storeSession: function (data) {
     // Put the object into storage
     sessionStorage.setItem('sessionData', JSON.stringify(data));
   },
-  getAuthToken: function(data) {
+  getAuthToken: function (data) {
     sessionStorage.setItem('sessionData', null);
 
     if (data.data.barcode) {
@@ -266,7 +266,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         accept: 'application/json'
       }
     })
-      .done(function(response) {
+      .done(function (response) {
         var webSocketData = {
           data_type: 'auth',
           data: {
@@ -277,12 +277,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         utils.storeSession(webSocketData);
         utils.postDataToWebsockets(webSocketData);
       })
-      .fail(function(data, jqXHR, textStatus, errorThrown) {
+      .fail(function (data, jqXHR, textStatus, errorThrown) {
         CommonActions.showErrorMessage(data.responseJSON.error);
       });
   },
 
-  sessionLogout: function(data) {
+  sessionLogout: function (data) {
     sessionStorage.setItem('sessionData', null);
     location.reload();
     $.ajax({
@@ -301,15 +301,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         )['data']['auth-token']
       }
     })
-      .done(function(response) {
+      .done(function (response) {
         sessionStorage.setItem('sessionData', null);
         location.reload();
       })
-      .fail(function(data, jqXHR, textStatus, errorThrown) {
+      .fail(function (data, jqXHR, textStatus, errorThrown) {
         alert('Logout Failed');
       });
   },
-  postDataToInterface: function(data, seat_name) {
+  postDataToInterface: function (data, seat_name) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
       'auth-token'
@@ -330,10 +330,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         'Authentication-Token': authentication_token
       }
     })
-      .done(function(response) {
+      .done(function (response) {
         CommonActions.hideSpinner();
       })
-      .fail(function(jqXhr) {
+      .fail(function (jqXhr) {
         console.log(jqXhr);
         CommonActions.hideSpinner();
         if (jqXhr.status == 401 || jqXhr.status == 403) {
@@ -346,7 +346,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }
       });
   },
-  generateSessionId: function() {
+  generateSessionId: function () {
     var text = '';
     var possible =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -354,7 +354,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     localStorage.setItem('session', text);
   },
-  getPeripheralData: function(type, seat_name, status, method) {
+  getPeripheralData: function (type, seat_name, status, method) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
       'auth-token'
@@ -377,13 +377,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         'Authentication-Token': authentication_token
       }
     })
-      .done(function(response) {
+      .done(function (response) {
         CommonActions.updateSeatData(response.data, type, status, method);
       })
-      .fail(function(jqXhr) {});
+      .fail(function (jqXhr) { });
   },
   ///itemsearch
-  getOrphanItemData: function(data, seat_name) {
+  getOrphanItemData: function (data, seat_name) {
     var dataToSent = '?' + 'barcode=' + data + '&' + 'ppsId=' + seat_name;
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
@@ -407,26 +407,26 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         'Authentication-Token': authentication_token
       }
     })
-      .done(function(response) {
+      .done(function (response) {
         CommonActions.updateSeatData(response.data, 'orphanSearch');
       })
-      .fail(function(jqXhr) {
+      .fail(function (jqXhr) {
         CommonActions.updateSeatData([], 'orphanSearch');
       });
   },
-  getBOIConfig: function() {
+  getBOIConfig: function () {
     $.ajax({
       type: 'GET',
       url: configConstants.BOI_CONFIG
     })
-      .done(function(response) {
+      .done(function (response) {
         CommonActions.updateSeatData(response, 'BOI_CONFIG');
       })
-      .fail(function(jqXhr) {
+      .fail(function (jqXhr) {
         CommonActions.updateSeatData(null, 'BOI_CONFIG');
       });
   },
-  updatePeripherals: function(data, method, seat_name) {
+  updatePeripherals: function (data, method, seat_name) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
       'auth-token'
@@ -471,7 +471,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
        }*/
     })
-      .done(function(response, statusText, xhr) {
+      .done(function (response, statusText, xhr) {
         utils.getPeripheralData(
           data.peripheral_type,
           seat_name,
@@ -480,7 +480,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         );
         // CommonActions.updateSeatData(response.data, data.peripheral_type);
       })
-      .fail(function(jqXhr) {
+      .fail(function (jqXhr) {
         if (jqXhr.status == 409)
           utils.getPeripheralData(
             data.peripheral_type,
@@ -504,7 +504,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           );
       });
   },
-  createLogData: function(message, type) {
+  createLogData: function (message, type) {
     var data = {};
     data['message'] = message;
     data['type'] = type;
@@ -512,7 +512,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  frntStringTransform: function(messgCode, stringArg) {
+  frntStringTransform: function (messgCode, stringArg) {
     var message_args = [];
     message_args = stringArg ? stringArg : [];
     message_args.unshift(
@@ -520,13 +520,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     );
     return _.apply(null, message_args);
   },
-  logError: function(data) {
+  logError: function (data) {
     $.ajax({
       type: 'POST',
       url: 'http://192.168.3.93:300/api/log',
       data: data,
       dataType: 'json'
-    }).success(function(response) {
+    }).success(function (response) {
       console.log('Error logged Successfully');
       console.log('Log Details :');
       console.log(JSON.stringify(data));
@@ -534,7 +534,264 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   }
 });
 
-var putSeatData = function(data) {
+var putSeatData = function (data) {
+  data.state_data =
+    {
+      "seat_name": "back_4",
+      "notification_list": [],
+      "dock_index": 1,
+      "exception_allowed": [],
+      "roll_cage_flow": false,
+      "bin_coordinate_plotting": false,
+      "event": "empty",
+      "screen_id": "universal_dock_undock",
+      "api_version": "1",
+      "logout_allowed": true,
+      "seat_type": "back",
+      "time_stamp": "1533124438",
+      "ppsbin_list": [{
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "6",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": true,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [1, 1],
+        "group_id": "1",
+        "totes_associated": "true"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "5",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": true,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [1, 2],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "4",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [1, 3],
+        "group_id": "1",
+        "totes_associated": "true"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "3",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [1, 4],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "2",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [1, 5],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "1",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [1, 6],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "12",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [2, 1],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "11",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [2, 2],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "10",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [2, 3],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "9",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [2, 4],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "8",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [2, 5],
+        "group_id": "1",
+        "totes_associated": "false"
+      }, {
+        "breadth": "200",
+        "direction": "center",
+        "bin_info": [],
+        "ppsbin_blink_state": false,
+        "ppsbin_id": "7",
+        "ppsbin_light_color": "none",
+        "length": "200",
+        "selected_state": false,
+        "ppsbin_state": "empty",
+        "ppsbin_count": "0",
+        "coordinate": [2, 6],
+        "group_id": "1",
+        "totes_associated": "false"
+      }],
+      "group_info": {
+        "1": "center"
+      },
+      "is_idle": false,
+      "operator_orientation": "0",
+      "structure": [2, 6],
+      "error_popup_disabled": true,
+      "dock_actions": [
+        {
+          "level": "info",
+          "code": "Common.A.001",
+          "details": [
+            "load unit"
+          ],
+          "description": "Scan load unit"
+        },
+        {
+          "level": "info",
+          "code": "Common.A.002",
+          "details": [
+          ],
+          "description": "Scan location/Press PPTL"
+        }
+      ],
+      "undock_actions": [
+        {
+          "level": "info",
+          "code": "Common.A.001",
+          "details": [
+            "load unit"
+          ],
+          "description": "Press PPTL to undock"
+        }
+      ],
+      "undock_index": 0,
+      // "dock_actions": [{
+      //   "level": "info",
+      //   "code": "PkF.A.012",
+      //   "details": ["tote"],
+      //   "description": "Scan Tote"
+      // }, {
+      //   "level": "info",
+      //   "code": "PkF.A.012",
+      //   "details": ["tote"],
+      //   "description": "Scan Tote location"
+      // }],
+      "screen_version": "1",
+      "docked": [],
+      "mode": "pick",
+      "scan_allowed": true,
+      "header_msge_list": [{
+        "level": "info",
+        "code": "PkF.H.028",
+        "details": ["tote"],
+        "description": "Dock Tote"
+      }],
+      "dock_header": {
+        "level": "info",
+        "code": "Common.H.002",
+        "details": [
+          "load unit"
+        ],
+        "description": "Dock load unit"
+      },
+      "undock_header": {
+        "level": "info",
+        "code": "Common.H.003",
+        "details": [
+          "load unit"
+        ],
+        "description": "Undock load unit"
+      },
+      "printer_visible": false
+    }
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

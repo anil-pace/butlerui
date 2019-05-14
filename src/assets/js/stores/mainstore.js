@@ -752,6 +752,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
+    getDockHeader: function () {
+        if (_seatData.hasOwnProperty("dock_header")) {
+            _dockHeaderMessage = _seatData.dock_header.description;
+            return _dockHeaderMessage;
+        } else {
+            return null;
+        }
+    },
+
+    getUnDockHeader: function () {
+        if (_seatData.hasOwnProperty("undock_header")) {
+            _undockHeaderMessage = _seatData.undock_header.description;
+            return _undockHeaderMessage;
+        } else {
+            return null;
+        }
+    },
 
 
     getChecklistData: function () {
@@ -796,6 +813,48 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     getChecklistDockIdx: function () {
         if (_seatData.hasOwnProperty('dock_index')) {
             return _seatData.dock_index;
+        }
+    },
+
+    getChecklistDockUndockData: function (arg) {
+        if (arg === "dock_actions" && _seatData.hasOwnProperty('dock_actions')) {
+            var dockActionsArray = [];
+            (Array.isArray(_seatData.dock_actions)) && (_seatData.dock_actions).map(function (value, key) {
+                var dataToReplace = value.details;
+                var data = serverMessages[value.code];
+                data = data.replace(/{\w+}/g, function (everyPlaceholder) {
+                    var placeHolder = everyPlaceholder.match(/\d+/g);
+                    return dataToReplace[placeHolder];
+                });
+
+                var eachData = { "action_results": { "value": data, "key": " " } }
+                dockActionsArray.push(eachData);
+            })
+            return dockActionsArray;
+        }
+        else if (arg === "undock_actions" && _seatData.hasOwnProperty('undock_actions')) {
+            var undockActionsArray = [];
+            (Array.isArray(_seatData.undock_actions)) && (_seatData.undock_actions).map(function (value, key) {
+                var dataToReplace = value.details;
+                var data = serverMessages[value.code];
+                data = data.replace(/{\w+}/g, function (everyPlaceholder) {
+                    var placeHolder = everyPlaceholder.match(/\d+/g);
+                    return dataToReplace[placeHolder];
+                });
+
+                var eachData = { "action_results": { "value": data, "key": " " } }
+                undockActionsArray.push(eachData);
+            })
+            return undockActionsArray;
+        }
+    },
+
+    getChecklistDockUndockIndex: function (arg) {
+        if (arg === "dock_index" && _seatData.hasOwnProperty('dock_index')) {
+            return _seatData.dock_index;
+        }
+        else if (arg === "undock_index" && _seatData.hasOwnProperty('undock_index')) {
+            return _seatData.undock_index;
         }
     },
 
@@ -3243,6 +3302,33 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data['PickFrontChecklistIndex'] = this.getChecklistDockIdx();
                 data["PickFrontCancelScan"] = this.cancelScanDetails();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+                break;
+
+            case appConstants.UNIVERSAL_DOCK_UNDOCK:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["udpBinMapDetails"] = this.getUDPMapDetails(),
+                    data["groupOrientation"] = this._getBinMapOrientation(),
+                    data["selectedTotes"] = this.getSelectedTotes()
+                data["PickCurrentBin"] = this._getSelectedBinID();
+
+                data["dockHeader"] = this.getDockHeader();
+                data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
+                data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");
+
+                data["undockHeader"] = this.getUnDockHeader();
+                data['undockChecklistData'] = this.getChecklistDockUndockData("undock_actions");
+                data['undockChecklistIndex'] = this.getChecklistDockUndockIndex("undock_index");
+
+
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+
+
                 break;
 
             case appConstants.PICK_FRONT_ONE_STEP_SCAN:

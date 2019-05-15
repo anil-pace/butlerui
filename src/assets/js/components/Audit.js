@@ -511,7 +511,7 @@ var Audit = React.createClass({
           if (this.state.AuditPackData['tableRows'].length > 0) {
             this._packData = (
               <div className='audit-wrapper'>
-                {isAddlInfoPresent && (
+                {(isAddlInfoPresent && this.state.infoButtonData.container_level_2) && (
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
@@ -535,7 +535,7 @@ var Audit = React.createClass({
           if (this.state.AuditSubPackData['tableRows'].length > 0) {
             this._subPackData = (
               <div className='audit-wrapper'>
-                {isAddlInfoPresent && (
+                {(isAddlInfoPresent && this.state.infoButtonData.container_level_1) && (
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
@@ -580,7 +580,7 @@ var Audit = React.createClass({
           if (this.state.AuditLooseItemsData['tableRows'].length > 0) {
             this._looseItems = (
               <div className='audit-wrapper'>
-                {isAddlInfoPresent && (
+                {(isAddlInfoPresent && this.state.infoButtonData.container_level_0) && (
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
@@ -608,9 +608,9 @@ var Audit = React.createClass({
 
               <div className='main-container space-left'>
                 <div className='audit-scan-left'>
+                  {this._looseItemData}
                   {this._packData}
                   {this._subPackData}
-                  {this._looseItemData}
                   {this._looseItems}
                 </div>
                 {this.state.allInfoModalStatus && isAddlInfoPresent && (

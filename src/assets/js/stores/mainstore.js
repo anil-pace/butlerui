@@ -3305,17 +3305,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
             case appConstants.UNIVERSAL_DOCK_UNDOCK:
-                data["PickFrontNavData"] = this.getNavData();
-                data["PickFrontServerNavData"] = this.getServerNavData();
-                data["PickFrontScreenId"] = this.getScreenId();
-                data["PickFrontExceptionData"] = this.getExceptionData();
-                data["PickFrontNotification"] = this.getNotificationData();
-                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
-                data["udpBinMapDetails"] = this.getUDPMapDetails(),
-                    data["groupOrientation"] = this._getBinMapOrientation(),
-                    data["selectedTotes"] = this.getSelectedTotes()
-                data["PickCurrentBin"] = this._getSelectedBinID();
 
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["pickBackCancelButtonData"] = this.cancelScanDetails();
+                // data["udpBinMapDetails"] = this.getUDPMapDetails(),
+                //     data["groupOrientation"] = this._getBinMapOrientation(),
+                //     data["selectedTotes"] = this.getSelectedTotes()
+                // data["PickCurrentBin"] = this._getSelectedBinID();
                 data["dockHeader"] = this.getDockHeader();
                 data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
                 data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");
@@ -3323,12 +3325,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["undockHeader"] = this.getUnDockHeader();
                 data['undockChecklistData'] = this.getChecklistDockUndockData("undock_actions");
                 data['undockChecklistIndex'] = this.getChecklistDockUndockIndex("undock_index");
-
-
-                data["PickFrontCancelScan"] = this.cancelScanDetails();
-                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
-
-
                 break;
 
             case appConstants.PICK_FRONT_ONE_STEP_SCAN:

@@ -21,6 +21,7 @@ var Spinner = require("./Spinner/LoaderButler");
 var BinMap = require('./BinMap');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var utils = require("../utils/utils");
+var CheckList = require("./CheckList.js");
 
 function getStateData() {
   return mainstore.getScreenData();
@@ -148,6 +149,58 @@ var PickBack = React.createClass({
               <Bins binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} />
             </div>);
           }
+          this._component = (
+            <div className='grid-container'>
+              <Modal />
+              {binComponent}
+            </div>
+          );
+        } else {
+          this._component = this.getExceptionComponent();
+        }
+        break;
+
+      case appConstants.UNIVERSAL_DOCK_UNDOCK:
+        if (this.state.PickBackExceptionStatus == false) {
+          this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
+          var binComponent = "";
+          binComponent = (
+            <div className='grid-container'>
+              <Modal />
+              <div className='main-container'>
+                <div className="dock-undock-container">
+                  <CheckList
+                    checklistHeader={this.state.dockHeader}
+                    checklistData={this.state.dockChecklistData}
+                    checklistIndex={this.state.dockChecklistIndex}
+                  />
+
+                  <CheckList
+                    checklistHeader={this.state.undockHeader}
+                    checklistData={this.state.undockChecklistData}
+                    checklistIndex={this.state.undockChecklistIndex}
+                  />
+                </div>
+
+
+
+                {/* <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}
+                  groupInfo={this.state.udpBinMapDetails} undockAwaited={null}
+                  customizeClassSplitPPS={adjustStyleOnSplitPPS}
+                  docked={this.state.selectedTotes} ruleset={'withBorder'}
+                  selectedbin={this.state.PickCurrentBin} /> */}
+              </div>
+              <div className='actions'>
+              </div>
+            </div >
+          )
+          // if (this.state.OrigBinUse) {
+          //   binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} seatType={this.state.SeatType} />);
+          // } else {
+          //   binComponent = (<div className='main-container'>
+          //     <Bins binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} />
+          //   </div>);
+          // }
           this._component = (
             <div className='grid-container'>
               <Modal />
@@ -308,61 +361,6 @@ var PickBack = React.createClass({
             </div>
           </div>
         );
-        break;
-
-      case appConstants.UNIVERSAL_DOCK_UNDOCK:
-        var rackType = "";
-        var adjustStyleOnSplitPPS = "";
-        var cancelScanDisabled = (this.state.PickFrontCancelScan) ? true : false;
-        var cancelButton;
-        if (cancelScanDisabled) {
-          cancelButton = (<div className='cancel-scan'><Button1 disabled={false} text={_("Cancel Scan")}
-            module={appConstants.PICK_FRONT}
-            action={appConstants.CANCEL_SCAN}
-            color={"black"} /></div>);
-        }
-        else {
-          cancelButton = "";
-        }
-
-        if (!this.state.PickFrontExceptionStatus) {
-          this._navigation = (<Navigation navData={this.state.PickFrontNavData}
-            serverNavData={this.state.PickFrontServerNavData}
-            navMessagesJson={this.props.navMessagesJson} />);
-          if (this.state.PickFrontChecklistData) {
-            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
-          }
-          this._component = (
-            <div className='grid-container'>
-              <Modal />
-              <div className='main-container'>
-                <div className="dock-undock-container">
-                  <CheckList
-                    checklistHeader={this.state.dockHeader}
-                    checklistData={this.state.dockChecklistData}
-                    checklistIndex={this.state.dockChecklistIndex}
-                  />
-
-                  <CheckList
-                    checklistHeader={this.state.undockHeader}
-                    checklistData={this.state.undockChecklistData}
-                    checklistIndex={this.state.undockChecklistIndex}
-                  />
-                </div>
-                <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}
-                  groupInfo={this.state.udpBinMapDetails} undockAwaited={null}
-                  customizeClassSplitPPS={adjustStyleOnSplitPPS}
-                  docked={this.state.selectedTotes} ruleset={'withBorder'}
-                  selectedbin={this.state.PickCurrentBin} />
-              </div>
-              <div className='actions'>
-                {cancelButton}
-              </div>
-            </div>
-          );
-        } else {
-          this._component = this.getExceptionComponent();
-        }
         break;
 
       case appConstants.PICK_BACK_REPRINT_TOTE:

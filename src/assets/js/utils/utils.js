@@ -535,263 +535,271 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
-  data.state_data =
-    {
-      "seat_name": "back_4",
-      "notification_list": [],
-      "dock_index": 1,
-      "exception_allowed": [],
-      "roll_cage_flow": false,
-      "bin_coordinate_plotting": false,
-      "event": "empty",
-      "screen_id": "universal_dock_undock",
-      "api_version": "1",
-      "logout_allowed": true,
-      "seat_type": "back",
-      "time_stamp": "1533124438",
-      "ppsbin_list": [{
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "6",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": true,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [1, 1],
-        "group_id": "1",
-        "totes_associated": "true"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "5",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": true,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [1, 2],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "4",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [1, 3],
-        "group_id": "1",
-        "totes_associated": "true"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "3",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [1, 4],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "2",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [1, 5],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "1",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [1, 6],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "12",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [2, 1],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "11",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [2, 2],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "10",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [2, 3],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "9",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [2, 4],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "8",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [2, 5],
-        "group_id": "1",
-        "totes_associated": "false"
-      }, {
-        "breadth": "200",
-        "direction": "center",
-        "bin_info": [],
-        "ppsbin_blink_state": false,
-        "ppsbin_id": "7",
-        "ppsbin_light_color": "none",
-        "length": "200",
-        "selected_state": false,
-        "ppsbin_state": "empty",
-        "ppsbin_count": "0",
-        "coordinate": [2, 6],
-        "group_id": "1",
-        "totes_associated": "false"
-      }],
-      "group_info": {
-        "1": "center"
-      },
-      "is_idle": false,
-      "operator_orientation": "0",
-      "structure": [2, 6],
-      "error_popup_disabled": true,
-      "dock_actions": [
-        {
-          "level": "info",
-          "code": "Common.A.001",
-          "details": [
-            "load unit"
-          ],
-          "description": "Scan load unit"
-        },
-        {
-          "level": "info",
-          "code": "Common.A.002",
-          "details": [
-          ],
-          "description": "Scan location/Press PPTL"
-        }
+  data.state_data = {
+    "seat_name": "back_2",
+    "notification_list": [{
+      "level": "info",
+      "code": "PkB.I.004",
+      "details": ["8"],
+      "description": "Bin entities removed successfully"
+    }],
+    "exception_allowed": [],
+    "roll_cage_flow": false,
+    "bin_coordinate_plotting": false,
+    "event": "initialize",
+    "screen_id": "universal_dock_undock",
+    "logout_allowed": true,
+    "seat_type": "back",
+    "time_stamp": "2019-05-14T12:51:33Z",
+    "ppsbin_list": [{
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "6",
+      "packing_box": "false",
+      "orig_coordinate": [0, 200],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [2, 1],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "1",
+      "packing_box": "false",
+      "orig_coordinate": [0, 0],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [1, 1],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "7",
+      "packing_box": "false",
+      "orig_coordinate": [200, 200],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [2, 2],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "2",
+      "packing_box": "false",
+      "orig_coordinate": [200, 0],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [1, 2],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "8",
+      "packing_box": "false",
+      "orig_coordinate": [400, 200],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [2, 3],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "3",
+      "packing_box": "false",
+      "orig_coordinate": [400, 0],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [1, 3],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "9",
+      "packing_box": "false",
+      "orig_coordinate": [600, 200],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [2, 4],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "4",
+      "packing_box": "false",
+      "orig_coordinate": [600, 0],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [1, 4],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "10",
+      "packing_box": "false",
+      "orig_coordinate": [800, 200],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [2, 5],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }, {
+      "breadth": "200",
+      "direction": "center",
+      "bin_info": [],
+      "ppsbin_id": "5",
+      "packing_box": "false",
+      "orig_coordinate": [800, 0],
+      "ppsbin_light_color": "none",
+      "ppsbin_blue_state": "false",
+      "selected_state": false,
+      "ppsbin_state": "empty",
+      "ppsbin_count": "0",
+      "coordinate": [1, 5],
+      "length": "200",
+      "ppsbin_blink_state": false,
+      "group_id": "1",
+      "totes_associated": "false"
+    }],
+    "mode": "pick",
+    "group_info": {
+      "1": "center"
+    },
+    "scan_allowed": true,
+    "operator_orientation": "0",
+    "structure": [2, 5],
+    "error_popup_disabled": false,
+    "screen_version": "1",
+    "docked": [],
+    "api_version": "1",
+    "is_idle": false,
+    "header_msge_list": [{
+      "level": "info",
+      "code": "PkB.H.012",
+      "details": [],
+      "description": "Wait for next action"
+    }],
+    "dock_header": {
+      "level": "info",
+      "code": "Common.A.001",
+      "details": [
+        "load unit"
       ],
-      "undock_actions": [
-        {
-          "level": "info",
-          "code": "Common.A.001",
-          "details": [
-            "load unit"
-          ],
-          "description": "Press PPTL to undock"
-        }
-      ],
-      "undock_index": 0,
-      // "dock_actions": [{
-      //   "level": "info",
-      //   "code": "PkF.A.012",
-      //   "details": ["tote"],
-      //   "description": "Scan Tote"
-      // }, {
-      //   "level": "info",
-      //   "code": "PkF.A.012",
-      //   "details": ["tote"],
-      //   "description": "Scan Tote location"
-      // }],
-      "screen_version": "1",
-      "docked": [],
-      "mode": "pick",
-      "scan_allowed": true,
-      "header_msge_list": [{
+      "description": "Dock load unit"
+    },
+    "dock_actions": [
+      {
         "level": "info",
-        "code": "PkF.H.028",
-        "details": ["tote"],
-        "description": "Dock Tote"
-      }],
-      "dock_header": {
-        "level": "info",
-        "code": "Common.H.002",
+        "code": "Common.A.001",
         "details": [
           "load unit"
         ],
-        "description": "Dock load unit"
+        "description": "Scan load unit"
       },
-      "undock_header": {
+      {
         "level": "info",
-        "code": "Common.H.003",
+        "code": "Common.A.002",
+        "details": [
+        ],
+        "description": "Scan location/Press PPTL"
+      }
+    ],
+    "dock_index": 1,
+    "dock_station_list": [
+      {
+        "direction": "center-top",
+        "dock_station_id": "3",
+        "status": "none"
+      },
+      {
+        "direction": "center-top",
+        "dock_station_id": "4",
+        "status": "none"
+      }
+    ],
+    "undock_header": {
+      "level": "info",
+      "code": "Common.H.003",
+      "details": [
+        "load unit"
+      ],
+      "description": "Undock load unit"
+    },
+    "undock_actions": [
+      {
+        "level": "info",
+        "code": "Common.A.001",
         "details": [
           "load unit"
         ],
-        "description": "Undock load unit"
-      },
-      "printer_visible": false
-    }
+        "description": "Press PPTL to undock"
+      }
+    ],
+    "undock_index": 0,
+    "printer_visible": false
+
+  }
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

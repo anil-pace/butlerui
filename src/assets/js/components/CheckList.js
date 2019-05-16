@@ -77,7 +77,7 @@ var CheckList = React.createClass({
             <div className="table-wrapper-checklist">
                 <table className="table">
                     <theader>
-                        {this.props.checklistHeader + ":"}
+                        {this.props.checklistHeader ? this.props.checklistHeader + ":" : ""}
                     </theader>
                     <tbody>
                         {tableData}

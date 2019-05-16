@@ -535,7 +535,710 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function(data) {
-  console.log(data);
+  data.state_data = {
+    seat_name: 'front_12',
+    notification_list: [
+      {
+        level: 'info',
+        code: 'PkF.I.004',
+        details: ['Item'],
+        description: 'Item Scan successful'
+      }
+    ],
+    scan_details: { current_qty: '1', total_qty: '1', kq_allowed: true },
+    rack_details: {
+      slot_barcodes: ['200.0.C.07', '200.0.C.08'],
+      rack_type_rec: [
+        {
+          slot_ref: [48, 46, 65, 46, 48, 49, 45, 65, 46, 48, 50],
+          height: 35.2,
+          length: 34.25,
+          orig_coordinates: [1.5, 6.4],
+          type: 'slot',
+          barcodes: ['A.01', 'A.02']
+        },
+        {
+          slot_ref: [48, 46, 65, 46, 48, 51],
+          height: 35.2,
+          length: 34.25,
+          orig_coordinates: [36.7, 6.4],
+          type: 'slot',
+          barcodes: ['A.03']
+        },
+        {
+          slot_ref: [
+            48,
+            46,
+            65,
+            46,
+            48,
+            52,
+            45,
+            65,
+            46,
+            48,
+            53,
+            45,
+            65,
+            46,
+            48,
+            54
+          ],
+          height: 35.2,
+          length: 69.5,
+          orig_coordinates: [72, 6.4],
+          type: 'slot',
+          barcodes: ['A.04', 'A.05', 'A.06']
+        },
+        {
+          slot_ref: [48, 46, 66, 46, 48, 49, 45, 66, 46, 48, 50],
+          height: 35.2,
+          length: 34.25,
+          orig_coordinates: [1.5, 43.6],
+          type: 'slot',
+          barcodes: ['B.01', 'B.02']
+        },
+        {
+          slot_ref: [48, 46, 66, 46, 48, 51],
+          height: 35.2,
+          length: 34.25,
+          orig_coordinates: [36.7, 43.6],
+          type: 'slot',
+          barcodes: ['B.03']
+        },
+        {
+          slot_ref: [
+            48,
+            46,
+            66,
+            46,
+            48,
+            52,
+            45,
+            66,
+            46,
+            48,
+            53,
+            45,
+            66,
+            46,
+            48,
+            54
+          ],
+          height: 35.2,
+          length: 69.5,
+          orig_coordinates: [72, 43.6],
+          type: 'slot',
+          barcodes: ['B.04', 'B.05', 'B.06']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 48, 49, 45, 67, 46, 48, 50],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [1.5, 80.8],
+          type: 'slot',
+          barcodes: ['C.01', 'C.02']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 48, 51],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [36.7, 80.8],
+          type: 'slot',
+          barcodes: ['C.03']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 48, 52],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [72, 80.8],
+          type: 'slot',
+          barcodes: ['C.04']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 48, 53, 45, 67, 46, 48, 54],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [107.25, 80.8],
+          type: 'slot',
+          barcodes: ['C.05', 'C.06']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 48, 55, 45, 67, 46, 48, 56],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [1.5, 99.4],
+          type: 'slot',
+          barcodes: ['C.07', 'C.08']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 48, 57],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [36.7, 99.4],
+          type: 'slot',
+          barcodes: ['C.09']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 49, 48],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [72, 99.4],
+          type: 'slot',
+          barcodes: ['C.10']
+        },
+        {
+          slot_ref: [48, 46, 67, 46, 49, 49, 45, 67, 46, 49, 50],
+          height: 16.6,
+          length: 34.25,
+          orig_coordinates: [107.25, 99.4],
+          type: 'slot',
+          barcodes: ['C.11', 'C.12']
+        },
+        {
+          slot_ref: [
+            48,
+            46,
+            68,
+            46,
+            48,
+            49,
+            45,
+            68,
+            46,
+            48,
+            50,
+            45,
+            68,
+            46,
+            48,
+            51
+          ],
+          height: 35.2,
+          length: 69.5,
+          orig_coordinates: [1.5, 118],
+          type: 'slot',
+          barcodes: ['D.01', 'D.02', 'D.03']
+        },
+        {
+          slot_ref: [
+            48,
+            46,
+            68,
+            46,
+            48,
+            52,
+            45,
+            68,
+            46,
+            48,
+            53,
+            45,
+            68,
+            46,
+            48,
+            54
+          ],
+          height: 35.2,
+          length: 69.5,
+          orig_coordinates: [72, 118],
+          type: 'slot',
+          barcodes: ['D.04', 'D.05', 'D.06']
+        }
+      ],
+      rack_type: 'msu',
+      rack_width: 143,
+      slot_type: 'slot'
+    },
+    exception_allowed: [],
+    roll_cage_flow: false,
+    bin_coordinate_plotting: true,
+    final_damaged_boxes: [],
+    event: 'empty',
+    screen_id: 'pick_front_pptl_press',
+    logout_allowed: false,
+    operator_orientation: '0',
+    time_stamp: '2019-05-06T10:24:58Z',
+    ppsbin_list: [
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [
+          { product_sku: 'SKU_201', serial: [], type: 'Item', quantity: 1 }
+        ],
+        ppsbin_id: '13',
+        packing_box: 'false',
+        orig_coordinate: [0, 50],
+        ppsbin_light_color: 'blue',
+        length: '69',
+        selected_state: true,
+        ppsbin_state: 'IN USE',
+        ppsbin_count: '1',
+        coordinate: [2, 4],
+        ppsbin_blink_state: true,
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '9',
+        packing_box: 'false',
+        orig_coordinate: [0, 0],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [1, 4],
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '14',
+        packing_box: 'false',
+        orig_coordinate: [60, 50],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [2, 3],
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '10',
+        packing_box: 'false',
+        orig_coordinate: [60, 0],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [1, 3],
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '15',
+        packing_box: 'false',
+        orig_coordinate: [120, 50],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [2, 2],
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '11',
+        packing_box: 'false',
+        orig_coordinate: [120, 0],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [1, 2],
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '16',
+        packing_box: 'false',
+        orig_coordinate: [180, 50],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [2, 1],
+        group_id: '2',
+        totes_associated: 'false'
+      },
+      {
+        breadth: '80',
+        direction: 'right',
+        bin_info: [],
+        ppsbin_id: '12',
+        packing_box: 'false',
+        orig_coordinate: [180, 0],
+        length: '69',
+        selected_state: false,
+        ppsbin_state: 'empty',
+        ppsbin_count: '0',
+        coordinate: [1, 1],
+        group_id: '2',
+        totes_associated: 'false'
+      }
+    ],
+    mode: 'pick',
+    group_info: { '1': 'left', '2': 'right' },
+    scan_allowed: false,
+    irt_scan_enabled: false,
+    button_press_allowed: true,
+    cancel_scan_enabled: true,
+    button_press_id: 'bin_full',
+    structure: [2, 4],
+    error_popup_disabled: false,
+    header_steps: ['PkF.S.003', 'PkF.S.005'],
+    screen_version: '1',
+    damaged_boxes: [],
+    docked: [],
+    seat_type: 'front',
+    api_version: '1',
+    is_idle: false,
+    header_msge_list: [
+      {
+        level: 'info',
+        code: 'PkF.H.007',
+        details: ['13'],
+        description: 'Press PPTL for Bin to confirm'
+      }
+    ]
+  };
+
+  //Multiple Screen state_Data
+  // data.state_data = {
+  //   seat_name: 'front_10',
+  //   notification_list: [
+  //     {
+  //       level: 'info',
+  //       code: 'PkF.I.004',
+  //       details: ['Pack'],
+  //       description: 'Item Scan successful'
+  //     }
+  //   ],
+  //   scan_details: { current_qty: '1', total_qty: '2', kq_allowed: true },
+  //   scan_allowed: true,
+  //   rack_details: {
+  //     slot_barcodes: ['102.0.A.01', '102.0.A.02'],
+  //     rack_type_rec: [
+  //       {
+  //         slot_ref: [48, 46, 65, 46, 48, 49, 45, 65, 46, 48, 50],
+  //         height: 140,
+  //         length: 120,
+  //         orig_coordinates: [0, 4.2],
+  //         type: 'slot',
+  //         barcodes: ['A.01', 'A.02']
+  //       }
+  //     ],
+  //     rack_type: 'mpsu',
+  //     rack_width: 146,
+  //     slot_type: 'slot'
+  //   },
+  //   exception_allowed: [
+  //     {
+  //       event: 'missing_or_unscannable_damaged_item',
+  //       exception_id: 'PkF001',
+  //       details: ['Pack'],
+  //       exception_name: 'Item Missing/Bad Barcode'
+  //     }
+  //   ],
+  //   roll_cage_flow: true,
+  //   bin_coordinate_plotting: true,
+  //   event: 'more_items',
+  //   screen_id: 'pick_front_more_item_scan',
+  //   wrong_undock: [],
+  //   logout_allowed: false,
+  //   seat_type: 'front',
+  //   product_info: [
+  //     [
+  //       {
+  //         display_data: [
+  //           { locale: 'en-US', display_name: 'product_local_image_url' }
+  //         ],
+  //         product_local_image_url: 'outer'
+  //       }
+  //     ],
+  //     [
+  //       {
+  //         display_data: [{ locale: 'en-US', display_name: 'Dimension' }],
+  //         product_dimensions: [30, 15, 20]
+  //       }
+  //     ],
+  //     [
+  //       {
+  //         display_data: [{ locale: 'en-US', display_name: 'Barcodes' }],
+  //         product_barcodes: ['P_200']
+  //       }
+  //     ]
+  //   ],
+  //   time_stamp: '2019-05-13T11:24:10Z',
+  //   ppsbin_list: [
+  //     {
+  //       breadth: '65',
+  //       direction: 'left',
+  //       bin_info: [
+  //         { product_sku: 'SKU_200', serial: [], type: 'Pack', quantity: 1 }
+  //       ],
+  //       ppsbin_id: '1',
+  //       packing_box: 'false',
+  //       orig_coordinate: [0, 0],
+  //       ppsbin_light_color: 'blue',
+  //       length: '100',
+  //       selected_state: true,
+  //       ppsbin_state: 'IN USE',
+  //       ppsbin_count: '1',
+  //       coordinate: [1, 1],
+  //       ppsbin_blink_state: true,
+  //       group_id: '1',
+  //       totes_associated: 'false'
+  //     }
+  //   ],
+  //   mode: 'pick',
+  //   group_info: {
+  //     '1': 'left',
+  //     '2': 'left',
+  //     '3': 'left',
+  //     '4': 'left',
+  //     '5': 'right',
+  //     '6': 'right',
+  //     '7': 'right',
+  //     '8': 'right'
+  //   },
+  //   undock_awaited: [],
+  //   operator_orientation: '0',
+  //   button_press_allowed: true,
+  //   item_uid: '164',
+  //   cancel_scan_enabled: true,
+  //   button_press_id: 'bin_full',
+  //   structure: [1, 1],
+  //   error_popup_disabled: false,
+  //   screen_version: '1',
+  //   docked: { '1': 'left' },
+  //   api_version: '1',
+  //   is_idle: false,
+  //   header_msge_list: [
+  //     {
+  //       level: 'info',
+  //       code: 'PkF.H.018',
+  //       details: [1, 'Pack', '1'],
+  //       description: 'Scan Label and Place in Bin'
+  //     }
+  //   ]
+  // };
+
+  //Single Item Screen
+  // data.state_data = {
+  //   seat_name: 'front_10',
+  //   notification_list: [],
+  //   scan_details: { current_qty: '1', total_qty: '10', kq_allowed: true },
+  //   rack_details: {
+  //     slot_barcodes: [
+  //       '1.0.B.01',
+  //       '1.0.B.02',
+  //       '1.0.B.03',
+  //       '1.0.B.04',
+  //       '1.0.B.05',
+  //       '1.0.B.06'
+  //     ],
+  //     rack_type_rec: [
+  //       {
+  //         slot_ref: [
+  //           48,
+  //           46,
+  //           65,
+  //           46,
+  //           48,
+  //           49,
+  //           45,
+  //           65,
+  //           46,
+  //           48,
+  //           50,
+  //           45,
+  //           65,
+  //           46,
+  //           48,
+  //           51,
+  //           45,
+  //           65,
+  //           46,
+  //           48,
+  //           52,
+  //           45,
+  //           65,
+  //           46,
+  //           48,
+  //           53,
+  //           45,
+  //           65,
+  //           46,
+  //           48,
+  //           54
+  //         ],
+  //         height: 48.46,
+  //         length: 135,
+  //         orig_coordinates: [4.299999999999997, 4.8],
+  //         type: 'slot',
+  //         barcodes: ['A.01', 'A.02', 'A.03', 'A.04', 'A.05', 'A.06']
+  //       },
+  //       {
+  //         slot_ref: [
+  //           48,
+  //           46,
+  //           66,
+  //           46,
+  //           48,
+  //           49,
+  //           45,
+  //           66,
+  //           46,
+  //           48,
+  //           50,
+  //           45,
+  //           66,
+  //           46,
+  //           48,
+  //           51,
+  //           45,
+  //           66,
+  //           46,
+  //           48,
+  //           52,
+  //           45,
+  //           66,
+  //           46,
+  //           48,
+  //           53,
+  //           45,
+  //           66,
+  //           46,
+  //           48,
+  //           54
+  //         ],
+  //         height: 47,
+  //         length: 135,
+  //         orig_coordinates: [4.299999999999997, 57.26],
+  //         type: 'slot',
+  //         barcodes: ['B.01', 'B.02', 'B.03', 'B.04', 'B.05', 'B.06']
+  //       },
+  //       {
+  //         slot_ref: [
+  //           48,
+  //           46,
+  //           67,
+  //           46,
+  //           48,
+  //           49,
+  //           45,
+  //           67,
+  //           46,
+  //           48,
+  //           50,
+  //           45,
+  //           67,
+  //           46,
+  //           48,
+  //           51,
+  //           45,
+  //           67,
+  //           46,
+  //           48,
+  //           52,
+  //           45,
+  //           67,
+  //           46,
+  //           48,
+  //           53,
+  //           45,
+  //           67,
+  //           46,
+  //           48,
+  //           54
+  //         ],
+  //         height: 42.64,
+  //         length: 135,
+  //         orig_coordinates: [4.299999999999997, 103.9],
+  //         type: 'slot',
+  //         barcodes: ['C.01', 'C.02', 'C.03', 'C.04', 'C.05', 'C.06']
+  //       }
+  //     ],
+  //     rack_type: 'msu',
+  //     rack_width: 143,
+  //     slot_type: 'slot'
+  //   },
+  //   exception_allowed: [],
+  //   roll_cage_flow: false,
+  //   bin_coordinate_plotting: true,
+  //   final_damaged_boxes: [],
+  //   event: 'empty',
+  //   screen_id: 'pick_front_pptl_press',
+  //   logout_allowed: false,
+  //   operator_orientation: '0',
+  //   time_stamp: '2019-05-06T09:35:51Z',
+  //   ppsbin_list: [
+  //     {
+  //       breadth: '65',
+  //       direction: 'left',
+  //       bin_info: [
+  //         { product_sku: 'SKU_200', serial: [], type: 'Pack', quantity: 1 }
+  //       ],
+  //       ppsbin_id: '1',
+  //       packing_box: 'false',
+  //       orig_coordinate: [0, 0],
+  //       ppsbin_light_color: 'blue',
+  //       length: '100',
+  //       selected_state: true,
+  //       ppsbin_state: 'IN USE',
+  //       ppsbin_count: '1',
+  //       coordinate: [1, 1],
+  //       ppsbin_blink_state: true,
+  //       group_id: '1',
+  //       totes_associated: 'false'
+  //     }
+  //   ],
+  //   mode: 'pick',
+  //   group_info: {
+  //     '1': 'left',
+  //     '2': 'left',
+  //     '3': 'left',
+  //     '4': 'left',
+  //     '5': 'right',
+  //     '6': 'right',
+  //     '7': 'right',
+  //     '8': 'right'
+  //   },
+  //   scan_allowed: false,
+  //   irt_scan_enabled: false,
+  //   button_press_allowed: true,
+  //   cancel_scan_enabled: true,
+  //   button_press_id: 'bin_full',
+  //   structure: [1, 1],
+  //   error_popup_disabled: false,
+  //   header_steps: ['PkF.S.003', 'PkF.S.005'],
+  //   screen_version: '1',
+  //   damaged_boxes: [],
+  //   docked: [],
+  //   seat_type: 'front',
+  //   api_version: '1',
+  //   is_idle: false,
+  //   header_msge_list: [
+  //     {
+  //       level: 'info',
+  //       code: 'PkF.H.007',
+  //       details: ['1'],
+  //       description: 'Press PPTL for Bin to confirm'
+  //     }
+  //   ]
+  // };
+  console.log('Data ' + JSON.stringify(data));
+  console.log('Data in object form Sudivya' + data);
+
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {
     case appConstants.PUT_BACK:
       CommonActions.setPutBackData(data.state_data);

@@ -6,14 +6,15 @@ var allSvgConstants = require('./../../constants/svgConstants');
 
 var Pallet = React.createClass({
 
-    render: function(){
+    render: function () {
 
         return (<div className="palletWrapper">
-            <img  src={allSvgConstants.pallet}/>
+            <div className="palletHeader">
+                <div className="iconPlaceHolder" />
+                <div className="textPlaceHolder">{_("PICK FROM TOP & LEFT TO RIGHT")}</div>
+            </div>
+            <img src={allSvgConstants.newPallet} />
         </div>)
-
-
-
     }
 });
 module.exports = Pallet;

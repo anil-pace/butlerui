@@ -193,15 +193,8 @@ var SplitPPS = React.createClass({
         var customizeClassSplitPPS = this.props.customizeClassSplitPPS;
 
         return (
-            <div className={customizeClassSplitPPS ? "splitPPSWrapper " + customizeClassSplitPPS : "splitPPSWrapper"} style={transformStyle}>
+            <div className={customizeClassSplitPPS ? "splitPPSWrapperForPickBack " + customizeClassSplitPPS : "splitPPSWrapperForPickBack"} style={transformStyle}>
                 <div className="mapCont">
-                    <div className={"col1 three"}>
-                        {(mapStructure.leftCol).length >= 1 ?
-                            <ul className={this.props.ruleset === 'withBorder' ? 'withBorderLeft' : ''}>
-                                {mapStructure.leftCol}
-                            </ul> : ""
-                        }
-                    </div>
                     <div className={"col4 three"}>
                         {(mapStructure.centerCol).length >= 1 ?
                             <ul>
@@ -209,6 +202,15 @@ var SplitPPS = React.createClass({
                             </ul> : ""
                         }
                     </div>
+
+                    <div className={"col1 three"}>
+                        {(mapStructure.leftCol).length >= 1 ?
+                            <ul className={this.props.ruleset === 'withBorder' ? 'withBorderLeft' : ''}>
+                                {mapStructure.leftCol}
+                            </ul> : ""
+                        }
+                    </div>
+
                     <div className="col2 spriteIcons">
                     </div>
                     <div className={"col3 three"}>

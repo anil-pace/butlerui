@@ -22,6 +22,7 @@ var BinMap = require('./BinMap');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var utils = require("../utils/utils");
 var CheckList = require("./CheckList.js");
+var SplitPPS = require('./SplitPPSForPickBack.js');
 
 function getStateData() {
   return mainstore.getScreenData();
@@ -165,34 +166,30 @@ var PickBack = React.createClass({
           this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           var binComponent = "";
           binComponent = (
-            <div className='grid-container'>
-              <Modal />
-              <div className='main-container'>
-                <div className="dock-undock-container">
-                  <CheckList
-                    checklistHeader={this.state.dockHeader}
-                    checklistData={this.state.dockChecklistData}
-                    checklistIndex={this.state.dockChecklistIndex}
-                  />
+            <div className='main-container'>
+              <div className="dock-undock-container">
+                <CheckList
+                  checklistHeader={this.state.dockHeader}
+                  checklistData={this.state.dockChecklistData}
+                  checklistIndex={this.state.dockChecklistIndex}
+                />
 
-                  <CheckList
-                    checklistHeader={this.state.undockHeader}
-                    checklistData={this.state.undockChecklistData}
-                    checklistIndex={this.state.undockChecklistIndex}
-                  />
-                </div>
+                <CheckList
+                  checklistHeader={this.state.undockHeader}
+                  checklistData={this.state.undockChecklistData}
+                  checklistIndex={this.state.undockChecklistIndex}
+                />
+              </div>
+
+              <SplitPPS displayBinId={true} groupInfo={this.state.udpBinMapDetails} />
 
 
-
-                {/* <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}
+              {/* <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}
                   groupInfo={this.state.udpBinMapDetails} undockAwaited={null}
                   customizeClassSplitPPS={adjustStyleOnSplitPPS}
                   docked={this.state.selectedTotes} ruleset={'withBorder'}
                   selectedbin={this.state.PickCurrentBin} /> */}
-              </div>
-              <div className='actions'>
-              </div>
-            </div >
+            </div>
           )
           // if (this.state.OrigBinUse) {
           //   binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} seatType={this.state.SeatType} />);

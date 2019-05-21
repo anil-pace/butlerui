@@ -768,15 +768,40 @@ var putSeatData = function (data) {
     "dock_index": 1,
     "dock_station_list": [
       {
-        "direction": "center-top",
+        "direction": "left",
         "dock_station_id": "3",
         "status": "none"
       },
       {
-        "direction": "center-top",
+        "direction": "left",
         "dock_station_id": "4",
         "status": "none"
-      }
+      },
+      {
+        "direction": "center-top",
+        "dock_station_id": "1",
+        "status": "none"
+      },
+      {
+        "direction": "center-top",
+        "dock_station_id": "2",
+        "status": "none"
+      },
+      // {
+      //   "direction": "right",
+      //   "dock_station_id": "6",
+      //   "status": "none"
+      // },
+      // {
+      //   "direction": "right",
+      //   "dock_station_id": "7",
+      //   "status": "none"
+      // },
+      // {
+      //   "direction": "right",
+      //   "dock_station_id": "8",
+      //   "status": "none"
+      // }
     ],
     "undock_header": {
       "level": "info",
@@ -798,7 +823,6 @@ var putSeatData = function (data) {
     ],
     "undock_index": 0,
     "printer_visible": false
-
   }
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {

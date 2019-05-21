@@ -2802,6 +2802,47 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return groupInfo;
     },
+
+    getDockStationList: function () {
+        var groupInfo = {};
+        var leftBins = [];
+        var rightBins = [];
+        var centerBins = [];
+        var centerTopBins = [];
+        if (_seatData["dock_station_list"]) {
+            _seatData["dock_station_list"].forEach(function (bin) {
+                if (bin["direction"] === "left") {
+                    leftBins.push(bin)
+                }
+                else if (bin["direction"] === "right") {
+                    rightBins.push(bin)
+                }
+                else if (bin["direction"] === "center") {
+                    centerBins.push(bin)
+                }
+                else if (bin["direction"] === "center-top") {
+                    centerTopBins.push(bin)
+                }
+
+            })
+            // leftBins.sort(function (a, b) {
+            //     return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
+            // });
+            // rightBins.sort(function (a, b) {
+            //     return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
+            // });
+            // centerBins.sort(function (a, b) {
+            //     return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
+            // });
+
+            leftBins = leftBins.concat(rightBins, centerBins, centerTopBins);
+            leftBins.forEach(function (bin) {
+                groupInfo[bin["dock_station_id"]] = bin["direction"]
+            })
+        }
+        return groupInfo;
+    },
+
     getMissingItemList: function () {
         return _seatData["missing_items"] || [];
     },
@@ -3314,11 +3355,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackExceptionData"] = this.getExceptionData();
                 data["pickBackCancelButtonData"] = this.cancelScanDetails();
-                // data["udpBinMapDetails"] = this.getUDPMapDetails(),
-                //     data["groupOrientation"] = this._getBinMapOrientation(),
-                //     data["selectedTotes"] = this.getSelectedTotes()
-                // data["PickCurrentBin"] = this._getSelectedBinID();
-                data["dockHeader"] = this.getDockHeader();
+                data["udpBinMapDetails"] = this.getDockStationList(),
+                    //     data["groupOrientation"] = this._getBinMapOrientation(),
+                    //     data["selectedTotes"] = this.getSelectedTotes()
+                    // data["PickCurrentBin"] = this._getSelectedBinID();
+                    data["dockHeader"] = this.getDockHeader();
                 data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
                 data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");
 

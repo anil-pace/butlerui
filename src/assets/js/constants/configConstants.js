@@ -1,6 +1,6 @@
 var configConstants = {
-   WEBSOCKET_IP: 'wss://192.168.9.166/wss',
-   INTERFACE_IP: 'https://192.168.9.166'
+   WEBSOCKET_IP: 'wss://192.168.9.160/wss',
+   INTERFACE_IP: 'https://192.168.9.160'
 };
 var BOI_CONFIG =
    configConstants.INTERFACE_IP + '/api/components/get_boi_config';

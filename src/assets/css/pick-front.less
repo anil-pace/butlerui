@@ -16,12 +16,32 @@
 .palletWrapper {
   position: relative;
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   justify-content: center;
   flex-wrap: nowrap;
   box-sizing: border-box;
-  width: 28%;
   overflow: hidden;
+  margin-right: 5%;
+  .palletHeader {
+    font-size: 30px;
+    font-weight: bold;
+    color: #515151;
+    line-break: break-all;
+    display: flex;
+    flex-flow: row;
+    width: 80%;
+    margin-left: 10%;
+    align-items: center;
+    .iconPlaceHolder{
+      background: url(../images/infoIcon.svg) no-repeat;
+      width: 52px;
+      height: 52px;
+      min-width: 18%;
+    }
+    .textPlaceHolder{
+      margin-left: 5%;
+    }
+  }
 }
 
 .palletWrapper .palletImage{

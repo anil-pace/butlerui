@@ -481,6 +481,7 @@ var PickFront = React.createClass({
       case appConstants.PICK_FRONT_WORKING_TABLE:
         var cancelScanFlag = this.state.PickFrontCancelScan;
         var cancelClicked = mainstore.getCancelButtonStatus();
+        var { PickFrontReprintEnabled } = this.state;
         var cancelScanDisabled =
           cancelScanFlag || cancelScanFlag === undefined ? false : true;
         if (this.state.PickFrontExceptionStatus == false) {
@@ -520,12 +521,12 @@ var PickFront = React.createClass({
 
           // Pick Front Flow Customer Trolley Support Print Enhancements
           var reprintButton = '';
-          reprintButton = !cancelScanDisabled ? (
+          reprintButton = PickFrontReprintEnabled ? (
             <Button1
               disabled={false}
               text={_('Reprint')}
               module={appConstants.PICK_FRONT}
-              action={appConstants.REPRINT}
+              action={appConstants.REPRINT_REQUEST}
               color={'black'}
             />
           ) : (
@@ -603,14 +604,23 @@ var PickFront = React.createClass({
                   screenClass='frontFlow'
                 />
               )}
-              {this.state.SplitScreenFlag && (
+              {this.state.PickFrontPrintRequired && (
+                <div className='frontPrinterFlow'>
+                  <img
+                    height='150px'
+                    width='150px'
+                    src={'./assets/images/Printer1.gif'}
+                  />
+                </div>
+              )}
+              {/* {this.state.PickFrontPrintRequired && (
                 <BinMap
                   orientation={this.state.groupOrientation}
                   mapDetails={this.state.BinMapDetails}
                   selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontPrinterFlow'
                 />
-              )}
+              )} */}
               {binComponent}
               <div className='actions'>
                 <Button1
@@ -789,7 +799,7 @@ var PickFront = React.createClass({
           cancelScanFlag || cancelScanFlag === undefined ? false : true;
         var cancelButton;
         var cancelClicked = mainstore.getCancelButtonStatus();
-        const { enableReprint } = this.state;
+        var { PickFrontReprintEnabled } = this.state;
         var BinFull = (
           <Button1
             disabled={false}
@@ -842,12 +852,12 @@ var PickFront = React.createClass({
 
           // Pick Front Flow Customer Trolley Support Print Enhancements
           var reprintButton = '';
-          reprintButton = !cancelScanDisabled ? (
+          reprintButton = PickFrontReprintEnabled ? (
             <Button1
               disabled={false}
               text={_('Reprint')}
               module={appConstants.PICK_FRONT}
-              action={appConstants.REPRINT}
+              action={appConstants.REPRINT_REQUEST}
               color={'black'}
             />
           ) : (
@@ -884,7 +894,7 @@ var PickFront = React.createClass({
                   screenClass='frontFlow'
                 />
               )}
-              {this.state.SplitScreenFlag && (
+              {this.state.PickFrontPrintRequired && (
                 <BinMap
                   orientation={this.state.groupOrientation}
                   mapDetails={this.state.BinMapDetails}

@@ -480,15 +480,13 @@ var Button1 = React.createClass({
           case appConstants.CONFIRM_REPRINT_LAST_REQUEST:
             data['event_name'] = appConstants.CONFIRM_REPRINT_LAST_REQUEST;
             data['event_data'] = null;
-            ActionCreators.setCancelButtonStatus(false);
-            ActionCreators.validateAndSendDataToServer();
+            -ActionCreators.postDataToInterface(data);
             closeModalBox();
             break;
           case appConstants.CONFIRM_REPRINT_ALL_REQUEST:
             data['event_name'] = appConstants.CONFIRM_REPRINT_ALL_REQUEST;
             data['event_data'] = null;
-            ActionCreators.setCancelButtonStatus(false);
-            ActionCreators.validateAndSendDataToServer();
+            -ActionCreators.postDataToInterface(data);
             closeModalBox();
             break;
           case appConstants.BOX_FULL:

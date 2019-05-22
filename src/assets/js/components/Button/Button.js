@@ -575,13 +575,21 @@ var Button1 = React.createClass({
                     case appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS:
                         data["event_name"] = "audit_actions";
                         data["event_data"]["type"] = "exception_response";
-                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        data["event_data"]["event"] = "process_damaged_boxes";
                         var damagedQtyCount = mainstore.getDamagedQuantity();
                         var damagedBoxDetails = mainstore.getDamagedBoxDetails();
                         damagedBoxDetails[0].damaged_qty = damagedQtyCount;
                         data["event_data"]["damaged_boxes"] = damagedBoxDetails;
                         ActionCreators.postDataToInterface(data);
                         break;
+
+                    case appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM:
+                        data["event_name"] = "audit_actions";
+                        data["event_data"]["type"] = "exception_response";
+                        data["event_data"]["event"] = mainstore.getExceptionType();
+                        ActionCreators.postDataToInterface(data);
+                        break;
+
                     case appConstants.CANCEL_EXCEPTION_TO_SERVER:
                         data["event_name"] = "cancel_exception";
                         ActionCreators.postDataToInterface(data);

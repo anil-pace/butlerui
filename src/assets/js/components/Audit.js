@@ -51,7 +51,9 @@ var Audit = React.createClass({
       this.state.AuditScreenId !=
         appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId != appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION &&
-      this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION
+      this.state.AuditScreenId !==
+        appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId !== appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM
     ) {
       if (
         this.state.AuditShowModal['showModal'] != undefined &&
@@ -510,18 +512,19 @@ var Audit = React.createClass({
           if (this.state.AuditPackData['tableRows'].length > 0) {
             this._packData = (
               <div className='audit-wrapper'>
-                {isAddlInfoPresent && (
-                  <p className='a-info-wrap'>
-                    <span
-                      className='audit-uom-info-icon'
-                      onClick={function() {
-                        this._openAddlInfoModal(true);
-                      }.bind(this)}
-                    >
-                      <i>i</i>
-                    </span>
-                  </p>
-                )}
+                {isAddlInfoPresent &&
+                  this.state.infoButtonData.container_level_2 && (
+                    <p className='a-info-wrap'>
+                      <span
+                        className='audit-uom-info-icon'
+                        onClick={function() {
+                          this._openAddlInfoModal(true);
+                        }.bind(this)}
+                      >
+                        <i>i</i>
+                      </span>
+                    </p>
+                  )}
                 <TabularData
                   data={this.state.AuditPackData}
                   className='audit_scan'
@@ -534,18 +537,19 @@ var Audit = React.createClass({
           if (this.state.AuditSubPackData['tableRows'].length > 0) {
             this._subPackData = (
               <div className='audit-wrapper'>
-                {isAddlInfoPresent && (
-                  <p className='a-info-wrap'>
-                    <span
-                      className='audit-uom-info-icon'
-                      onClick={function() {
-                        this._openAddlInfoModal(true);
-                      }.bind(this)}
-                    >
-                      <i>i</i>
-                    </span>
-                  </p>
-                )}
+                {isAddlInfoPresent &&
+                  this.state.infoButtonData.container_level_1 && (
+                    <p className='a-info-wrap'>
+                      <span
+                        className='audit-uom-info-icon'
+                        onClick={function() {
+                          this._openAddlInfoModal(true);
+                        }.bind(this)}
+                      >
+                        <i>i</i>
+                      </span>
+                    </p>
+                  )}
                 <TabularData
                   data={this.state.AuditSubPackData}
                   className='audit_scan'
@@ -579,18 +583,19 @@ var Audit = React.createClass({
           if (this.state.AuditLooseItemsData['tableRows'].length > 0) {
             this._looseItems = (
               <div className='audit-wrapper'>
-                {isAddlInfoPresent && (
-                  <p className='a-info-wrap'>
-                    <span
-                      className='audit-uom-info-icon'
-                      onClick={function() {
-                        this._openAddlInfoModal(true);
-                      }.bind(this)}
-                    >
-                      <i>i</i>
-                    </span>
-                  </p>
-                )}
+                {isAddlInfoPresent &&
+                  this.state.infoButtonData.container_level_0 && (
+                    <p className='a-info-wrap'>
+                      <span
+                        className='audit-uom-info-icon'
+                        onClick={function() {
+                          this._openAddlInfoModal(true);
+                        }.bind(this)}
+                      >
+                        <i>i</i>
+                      </span>
+                    </p>
+                  )}
                 <TabularData
                   data={this.state.AuditLooseItemsData}
                   className='audit_scan'
@@ -607,9 +612,9 @@ var Audit = React.createClass({
 
               <div className='main-container space-left'>
                 <div className='audit-scan-left'>
+                  {this._looseItemData}
                   {this._packData}
                   {this._subPackData}
-                  {this._looseItemData}
                   {this._looseItems}
                 </div>
                 {this.state.allInfoModalStatus && isAddlInfoPresent && (
@@ -888,125 +893,118 @@ var Audit = React.createClass({
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
-        if (this.state.AuditExceptionScreen == 'first_screen') {
-          for (
-            var i = 0;
-            i < this.state.AuditDamagedItems.tableRows.length;
-            i++
-          ) {
-            var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
-              .buttonStatus;
-            if (staticCountFlag === true) {
-              var dynamicCount = mainstore.getDamagedQuantity();
-              if (dynamicCount <= 0) {
-                var dynamicCountFlag = false;
-              } else {
-                var dynamicCountFlag = true;
-              }
-              this._disableNext = !(staticCountFlag && dynamicCountFlag);
+        for (
+          var i = 0;
+          i < this.state.AuditDamagedItems.tableRows.length;
+          i++
+        ) {
+          var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
+            .buttonStatus;
+          if (staticCountFlag === true) {
+            var dynamicCount = mainstore.getDamagedQuantity();
+            if (dynamicCount <= 0) {
+              var dynamicCountFlag = false;
             } else {
-              this._disableNext = !staticCountFlag;
+              var dynamicCountFlag = true;
             }
-            // Serialised flow specific sceanrio
-            let isDamagedQuantityOne =
-              this.state.AuditDamagedCount.length &&
-              this.state.AuditDamagedCount[0].damaged_qty === 1
-                ? true
-                : false;
-            let isKQDisabled = this.state.AuditDamagedCount.length
-              ? !this.state.AuditDamagedCount[0].enable_kq_row
-              : false;
-            if (isDamagedQuantityOne && isKQDisabled) {
-              this._disableNext = false;
-            }
+            this._disableNext = !(staticCountFlag && dynamicCountFlag);
+          } else {
+            this._disableNext = !staticCountFlag;
           }
+          // Serialised flow specific sceanrio
+          let isDamagedQuantityOne =
+            this.state.AuditDamagedCount.length &&
+            this.state.AuditDamagedCount[0].damaged_qty === 1
+              ? true
+              : false;
+          let isKQDisabled = this.state.AuditDamagedCount.length
+            ? !this.state.AuditDamagedCount[0].enable_kq_row
+            : false;
+          if (isDamagedQuantityOne && isKQDisabled) {
+            this._disableNext = false;
+          }
+        }
 
-          this._component = (
-            <div className='grid-container exception'>
-              <Modal />
-              <Exception data={this.state.AuditExceptionData} />
-              <div className='exception-right'>
-                <ExceptionHeader data={this.state.AuditServerNavData} />
-                <TabularData
-                  data={this.state.AuditDamagedItems}
-                  className='limit-height width-extra '
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.AuditExceptionData} />
+            <div className='exception-right'>
+              <ExceptionHeader data={this.state.AuditServerNavData} />
+              <TabularData
+                data={this.state.AuditDamagedItems}
+                className='limit-height width-extra '
+              />
+              <div className='finish-damaged-barcode'>
+                <Button1
+                  disabled={this._disableNext}
+                  text={_('NEXT')}
+                  color={'orange'}
+                  module={appConstants.AUDIT}
+                  action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
                 />
-                <div className='finish-damaged-barcode'>
-                  <Button1
-                    disabled={this._disableNext}
-                    text={_('NEXT')}
-                    color={'orange'}
-                    module={appConstants.AUDIT}
-                    action={appConstants.AUDIT_NEXT_SCREEN}
-                  />
-                </div>
               </div>
-              <div className='cancel-scan'>
+            </div>
+            <div className='cancel-scan'>
+              <Button1
+                disabled={false}
+                text={_('Cancel Exception')}
+                module={appConstants.AUDIT}
+                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                color={'black'}
+              />
+            </div>
+          </div>
+        );
+
+        break;
+
+      case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
+        var selected_screen;
+        if (!this.state.GetIRTScanStatus) {
+          selected_screen = (
+            <div className='gor-exception-align'>
+              <div className='gor-exceptionConfirm-text'>
+                {_('Please put exception entities in exception area')}
+              </div>
+              <div className='finish-damaged-barcode align-button'>
                 <Button1
                   disabled={false}
-                  text={_('Cancel Exception')}
+                  text={_('Confirm')}
+                  color={'orange'}
                   module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                  color={'black'}
+                  action={
+                    appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM
+                  }
                 />
               </div>
             </div>
           );
-        } else if (this.state.AuditExceptionScreen == 'second_screen') {
-          if (!this.state.GetIRTScanStatus) {
-            _button = (
-              <div className='exception-right'>
-                <div className='main-container exception2'>
-                  <div className='kq-exception'>
-                    <div className='kq-header'>
-                      {_('Please put entities in exception area and confirm')}
-                    </div>
-                  </div>
-                </div>
-                <div className='finish-damaged-barcode'>
-                  <Button1
-                    disabled={false}
-                    text={_('Confirm')}
-                    color={'orange'}
-                    module={appConstants.AUDIT}
-                    action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
-                  />
-                </div>
-              </div>
-            );
-          } else {
-            _button = (
-              <div className='exception-right'>
-                <div className='main-container exception2'>
-                  <div className='kq-exception'>
-                    <div className='kq-header'>
-                      {_(
-                        'Please put entities in exception area and scan the bin'
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          }
-
-          this._component = (
-            <div className='grid-container exception'>
-              {<Modal />}
-              <Exception data={this.state.AuditExceptionData} />
-              {_button}
-              <div className='cancel-scan'>
-                <Button1
-                  disabled={false}
-                  text={_('Cancel Exception')}
-                  module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                  color={'black'}
-                />
+        } else {
+          selected_screen = (
+            <div className='gor-exception-align'>
+              <div className='gor-exceptionConfirm-text'>
+                {_('Please put exception entities in IRT bin and scan the bin')}
               </div>
             </div>
           );
         }
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.AuditExceptionData} />
+            <div className='exception-right'>{selected_screen}</div>
+            <div className='cancel-scan'>
+              <Button1
+                disabled={false}
+                text={_('Cancel Exception')}
+                module={appConstants.AUDIT}
+                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                color={'black'}
+              />
+            </div>
+          </div>
+        );
         break;
 
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:

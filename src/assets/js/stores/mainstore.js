@@ -1436,17 +1436,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.Sku_Item_List) {
             _seatData.Sku_Item_List.map(function (value, index) {
                 d = [];
-                var itemQtyList = [];
+                var itemExpectedQty = [];
+                var itemActualQty = [];
                 var itemList = value.Item_Qty_List;
                 if (itemList) {
                     for (var i = 0, listLen = itemList.length; i < listLen; i++) {
-                        itemQtyList.push(itemList[i].Actual_Qty)
+                        itemExpectedQty.push(itemList[i].Expected_qty);
+                        itemActualQty.push(itemList[i].Actual_Qty);
                     }
                 }
                 d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
                 if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-                    d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, disabledStatus, true));
-                d.push(new self.tableCol(itemQtyList.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
+                    d.push(new self.tableCol(itemExpectedQty.toString(), "enabled", false, "large", true, false, false, disabledStatus, true));
+                d.push(new self.tableCol(itemActualQty.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
                 data["tableRows"].push(d);
             });
         }
@@ -2151,6 +2153,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
         return bIsMobile;
     },
+
     _getDockedGroup: function () {
         return (_seatData && _seatData.docked ? Object.keys(_seatData.docked) : []);
 
@@ -2774,6 +2777,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return selectedBin;
     },
 
+    _getRollCageStatus: function () {
+        var rollCageStatus = false;
+        if (_seatData) {
+            rollCageStatus = _seatData.roll_cage_flow && _currentSeat == appConstants.PICK_FRONT;
+        }
+        return rollCageStatus;
+    },
+
     getScreenData: function () {
         var data = {};
 
@@ -3196,7 +3207,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
                 data["PreviousDetails"] = this.getPreviousPickDetails();
+                data["rollCageStatus"] = this._getRollCageStatus();
+                data["groupOrientation"] = this._getBinMapOrientation();
                 data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
                 break;
 
             case appConstants.PICK_FRONT_LOCATION_CONFIRM:
@@ -3520,7 +3535,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickFrontNotification"] = this.getNotificationData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();
                 data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
-
                 data["groupOrientation"] = this._getBinMapOrientation();
                 data["BinMapDetails"] = this._getBinMapDetails();
                 data["UndockAwaited"] = this._getUndockAwaitedGroup();
@@ -3730,6 +3744,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["AuditPickDirection"] = this.getDirectionDetails();
                 data["isDrawer"] = this.getDrawerFlag();
                 data["SlotType"] = this.getSlotType();
+                break;
+
+            case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
                 break;
 
             case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:

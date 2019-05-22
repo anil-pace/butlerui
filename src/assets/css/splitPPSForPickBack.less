@@ -1,11 +1,11 @@
 
 .splitPPSWrapperForPickBack{
-	
 	box-sizing:border-box;
     max-height: 350px;
     width: 40%;
     margin:0;
-    padding: 12px;
+	padding: 12px;
+	margin-right: 15%;
 	&.rightAligned{
 		right: -25px;
 		width:35%;
@@ -61,6 +61,33 @@
 		    .undock{
 		    	display:inline-block;
 		    	background:#518FFC url('../images/icon_whitearrow.svg') no-repeat center;
+		    	width:100%;
+		    	height:100%;
+		    	position: relative;
+			     &.right{
+			    	-webkit-animation: undockRight 1s infinite; /* Safari 4.0 - 8.0 */
+				    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+				    animation: undockRight 1s infinite;
+				    animation-timing-function: step-in;
+				    /* Safari */
+					-webkit-transform: rotate(-180deg);
+					/* Firefox */
+					-moz-transform: rotate(-180deg);
+					/* IE */
+					-ms-transform: rotate(-180deg);
+					/* Opera */
+					-o-transform: rotate(-180deg);
+			    }
+			     &.left{
+			    	-webkit-animation: undockLeft 1s infinite; /* Safari 4.0 - 8.0 */
+				    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+				    animation: undockLeft 1s infinite;
+				    animation-timing-function: step-in;
+			    }
+			}
+			.printReady{
+		    	display:inline-block;
+		    	background:yellow url('../images/icon_whitearrow.svg') no-repeat center;
 		    	width:100%;
 		    	height:100%;
 		    	position: relative;
@@ -156,6 +183,7 @@
 	    background-position: -225px 1px;
 		vertical-align:middle;
 		zoom: 80%;
+		margin-top: 10%;
 	}
 	.col3{
 		display: inline-block;
@@ -188,6 +216,34 @@
 		    .undock{
 		    	display:inline-block;
 		    	background:#518FFC url('../images/icon_whitearrow.svg') no-repeat center;
+		    	height:100%;
+		    	width:100%;
+		    	position: relative;
+			    &.right{
+			    	-webkit-animation: undockRight 1s infinite; /* Safari 4.0 - 8.0 */
+				    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+				    animation: undockRight 1s infinite;
+				    animation-timing-function: step-in;
+				    /* Safari */
+					-webkit-transform: rotate(-180deg);
+					/* Firefox */
+					-moz-transform: rotate(-180deg);
+					/* IE */
+					-ms-transform: rotate(-180deg);
+					/* Opera */
+					-o-transform: rotate(-180deg);
+			    }
+			     &.left{
+					
+			    	-webkit-animation: undockLeft 1s infinite; /* Safari 4.0 - 8.0 */
+				    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+				    animation: undockLeft 1s infinite;
+				    animation-timing-function: step-in;
+			    }
+			}
+			.printReady{
+		    	display:inline-block;
+		    	background: yellow url('../images/icon_whitearrow.svg') no-repeat center;
 		    	height:100%;
 		    	width:100%;
 		    	position: relative;
@@ -317,7 +373,31 @@
 					
 				}
 				
-		    }	    
+			}	  
+			.printReady{
+		    	display:inline-block;
+		    	background:yellow url('../images/icon_whitearrow.svg') no-repeat center;
+		    	height:100%;
+				width: 100%;
+				position: absolute;
+				left:0px;
+				zoom: 50%;
+			     &.below{
+			    	-webkit-animation: undockBelow 1s infinite; /* Safari 4.0 - 8.0 */
+				    -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+				    animation: undockBelow 1s infinite;
+					animation-timing-function: step-in;
+					-webkit-transform: rotate(-90deg);
+					/* Firefox */
+					-moz-transform: rotate(-90deg);
+					/* IE */
+					-ms-transform: rotate(-90deg);
+					/* Opera */
+					-o-transform: rotate(-90deg);
+					
+				}
+				
+		    }  
 		}
 		&.three{
 			li{

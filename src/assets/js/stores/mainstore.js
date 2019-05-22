@@ -2866,6 +2866,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return undockAwaited;
     },
 
+    getPrintReadyList: function () {
+        var printReady = [];
+        if (_seatData["dock_station_list"]) {
+            _seatData["dock_station_list"].forEach(function (bin) {
+                if (bin["status"] === "print_ready") {
+                    printReady.push(bin["dock_station_id"]);
+                }
+            })
+        }
+        return printReady;
+    },
+
     getWrongUndockList: function () {
         var wrongUndockList = [];
         if (_seatData["dock_station_list"]) {
@@ -3395,6 +3407,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["udpBinMapDetails"] = this.getDockStationList();
                 data["DockedGroup"] = this.getDockedList();
                 data["UndockAwaited"] = this.getUndockAwaitedList();
+                data["PrintReady"] = this.getPrintReadyList();
                 data["WrongUndock"] = this.getWrongUndockList();
 
                 //     data["groupOrientation"] = this._getBinMapOrientation(),

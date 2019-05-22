@@ -185,6 +185,7 @@ var PickBack = React.createClass({
                 displayBinId={true}
                 groupInfo={this.state.udpBinMapDetails}
                 docked={this.state.DockedGroup}
+                printReady={this.state.PrintReady}
                 wrongUndock={this.state.WrongUndock}
                 undockAwaited={this.state.UndockAwaited}
               />
@@ -206,6 +207,13 @@ var PickBack = React.createClass({
           // }
           this._component = (
             <div className='grid-container'>
+              <div style={{ position: "fixed", top: "31%", left: 0, border: "5px solid yellow" }}>
+                <img
+                  src={'./assets/images/Printer.gif'}
+                  height='180px'
+                  width='180px'
+                />
+              </div>
               <Modal />
               {binComponent}
             </div>

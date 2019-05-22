@@ -79,6 +79,7 @@ var CheckList = React.createClass({
                     <theader>
                         {this.props.checklistHeader ? this.props.checklistHeader + ":" : ""}
                     </theader>
+                    <div> &nbsp; </div>
                     <tbody>
                         {tableData}
                     </tbody>

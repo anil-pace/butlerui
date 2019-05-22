@@ -8,6 +8,7 @@ var SplitPPS = React.createClass({
         var leftCol = [],
             dockedGroup = this.props.docked || [],
             undockAwaited = this.props.undockAwaited || [],
+            printReady = this.props.printReady || [],
             wrongUndock = this.props.wrongUndock || [],
             selectedBin = this.props.selectedbin || [],
             rightCol = [], centerCol = [], centerTopCol = [], maxBlockCount = 0, maxLeftCount = 0, maxRightCount = 0, maxBlockHeight = 0, maxCenterCount = 0, maxCenterTopCount = 0, style = null, maxWidth = 0;
@@ -31,6 +32,7 @@ var SplitPPS = React.createClass({
         console.log("dockedGroup" + dockedGroup);
         console.log("undockAwaited" + undockAwaited);
         console.log("wrongUndock" + wrongUndock);
+        console.log("printReady" + printReady);
         maxBlockCount = maxCenterTopCount > 0 ? maxCenterTopCount : (maxLeftCount > maxRightCount) ? maxLeftCount : maxRightCount;
 
         maxBlockHeight = maxCenterTopCount > 0 ? 75 / maxBlockCount : 50 / maxBlockCount;
@@ -56,11 +58,13 @@ var SplitPPS = React.createClass({
         }
         var dockedclassName = this.props.ruleset === 'withBorder' ? "dockedCont bottomBorderLeft" : "dockedCont";
         var undockclassName = this.props.ruleset === 'withBorder' ? "undockedCont bottomBorderLeft" : "undockedCont";
+        var printReadyclassName = this.props.ruleset === 'withBorder' ? "printReadyCont bottomBorderLeft" : "printReadyCont";
         var wrongUndockclassName = this.props.ruleset === 'withBorder' ? "wrongUndockCont bottomBorderLeft" : "wrongUndockCont";
         var selectedbinclassName = this.props.ruleset === 'withBorder' ? "selectedbinCont bottomBorderLeft" : "selectedbin";
 
         var dockedRightclassName = this.props.ruleset === 'withBorder' ? "dockedCont bottomBorderRight" : "dockedCont";
         var undockRigtclassName = this.props.ruleset === 'withBorder' ? "undockedCont bottomBorderRight" : "undockedCont";
+        var printReadyRigtclassName = this.props.ruleset === 'withBorder' ? "printReadyCont bottomBorderRight" : "printReadyCont";
         var wrongUndockRightclassName = this.props.ruleset === 'withBorder' ? "wrongUndockCont bottomBorderRight" : "wrongUndockCont";
         var selectedbinRightclassName = this.props.ruleset === 'withBorder' ? "selectedbinCont bottomBorderRight" : "selectedbin";
 
@@ -82,6 +86,11 @@ var SplitPPS = React.createClass({
                     else if (wrongUndock.indexOf(k) >= 0) {
                         leftCol.push(<li key={k} style={style} className={wrongUndockclassName}>
                             <span className="wrongUndock left">{this.props.displayBinId ? k : null}</span>
+                        </li>);
+                    }
+                    else if (printReady.indexOf(k) >= 0) {
+                        leftCol.push(<li key={k} style={style} className={printReadyclassName}>
+                            <span className="printReady left">&nbsp;</span>
                         </li>);
                     }
                     else if (selectedBin.indexOf(k) >= 0) {
@@ -109,6 +118,11 @@ var SplitPPS = React.createClass({
                             <span className="wrongUndock right">{this.props.displayBinId ? k : null}</span>
                         </li>);
                     }
+                    else if (printReady.indexOf(k) >= 0) {
+                        rightCol.push(<li key={k} style={style} className={printReadyRigtclassName}>
+                            <span className="printReady right">{this.props.displayBinId ? k : null}</span>
+                        </li>);
+                    }
                     else if (selectedBin.indexOf(k) >= 0) {
                         rightCol.push(<li key={k} style={style} className={selectedbinRightclassName}>
                             <span className="selectedbin">{this.props.displayBinId ? k : null}</span>
@@ -132,6 +146,13 @@ var SplitPPS = React.createClass({
                             </span>
                         </li>);
                     }
+                    else if (printReady.indexOf(k) >= 0) {
+                        centerCol.push(<li key={k} style={style} className="printReadyCont">
+                            <span >{this.props.displayBinId ? k : null}</span>
+                            <span className="printReady below">
+                            </span>
+                        </li>);
+                    }
                     else if (wrongUndock.indexOf(k) >= 0) {
                         centerCol.push(<li key={k} style={style} className={"wrongUndockCont"}>
                             <span className="wrongUndock left">{this.props.displayBinId ? k : null}</span>
@@ -147,35 +168,6 @@ var SplitPPS = React.createClass({
                     }
 
                 }
-                else if (data[k] === allresourceConstants.BIN_GROUP_CENTER_TOP) {
-                    if (dockedGroup.indexOf(k) >= 0) {
-                        centerTopCol.push(<li key={k} style={style} className="dockedCont">
-                            <span className={this.props.ruleset === 'withBorder' ? "" : "docked"}>{this.props.displayBinId ? k : null}</span>
-                        </li>);
-                    }
-                    else if (undockAwaited.indexOf(k) >= 0) {
-                        centerTopCol.push(<li key={k} style={style} className="undockedCont">
-                            <span >{this.props.displayBinId ? k : null}</span>
-                            <span className="undock below">
-                            </span>
-                        </li>);
-                    }
-                    else if (wrongUndock.indexOf(k) >= 0) {
-                        centerTopCol.push(<li key={k} style={style} className={"wrongUndockCont"}>
-                            <span className="wrongUndock left">{this.props.displayBinId ? k : null}</span>
-                        </li>);
-                    }
-                    else if (selectedBin.indexOf(k) >= 0) {
-                        centerTopCol.push(<li key={k} style={style} className={"selectedbinCont"}>
-                            <span className="selectedbin">{this.props.displayBinId ? k : null}</span>
-                        </li>);
-                    }
-                    else {
-                        centerTopCol.push(<li key={k} style={style}><span>{this.props.displayBinId ? k : null}</span></li>);
-                    }
-
-                }
-
             }
         }
 

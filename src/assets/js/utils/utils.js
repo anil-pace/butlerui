@@ -535,7 +535,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
-  //data.state_data = { "seat_name": "front_4", "notification_list": [], "exception_allowed": [{ "event": "missing_or_unscannable_damaged_item", "exception_id": "PkF001", "details": ["Item"], "exception_name": "Item Missing/Bad Barcode" }], "irt_scan_enabled": true, "bin_coordinate_plotting": true, "final_damaged_boxes": [], "event": "pick_front_irt_bin_confirm", "screen_id": "pick_front_irt_bin_confirm", "logout_allowed": false, "seat_type": "front", "time_stamp": "2019-05-02T08:09:27Z", "api_version": "1", "group_info": { "1": "center" }, "is_idle": false, "operator_orientation": "0", "exception_type": "missing_or_unscannable_damaged_item", "error_popup_disabled": true, "screen_version": "1", "damaged_boxes": [], "docked": [], "mode": "pick", "scan_allowed": true, "header_msge_list": [{ "level": "info", "code": "PkF.H.013", "details": [0], "description": "Scan Damaged Entity" }], "roll_cage_flow": false };
   data.state_data = {
     "seat_name": "back_2",
     "notification_list": [{
@@ -781,33 +780,33 @@ var putSeatData = function (data) {
       {
         "direction": "center-top",
         "dock_station_id": "1",
-        "status": "docked"
+        "status": "print_ready"
       },
       {
         "direction": "center-top",
         "dock_station_id": "2",
         "status": "undock_awaited"
       },
-      {
-        "direction": "right",
-        "dock_station_id": "3",
-        "status": "wrong_undock"
-      },
-      {
-        "direction": "right",
-        "dock_station_id": "4",
-        "status": "none"
-      },
-      {
-        "direction": "right",
-        "dock_station_id": "6",
-        "status": "none"
-      },
-      {
-        "direction": "left",
-        "dock_station_id": "7",
-        "status": "none"
-      }
+      // {
+      //   "direction": "right",
+      //   "dock_station_id": "3",
+      //   "status": "wrong_undock"
+      // },
+      // {
+      //   "direction": "left",
+      //   "dock_station_id": "4",
+      //   "status": "docked"
+      // },
+      // {
+      //   "direction": "right",
+      //   "dock_station_id": "6",
+      //   "status": "none"
+      // },
+      // {
+      //   "direction": "left",
+      //   "dock_station_id": "7",
+      //   "status": "none"
+      // }
     ],
     "undock_header": {
       "level": "info",
@@ -830,6 +829,7 @@ var putSeatData = function (data) {
     "undock_index": 0,
     "printer_visible": false
   }
+
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

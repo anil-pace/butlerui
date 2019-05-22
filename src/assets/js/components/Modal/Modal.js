@@ -460,7 +460,7 @@ function loadComponent(modalType, modalData, ths) {
       );
       title = _('Bin Full');
       break;
-    case appConstants.REPRINT:
+    case appConstants.REPRINT_REQUEST:
       component = [];
       component.push(
         <div>

@@ -37,31 +37,32 @@ var Audit = React.createClass({
   _currentBox: '',
   _looseItems: '',
   _navigation: '',
-  showModal: function() {
+  showModal: function () {
     if (
       this.state.AuditScreenId != appConstants.AUDIT_RECONCILE &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
+      appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+      appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
+      appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
+      appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
+      appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId != appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION &&
-      this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION
+      this.state.AuditScreenId !== appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION &&
+      this.state.AuditScreenId !== appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM
     ) {
       if (
         this.state.AuditShowModal['showModal'] != undefined &&
         this.state.AuditShowModal['showModal'] ==
-          true /*&& !$('.modal').hasClass('in')*/
+        true /*&& !$('.modal').hasClass('in')*/
       ) {
         var self = this;
         this.state.AuditShowModal['showModal'] = false;
         var r = self.state.AuditShowModal.message;
-        setTimeout(function() {
+        setTimeout(function () {
           ActionCreators.showModal({
             data: {
               message: r
@@ -74,10 +75,10 @@ var Audit = React.createClass({
       }
     }
   },
-  getInitialState: function() {
+  getInitialState: function () {
     return this.getStateData();
   },
-  getStateData: function() {
+  getStateData: function () {
     var screenData = mainstore.getScreenData();
     var localState = {
       allInfoModalStatus: this.state ? this.state.allInfoModalStatus : false,
@@ -91,22 +92,22 @@ var Audit = React.createClass({
     };
     return Object.assign({}, screenData, localState);
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     //this.showModal();
     mainstore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     mainstore.removeChangeListener(this.onChange);
   },
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.showModal();
     AuditStore.addChangeListener(this.onChange);
   },
-  onChange: function() {
+  onChange: function () {
     this.setState(this.getStateData());
     this.showModal();
   },
-  getExceptionComponent: function() {
+  getExceptionComponent: function () {
     var _rightComponent = '';
     this._navigation = '';
     return (
@@ -126,20 +127,20 @@ var Audit = React.createClass({
       </div>
     );
   },
-  callAPItoGetData: function(data) {
+  callAPItoGetData: function (data) {
     ActionCreators.getOrphanItemData(data);
   },
-  _onTabClick: function(selectedIndex) {
+  _onTabClick: function (selectedIndex) {
     this.setState({
       selectedTab: selectedIndex
     });
   },
-  _openAddlInfoModal: function(status) {
+  _openAddlInfoModal: function (status) {
     this.setState({
       allInfoModalStatus: status
     });
   },
-  _onSelect: function(val, txt) {
+  _onSelect: function (val, txt) {
     var data = {
       event_name: 'audit_change_uom',
       event_data: {
@@ -148,7 +149,7 @@ var Audit = React.createClass({
     };
     ActionCreators.postDataToInterface(data);
   },
-  getUOMDropdownValues: function() {
+  getUOMDropdownValues: function () {
     var customContainerNames = this.state.customContainerNames,
       options = [];
     for (var k in customContainerNames) {
@@ -159,7 +160,7 @@ var Audit = React.createClass({
     }
     return options;
   },
-  getAddlInfoData: function() {
+  getAddlInfoData: function () {
     var AuditAddlInfoData = {};
     var infoButtonData = this.state.infoButtonData,
       customContainerNames = this.state.customContainerNames,
@@ -256,7 +257,7 @@ var Audit = React.createClass({
 
     return AuditAddlInfoData;
   },
-  getLooseItemsData: function() {
+  getLooseItemsData: function () {
     var KDeepLooseItemsData = this.state.AuditKDeepLooseItemsData;
     if (KDeepLooseItemsData) {
       var looseItemsData = {};
@@ -327,7 +328,7 @@ var Audit = React.createClass({
     }
     return null;
   },
-  getScreenComponent: function(screen_id) {
+  getScreenComponent: function (screen_id) {
     switch (screen_id) {
       case appConstants.AUDIT_WAITING_FOR_MSU:
         if (this.state.AuditExceptionStatus == false) {
@@ -514,7 +515,7 @@ var Audit = React.createClass({
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
-                      onClick={function() {
+                      onClick={function () {
                         this._openAddlInfoModal(true);
                       }.bind(this)}
                     >
@@ -538,7 +539,7 @@ var Audit = React.createClass({
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
-                      onClick={function() {
+                      onClick={function () {
                         this._openAddlInfoModal(true);
                       }.bind(this)}
                     >
@@ -562,7 +563,7 @@ var Audit = React.createClass({
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
-                      onClick={function() {
+                      onClick={function () {
                         this._openAddlInfoModal(true);
                       }.bind(this)}
                     >
@@ -583,7 +584,7 @@ var Audit = React.createClass({
                   <p className='a-info-wrap'>
                     <span
                       className='audit-uom-info-icon'
-                      onClick={function() {
+                      onClick={function () {
                         this._openAddlInfoModal(true);
                       }.bind(this)}
                     >
@@ -622,7 +623,7 @@ var Audit = React.createClass({
                       defaultActiveTabIndex={this.state.selectedTab}
                       tabClass={'tabs-audit'}
                     >
-                      {Object.keys(AuditAddlInfoData).map(function(
+                      {Object.keys(AuditAddlInfoData).map(function (
                         value,
                         index
                       ) {
@@ -645,7 +646,7 @@ var Audit = React.createClass({
                           <div className='col-md-1 pull-right'>
                             <button
                               className={'close-info custom-button black'}
-                              onClick={function() {
+                              onClick={function () {
                                 this._openAddlInfoModal(false);
                               }.bind(this)}
                             >
@@ -668,18 +669,18 @@ var Audit = React.createClass({
                         onSelectHandler={this._onSelect}
                         placeholder={
                           this.state.customContainerNames[
-                            this.state.selectedUOM
+                          this.state.selectedUOM
                           ] || _('Select Value')
                         }
                       >
-                        {function(_this) {
+                        {function (_this) {
                           var options = [];
-                          uomOptions.map(function(el, idx) {
+                          uomOptions.map(function (el, idx) {
                             options.push(
                               <span
                                 className='gor-dropdown-option'
                                 key={el.value}
-                                onClick={function() {
+                                onClick={function () {
                                   _this._onSelect(el.value, el.text);
                                 }}
                               >
@@ -888,121 +889,114 @@ var Audit = React.createClass({
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
         this._navigation = '';
-        if (this.state.AuditExceptionScreen == 'first_screen') {
-          for (
-            var i = 0;
-            i < this.state.AuditDamagedItems.tableRows.length;
-            i++
-          ) {
-            var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
-              .buttonStatus;
-            if (staticCountFlag === true) {
-              var dynamicCount = mainstore.getDamagedQuantity();
-              if (dynamicCount <= 0) {
-                var dynamicCountFlag = false;
-              } else {
-                var dynamicCountFlag = true;
-              }
-              this._disableNext = !(staticCountFlag && dynamicCountFlag);
+        for (
+          var i = 0;
+          i < this.state.AuditDamagedItems.tableRows.length;
+          i++
+        ) {
+          var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
+            .buttonStatus;
+          if (staticCountFlag === true) {
+            var dynamicCount = mainstore.getDamagedQuantity();
+            if (dynamicCount <= 0) {
+              var dynamicCountFlag = false;
             } else {
-              this._disableNext = !staticCountFlag;
+              var dynamicCountFlag = true;
             }
-            // Serialised flow specific sceanrio
-            let isDamagedQuantityOne =
-              this.state.AuditDamagedCount[0].damaged_qty === 1 ? true : false;
-            let isKQDisabled = !this.state.AuditDamagedCount[0].enable_kq_row;
-            if (isDamagedQuantityOne && isKQDisabled) {
-              this._disableNext = false;
-            }
+            this._disableNext = !(staticCountFlag && dynamicCountFlag);
+          } else {
+            this._disableNext = !staticCountFlag;
           }
+          // Serialised flow specific sceanrio
+          let isDamagedQuantityOne =
+            this.state.AuditDamagedCount.length &&
+              this.state.AuditDamagedCount[0].damaged_qty === 1
+              ? true
+              : false;
+          let isKQDisabled = this.state.AuditDamagedCount.length
+            ? !this.state.AuditDamagedCount[0].enable_kq_row
+            : false;
+          if (isDamagedQuantityOne && isKQDisabled) {
+            this._disableNext = false;
+          }
+        }
 
-          this._component = (
-            <div className='grid-container exception'>
-              <Modal />
-              <Exception data={this.state.AuditExceptionData} />
-              <div className='exception-right'>
-                <ExceptionHeader data={this.state.AuditServerNavData} />
-                <TabularData
-                  data={this.state.AuditDamagedItems}
-                  className='limit-height width-extra '
-                />
-                <div className='finish-damaged-barcode'>
-                  <Button1
-                    disabled={this._disableNext}
-                    text={_('NEXT')}
-                    color={'orange'}
-                    module={appConstants.AUDIT}
-                    action={appConstants.AUDIT_NEXT_SCREEN}
-                  />
-                </div>
-              </div>
-              <div className='cancel-scan'>
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.AuditExceptionData} />
+            <div className='exception-right'>
+              <ExceptionHeader data={this.state.AuditServerNavData} />
+              <TabularData
+                data={this.state.AuditDamagedItems}
+                className='limit-height width-extra '
+              />
+              <div className='finish-damaged-barcode'>
                 <Button1
-                  disabled={false}
-                  text={_('Cancel Exception')}
+                  disabled={this._disableNext}
+                  text={_('NEXT')}
+                  color={'orange'}
                   module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                  color={'black'}
+                  action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
                 />
               </div>
             </div>
-          );
-        } else if (this.state.AuditExceptionScreen == 'second_screen') {
-          if (!this.state.GetIRTScanStatus) {
-            _button = (
-              <div className='exception-right'>
-                <div className='main-container exception2'>
-                  <div className='kq-exception'>
-                    <div className='kq-header'>
-                      {_('Please put entities in exception area and confirm')}
-                    </div>
-                  </div>
-                </div>
-                <div className='finish-damaged-barcode'>
-                  <Button1
-                    disabled={false}
-                    text={_('Confirm')}
-                    color={'orange'}
-                    module={appConstants.AUDIT}
-                    action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS}
-                  />
-                </div>
-              </div>
-            );
-          } else {
-            _button = (
-              <div className='exception-right'>
-                <div className='main-container exception2'>
-                  <div className='kq-exception'>
-                    <div className='kq-header'>
-                      {_(
-                        'Please put entities in exception area and scan the bin'
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          }
+            <div className='cancel-scan'>
+              <Button1
+                disabled={false}
+                text={_('Cancel Exception')}
+                module={appConstants.AUDIT}
+                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                color={'black'}
+              />
+            </div>
+          </div>
+        );
 
-          this._component = (
-            <div className='grid-container exception'>
-              {<Modal />}
-              <Exception data={this.state.AuditExceptionData} />
-              {_button}
-              <div className='cancel-scan'>
+        break;
+
+      case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
+        var selected_screen;
+        if (!this.state.GetIRTScanStatus) {
+          selected_screen = (
+            <div className="gor-exception-align">
+              <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>
+              <div className="finish-damaged-barcode align-button">
                 <Button1
                   disabled={false}
-                  text={_('Cancel Exception')}
+                  text={_("Confirm")}
+                  color={"orange"}
                   module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                  color={'black'}
-                />
+                  action={appConstants.SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM} />
               </div>
             </div>
           );
         }
+        else {
+          selected_screen = (
+            <div className="gor-exception-align">
+              <div className="gor-exceptionConfirm-text">{_("Please put exception entities in IRT bin and scan the bin")}</div>
+            </div>
+          );
+        }
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.AuditExceptionData} />
+            <div className="exception-right">
+              {selected_screen}
+            </div>
+            <div className='cancel-scan'>
+              <Button1 disabled={false}
+                text={_("Cancel Exception")}
+                module={appConstants.AUDIT}
+                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                color={"black"} />
+            </div>
+          </div>
+        );
         break;
+
 
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
@@ -1190,11 +1184,11 @@ var Audit = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className='itemSearchfooter'>
@@ -1215,7 +1209,7 @@ var Audit = React.createClass({
         return true;
     }
   },
-  getNotificationComponent: function() {
+  getNotificationComponent: function () {
     if (this.state.AuditNotification != undefined) {
       this._notification = (
         <Notification
@@ -1225,7 +1219,7 @@ var Audit = React.createClass({
       );
     } else {
       if ($('.modal.notification-error').is(':visible')) {
-        setTimeout(function() {
+        setTimeout(function () {
           $('.modal.notification-error').data(
             'bs.modal'
           ).options.backdrop = true;
@@ -1236,7 +1230,7 @@ var Audit = React.createClass({
 
         return null;
       } else if ($('.modal.in').is(':visible')) {
-        setTimeout(function() {
+        setTimeout(function () {
           if (
             $('.modal.in')
               .find('div')
@@ -1254,7 +1248,7 @@ var Audit = React.createClass({
       this._notification = '';
     }
   },
-  render: function(data) {
+  render: function (data) {
     this.getNotificationComponent();
     this.getScreenComponent(this.state.AuditScreenId);
     return (

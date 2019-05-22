@@ -4981,6 +4981,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
+<<<<<<< HEAD
   getToteException: function() {
     if (_seatData.hasOwnProperty('exception_msg')) {
       return _seatData.exception_msg[0];
@@ -5002,6 +5003,1121 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             : 0,
           total_qty: 0,
           kq_allowed: _seatData.enable_kq ? true : false /* BSS-10640 */
+=======
+        //since OrigBinUse Flag is needed in all the screens.
+        data["OrigBinUse"] = this._getOrigBinUse();
+        data["SeatType"] = this.getSeatType();
+        data["ppsMode"] = this.getPpsMode();
+        switch (_screenId) {
+
+            case appConstants.PUT_BACK_STAGE:
+            case appConstants.PUT_BACK_SCAN_TOTE:
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["StageActive"] = this.getStageActiveStatus();
+                data["StageAllActive"] = this.getStageAllActiveStatus();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
+                data["ToteId"] = this.getToteId();
+                data["StageButtonHideFlag"] = this.getStageButtonHideStatus();
+                break;
+            case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNotification"] = this.getNotificationData();
+                break;
+
+            case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackItemUid"] = this.getItemUid();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackToteException"] = this.getToteException();
+                break;
+            case appConstants.PUT_BACK_SCAN:
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackScanDetails"] = this.scanDetails();
+                data["PutBackProductDetails"] = this.productDetails();
+                data["PutBackItemUid"] = this.getItemUid();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["InvoiceRequired"] = this.getInvoiceStatus();
+                data["InvoiceType"] = this.getInvoiceType();
+                break;
+            case appConstants.PUT_BACK_INVOICE:
+                data["HeaderMessg"] = this.getHeaderMessg();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["InvoiceType"] = this.getInvoiceType();
+                data["PutBackNotification"] = this.getNotificationData();
+                break;
+            case appConstants.PUT_BACK_TOTE_CLOSE:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackReconciliation"] = this.getReconcileData();
+                data["PutBackToteId"] = this.getToteId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                break;
+
+            case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
+            case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+                break;
+            case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackNextButtonState"] = this.enableButton();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                break;
+            case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                break;
+
+            case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                data["GetExceptionType"] = this.getExceptionType();
+                break;
+            case appConstants.PUT_BACK_PRESS_PPTL_TOTE:
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["ToteId"] = this.getToteId();
+                break;
+
+            case appConstants.PUT_BACK_NO_SCAN_TOTE:
+                data["PutBackBinData"] = this.getBinData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["StageButtonHideFlag"] = this.getStageButtonHideStatus();
+                data["StageActive"] = this.getStageActiveStatus();
+                data["StageAllActive"] = this.getStageAllActiveStatus();
+                break;
+
+            case appConstants.PUT_BACK_UNSCANNABLE:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PutBackExceptionType"] = this.getExceptionType();
+                break;
+
+            case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PutBackExceptionProductDetails"] = this.getItemDetailsData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionScreen"] = this.getPutBackExceptionScreen();
+                break;
+
+            case appConstants.PRE_PUT_STAGE:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] = this._getMtuDetails();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PRE_PUT_SCAN:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ReleaseActive"] = this._getReleaseActiveStatus();
+                data["MtuDetails"] = this._getMtuDetails();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutToteid"] = this.getToteId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PRE_PUT_RELEASE:
+                data["PrePutBinData"] = this.getBinData();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["MtuDetails"] = this._getMtuDetails();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PRE_PUT_EXCEPTION_EXCESS_TOTE:
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                break;
+            case appConstants.PRE_PUT_EXCEPTION_EXCESS_ITEMS:
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExcessItems"] = this._getExcessItemsData();
+                data["PrePutExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
+            case appConstants.PUT_FRONT_WAITING_FOR_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["MobileFlag"] = this._getMobileFlag();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+
+                break;
+            case appConstants.PUT_FRONT_SCAN:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting();
+                break;
+            case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
+            case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
+            case appConstants.UDP_PUT_FRONT_MISSING:
+            case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                data["PutFrontPutDirection"] = this.getDirectionDetails();
+                break;
+            case appConstants.PUT_FRONT_WAITING_UNDOCK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PUT_FRONT_WRONG_UNDOCK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["DockedGroup"] = this._getDockedGroup();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["WrongUndock"] = this._getWrongUndockGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
+
+
+            case appConstants.PUT_FRONT_PPTL_PRESS:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
+            case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontBinData"] = this.getBinData();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                break;
+            case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
+            case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontCurrentBin"] = this.getCurrentSelectedBin();
+                data["PutFrontRackDetails"] = this.getRackDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontScanDetails"] = this.scanDetails();
+                data["PutFrontProductDetails"] = this.productDetails();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PutFrontItemUid"] = this.getItemUid();
+                break;
+
+            case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontExceptionFlag"] = this._getWareHouseExceptionFlag();
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                break;
+            case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PutFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PutFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                data["UnmarkedContainer"] = this.getUnmarkedContainerFlag();
+                break;
+
+            case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontKQQuantity"] = this.getScanDetails();
+                data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen();
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontDamagedQuantity"] = this.getPhysicallyDamagedScanDetails();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontDamagedItems"] = this._getDamagedItemsData();
+
+                data["PutFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["isUnmarkedContainer"] = this._getUnmarkedContainerFlag();
+                break;
+
+
+
+
+            case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
+            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                break;
+            case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExcessItems"] = this._getExcessItemsData();
+                data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
+
+            case appConstants.PUT_BACK_SCAN_EXCESS_ITEM:
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExcessItems"] = this._getExcessItemsData();
+                data["PutBackExceptionFlag"] = this._getExcessExceptionFlag();
+                break;
+
+
+
+
+            case appConstants.PICK_FRONT_WAITING_FOR_MSU:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["PreviousDetails"] = this.getPreviousPickDetails();
+                data["rollCageStatus"] = this._getRollCageStatus();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
+                break;
+
+            case appConstants.PICK_FRONT_LOCATION_CONFIRM:
+            case appConstants.PICK_FRONT_LOCATION_SCAN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["PickFrontLocationButtonEnable"] = this.getLocationButtonStatus();
+
+                break;
+
+            case appConstants.PICK_FRONT_SKIP_TOTE:
+            case appConstants.PICK_FRONT_DOCK_TOTE:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["udpBinMapDetails"] = this.getUDPMapDetails(),
+                    data["groupOrientation"] = this._getBinMapOrientation(),
+                    data["selectedTotes"] = this.getSelectedTotes()
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data['PickFrontChecklistData'] = this.getChecklistDockData();
+                data['PickFrontChecklistIndex'] = this.getChecklistDockIdx();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+                break;
+
+            case appConstants.PICK_FRONT_ONE_STEP_SCAN:
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["udpBinMapDetails"] = this.getUDPMapDetails();
+                data["selectedTotes"] = this.getSelectedTotes();
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data["PreviousDetails"] = this.getPreviousPickDetails();
+                data["SlotType"] = this.getSlotType();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["undockAwaited"] = this._getUndockAwaitedGroup();
+                break;
+
+
+
+            case appConstants.PICK_FRONT_SLOT_SCAN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontCarryingUnitBtnEnable"] = this.getButtonStatus();
+                break;
+
+            case appConstants.PICK_FRONT_UNDOCK_TOTE:
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["udpBinMapDetails"] = this.getUDPMapDetails();
+                data["selectedTotes"] = this.getSelectedTotes();
+                data["PickCurrentBin"] = this._getSelectedBinID();
+                data["undockAwaited"] = this._getUndockAwaitedGroup();
+
+                break;
+            case appConstants.PICK_FRONT_CONTAINER_BREAK:
+            case appConstants.PICK_FRONT_ITEM_SCAN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontPickDirection"] = this.getDirectionDetails();
+                data["PickFrontRackTypeMPU"] = this.getRackType();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+
+                break;
+
+            case appConstants.PICK_FRONT_CHECKLIST:
+
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontPickDirection"] = this.getDirectionDetails();
+                data["PickFrontRackTypeMPU"] = this.getRackType();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistData"] = this.getChecklistData();
+                data["PickFrontChecklistIndex"] = this.getChecklistIdx();
+                break;
+
+            case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
+                data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+                data["PickFrontNotification"] = this.getNotificationData();
+
+            case appConstants.PICK_FRONT_CONTAINER_SCAN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["SlotType"] = this.getSlotType();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                break;
+            case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+                data["PickFrontPackingCancelStatus"] = this.getPickFrontPackingCancelStatus();
+                data["PickFrontBoxOrderDetails"] = this.getOrderID();
+                data["PickFrontNotification"] = this.getNotificationData();
+
+            case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
+            case appConstants.PICK_FRONT_WORKING_TABLE:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                break;
+
+            case appConstants.PICK_FRONT_PACKING_BOX:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontPackingBoxType"] = this.getPackingBoxType();
+                break;
+
+            case appConstants.PER_ITEM_PRINT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PrintScanDetails"] = this.getQuantityDetails();
+                data["PickCurrentBin"] = this.getCurrentSelectedBin();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PrintCancelScan"] = this.cancelScanDetails();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontNotification"] = this.getNotificationData();
+                break;
+
+            case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                break;
+
+            case appConstants.PICK_FRONT_SCAN_PACKS:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontBoxOrderDetails"] = this.getOrderDetails();
+                data["PickFrontBinData"] = this.getBinData();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontItemUid"] = this.getItemUid();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontRackDetails"] = this.getRackDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontRackTypeMPU"] = this.getRackType();
+                break;
+            case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
+                data["PickFrontPackingButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontPackingButtonDisable"] = this.getPickFrontButtonStatus();
+                data["PickFrontNotification"] = this.getNotificationData();
+
+            case appConstants.PICK_FRONT_PPTL_PRESS:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontProductDetails"] = this.productDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontSearchStatus"] = this.getItemSearchWindow();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["PickFrontItemUid"] = this.getItemUid();
+
+
+                break;
+            case appConstants.ITEM_SEARCH:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["AuditScreenId"] = this.getScreenId();
+                data["PrePutScreenId"] = this.getScreenId();
+
+                break;
+            case appConstants.ITEM_SEARCH_RESULT:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["AuditScreenId"] = this.getScreenId();
+                data["PrePutScreenId"] = this.getScreenId();
+                data["ItemSearchData"] = this.getItemData();
+                data["rowconfig"] = this.getDynamicColumnWidth();
+                data["loaderState"] = this.getLoaderStatus();
+                break;
+
+            case appConstants.PICK_FRONT_BIN_PRINTOUT:
+            case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontScanDetails"] = this.scanDetails();
+                data["PickFrontCancelScan"] = this.cancelScanDetails();
+                data["PickFrontChecklistDetails"] = this.getChecklistDetails();
+                data["PickFrontChecklistIndex"] = this.getChecklistIndex();
+                data["PickFrontSlotDetails"] = this.getCurrentSlot();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontChecklistOverlayStatus"] = this.getChecklistOverlayStatus();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["PickFrontButtonType"] = this.getPickFrontButtonType();
+                data["PickFrontButtonStatus"] = this.getPickFrontButtonStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                break;
+
+            case appConstants.PICK_FRONT_SKIP_BIN:
+            case appConstants.PICK_FRONT_NO_FREE_BIN:
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontBinData"] = this.getBinData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+                data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus();
+                data["groupOrientation"] = this._getBinMapOrientation();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["UndockAwaited"] = this._getUndockAwaitedGroup();
+                data["DockedGroup"] = this._getDockedGroup();
+                break;
+
+            case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+
+                break;
+            case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+            case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
+                data["PutBackKQDetails"] = this.getScanDetails();
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontGoodQuantity"] = this.getGoodScanDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["PickFrontMissingQuantity"] = this.getMissingScanDetails();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                break;
+
+
+            case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontDamagedItems"] = this._getDamagedItemsData();
+                data["PickFrontExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                break;
+            case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionScreen"] = this.getPickFrontExceptionScreen();
+                data["PickFrontBoxDetails"] = this.getBoxDetails();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                break;
+
+            case appConstants.PICK_BACK_BIN:
+            case appConstants.PICK_BACK_SCAN:
+            case appConstants.PICK_BACK_NO_SCAN:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["pickBackCancelButtonData"] = this.cancelScanDetails();
+                break;
+            case appConstants.PICK_BACK_EXCEPTION_REPRINT:
+            case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
+            case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:
+            case appConstants.PICK_BACK_EXCEPTION_OVERRIDE_TOTE:
+            case appConstants.PICK_BACK_REPRINT_TOTE:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackToteDetails"] = this.getToteDetails();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
+                data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
+                break;
+
+            case appConstants.PICK_BACK_PACKING_BOX:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["BinMapDetails"] = this._getBinMapDetails();
+                data["BinMapGroupDetails"] = this.getSelectedBinGroup();
+                data["groupOrientation"] = this._getBinMapOrientation(),
+                    data["PickBackBinData"] = this.getBinData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["PickBackPackingBoxType"] = this.getPackingBoxType();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
+                data["pickBackCancelButtonData"] = this.cancelScanDetails();
+                break;
+
+            case appConstants.PICK_BACK_CHANGE_PBOX_BIN:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
+                break;
+            case appConstants.PICK_BACK_CHANGE_PBOX_SCAN:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["BoxBarcode"] = this.getBoxBarcode();
+                data["ConfirmEnabled"] = this.getConfirmState();
+                break;
+
+
+
+
+            case appConstants.AUDIT_WAITING_FOR_MSU:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                break;
+            case appConstants.AUDIT_SCAN:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditCancelScanStatus"] = this.getCancelScanStatus();
+                data["AuditBoxSerialData"] = this.getBoxSerialData();
+                data["AuditLooseItemsData"] = this.getLooseItemsData();
+                data["AuditSlotDetails"] = this.getCurrentSlot();
+                data["AuditItemDetailsData"] = this.getItemDetailsData();
+                data["AuditScanDetails"] = this.getScanDetails();
+                data["AuditFinishFlag"] = this.getFinishAuditFlag();
+                data["AuditKQQuantity"] = this.getKQQuantity();
+                break;
+
+
+
+            case appConstants.AUDIT_RECONCILE:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditSRStatus"] = this.getSRStatus();
+                data["AuditReconcileBoxSerialData"] = this.getReconcileBoxSerialData();
+                data["AuditReconcileLooseItemsData"] = this.getReconcileLooseItemsData();
+                data["AuditReconcileItemInBoxData"] = this.getItemInBoxReconcileData();
+                data["AuditReconcilePackData"] = this.getPackReconcileData();
+                data["AuditReconcileSubPackData"] = this.getSubPackReconcileData();
+                data["DamageReconcileData"] = this.getDamageReconcileData();
+                data["FinalDamageReconcileData"] = this.getFinalDamageReconcileData();
+                data["AuditSlotDetails"] = this.getCurrentSlot();
+                data["AuditPossibleContainerNames"] = this.getContainerNames();
+                break;
+
+            case appConstants.AUDIT_LOCATION_SCAN:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditRackDetails"] = this.getRackDetails();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditSRStatus"] = this.getSRStatus();
+                data["AuditRackTypeMPU"] = this.getRackType();
+                data["AuditPickDirection"] = this.getDirectionDetails();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SlotType"] = this.getSlotType();
+                break;
+
+            case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                break;
+
+            case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditDamagedItems"] = this._getDamagedItemsDataForAudit();
+                data["AuditExceptionFlag"] = this._getDamagedExceptionFlag();
+                data["GetIRTScanStatus"] = this.getIRTScanStatus();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditDamagedCount"] = this.getAuditDamagedCount();
+                break;
+
+            case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
+            case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
+            case appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION:
+            case appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION:
+            case appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:
+            case appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                //data["AuditShowModal"] = this.getModalStatus();
+                data["AuditKQDetails"] = this.getScanDetails();
+                data["AuditExceptionScreen"] = this.getAuditExceptionScreen();
+                break;
+
+            //SR Audit
+            case appConstants.AUDIT_SCAN_SR:
+                data["AuditNavData"] = this.getNavData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditScreenId"] = this.getScreenId();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditShowModal"] = this.getModalStatus();
+                data["AuditCancelScanStatus"] = this.getCancelScanStatus();
+                data["AuditPackData"] = this.getPackData();
+                data["AuditSubPackData"] = this.getSubPackData();
+                data["AuditScanDetails"] = this.getScanDetails();
+                data["AuditItemDetailsData"] = this.getItemDetailsData();
+                data["AuditSRKQQuantity"] = this.getSRKQQuantity();
+                data["AuditFinishFlag"] = this.getFinishAuditFlag();
+                data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails();
+                data["AuditKDeepLooseItemsData"] = this.getKDeepLooseItemsData();
+                data["AuditLooseItemsData"] = this.getLooseItemsData();
+                break;
+
+            case appConstants.SEARCH_ENTITY_SCAN:
+                data['SearchItemExceptionStatus'] = this.getExceptionStatus();
+                data["SearchItemNavData"] = this.getNavData();
+                data["SearchItemServerNavData"] = this.getServerNavData();
+                data["SearchItemNotification"] = this.getNotificationData();
+                data["SearchItemScreenId"] = this.getScreenId();
+                data["SlotType"] = this.getSlotType();
+                data["isDrawer"] = this.getDrawerFlag();
+                data["SearchItemRackDetails"] = this.getRackDetails();
+                data["SearchItemProductDetails"] = this.productDetails();
+                data["SearchItemKQQuantity"] = this.getScanDetails();
+                data["kQstatus"] = this.kQstatus();
+                data["ProductSerial"] = this.getProductSerial();
+
+                break;
+            case appConstants.SEARCH_IRT_CONFIRM:
+                data['SearchItemExceptionStatus'] = this.getExceptionStatus();
+                data["SearchItemNavData"] = this.getNavData();
+                data["SearchItemServerNavData"] = this.getServerNavData();
+                data["SearchItemNotification"] = this.getNotificationData();
+                data["SearchItemProductDetails"] = this.productDetails();
+                data["SearchItemScreenId"] = this.getScreenId();
+                data["SearchItemExcessData"] = this.getSearchExcessQty();
+                data["SearchIRTFlag"] = this.getIRTFlagStatus();
+                data["ProductSerial"] = this.getProductSerial();
+                break;
+
+            case appConstants.WAITING_FOR_MSU:
+                data["SearchItemNavData"] = this.getNavData();
+                data["SearchItemServerNavData"] = this.getServerNavData();
+                data["SearchItemNotification"] = this.getNotificationData();
+                data["SearchItemScreenId"] = this.getScreenId();
+                data['SearchItemExceptionStatus'] = this.getExceptionStatus();
+                break;
+
+            case appConstants.PPTL_MANAGEMENT:
+            case appConstants.SCANNER_MANAGEMENT:
+                data["utility"] = this.getPptlData();
+                data["PutBackScreenId"] = this.getScreenId();
+                data["PutFrontScreenId"] = this.getScreenId();
+                data["PickFrontScreenId"] = this.getScreenId();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["AuditScreenId"] = this.getScreenId();
+                data["PutBackNavData"] = this.getNavData();
+                data["PutBackServerNavData"] = this.getServerNavData();
+                data["PutBackExceptionData"] = this.getExceptionData();
+                data["PutBackNotification"] = this.getNotificationData();
+                data["PutBackExceptionStatus"] = this.getExceptionStatus();
+                data["PutBackPpsMode"] = this.getPpsMode();
+                data["PutBackSeatType"] = this.getSeatType();
+                data["PutFrontPpsMode"] = this.getPpsMode();
+                data["PutFrontSeatType"] = this.getSeatType();
+
+                data["PickBackPpsMode"] = this.getPpsMode();
+                data["PickBackSeatType"] = this.getSeatType();
+                data["PickFrontPpsMode"] = this.getPpsMode();
+                data["PickFrontSeatType"] = this.getSeatType();
+
+                data["PutFrontNavData"] = this.getNavData();
+                data["PutFrontServerNavData"] = this.getServerNavData();
+                data["PutFrontExceptionData"] = this.getExceptionData();
+                data["PutFrontNotification"] = this.getNotificationData();
+                data["PutFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickFrontNavData"] = this.getNavData();
+                data["PickFrontServerNavData"] = this.getServerNavData();
+                data["PickFrontExceptionData"] = this.getExceptionData();
+                data["PickFrontNotification"] = this.getNotificationData();
+                data["PickFrontExceptionStatus"] = this.getExceptionStatus();
+
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+
+                data["AuditNavData"] = this.getNavData();
+                data["AuditServerNavData"] = this.getServerNavData();
+                data["AuditExceptionData"] = this.getExceptionData();
+                data["AuditNotification"] = this.getNotificationData();
+                data["AuditExceptionStatus"] = this.getExceptionStatus();
+                data["AuditPpsMode"] = this.getPpsMode();
+                data["AuditSeatType"] = this.getSeatType();
+                data["AuditShowModal"] = this.getModalStatus();
+
+                //Peripheral management for pre-put
+                data["PrePutScreenId"] = this.getScreenId();
+                data["PrePutPpsMode"] = this.getPpsMode();
+                data["PrePutSeatType"] = this.getSeatType();
+                data["PrePutNavData"] = this.getNavData();
+                data["PrePutServerNavData"] = this.getServerNavData();
+                data["PrePutExceptionData"] = this.getExceptionData();
+                data["PrePutNotification"] = this.getNotificationData();
+                data["PrePutExceptionStatus"] = this.getExceptionStatus();
+                break;
+            default:
+>>>>>>> dcc88ffe0cbaa4e3c8978c4e880374347cea7db1
         }
       };
       return data.scan_details;

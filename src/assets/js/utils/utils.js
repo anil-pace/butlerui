@@ -535,6 +535,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
+  //data.state_data = { "seat_name": "front_4", "notification_list": [], "exception_allowed": [{ "event": "missing_or_unscannable_damaged_item", "exception_id": "PkF001", "details": ["Item"], "exception_name": "Item Missing/Bad Barcode" }], "irt_scan_enabled": true, "bin_coordinate_plotting": true, "final_damaged_boxes": [], "event": "pick_front_irt_bin_confirm", "screen_id": "pick_front_irt_bin_confirm", "logout_allowed": false, "seat_type": "front", "time_stamp": "2019-05-02T08:09:27Z", "api_version": "1", "group_info": { "1": "center" }, "is_idle": false, "operator_orientation": "0", "exception_type": "missing_or_unscannable_damaged_item", "error_popup_disabled": true, "screen_version": "1", "damaged_boxes": [], "docked": [], "mode": "pick", "scan_allowed": true, "header_msge_list": [{ "level": "info", "code": "PkF.H.013", "details": [0], "description": "Scan Damaged Entity" }], "roll_cage_flow": false };
   data.state_data = {
     "seat_name": "back_2",
     "notification_list": [{
@@ -795,11 +796,6 @@ var putSeatData = function (data) {
       {
         "direction": "right",
         "dock_station_id": "4",
-        "status": "none"
-      },
-      {
-        "direction": "right",
-        "dock_station_id": "5",
         "status": "none"
       },
       {

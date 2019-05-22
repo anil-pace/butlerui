@@ -181,7 +181,13 @@ var PickBack = React.createClass({
                 />
               </div>
 
-              <SplitPPS displayBinId={true} groupInfo={this.state.udpBinMapDetails} />
+              <SplitPPS
+                displayBinId={true}
+                groupInfo={this.state.udpBinMapDetails}
+                docked={this.state.DockedGroup}
+                wrongUndock={this.state.WrongUndock}
+                undockAwaited={this.state.UndockAwaited}
+              />
 
 
               {/* <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}

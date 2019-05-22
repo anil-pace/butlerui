@@ -780,17 +780,17 @@ var putSeatData = function (data) {
       {
         "direction": "center-top",
         "dock_station_id": "1",
-        "status": "none"
+        "status": "docked"
       },
       {
         "direction": "center-top",
         "dock_station_id": "2",
-        "status": "none"
+        "status": "undock_awaited"
       },
       {
         "direction": "right",
         "dock_station_id": "3",
-        "status": "none"
+        "status": "wrong_undock"
       },
       {
         "direction": "right",
@@ -799,17 +799,17 @@ var putSeatData = function (data) {
       },
       {
         "direction": "right",
-        "dock_station_id": "13",
+        "dock_station_id": "5",
         "status": "none"
       },
       {
         "direction": "right",
-        "dock_station_id": "14",
+        "dock_station_id": "6",
         "status": "none"
       },
       {
         "direction": "left",
-        "dock_station_id": "5",
+        "dock_station_id": "7",
         "status": "none"
       }
     ],

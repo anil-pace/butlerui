@@ -2843,6 +2843,43 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         return groupInfo;
     },
 
+    getDockedList: function () {
+        var dockedGroup = [];
+        if (_seatData["dock_station_list"]) {
+            _seatData["dock_station_list"].forEach(function (bin) {
+                if (bin["status"] === "docked") {
+                    dockedGroup.push(bin["dock_station_id"]);
+                }
+            })
+        }
+        return dockedGroup;
+    },
+    getUndockAwaitedList: function () {
+        var undockAwaited = [];
+        if (_seatData["dock_station_list"]) {
+            _seatData["dock_station_list"].forEach(function (bin) {
+                if (bin["status"] === "undock_awaited") {
+                    undockAwaited.push(bin["dock_station_id"]);
+                }
+            })
+        }
+        return undockAwaited;
+    },
+
+    getWrongUndockList: function () {
+        var wrongUndockList = [];
+        if (_seatData["dock_station_list"]) {
+            _seatData["dock_station_list"].forEach(function (bin) {
+                if (bin["status"] === "wrong_undock") {
+                    wrongUndockList.push(bin["dock_station_id"]);
+                }
+            })
+        }
+        console.log("wrongUndock " + wrongUndockList);
+        return wrongUndockList;
+    },
+
+
     getMissingItemList: function () {
         return _seatData["missing_items"] || [];
     },
@@ -3355,11 +3392,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackExceptionData"] = this.getExceptionData();
                 data["pickBackCancelButtonData"] = this.cancelScanDetails();
-                data["udpBinMapDetails"] = this.getDockStationList(),
-                    //     data["groupOrientation"] = this._getBinMapOrientation(),
-                    //     data["selectedTotes"] = this.getSelectedTotes()
-                    // data["PickCurrentBin"] = this._getSelectedBinID();
-                    data["dockHeader"] = this.getDockHeader();
+                data["udpBinMapDetails"] = this.getDockStationList();
+                data["DockedGroup"] = this.getDockedList();
+                data["UndockAwaited"] = this.getUndockAwaitedList();
+                data["WrongUndock"] = this.getWrongUndockList();
+
+                //     data["groupOrientation"] = this._getBinMapOrientation(),
+                //     data["selectedTotes"] = this.getSelectedTotes()
+                // data["PickCurrentBin"] = this._getSelectedBinID();
+                data["dockHeader"] = this.getDockHeader();
                 data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
                 data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");
 

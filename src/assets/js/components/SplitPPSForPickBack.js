@@ -5,7 +5,8 @@ var SplitPPS = React.createClass({
 
     processData: function () {
         var data = Object.assign({}, (this.props.groupInfo || {}));
-        var leftCol = [], dockedGroup = this.props.docked || [],
+        var leftCol = [],
+            dockedGroup = this.props.docked || [],
             undockAwaited = this.props.undockAwaited || [],
             wrongUndock = this.props.wrongUndock || [],
             selectedBin = this.props.selectedbin || [],

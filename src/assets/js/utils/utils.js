@@ -789,12 +789,27 @@ var putSeatData = function (data) {
       },
       {
         "direction": "right",
-        "dock_station_id": "6",
+        "dock_station_id": "3",
         "status": "none"
       },
       {
         "direction": "right",
-        "dock_station_id": "7",
+        "dock_station_id": "4",
+        "status": "none"
+      },
+      {
+        "direction": "right",
+        "dock_station_id": "13",
+        "status": "none"
+      },
+      {
+        "direction": "right",
+        "dock_station_id": "14",
+        "status": "none"
+      },
+      {
+        "direction": "left",
+        "dock_station_id": "5",
         "status": "none"
       }
     ],

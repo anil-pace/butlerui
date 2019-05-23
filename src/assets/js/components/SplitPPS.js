@@ -162,7 +162,7 @@ var SplitPPS = React.createClass({
 						</li>);
 					}
 					else {
-						centerCol.push(<li key={k} style={style}><span>{this.props.displayBinId ? k : null}</span></li>);
+						centerCol.push(<li className="noBackGround" key={k} style={style}><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 
 				}

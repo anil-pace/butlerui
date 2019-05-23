@@ -1,5 +1,6 @@
 var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
+var mainstore = require('../stores/mainstore');
 
 var SplitPPS = React.createClass({
 
@@ -188,8 +189,8 @@ var SplitPPS = React.createClass({
 		}
 		var customizeClassSplitPPS = this.props.customizeClassSplitPPS;
 
-		const mode = "pick_back";
-		if (mode === "pick_back") {
+		const seatType = mainstore.getSeatType();
+		if (seatType === "back") {
 			return (
 				<div className={customizeClassSplitPPS ? "splitPPSWrapperForPickBack " + customizeClassSplitPPS : "splitPPSWrapperForPickBack"} style={transformStyle}>
 					<div className="mapCont">

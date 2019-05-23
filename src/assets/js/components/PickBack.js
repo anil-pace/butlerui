@@ -22,7 +22,7 @@ var BinMap = require('./BinMap');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var utils = require("../utils/utils");
 var CheckList = require("./CheckList.js");
-var SplitPPS = require('./SplitPPSForPickBack.js');
+var SplitPPS = require('./SplitPPS.js');
 
 function getStateData() {
   return mainstore.getScreenData();

@@ -676,6 +676,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('tote_details'))
             return _seatData.tote_details.tote_barcode;
     },
+    isPrinterVisible: function () {
+        if (_seatData.hasOwnProperty('printer_visible'))
+            return _seatData.printer_visible;
+    },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
         var orderDetails = _seatData['order_details'];
@@ -3404,6 +3408,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackExceptionData"] = this.getExceptionData();
                 data["pickBackCancelButtonData"] = this.cancelScanDetails();
+
+                data["isPrinterVisible"] = this.isPrinterVisible();
+                data["dockHeader"] = this.getDockHeader();
+                data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
+                data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");
+
+                data["undockHeader"] = this.getUnDockHeader();
+                data['undockChecklistData'] = this.getChecklistDockUndockData("undock_actions");
+                data['undockChecklistIndex'] = this.getChecklistDockUndockIndex("undock_index");
+
                 data["udpBinMapDetails"] = this.getDockStationList();
                 data["DockedGroup"] = this.getDockedList();
                 data["UndockAwaited"] = this.getUndockAwaitedList();
@@ -3413,13 +3427,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 //     data["groupOrientation"] = this._getBinMapOrientation(),
                 //     data["selectedTotes"] = this.getSelectedTotes()
                 // data["PickCurrentBin"] = this._getSelectedBinID();
-                data["dockHeader"] = this.getDockHeader();
-                data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
-                data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");
 
-                data["undockHeader"] = this.getUnDockHeader();
-                data['undockChecklistData'] = this.getChecklistDockUndockData("undock_actions");
-                data['undockChecklistIndex'] = this.getChecklistDockUndockIndex("undock_index");
                 break;
 
             case appConstants.PICK_REPRINT_PACKLIST:

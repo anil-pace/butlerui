@@ -223,13 +223,14 @@ var PickBack = React.createClass({
           // }
           this._component = (
             <div className='grid-container'>
-              <div style={{ position: "fixed", top: "31%", left: 0, border: "5px solid yellow" }}>
-                <img
-                  src={'./assets/images/Printer.gif'}
-                  height='180px'
-                  width='180px'
-                />
-              </div>
+              {this.state.isPrinterVisible ?
+                (<div style={{ position: "fixed", top: "31%", left: 0, border: "5px solid yellow" }}>
+                  <img
+                    src={'./assets/images/Printer.gif'}
+                    height='180px'
+                    width='180px'
+                  />
+                </div>) : ""}
               <Modal />
               {binComponent}
             </div>

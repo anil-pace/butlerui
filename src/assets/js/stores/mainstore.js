@@ -3422,6 +3422,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data['undockChecklistIndex'] = this.getChecklistDockUndockIndex("undock_index");
                 break;
 
+            case appConstants.PICK_REPRINT_PACKLIST:
+                data["PickBackNavData"] = this.getNavData();
+                data["PickBackBinData"] = this.getBinData();
+                data["PickBackExceptionData"] = this.getExceptionData();
+                data["PickBackServerNavData"] = this.getServerNavData();
+                data["PickBackNotification"] = this.getNotificationData();
+                data["PickBackExceptionStatus"] = this.getExceptionStatus();
+                data["PickBackScreenId"] = this.getScreenId();
+                data["PickBackToteDisAssociationData"] = this.getDataToDisAssociateTote();
+                data["PickBackSelectedBin"] = this.getSelectedBin();
+                break;
+
             case appConstants.PICK_FRONT_ONE_STEP_SCAN:
                 data["PickFrontExceptionData"] = this.getExceptionData();
                 data["PickFrontExceptionStatus"] = this.getExceptionStatus();

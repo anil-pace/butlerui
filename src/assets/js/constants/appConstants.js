@@ -370,7 +370,8 @@ var appConstants = {
   GET_BOI_CONFIG: 'GET_BOI_CONFIG',
   KEYBOARD: 'KEYBOARD',
   SCANNER: 'SCANNER',
-  UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock"
+  UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock",
+  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist'
 };
 
 module.exports = appConstants;

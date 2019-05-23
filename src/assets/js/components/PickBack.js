@@ -161,6 +161,22 @@ var PickBack = React.createClass({
         }
         break;
 
+      case appConstants.PICK_REPRINT_PACKLIST:
+        this._navigation = '';
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.PickBackExceptionData} />
+            <div className="exception-right">
+              <ExceptionHeader data={this.state.PickBackServerNavData} />
+            </div>
+            <div className='cancel-scan'>
+              <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
+            </div>
+          </div>
+        );
+        break;
+
       case appConstants.UNIVERSAL_DOCK_UNDOCK:
         if (this.state.PickBackExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);

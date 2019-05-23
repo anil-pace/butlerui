@@ -535,6 +535,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
+
+  /*
   data.state_data = {
     "seat_name": "back_2",
     "notification_list": [{
@@ -829,6 +831,51 @@ var putSeatData = function (data) {
     "undock_index": 0,
     "printer_visible": false
   }
+  */
+
+
+  /*---------- exception data => pick_reprint_packlist */
+  data.state_data = {
+    "api_version": "1",
+    "bin_coordinate_plotting": false,
+    "docked": [],
+    "error_popup_disabled": false,
+    "event": "reprint_packlist",
+    "exception_allowed": [
+      {
+        "details": [],
+        "event": "reprint_packlist",
+        "exception_id": "PkC001",
+        "exception_name": "Reprint Packlist"
+      }
+    ],
+    "exception_type": "reprint_packlist",
+    "group_info": {
+      "1": "center"
+    },
+    "header_msge_list": [
+      {
+        "code": "PkC.H.001",
+        "description": "Scan the load units for its packlist",
+        "details": [],
+        "level": "info"
+      }
+    ],
+    "is_idle": false,
+    "logout_allowed": false,
+    "mode": "pick",
+    "notification_list": [],
+    "operator_orientation": "0",
+    "roll_cage_flow": false,
+    "scan_allowed": true,
+    "screen_id": "pick_reprint_packlist",
+    "screen_version": "1",
+    "seat_name": "back_1",
+    "seat_type": "back",
+    "time_stamp": "2019-05-14T09:23:01Z"
+  };
+  /* ----- */
+
 
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {

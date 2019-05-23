@@ -97,7 +97,7 @@ var SplitPPS = React.createClass({
 						</li>);
 					}
 					else {
-						leftCol.push(<li key={k} style={style} className={this.props.ruleset === 'withBorder' ? "bottomBorderLeft padding" : "padding"} ><span>{this.props.displayBinId ? k : null}</span></li>);
+						leftCol.push(<li key={k} style={style} className={this.props.ruleset === 'withBorder' ? "bottomBorderLeft padding noBackGround" : "padding noBackGround"} ><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 
 				}
@@ -114,7 +114,7 @@ var SplitPPS = React.createClass({
 					}
 					else if (printReady.indexOf(k) >= 0) {
 						rightCol.push(<li key={k} style={style} className={printReadyRigtclassName}>
-							<span className="printReady right">{this.props.displayBinId ? k : null}</span>
+							<span className="printReady right">&nbsp;</span>
 						</li>);
 					} else if (wrongUndock.indexOf(k) >= 0) {
 						rightCol.push(<li key={k} style={style} className={wrongUndockRightclassName}>
@@ -127,7 +127,7 @@ var SplitPPS = React.createClass({
 						</li>);
 					}
 					else {
-						rightCol.push(<li key={k} style={style} className={this.props.ruleset === 'withBorder' ? "bottomBorderRight padding" : "padding"} ><span>{this.props.displayBinId ? k : null}</span></li>);
+						rightCol.push(<li key={k} style={style} className={this.props.ruleset === 'withBorder' ? "bottomBorderRight padding noBackGround" : "padding noBackGround"} ><span>{this.props.displayBinId ? k : null}</span></li>);
 					}
 
 				}

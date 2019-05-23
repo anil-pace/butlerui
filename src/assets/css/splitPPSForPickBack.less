@@ -56,7 +56,13 @@
 		    height: 38px;
 		    width: 100px;
 		    margin-top: 10%;
-		    background:#D6D7D7;
+			background:#D6D7D7;
+			border: 1px solid #D6D7D7;
+			&.noBackGround{
+				outline: 1px dashed #D6D7D7;
+				outline-offset: -10px;
+				background: transparent;
+			}
 		    
 		    .undock{
 		    	display:inline-block;
@@ -211,8 +217,13 @@
 		    height: 38px;
 		    width: 100px;
 		    margin-top: 10%;
-		    background:#D6D7D7;
-		    
+			background:#D6D7D7;
+			border: 1px solid #D6D7D7;
+		    &.noBackGround{
+				outline: 1px dashed #D6D7D7;
+				outline-offset: -10px;
+				background: transparent;
+			}
 		    .undock{
 		    	display:inline-block;
 		    	background:#518FFC url('../images/icon_whitearrow.svg') no-repeat center;
@@ -344,15 +355,16 @@
 		    background: transparent;
 		}
 		li{
-		    display: inline-block;
+			display: inline-block;
+			border: 1px solid #D6D7D7;
 		    background:#D6D7D7;
 		    height: 38px;
 		    width: 100px;
 		    margin-left: 1%;
 			position: relative;
-			outline: 1px dashed #D6D7D7;
-			outline-offset: -10px;
 			&.noBackGround{
+				outline: 1px dashed #D6D7D7;
+				outline-offset: -10px;
 				background: transparent;
 			}
 			.undock{

@@ -42,7 +42,7 @@ var SplitPPS = React.createClass({
 		}
 		if (this.props.displayBinId) {
 			fontSize = maxCenterCount > 0 ? ((70 / 28) * maxBlockHeight) + 'px' : ((50 / 28) * maxBlockHeight) + 'px';
-			padding = "10%";
+			padding = "0%";
 
 			/* Start =>special condition for pick_front_slot_scan to limit font size when only one bin is there */
 			if (parseInt(fontSize, 10) > parseInt("88px", 10)) { fontSize = 62.5 + 'px', padding = 0 + '%'; }

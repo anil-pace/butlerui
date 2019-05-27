@@ -168,6 +168,7 @@ var serverMessages = {
     "PkB.B.031": "Seat Type",
     "Common.A.001": 'Scan {0}',
     "Common.A.002": 'Scan {0} location',
+    "Common.A.003": 'Scan location/Press PPTL',
     "Common.I.000": "Testing configuration {0} and {1}",
     "Common.E.001": "Processing. Please wait and scan later",
     "Common.I.002": "Waiting for rack",

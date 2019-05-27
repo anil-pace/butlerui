@@ -3424,6 +3424,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PrintReady"] = this.getPrintReadyList();
                 data["WrongUndock"] = this.getWrongUndockList();
 
+
                 //     data["groupOrientation"] = this._getBinMapOrientation(),
                 //     data["selectedTotes"] = this.getSelectedTotes()
                 // data["PickCurrentBin"] = this._getSelectedBinID();

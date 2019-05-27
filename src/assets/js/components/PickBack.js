@@ -181,6 +181,32 @@ var PickBack = React.createClass({
         if (this.state.PickBackExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           var binComponent = "";
+          var cancelScanFlag = this.state.pickBackCancelButtonData;
+          var reprintButtonFlag = this.state.isPrinterVisible;
+          var cancelButton, reprintButton;
+          if (cancelScanFlag) {
+            cancelButton = (
+              <div >
+                <div className='cancel-scan'>
+                  <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN_ALL} color={"black"} />
+                </div>
+              </div>);
+          }
+          else {
+            cancelButton = (<div ></div>);
+          }
+          if (reprintButtonFlag) {
+            reprintButton = (
+              <div >
+                <div className='reprint'>
+                  <Button1 disabled={false} text={_("Reprint")} module={appConstants.PICK_BACK} action={appConstants.reprintButton} color={"black"} />
+                </div>
+              </div>);
+          }
+          else {
+            reprintButton = (<div ></div>);
+          }
+
           binComponent = (
             <div className='main-container'>
               <div className="dock-undock-container">
@@ -233,6 +259,10 @@ var PickBack = React.createClass({
                 </div>) : ""}
               <Modal />
               {binComponent}
+              <div className='actions'>
+                {cancelButton}
+                {reprintButton}
+              </div>
             </div>
           );
         } else {

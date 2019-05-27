@@ -761,7 +761,7 @@ var putSeatData = function (data) {
       },
       {
         "level": "info",
-        "code": "Common.A.002",
+        "code": "Common.A.003",
         "details": [
         ],
         "description": "Scan location/Press PPTL"
@@ -829,7 +829,8 @@ var putSeatData = function (data) {
       }
     ],
     "undock_index": 0,
-    "printer_visible": true
+    "printer_visible": true,
+    "cancel_scan_enabled": true
   }
 
 

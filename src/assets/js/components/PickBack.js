@@ -210,11 +210,11 @@ var PickBack = React.createClass({
           binComponent = (
             <div className='main-container'>
               <div className="dock-undock-container">
-                <CheckList
+                {this.state.dockChecklistData ? (<CheckList
                   checklistHeader={this.state.dockHeader}
                   checklistData={this.state.dockChecklistData}
                   checklistIndex={this.state.dockChecklistIndex}
-                />
+                />) : <div style={{ "display": "none" }} />}
 
                 <CheckList
                   checklistHeader={this.state.undockHeader}

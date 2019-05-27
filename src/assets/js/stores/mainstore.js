@@ -357,6 +357,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                         _NavData = navConfig.utility[1];
                         _seatData.header_msge_list[0].code = resourceConstants.CLIENTCODE_005;
                     }
+                    else if (_seatData.screen_id === appConstants.UNIVERSAL_DOCK_UNDOCK) {
+                        _NavData = navConfig.pickBack[4];
+                    }
 
                     else if (_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN) {
                         _NavData = navConfig.pickBack[1];
@@ -3399,10 +3402,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 break;
 
             case appConstants.UNIVERSAL_DOCK_UNDOCK:
-
                 data["PickBackNavData"] = this.getNavData();
                 data["PickBackNotification"] = this.getNotificationData();
-                data["PickBackBinData"] = this.getBinData();
                 data["PickBackScreenId"] = this.getScreenId();
                 data["PickBackServerNavData"] = this.getServerNavData();
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();

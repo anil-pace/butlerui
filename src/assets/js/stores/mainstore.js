@@ -1495,7 +1495,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.cancel_scan_enabled;
   },
   printRequiredDetails: function() {
-    return _seatData.printer_visible;
+    return _seatData.printer_info;
   },
   isReprintEnabled: function() {
     return _seatData.reprint_button_enabled;
@@ -5987,6 +5987,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['SplitScreenFlag'] = this._getSplitScreenFlag();
         data['BinMapGroupDetails'] = this.getSelectedBinGroup();
         data['PickFrontItemUid'] = this.getItemUid();
+        data['PickFrontPrintRequired'] = this.printRequiredDetails();
+        data['PickFrontReprintEnabled'] = this.isReprintEnabled();
+        data['PickFrontReprintPopUp'] = this.isReprintPopUpEnabled();
 
         break;
       case appConstants.ITEM_SEARCH:

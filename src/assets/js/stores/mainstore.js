@@ -2844,7 +2844,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
             leftBins = leftBins.concat(rightBins, centerBins, centerTopBins);
             leftBins.forEach(function (bin) {
-                groupInfo[bin["dock_station_id"]] = bin["direction"]
+                groupInfo[bin["dock_station_label"]] = bin["direction"]
             })
         }
         return groupInfo;
@@ -2855,7 +2855,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["dock_station_list"]) {
             _seatData["dock_station_list"].forEach(function (bin) {
                 if (bin["status"] === "docked") {
-                    dockedGroup.push(bin["dock_station_id"]);
+                    dockedGroup.push(bin["dock_station_label"]);
                 }
             })
         }
@@ -2866,7 +2866,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["dock_station_list"]) {
             _seatData["dock_station_list"].forEach(function (bin) {
                 if (bin["status"] === "undock_awaited") {
-                    undockAwaited.push(bin["dock_station_id"]);
+                    undockAwaited.push(bin["dock_station_label"]);
                 }
             })
         }
@@ -2878,7 +2878,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["dock_station_list"]) {
             _seatData["dock_station_list"].forEach(function (bin) {
                 if (bin["status"] === "print_ready") {
-                    printReady.push(bin["dock_station_id"]);
+                    printReady.push(bin["dock_station_label"]);
                 }
             })
         }
@@ -2890,7 +2890,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData["dock_station_list"]) {
             _seatData["dock_station_list"].forEach(function (bin) {
                 if (bin["status"] === "wrong_undock") {
-                    wrongUndockList.push(bin["dock_station_id"]);
+                    wrongUndockList.push(bin["dock_station_label"]);
                 }
             })
         }

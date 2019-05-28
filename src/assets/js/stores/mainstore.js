@@ -822,35 +822,40 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             return _seatData.dock_index;
         }
     },
+    manipulateMessage: function (value) {
+        var dataToReplace = value.details;
+        var data = serverMessages[value.code];
+        data = data.replace(/{\w+}/g, function (everyPlaceholder) {
+            var placeHolder = everyPlaceholder.match(/\d+/g);
+            return dataToReplace[placeHolder];
+        });
+        var eachData = { "action_results": { "value": data, "key": " " } }
+        return eachData;
+    },
 
     getChecklistDockUndockData: function (arg) {
         if (arg === "dock_actions" && _seatData.hasOwnProperty('dock_actions')) {
             var dockActionsArray = [];
             (Array.isArray(_seatData.dock_actions)) && (_seatData.dock_actions).map(function (value, key) {
-                var dataToReplace = value.details;
-                var data = serverMessages[value.code];
-                data = data.replace(/{\w+}/g, function (everyPlaceholder) {
-                    var placeHolder = everyPlaceholder.match(/\d+/g);
-                    return dataToReplace[placeHolder];
-                });
-
-                var eachData = { "action_results": { "value": data, "key": " " } }
-                dockActionsArray.push(eachData);
+                messageData = mainstore.manipulateMessage(value);
+                dockActionsArray.push(messageData);
             })
             return dockActionsArray;
         }
         else if (arg === "undock_actions" && _seatData.hasOwnProperty('undock_actions')) {
             var undockActionsArray = [];
             (Array.isArray(_seatData.undock_actions)) && (_seatData.undock_actions).map(function (value, key) {
-                var dataToReplace = value.details;
-                var data = serverMessages[value.code];
-                data = data.replace(/{\w+}/g, function (everyPlaceholder) {
-                    var placeHolder = everyPlaceholder.match(/\d+/g);
-                    return dataToReplace[placeHolder];
-                });
+                messageData = mainstore.manipulateMessage(value);
+                dockActionsArray.push(messageData);
+                // var dataToReplace = value.details;
+                // var data = serverMessages[value.code];
+                // data = data.replace(/{\w+}/g, function (everyPlaceholder) {
+                //     var placeHolder = everyPlaceholder.match(/\d+/g);
+                //     return dataToReplace[placeHolder];
+                // });
 
-                var eachData = { "action_results": { "value": data, "key": " " } }
-                undockActionsArray.push(eachData);
+                // var eachData = { "action_results": { "value": data, "key": " " } }
+                // undockActionsArray.push(eachData);
             })
             return undockActionsArray;
         }

@@ -5987,6 +5987,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['SplitScreenFlag'] = this._getSplitScreenFlag();
         data['BinMapGroupDetails'] = this.getSelectedBinGroup();
         data['PickFrontItemUid'] = this.getItemUid();
+        data['PickFrontPrintRequired'] = this.printRequiredDetails();
+        data['PickFrontReprintEnabled'] = this.isReprintEnabled();
+        data['PickFrontReprintPopUp'] = this.isReprintPopUpEnabled();
 
         break;
       case appConstants.ITEM_SEARCH:

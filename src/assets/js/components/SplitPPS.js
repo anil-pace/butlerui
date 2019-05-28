@@ -26,11 +26,6 @@ var SplitPPS = React.createClass({
 			}
 		}
 
-		console.log("===================================>");
-		console.log("dockedGroup" + dockedGroup);
-		console.log("undockAwaited" + undockAwaited);
-		console.log("wrongUndock" + wrongUndock);
-		console.log("printReady" + printReady);
 		maxBlockCount = maxCenterCount > 0 ? maxCenterCount : (maxLeftCount > maxRightCount) ? maxLeftCount : maxRightCount;
 
 		maxBlockHeight = maxCenterCount > 0 ? 75 / maxBlockCount : 50 / maxBlockCount;

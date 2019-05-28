@@ -2880,7 +2880,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 }
             })
         }
-        console.log("wrongUndock " + wrongUndockList);
         return wrongUndockList;
     },
 

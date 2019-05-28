@@ -250,11 +250,11 @@ var PickBack = React.createClass({
           this._component = (
             <div className='grid-container'>
               {this.state.isPrinterVisible ?
-                (<div style={{ position: "fixed", top: "31%", left: 0, border: "5px solid yellow" }}>
+                (<div style={{ position: "fixed", top: "31%", left: 0, border: "4px solid #FFC003" }}>
                   <img
                     src={'./assets/images/Printer.gif'}
-                    height='180px'
-                    width='180px'
+                    height='158px'
+                    width='158px'
                   />
                 </div>) : ""}
               <Modal />

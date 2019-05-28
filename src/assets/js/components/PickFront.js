@@ -809,7 +809,10 @@ var PickFront = React.createClass({
             color={'black'}
           />
         );
-
+        const {
+          printer_border_color,
+          printer_visible
+        } = this.state.PickFrontPrintRequired;
         var topPosition = this.state.SplitScreenFlag ? '320px' : '140px';
         var reprintIconStyle = {
           top: topPosition,

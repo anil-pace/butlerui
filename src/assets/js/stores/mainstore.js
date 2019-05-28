@@ -679,9 +679,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (_seatData.hasOwnProperty('tote_details'))
             return _seatData.tote_details.tote_barcode;
     },
-    isPrinterVisible: function () {
-        if (_seatData.hasOwnProperty('printer_visible'))
-            return _seatData.printer_visible;
+    printRequiredDetails: function () {
+        if (_seatData.hasOwnProperty('printer_info'))
+            return _seatData.printer_info;
     },
     getOrderDetails: function () {
         var orderDetailsinOrder = {};
@@ -3414,8 +3414,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["PickBackExceptionStatus"] = this.getExceptionStatus();
                 data["PickBackExceptionData"] = this.getExceptionData();
                 data["pickBackCancelButtonData"] = this.cancelScanDetails();
+                data["SplitScreenFlag"] = this._getSplitScreenFlag();
 
-                data["isPrinterVisible"] = this.isPrinterVisible();
+                data["isPrinterVisible"] = this.printRequiredDetails();
                 data["dockHeader"] = this.getDockHeader();
                 data['dockChecklistData'] = this.getChecklistDockUndockData("dock_actions");
                 data['dockChecklistIndex'] = this.getChecklistDockUndockIndex("dock_index");

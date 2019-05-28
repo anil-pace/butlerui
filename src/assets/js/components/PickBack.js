@@ -182,7 +182,7 @@ var PickBack = React.createClass({
           this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           var binComponent = "";
           var cancelScanFlag = this.state.pickBackCancelButtonData;
-          var reprintButtonFlag = this.state.isPrinterVisible;
+          //var reprintButtonFlag = this.state.isPrinterVisible;
           var cancelButton, reprintButton;
           if (cancelScanFlag) {
             cancelButton = (
@@ -193,28 +193,29 @@ var PickBack = React.createClass({
               </div>);
           }
           else {
-            cancelButton = (<div ></div>);
+            cancelButton = (<div></div>);
           }
-          if (reprintButtonFlag) {
-            reprintButton = (
-              <div >
-                <div className='reprint'>
-                  <Button1 disabled={false} text={_("Reprint")} module={appConstants.PICK_BACK} action={appConstants.reprintButton} color={"black"} />
-                </div>
-              </div>);
-          }
-          else {
-            reprintButton = (<div ></div>);
-          }
+          // if (reprintButtonFlag) {
+          //   reprintButton = (
+          //     <div >
+          //       <div className='reprint'>
+          //         <Button1 disabled={false} text={_("Reprint")} module={appConstants.PICK_BACK} action={appConstants.reprintButton} color={"black"} />
+          //       </div>
+          //     </div>);
+          // }
+          // else {
+          //   reprintButton = (<div ></div>);
+          // }
 
           binComponent = (
             <div className='main-container'>
               <div className="dock-undock-container">
-                {this.state.dockChecklistData ? (<CheckList
-                  checklistHeader={this.state.dockHeader}
-                  checklistData={this.state.dockChecklistData}
-                  checklistIndex={this.state.dockChecklistIndex}
-                />) : <div style={{ "display": "none" }} />}
+                {this.state.dockChecklistData ?
+                  (<CheckList
+                    checklistHeader={this.state.dockHeader}
+                    checklistData={this.state.dockChecklistData}
+                    checklistIndex={this.state.dockChecklistIndex}
+                  />) : <div style={{ "display": "none" }} />}
 
                 <CheckList
                   checklistHeader={this.state.undockHeader}
@@ -231,39 +232,36 @@ var PickBack = React.createClass({
                 wrongUndock={this.state.WrongUndock}
                 undockAwaited={this.state.UndockAwaited}
               />
-
-
-              {/* <SplitPPS orientation={this.state.groupOrientation} displayBinId={true}
-                  groupInfo={this.state.udpBinMapDetails} undockAwaited={null}
-                  customizeClassSplitPPS={adjustStyleOnSplitPPS}
-                  docked={this.state.selectedTotes} ruleset={'withBorder'}
-                  selectedbin={this.state.PickCurrentBin} /> */}
             </div>
           )
-          // if (this.state.OrigBinUse) {
-          //   binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} seatType={this.state.SeatType} />);
-          // } else {
-          //   binComponent = (<div className='main-container'>
-          //     <Bins binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} />
-          //   </div>);
-          // }
+
+          const {
+            printer_visible,
+            printer_border_color
+          } = this.state.isPrinterVisible;
+
+          var reprintIconStyle = {
+            top: "31%",
+            borderColor: "4px solid #FFC003"
+          };
+
           this._component = (
             <div className='grid-container'>
-              {this.state.isPrinterVisible ?
-                (<div style={{ position: "fixed", top: "31%", left: 0, border: "4px solid #FFC003" }}>
-                  <img
+              {printer_visible &&
+                (<div style={{ position: "fixed", top: reprintIconStyle.top, left: 0, border: reprintIconStyle.borderColor }}>
+                  < img
                     src={'./assets/images/Printer.gif'}
                     height='158px'
                     width='158px'
                   />
-                </div>) : ""}
+                </div>)
+              }
               <Modal />
               {binComponent}
               <div className='actions'>
                 {cancelButton}
-                {reprintButton}
               </div>
-            </div>
+            </div >
           );
         } else {
           this._component = this.getExceptionComponent();

@@ -1495,7 +1495,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.cancel_scan_enabled;
   },
   printRequiredDetails: function() {
-    return _seatData.printer_visible;
+    return _seatData.printer_info;
   },
   isReprintEnabled: function() {
     return _seatData.reprint_button_enabled;

@@ -847,15 +847,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             (Array.isArray(_seatData.undock_actions)) && (_seatData.undock_actions).map(function (value, key) {
                 messageData = mainstore.manipulateMessage(value);
                 dockActionsArray.push(messageData);
-                // var dataToReplace = value.details;
-                // var data = serverMessages[value.code];
-                // data = data.replace(/{\w+}/g, function (everyPlaceholder) {
-                //     var placeHolder = everyPlaceholder.match(/\d+/g);
-                //     return dataToReplace[placeHolder];
-                // });
-
-                // var eachData = { "action_results": { "value": data, "key": " " } }
-                // undockActionsArray.push(eachData);
             })
             return undockActionsArray;
         }
@@ -2837,16 +2828,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 }
 
             })
-            // leftBins.sort(function (a, b) {
-            //     return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
-            // });
-            // rightBins.sort(function (a, b) {
-            //     return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
-            // });
-            // centerBins.sort(function (a, b) {
-            //     return (a["orig_coordinate"] || a["coordinate"])[1] - (b["orig_coordinate"] || b["coordinate"])[1];
-            // });
-
             leftBins = leftBins.concat(rightBins, centerBins, centerTopBins);
             leftBins.forEach(function (bin) {
                 groupInfo[bin["dock_station_label"]] = bin["direction"]
@@ -3430,12 +3411,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 data["UndockAwaited"] = this.getUndockAwaitedList();
                 data["PrintReady"] = this.getPrintReadyList();
                 data["WrongUndock"] = this.getWrongUndockList();
-
-
-                //     data["groupOrientation"] = this._getBinMapOrientation(),
-                //     data["selectedTotes"] = this.getSelectedTotes()
-                // data["PickCurrentBin"] = this._getSelectedBinID();
-
                 break;
 
             case appConstants.PICK_REPRINT_PACKLIST:

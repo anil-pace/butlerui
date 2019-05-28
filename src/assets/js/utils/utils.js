@@ -555,13 +555,28 @@ var putSeatData = function (data) {
       "direction": "center-top",
       "dock_station_label": "1"
     }, {
-      "status": "undock_awaited",
+      "status": "docked",
       "direction": "center-top",
       "dock_station_label": "2"
     }, {
       "status": "print_ready",
       "direction": "center-top",
       "dock_station_label": "3"
+    },
+    {
+      "status": "docked",
+      "direction": "left",
+      "dock_station_label": "4"
+    },
+    {
+      "status": "print_ready",
+      "direction": "right",
+      "dock_station_label": "5"
+    },
+    {
+      "status": "docked",
+      "direction": "right",
+      "dock_station_label": "6"
     }],
     "logout_allowed": true,
     "seat_type": "back",
@@ -609,7 +624,7 @@ var putSeatData = function (data) {
     }],
     "printer_info":
     {
-      "printer_visible": true,
+      "printer_visible": false,
       "printer_border_color": "yellow"
     }
   }

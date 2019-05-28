@@ -588,6 +588,17 @@ var PickFront = React.createClass({
               );
             }
           }
+          var topPosition = this.state.SplitScreenFlag ? '320px' : '140px';
+          const {
+            printer_visible,
+            printer_border_color
+          } = this.state.PickFrontPrintRequired;
+
+          var reprintIconStyle = {
+            top: topPosition,
+            borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color]
+          };
+
           this._component = (
             <div className='grid-container'>
               <Modal cancelClicked={cancelClicked} />
@@ -602,8 +613,8 @@ var PickFront = React.createClass({
                   screenClass='frontFlow'
                 />
               )}
-              {this.state.PickFrontPrintRequired && (
-                <div className='reprintIcon'>
+              {printer_visible && (
+                <div className='reprintIcon' style={reprintIconStyle}>
                   <img
                     src={'./assets/images/Printer.gif'}
                     height='140px'
@@ -790,6 +801,11 @@ var PickFront = React.createClass({
         var cancelButton;
         var cancelClicked = mainstore.getCancelButtonStatus();
         var { PickFrontReprintEnabled } = this.state;
+        var topPosition = this.state.SplitScreenFlag ? '320px' : '140px';
+        var {
+          printer_visible,
+          printer_border_color
+        } = this.state.PickFrontPrintRequired;
         var BinFull = (
           <Button1
             disabled={false}
@@ -799,6 +815,12 @@ var PickFront = React.createClass({
             color={'black'}
           />
         );
+
+        var reprintIconStyle = {
+          top: topPosition,
+          borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color]
+        };
+
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -884,8 +906,8 @@ var PickFront = React.createClass({
                   screenClass='frontFlow'
                 />
               )}
-              {this.state.PickFrontPrintRequired && (
-                <div className='reprintIcon'>
+              {printer_visible && (
+                <div className='reprintIcon' style={reprintIconStyle}>
                   <img
                     height='140px'
                     width='140px'

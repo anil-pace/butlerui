@@ -759,23 +759,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
     },
 
-    getDockHeader: function () {
-        if (_seatData.hasOwnProperty("dock_header")) {
-            _dockHeaderMessage = _seatData.dock_header.description;
-            return _dockHeaderMessage;
-        } else {
-            return null;
-        }
-    },
 
-    getUnDockHeader: function () {
-        if (_seatData.hasOwnProperty("undock_header")) {
-            _undockHeaderMessage = _seatData.undock_header.description;
-            return _undockHeaderMessage;
-        } else {
-            return null;
-        }
-    },
 
 
     getChecklistData: function () {
@@ -849,6 +833,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 undockActionsArray.push(messageData);
             })
             return undockActionsArray;
+        }
+    },
+
+    getDockHeader: function () {
+        if (_seatData.hasOwnProperty("dock_header")) {
+            messageData = mainstore.manipulateMessage(_seatData.dock_header);
+            return messageData.action_results.value;
+        } else {
+            return null;
+        }
+    },
+
+    getUnDockHeader: function () {
+        if (_seatData.hasOwnProperty("undock_header")) {
+            messageData = mainstore.manipulateMessage(_seatData.undock_header);
+            return messageData.action_results.value;
+        } else {
+            return null;
         }
     },
 

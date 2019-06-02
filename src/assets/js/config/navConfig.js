@@ -32,7 +32,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "screen_id": ["put_back_stage", "put_back_scan_tote"],
             "code": "Common.000",
             "image": svgConstants.stage,
             "message": "Stage Bin or Scan Item",
@@ -40,24 +40,24 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-            "screen_id": ["put_back_scan","put_back_tote_close"],
+            "screen_id": ["put_back_scan", "put_back_tote_close"],
             "code": "Common.001",
             "image": svgConstants.scan,
             "message": "Scan & Confirm",
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        }],[
-         {
-            "screen_id": ["put_back_warehouse_full_irt_scan","put_back_no_scan"],
-            "code": "PtF.H.015",
-            "message": "Put item into IRT bin and scan the bin",
-            "showImage": false,
-            "level": 1,
-            "type": 'active'
-        }],
+        }], [
+            {
+                "screen_id": ["put_back_warehouse_full_irt_scan", "put_back_no_scan"],
+                "code": "PtF.H.015",
+                "message": "Put item into IRT bin and scan the bin",
+                "showImage": false,
+                "level": 1,
+                "type": 'active'
+            }],
         [{
-            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "screen_id": ["put_back_stage", "put_back_scan_tote"],
             "code": "Common.000",
             "image": svgConstants.stage,
             "message": "Stage Bin or Scan Item",
@@ -65,7 +65,7 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-            "screen_id": ["put_back_scan","put_back_tote_close"],
+            "screen_id": ["put_back_scan", "put_back_tote_close"],
             "code": "Common.001",
             "image": svgConstants.scan,
             "message": "Press PPTL",
@@ -74,7 +74,7 @@ var navData = {
             "type": 'passive'
         }],
         [{
-            "screen_id": ["put_back_stage","put_back_scan_tote"],
+            "screen_id": ["put_back_stage", "put_back_scan_tote"],
             "code": "Common.000",
             "image": svgConstants.stage,
             "message": "Scan",
@@ -89,7 +89,7 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        }],[{
+        }], [{
             "screen_id": ["put_back_no_scan_tote"],
             "code": "PtB.H.020",
             "image": svgConstants.stage,
@@ -101,7 +101,7 @@ var navData = {
 
     ],
     "putFront": [
-        
+
         [{
             "screen_id": "put_front_waiting_for_rack",
             "code": "Common.000",
@@ -150,7 +150,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "put_front_scan_rack_for_unmarked_entity",
             "code": "Common.001",
             "message": "Scan slot",
@@ -173,7 +173,7 @@ var navData = {
             "showImage": false,
             "level": 1,
             "type": 'active'
-        }],[{
+        }], [{
             "screen_id": "put_front_bin_warehouse_full",
             "code": "PtF.H.016",
             "message": "Warehouse Full",
@@ -196,7 +196,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'active'
-        },{
+        }, {
             "screen_id": "",
             "code": "Common.000",
             "message": "Put and confirm",
@@ -211,7 +211,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "ud_put_front_entity_scan",
             "code": "Common.000",
             "message": "Put and confirm",
@@ -226,7 +226,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'active'
-        },{
+        }, {
             "screen_id": "",
             "code": "Common.000",
             "message": "Put and confirm",
@@ -249,7 +249,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "ud_put_front_place_items_in_rack",
             "code": "UD.H.004",
             "message": "Put item in slot and scan slot to confirm",
@@ -264,7 +264,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "ud_put_front_missing",
             "code": "UD.H.004",
             "message": "Put item in slot and scan slot to confirm",
@@ -279,7 +279,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "ud_put_front_unexpected",
             "code": "UD.H.004",
             "message": "Put item in slot and scan slot to confirm",
@@ -292,7 +292,7 @@ var navData = {
     ],
     "pickFront": [
         [{
-            "screen_id": ["pick_front_waiting_for_msu","pick_front_one_step_scan","pick_front_dock_tote","pick_front_undock_tote", "pick_front_slot_scan", "pick_front_tote_confirm"],
+            "screen_id": ["pick_front_waiting_for_msu", "pick_front_one_step_scan", "pick_front_dock_tote", "pick_front_undock_tote", "pick_front_slot_scan", "pick_front_tote_confirm"],
             "code": "Common.000",
             "message": "Wait For MSU",
             "showImage": false,
@@ -300,7 +300,7 @@ var navData = {
             "type": 'active'
         }],
         [{
-            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan" , "pick_front_more_item_scan", "pick_front_container_break", "pick_front_checklist", "pick_front_skip_tote", "pick_front_skip_bin"],
+            "screen_id": ["pick_front_location_scan", "pick_front_container_scan", "pick_front_item_scan", "pick_front_more_item_scan", "pick_front_container_break", "pick_front_checklist", "pick_front_skip_tote", "pick_front_skip_bin"],
             "code": "Common.000",
             "image": svgConstants.scan,
             "message": "Scan Slot Barcode",
@@ -352,58 +352,58 @@ var navData = {
             "type": 'passive'
         }],
         [
-        {
-            "screen_id": "",
-            "code": "Common.000",
-            "image": svgConstants.scan,
-            "message": "Scan PB",
-            "showImage": true,
-            "level": 1,
-            "type": 'passive'
-        },{
-            "screen_id": ["pick_front_packing_container_scan"],
-            "code": "PkF.H.005",
-            "image": svgConstants.scan,
-            "message": "Scan box from MSU slot",
-            "showImage": true,
-            "level": 2,
-            "type": 'passive'
-        }, {
-            "screen_id": "",
-            "code": "Common.001",
-            "image": svgConstants.pptl,
-            "message": "Press PPTL",
-            "showImage": true,
-            "level": 3,
-            "type": 'passive'
-        }],
+            {
+                "screen_id": "",
+                "code": "Common.000",
+                "image": svgConstants.scan,
+                "message": "Scan PB",
+                "showImage": true,
+                "level": 1,
+                "type": 'passive'
+            }, {
+                "screen_id": ["pick_front_packing_container_scan"],
+                "code": "PkF.H.005",
+                "image": svgConstants.scan,
+                "message": "Scan box from MSU slot",
+                "showImage": true,
+                "level": 2,
+                "type": 'passive'
+            }, {
+                "screen_id": "",
+                "code": "Common.001",
+                "image": svgConstants.pptl,
+                "message": "Press PPTL",
+                "showImage": true,
+                "level": 3,
+                "type": 'passive'
+            }],
         [
-        {
-            "screen_id": "",
-            "code": "Common.000",
-            "image": svgConstants.scan,
-            "message": "Scan PB",
-            "showImage": true,
-            "level": 1,
-            "type": 'passive'
-        }, {
-            "screen_id": ["pick_front_packing_item_scan"],
-            "code": "Common.001",
-            "image": svgConstants.pptl,
-            "message": "Scan",
-            "showImage": true,
-            "level": 2,
-            "type": 'passive'
-        },
-        {
-            "screen_id": "",
-            "code": "Common.000",
-            "image": svgConstants.scan,
-            "message": "Press PPTL",
-            "showImage": true,
-            "level": 3,
-            "type": 'passive'
-        }],
+            {
+                "screen_id": "",
+                "code": "Common.000",
+                "image": svgConstants.scan,
+                "message": "Scan PB",
+                "showImage": true,
+                "level": 1,
+                "type": 'passive'
+            }, {
+                "screen_id": ["pick_front_packing_item_scan"],
+                "code": "Common.001",
+                "image": svgConstants.pptl,
+                "message": "Scan",
+                "showImage": true,
+                "level": 2,
+                "type": 'passive'
+            },
+            {
+                "screen_id": "",
+                "code": "Common.000",
+                "image": svgConstants.scan,
+                "message": "Press PPTL",
+                "showImage": true,
+                "level": 3,
+                "type": 'passive'
+            }],
         [{
             "screen_id": "",
             "code": "Common.000",
@@ -412,7 +412,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "",
             "code": "Common.000",
             "image": svgConstants.scan,
@@ -437,14 +437,14 @@ var navData = {
             "showImage": true,
             "level": null,
             "type": 'passive'
-        }],[{
-            "screen_id": ["pick_front_bin_printout","pick_front_rollcage_print"],
+        }], [{
+            "screen_id": ["pick_front_bin_printout", "pick_front_rollcage_print"],
             "code": "PkF.H.016",
             "message": "Take Printout and Press PPTL",
             "showImage": false,
             "level": 1,
             "type": 'passive'
-        }],[{
+        }], [{
             "screen_id": "pick_front_scan_packs",
             "code": "PkF.H.017",
             "image": svgConstants.scan,
@@ -452,16 +452,16 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },  {
-                "screen_id": "",
-                "code": "TEST.GAURAV.2", //TODO: Would be changed
-                "image": svgConstants.pptl,
-                "message": "Press PPTL",
-                "showImage": true,
-                "level": 2,
-                "type": 'passive'
-            }],
-            [{
+        }, {
+            "screen_id": "",
+            "code": "TEST.GAURAV.2", //TODO: Would be changed
+            "image": svgConstants.pptl,
+            "message": "Press PPTL",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
             "screen_id": "pick_front_location_scan",
             "code": "Common.000",
             "image": svgConstants.scan,
@@ -470,14 +470,14 @@ var navData = {
             "level": 1,
             "type": 'passive'
         }, {
-             "screen_id": ["pick_front_working_table", "pick_front_item_scan"],
+            "screen_id": ["pick_front_working_table", "pick_front_item_scan"],
             "code": "Common.001",
             "image": svgConstants.pptl,
             "message": "Scan Items",
             "showImage": true,
             "level": 2,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "pick_front_pptl_press",
             "code": "Common.001",
             "image": svgConstants.pptl,
@@ -485,15 +485,15 @@ var navData = {
             "showImage": true,
             "level": 3,
             "type": 'passive'
-        }],[{
-             "screen_id": "pick_front_working_table",
+        }], [{
+            "screen_id": "pick_front_working_table",
             "code": "Common.001",
             "image": svgConstants.pptl,
             "message": "Scan Items",
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "pick_front_pptl_press",
             "code": "Common.001",
             "image": svgConstants.pptl,
@@ -502,59 +502,68 @@ var navData = {
             "level": 2,
             "type": 'passive'
         }]
-        
+
 
     ],
     "pickBack": [
-    [ {
-        "screen_id": "pick_back_scan",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan Tote",
-        "showImage": true,
-        "level": 1,
-        "type": 'passive'
-    },{
-        "screen_id": "pick_back_bin",
-        "code": "Common.000",
-        "message": "Remove Item",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    }],
-    [{
-        "screen_id": "pick_back_no_scan",
-           "code": "PtF.H.015",
-           "message": "Put item into IRT bin and scan the bin",
-           "showImage": false,
-           "level": 1,
-           "type": 'passive'
-       }],
-       [ {
-        "screen_id": "pick_back_scan",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan Tote",
-        "showImage": true,
-        "level": 1,
-        "type": 'passive'
-    },{
-        "screen_id": "pick_back_bin",
-        "code": "Common.000",
-        "message": "Scan Bin",
-        "level": 2,
-        "type": 'passive'
-    }],
-    [{
-        "screen_id": ["pick_back_packing_box"],
-        "code": "Common.000",
-        "image": svgConstants.scan,
-        "message": "Place packing box in bin and scan ID",
-        "showImage": true,
-        "type": 'passive'
-    }]
+        [{
+            "screen_id": "pick_back_scan",
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Scan Tote",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": "pick_back_bin",
+            "code": "Common.000",
+            "message": "Remove Item",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "pick_back_no_scan",
+            "code": "PtF.H.015",
+            "message": "Put item into IRT bin and scan the bin",
+            "showImage": false,
+            "level": 1,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "pick_back_scan",
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Scan Tote",
+            "showImage": true,
+            "level": 1,
+            "type": 'passive'
+        }, {
+            "screen_id": "pick_back_bin",
+            "code": "Common.000",
+            "message": "Scan Bin",
+            "level": 2,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": ["pick_back_packing_box"],
+            "code": "Common.000",
+            "image": svgConstants.scan,
+            "message": "Place packing box in bin and scan ID",
+            "showImage": true,
+            "type": 'passive'
+        }],
+        [{
+            "screen_id": "universal_dock_undock",
+            "code": "PkB.H.012",
+            "image": "",
+            "message": "Wait for next action",
+            "showImage": false,
+            "type": 'active'
+        }]
+
     ],
-    "search":[
+    "search": [
         [{
             "screen_id": ["waiting_for_msu"],
             "code": "Common.000",
@@ -563,7 +572,7 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ {
+        [{
             "screen_id": "pick_back_scan",
             "code": "Common.001",
             "image": svgConstants.scan,
@@ -571,7 +580,7 @@ var navData = {
             "showImage": true,
             "level": 1,
             "type": 'passive'
-        },{
+        }, {
             "screen_id": "search_entity_scan",
             "code": "Common.000",
             "message": "Remove Item",
@@ -597,36 +606,36 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ 
-        {
-        "screen_id": "audit_front_waiting_for_location_scan",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan MSU Barcode",
-        "showImage": true,
-        "level": 1,
-        "type": 'passive'
-        },
-        {
-        "screen_id": "audit_scan",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan Items",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    },
-    ,{
-        "screen_id": "audit_reconcile",
-        "code": "Common.000",
-        "image": svgConstants.place,
-        "message": "Status",
-        "showImage": true,
-        "level": 3,
-        "type": 'passive'
-    }]
+        [
+            {
+                "screen_id": "audit_front_waiting_for_location_scan",
+                "code": "Common.001",
+                "image": svgConstants.scan,
+                "message": "Scan MSU Barcode",
+                "showImage": true,
+                "level": 1,
+                "type": 'passive'
+            },
+            {
+                "screen_id": "audit_scan",
+                "code": "Common.001",
+                "image": svgConstants.scan,
+                "message": "Scan Items",
+                "showImage": true,
+                "level": 2,
+                "type": 'passive'
+            },
+            , {
+                "screen_id": "audit_reconcile",
+                "code": "Common.000",
+                "image": svgConstants.place,
+                "message": "Status",
+                "showImage": true,
+                "level": 3,
+                "type": 'passive'
+            }]
     ],
-"sraudit": [
+    "sraudit": [
         [{
             "screen_id": "audit_front_waiting_for_msu",
             "code": "Common.000",
@@ -635,34 +644,34 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [ 
-          {
-        "screen_id": "audit_front_waiting_for_location_scan",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan slot",
-        "showImage": true,
-        "level": 1,
-        "type": 'passive'
-    },
-        {
-        "screen_id": "audit_scan_sr",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan entities",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
-    },
-    ,{
-        "screen_id": "audit_reconcile",
-        "code": "Common.000",
-        "image": null,
-        "message": "Status",
-        "showImage": true,
-        "level": 3,
-        "type": 'passive'
-    }]
+        [
+            {
+                "screen_id": "audit_front_waiting_for_location_scan",
+                "code": "Common.001",
+                "image": svgConstants.scan,
+                "message": "Scan slot",
+                "showImage": true,
+                "level": 1,
+                "type": 'passive'
+            },
+            {
+                "screen_id": "audit_scan_sr",
+                "code": "Common.001",
+                "image": svgConstants.scan,
+                "message": "Scan entities",
+                "showImage": true,
+                "level": 2,
+                "type": 'passive'
+            },
+            , {
+                "screen_id": "audit_reconcile",
+                "code": "Common.000",
+                "image": null,
+                "message": "Status",
+                "showImage": true,
+                "level": 3,
+                "type": 'passive'
+            }]
     ],
 
     "prePut": [
@@ -671,30 +680,30 @@ var navData = {
             "code": "Common.000",
             "image": svgConstants.stage,
             "message": "Scan tote",
-            "showImage": true,            
+            "showImage": true,
             "level": 1,
             "type": 'passive'
-        }, 
+        },
         {
-        "screen_id": "pre_put_scan",
-        "code": "Common.001",
-        "image": svgConstants.scan,
-        "message": "Scan slot",
-        "showImage": true,
-        "level": 2,
-        "type": 'passive'
+            "screen_id": "pre_put_scan",
+            "code": "Common.001",
+            "image": svgConstants.scan,
+            "message": "Scan slot",
+            "showImage": true,
+            "level": 2,
+            "type": 'passive'
         }],
-        [ 
-        {
-        "screen_id": "pre_put_release",
-        "code": "Common.000",
-        "message": "Release MTU",
-        "showImage": false,
-        "level": 1,
-        "type": 'active'
-        }]
+        [
+            {
+                "screen_id": "pre_put_release",
+                "code": "Common.000",
+                "message": "Release MTU",
+                "showImage": false,
+                "level": 1,
+                "type": 'active'
+            }]
     ],
-    "print":[
+    "print": [
         [{
             "screen_id": "per_item_print",
             "code": "Common.000",

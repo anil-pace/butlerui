@@ -229,7 +229,7 @@ var PickBack = React.createClass({
 
           this._component = (
             <div className='grid-container'>
-              {this.state.isPrinterVisible &&
+              {this.state.isPrinterVisible.printer_visible &&
                 (<div style={{ position: "fixed", top: reprintIconStyle.top, left: 0, border: reprintIconStyle.borderColor }}>
                   < img
                     src={'./assets/images/Printer.gif'}

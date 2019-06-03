@@ -21,6 +21,8 @@ var Spinner = require("./Spinner/LoaderButler");
 var BinMap = require('./BinMap');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var utils = require("../utils/utils");
+var CheckList = require("./CheckList.js");
+var SplitPPS = require('./SplitPPS.js');
 
 function getStateData() {
   return mainstore.getScreenData();
@@ -153,6 +155,95 @@ var PickBack = React.createClass({
               <Modal />
               {binComponent}
             </div>
+          );
+        } else {
+          this._component = this.getExceptionComponent();
+        }
+        break;
+
+      case appConstants.PICK_REPRINT_PACKLIST:
+        this._navigation = '';
+        this._component = (
+          <div className='grid-container exception'>
+            <Modal />
+            <Exception data={this.state.PickBackExceptionData} />
+            <div className="exception-right">
+              <ExceptionHeader data={this.state.PickBackServerNavData} />
+            </div>
+            <div className='cancel-scan'>
+              <Button1 disabled={false} text={_("Cancel Exception")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_EXCEPTION_MODAL} color={"black"} />
+            </div>
+          </div>
+        );
+        break;
+
+      case appConstants.UNIVERSAL_DOCK_UNDOCK:
+        if (this.state.PickBackExceptionStatus == false) {
+          this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
+          var binComponent = "";
+          var cancelScanFlag = this.state.pickBackCancelButtonData;
+          var cancelButton, reprintButton;
+          if (cancelScanFlag) {
+            cancelButton = (
+              <div >
+                <div className='cancel-scan'>
+                  <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PICK_BACK} action={appConstants.CANCEL_SCAN_ALL} color={"black"} />
+                </div>
+              </div>);
+          }
+          else {
+            cancelButton = (<div></div>);
+          }
+          binComponent = (
+            <div className='main-container'>
+              <div className="dock-undock-container">
+                {this.state.dockChecklistData ?
+                  (<CheckList
+                    checklistHeader={this.state.dockHeader}
+                    checklistData={this.state.dockChecklistData}
+                    checklistIndex={this.state.dockChecklistIndex}
+                  />) : <div style={{ "display": "none" }} />}
+
+                <CheckList
+                  checklistHeader={this.state.undockHeader}
+                  checklistData={this.state.undockChecklistData}
+                  checklistIndex={this.state.undockChecklistIndex}
+                />
+              </div>
+
+              <SplitPPS
+                displayBinId={true}
+                groupInfo={this.state.udpBinMapDetails}
+                docked={this.state.DockedGroup}
+                printReady={this.state.PrintReady}
+                wrongUndock={this.state.WrongUndock}
+                undockAwaited={this.state.UndockAwaited}
+              />
+            </div>
+          )
+
+          var reprintIconStyle = {
+            top: "31%",
+            borderColor: "4px solid #FFC003"
+          };
+
+          this._component = (
+            <div className='grid-container'>
+              {this.state.isPrinterVisible.printer_visible &&
+                (<div style={{ position: "fixed", top: reprintIconStyle.top, left: 0, border: reprintIconStyle.borderColor }}>
+                  < img
+                    src={'./assets/images/Printer.gif'}
+                    height='158px'
+                    width='158px'
+                  />
+                </div>)
+              }
+              <Modal />
+              {binComponent}
+              <div className='actions'>
+                {cancelButton}
+              </div>
+            </div >
           );
         } else {
           this._component = this.getExceptionComponent();

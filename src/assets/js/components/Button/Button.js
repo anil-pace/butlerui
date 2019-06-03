@@ -11,13 +11,13 @@ function closeModalBox() {
 
 var Button1 = React.createClass({
   _checklistClass: '',
-  removeTextField: function() {
+  removeTextField: function () {
     $('.modal-body')
       .find('input:text')
       .val('');
   },
 
-  performAction: function(module, action) {
+  performAction: function (module, action) {
     var peripheralId;
     var data = {
       event_name: '',
@@ -343,7 +343,7 @@ var Button1 = React.createClass({
             var checklist_index = this.props.checkListData.checklist_index;
             var checkList = this.props.checkListData;
             if (checklist_index != 'all') {
-              checkList.checklist_data[checklist_index - 1].map(function(
+              checkList.checklist_data[checklist_index - 1].map(function (
                 value,
                 index
               ) {
@@ -368,9 +368,9 @@ var Button1 = React.createClass({
                   );
               });
             } else {
-              checkList.checklist_data.map(function(value, index) {
+              checkList.checklist_data.map(function (value, index) {
                 if (index < mainstore.scanDetails()['current_qty'])
-                  value.map(function(value1, index1) {
+                  value.map(function (value1, index1) {
                     var keyvalue = Object.keys(value1);
                     if (
                       checkList.checklist_data[index][index1][keyvalue[0]]
@@ -749,14 +749,14 @@ var Button1 = React.createClass({
         return true;
     }
   },
-  showModal: function(data, type) {
+  showModal: function (data, type) {
     ActionCreators.showModal({
       data: data,
       type: type
     });
     $('.modal').modal();
   },
-  render: function() {
+  render: function () {
     if (this.props.disabled == false)
       return (
         <a

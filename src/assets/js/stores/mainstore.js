@@ -711,6 +711,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     },
 
     getChecklistDetails: function () {
+        
         if (_seatData.hasOwnProperty('checklist_details')) {
             if (_seatData.checklist_details.pick_checklist.length > 0) {
                 return _seatData.checklist_details.pick_checklist;

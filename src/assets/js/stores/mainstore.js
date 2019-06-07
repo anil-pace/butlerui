@@ -831,7 +831,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             var undockActionsArray = [];
             (Array.isArray(_seatData.undock_actions)) && (_seatData.undock_actions).map(function (value, key) {
                 messageData = mainstore.manipulateMessage(value);
-                dockActionsArray.push(messageData);
+                undockActionsArray.push(messageData);
             })
             return undockActionsArray;
         }

@@ -592,10 +592,9 @@ var PickFront = React.createClass({
 
           let printer_visible = false
           let printer_border_color = 'yellow'
-          if (this.state.PickFrontPrintRequired) {
-            printer_visible = this.state.PickFrontPrintRequired.printer_visible
-            printer_border_color = this.state.PickFrontPrintRequired
-              .printer_border_color
+          if (this.state.printerInfo) {
+            printer_visible = this.state.printerInfo.printer_visible
+            printer_border_color = this.state.printerInfo.printer_border_color
           }
 
           var reprintIconStyle = {
@@ -815,10 +814,9 @@ var PickFront = React.createClass({
         )
         let printer_visible = false
         let printer_border_color = 'yellow'
-        if (this.state.PickFrontPrintRequired) {
-          printer_visible = this.state.PickFrontPrintRequired.printer_visible
-          printer_border_color = this.state.PickFrontPrintRequired
-            .printer_border_color
+        if (this.state.printerInfo) {
+          printer_visible = this.state.printerInfo.printer_visible
+          printer_border_color = this.state.printerInfo.printer_border_color
         }
         var topPosition = this.state.SplitScreenFlag ? '320px' : '140px'
         var reprintIconStyle = {

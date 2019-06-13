@@ -172,8 +172,7 @@ var appConstants = {
   SEND_EXCESS_ITEMS_BIN: 'SEND_EXCESS_ITEMS_BIN',
   WAREHOUSEFULL_EXCEPTION: 'WAREHOUSEFULL_EXCEPTION',
   CONFIRM_PHYSICALLY_DAMAGED_ITEMS: 'CONFIRM_PHYSICALLY_DAMAGED_ITEMS',
-  SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM:
-    'SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM',
+  SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM: 'SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM',
   AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
     'audit_loose_item_damage_exception',
   AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE: 'audit_box_damage_exception',
@@ -183,7 +182,7 @@ var appConstants = {
   AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION: 'audit_sub_pack_unscannable_exception',
   AUDIT_EACH_UNSCANNABLE_EXCEPTION: 'audit_each_unscannable_exception',
   AUDIT_DAMAGED_ENTITY_EXCEPTION: 'audit_physically_damaged_exception',
-  AUDIT_FRONT_IRT_BIN_CONFIRM: 'audit_front_irt_bin_confirm',
+  AUDIT_FRONT_IRT_BIN_CONFIRM: "audit_front_irt_bin_confirm",
   DEFAULT: 'default',
   AUDIT: 'audit_front',
   SET_AUDIT_DATA: 'SET_AUDIT_DATA',
@@ -266,8 +265,8 @@ var appConstants = {
   CANCEL_LAST_SCAN: 'cancel_last_scan',
   REPRINT_REQUEST: 'reprint_request',
   CANCEL_REPRINT_REQUEST: 'cancel_reprint_request',
-  CONFIRM_REPRINT_LAST_REQUEST: 'reprint_last_confirmed',
-  CONFIRM_REPRINT_ALL_REQUEST: 'reprint_all_confirmed',
+  CONFIRM_REPRINT_LAST_REQUEST: 'reprint_last_confirm',
+  CONFIRM_REPRINT_ALL_REQUEST: 'reprint_all_confirm',
   PICK_FRONT_PACKING_BOX: 'pick_front_packing_box',
   PICK_FRONT_PACKING_CONTAINER_SCAN: 'pick_front_packing_container_scan',
   PICK_FRONT_PACKING_ITEM_SCAN: 'pick_front_packing_item_scan',
@@ -374,7 +373,9 @@ var appConstants = {
   PICK_FRONT_SKIP_BIN: 'pick_front_skip_bin',
   GET_BOI_CONFIG: 'GET_BOI_CONFIG',
   KEYBOARD: 'KEYBOARD',
-  SCANNER: 'SCANNER'
+  SCANNER: 'SCANNER',
+  UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock",
+  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist'
 };
 
 module.exports = appConstants;

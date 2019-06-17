@@ -6224,6 +6224,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontNotification'] = this.getNotificationData()
         data['PickFrontExceptionStatus'] = this.getExceptionStatus()
         data['PickFrontSkipDockingBtnEnable'] = this.getButtonStatus()
+        data['rollCageStatus'] = this._getRollCageStatus()
         data['groupOrientation'] = this._getBinMapOrientation()
         data['BinMapDetails'] = this._getBinMapDetails()
         data['UndockAwaited'] = this._getUndockAwaitedGroup()

@@ -5128,10 +5128,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var dataNotification = {}
 
     if (type === 'pptl') {
-      _seatData['screen_id'] = appConstants.PPTL_MANAGEMENT
+      _seatData['screen_id'] = appConstants.PPTL_MANAGEMENT;
+      if (_seatData['header_steps']) { _seatData['header_steps'] = undefined; }
       _peripheralScreen = true
     } else if (type === 'barcode_scanner') {
-      _seatData['screen_id'] = appConstants.SCANNER_MANAGEMENT
+      _seatData['screen_id'] = appConstants.SCANNER_MANAGEMENT;
+      if (_seatData['header_steps']) { _seatData['header_steps'] = undefined; }
       _peripheralScreen = true
     } else if (type === 'orphanSearch' || type === 'orphanSearchStart') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT

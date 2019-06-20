@@ -5025,10 +5025,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     if (type === 'pptl') {
       _seatData['screen_id'] = appConstants.PPTL_MANAGEMENT;
-      _peripheralScreen = true;
+      if (_seatData['header_steps']) { _seatData['header_steps'] = undefined; }
+      _peripheralScreen = true
     } else if (type === 'barcode_scanner') {
       _seatData['screen_id'] = appConstants.SCANNER_MANAGEMENT;
-      _peripheralScreen = true;
+      if (_seatData['header_steps']) { _seatData['header_steps'] = undefined; }
+      _peripheralScreen = true
     } else if (type === 'orphanSearch' || type === 'orphanSearchStart') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT;
       _peripheralScreen = true;

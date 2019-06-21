@@ -572,7 +572,7 @@ var PutFront = React.createClass({
             <div className="exception-right">
               <div className="main-container exception2">
                 <div className="kq-exception">
-                  <div className="kq-header">{_("Please scan bin which has excess item")}</div>
+                  <div className="kq-header">{_("Please scan PPTL which has excess item")}</div>
                 </div>
               </div>
             </div>

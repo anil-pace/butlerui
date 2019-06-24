@@ -5158,46 +5158,53 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.hasOwnProperty('auto_stage')) return _seatData.auto_stage;
   },
   getUDPMapDetails: function () {
-    var groupInfo = {};
+    var ppsBinIds = {};
+    var ppsBinIdColors = {};
     var leftBins = [];
     var rightBins = [];
     var centerBins = [];
     if (_seatData['ppsbin_list']) {
-      _seatData['ppsbin_list'].forEach(function (bin) {
-        if (bin['direction'] === 'left') {
-          leftBins.push(bin);
-        } else if (bin['direction'] === 'right') {
-          rightBins.push(bin);
-        } else if (bin['direction'] === 'center') {
-          centerBins.push(bin);
-        }
-      });
-      leftBins.sort(function (a, b) {
-        return (
-          (a['orig_coordinate'] || a['coordinate'])[1] -
-          (b['orig_coordinate'] || b['coordinate'])[1]
-        );
-      });
-      rightBins.sort(function (a, b) {
-        return (
-          (a['orig_coordinate'] || a['coordinate'])[1] -
-          (b['orig_coordinate'] || b['coordinate'])[1]
-        );
-      });
-      centerBins.sort(function (a, b) {
-        return (
-          (a['orig_coordinate'] || a['coordinate'])[1] -
-          (b['orig_coordinate'] || b['coordinate'])[1]
-        );
-      });
+        _seatData['ppsbin_list'].forEach(function (bin) {
+            if (bin['direction'] === 'left') {
+                leftBins.push(bin);
+            } else if (bin['direction'] === 'right') {
+                rightBins.push(bin);
+            } else if (bin['direction'] === 'center') {
+                centerBins.push(bin);
+            }
+        });
+        leftBins.sort(function (a, b) {
+            return (
+                (a['orig_coordinate'] || a['coordinate'])[1] -
+                (b['orig_coordinate'] || b['coordinate'])[1]
+            );
+        });
+        rightBins.sort(function (a, b) {
+            return (
+                (a['orig_coordinate'] || a['coordinate'])[1] -
+                (b['orig_coordinate'] || b['coordinate'])[1]
+            );
+        });
+        centerBins.sort(function (a, b) {
+            return (
+                (a['orig_coordinate'] || a['coordinate'])[1] -
+                (b['orig_coordinate'] || b['coordinate'])[1]
+            );
+        });
 
-      leftBins = leftBins.concat(rightBins, centerBins);
-      leftBins.forEach(function (bin) {
-        groupInfo[bin['ppsbin_id']] = bin['direction'];
-      });
+        leftBins = leftBins.concat(rightBins, centerBins);
+        leftBins.forEach(function (bin) {
+            ppsBinIds[bin['ppsbin_id']] = bin['direction'];
+        });
+        leftBins.forEach(function (bin) {
+            ppsBinIdColors[bin['ppsbin_id']] = bin['ppsbin_light_color'];
+        });
     }
-    return groupInfo;
-  },
+    return {
+        ppsBinIds: ppsBinIds,
+        ppsBinIdColors: ppsBinIdColors
+    };
+},
 
   getDockStationList: function () {
     var groupInfo = {};

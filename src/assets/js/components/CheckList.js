@@ -75,17 +75,14 @@ var CheckList = React.createClass({
 
         return (
             <div className="table-wrapper-checklist">
-                <table className="table">
-                    <theader>
-                        {this.props.checklistHeader ? this.props.checklistHeader + ":" : ""}
-                    </theader>
-                    <div> &nbsp; </div>
+                <div className="tableHeader">{this.props.checklistHeader ? this.props.checklistHeader + ":" : ""}</div>
+                <table className="tableWrapper">
                     <tbody>
                         {tableData}
                     </tbody>
                 </table>
                 {skipDockingButton}
-            </div>
+            </div >
         );
     }
 });

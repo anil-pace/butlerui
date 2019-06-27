@@ -2293,7 +2293,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
                 new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
             ]);
-            data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
+            data["footer"].push(new this.tableCol(_("Total: ") + _(" 0 entities"), "header", false, "small", false, true, true, false));
         }
         return data;
     },

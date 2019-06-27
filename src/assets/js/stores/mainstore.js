@@ -2277,10 +2277,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 total_damaged = mainstore.getDamagedQuantity();
 
                 data["tableRows"].push([
-                    new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM"),
-                    new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true),
-                    new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true),
-                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled)
+                    new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+                    new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                    new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                    new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
                 ]);
                 //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
             });
@@ -2288,10 +2288,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else {
             var isKQEnabled = false;
             data["tableRows"].push([
-                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true),
-                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled)
+                new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
             ]);
             data["footer"].push(new this.tableCol(_("Total: "), "header", false, "small", false, true, true, false));
         }

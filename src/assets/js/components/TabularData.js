@@ -20,10 +20,11 @@ var TabularData = React.createClass({
 
         var size = this.props.size == "double" ? classes = classes + "double " : "";
         var size = this.props.size == "triple" ? classes = classes + "triple " : "";
+        var tbodyClassName = this.props.tbodyClassName ? "customHeight" : "overflow " + (this.props.data.footer ? 'negate-flex' : '');
         return (
             <div className={classes}>
                 <TableHeader data={this.props.data.header} />
-                <div className={"overflow " + (this.props.data.footer ? 'negate-flex' : '')} >
+                <div className={tbodyClassName} >
                     {this._tableRows}
                 </div>
                 {this.props.data.footer && <TableFooter data={this.props.data.footer} />}

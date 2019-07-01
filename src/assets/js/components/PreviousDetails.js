@@ -63,7 +63,6 @@ var PreviousDetails = React.createClass({
     var typeToShow = (type === "pick") ? _("Previous Pick Details") : _("Previous Put Details")
     var customizeClass = this.props.customizeClass;
     var previousDetails = this.displayLocale(this.props.previousDetails);
-    var objectKeys = Object.keys(previousDetails);
     return (
       <div className={customizeClass ? "p-put-details " + customizeClass : "p-put-details"}>
         <div className="p-put-head">
@@ -71,10 +70,12 @@ var PreviousDetails = React.createClass({
         </div>
         <div className="p-put-content">
           {Object.keys(previousDetails).map(function (key, idx) {
-            return (<section key={key + idx} className="p-put-row">
-              <p className="p-put-key">{_(key) + " :"}</p>
-              <p className="p-put-value">{(previousDetails[key]).trim() || "--"}</p>
-            </section>)
+            if (idx <= 1) {
+              return (<section key={key + idx} className="p-put-row">
+                <p className="p-put-key">{_(key) + " :"}</p>
+                <p className="p-put-value">{(previousDetails[key]).trim() || "--"}</p>
+              </section>)
+            }
           })}
         </div>
         <div className="p-put-head">

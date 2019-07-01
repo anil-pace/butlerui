@@ -581,7 +581,7 @@ function server_messages_list() {
     _("{0} scan successful.");
     _("Excess Entity in {0} recorded.");
     _("{0} unexpected. {0} in use in another location");
-    _("{0} unexpected. Service request not present in {0}.");
+    _("{0} unexpected. Service request not present in {1}.");
     _("Invalid resource.");
     _("{0} unexpected. Service request not in correct state.");
     _("{0} unexpected. Empty {0} scanned.");
@@ -657,7 +657,7 @@ function server_messages_list() {
     _("Override {0} not possible");
     _("Barcode didn't match with current {0} barcode");
     _("{0} unexpected. {0} in use in another location");
-    _("{0} unexpected. Service request not present in {0}.");
+    _("{0} unexpected. Service request not present in {1}.");
     _("Invalid resource.");
     _("{0} unexpected. Service request not in correct state.");
     _("{0} unexpected. Empty {0} scanned.");
@@ -765,5 +765,12 @@ function server_messages_list() {
     _("Put Pack list in {0} and press PPTL to confirm");
     _("System is Idle");
     _("Please scan PPTL which has excess item");
+    _("MSU Sent");
+    _("This put request is not supported in current flow");
+    _("Service request not in correct state");
+    _("Multiple Service request found");
+    _("Unknown error");
+    _("Scan item");
+    _("Item scan successful");
 }
 

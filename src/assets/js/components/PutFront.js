@@ -751,16 +751,26 @@ var PutFront = React.createClass({
       case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
         this._modalContent = '';
         this._component = '';
+        this._subComponent = '';
+        if (this.state.PutFrontIsCrossDockEnabled === true) {
+          this._subComponent = (
+            <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={'customize_WaitingForMsu'} type="put" />)
+        }
+        else {
+          this._subComponent = (
+            <div className="single-bin udp-flow">
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
+              <CurrentBin details={this.state.PutFrontCurrentBinCount} />
+              <PreviousDetails previousDetails={this.state.PreviousDetails}/>
+            </div>
+          )
+        }
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag} />);
           this._component = (
             <div className='grid-container udp-flow'>
               <Modal />
-              <div className="single-bin udp-flow">
-                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
-                <CurrentBin details={this.state.PutFrontCurrentBinCount} />
-                <PreviousDetails previousDetails={this.state.PreviousDetails} />
-              </div>
+              {this._subComponent}
               <div className='main-container'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
                 <div className="msu-send-container">
@@ -781,6 +791,7 @@ var PutFront = React.createClass({
       case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
         this._modalContent = '';
         this._component = '';
+        this._subComponent = '';
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag} />);
           if (this.state.PutFrontScreenId === appConstants.UDP_PUT_FRONT_MISSING) {
@@ -841,19 +852,25 @@ var PutFront = React.createClass({
                     </div>
                   </div>
                 </div>
-
               </ReactModal>)
+          }
+          if (this.state.PutFrontIsCrossDockEnabled === true) {
+            this._subComponent = (
+              <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={'customize_WaitingForMsu'} type="put" />)
+          }
+          else {
+            this._subComponent = (
+              <div className="single-bin udp-flow">
+                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
+                <CurrentBin details={this.state.PutFrontCurrentBinCount} />
+                <PreviousDetails previousDetails={this.state.PreviousDetails} />
+              </div>
+            )
           }
           this._component = (
             <div className='grid-container'>
               <Modal toteId={this.state.ToteId} />
-              <div className={"single-bin udp-flow"}>
-
-                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
-                <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-                <PreviousDetails previousDetails={this.state.PreviousDetails} />
-
-              </div>
+              {this._subComponent}
               <div className='main-container udp-flow'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
                 <div className="msu-send-container">

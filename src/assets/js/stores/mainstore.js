@@ -194,6 +194,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.event;
   },
 
+  IsCrossDockEnabled: function () {
+    if (_seatData.is_ud_without_staging)
+      return _seatData.is_ud_without_staging;
+    else
+      return null;
+  },
+
   getBoxBarcode: function () {
     let BoxBarcode = {};
     if (
@@ -5164,47 +5171,47 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var rightBins = [];
     var centerBins = [];
     if (_seatData['ppsbin_list']) {
-        _seatData['ppsbin_list'].forEach(function (bin) {
-            if (bin['direction'] === 'left') {
-                leftBins.push(bin);
-            } else if (bin['direction'] === 'right') {
-                rightBins.push(bin);
-            } else if (bin['direction'] === 'center') {
-                centerBins.push(bin);
-            }
-        });
-        leftBins.sort(function (a, b) {
-            return (
-                (a['orig_coordinate'] || a['coordinate'])[1] -
-                (b['orig_coordinate'] || b['coordinate'])[1]
-            );
-        });
-        rightBins.sort(function (a, b) {
-            return (
-                (a['orig_coordinate'] || a['coordinate'])[1] -
-                (b['orig_coordinate'] || b['coordinate'])[1]
-            );
-        });
-        centerBins.sort(function (a, b) {
-            return (
-                (a['orig_coordinate'] || a['coordinate'])[1] -
-                (b['orig_coordinate'] || b['coordinate'])[1]
-            );
-        });
+      _seatData['ppsbin_list'].forEach(function (bin) {
+        if (bin['direction'] === 'left') {
+          leftBins.push(bin);
+        } else if (bin['direction'] === 'right') {
+          rightBins.push(bin);
+        } else if (bin['direction'] === 'center') {
+          centerBins.push(bin);
+        }
+      });
+      leftBins.sort(function (a, b) {
+        return (
+          (a['orig_coordinate'] || a['coordinate'])[1] -
+          (b['orig_coordinate'] || b['coordinate'])[1]
+        );
+      });
+      rightBins.sort(function (a, b) {
+        return (
+          (a['orig_coordinate'] || a['coordinate'])[1] -
+          (b['orig_coordinate'] || b['coordinate'])[1]
+        );
+      });
+      centerBins.sort(function (a, b) {
+        return (
+          (a['orig_coordinate'] || a['coordinate'])[1] -
+          (b['orig_coordinate'] || b['coordinate'])[1]
+        );
+      });
 
-        leftBins = leftBins.concat(rightBins, centerBins);
-        leftBins.forEach(function (bin) {
-            ppsBinIds[bin['ppsbin_id']] = bin['direction'];
-        });
-        leftBins.forEach(function (bin) {
-            ppsBinIdColors[bin['ppsbin_id']] = bin['ppsbin_light_color'];
-        });
+      leftBins = leftBins.concat(rightBins, centerBins);
+      leftBins.forEach(function (bin) {
+        ppsBinIds[bin['ppsbin_id']] = bin['direction'];
+      });
+      leftBins.forEach(function (bin) {
+        ppsBinIdColors[bin['ppsbin_id']] = bin['ppsbin_light_color'];
+      });
     }
     return {
-        ppsBinIds: ppsBinIds,
-        ppsBinIdColors: ppsBinIdColors
+      ppsBinIds: ppsBinIds,
+      ppsBinIdColors: ppsBinIdColors
     };
-},
+  },
 
   getDockStationList: function () {
     var groupInfo = {};
@@ -5556,7 +5563,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PutFrontScreenId'] = this.getScreenId();
         data['PutFrontCurrentBin'] = this.getCurrentSelectedBin();
         data['PutFrontRackDetails'] = this.getRackDetails();
-
+        data['PutFrontIsCrossDockEnabled'] = this.IsCrossDockEnabled();
         data['isDrawer'] = this.getDrawerFlag();
         data['SlotType'] = this.getSlotType();
         data['SplitScreenFlag'] = this._getSplitScreenFlag();

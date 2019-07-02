@@ -85,7 +85,7 @@ var PreviousDetails = React.createClass({
           {Object.keys(previousDetails).map(function (key, idx) {
             if (key === "Location") {
               return (<section key={key + idx} className="p-put-row">
-                <p className="p-put-value-1">{(previousDetails[key]).trim() || "2"}</p>
+                <p className="p-put-value-location">{(previousDetails[key]).trim() || "--"}</p>
               </section>)
             }
           })}

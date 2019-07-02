@@ -70,7 +70,22 @@ var PreviousDetails = React.createClass({
         </div>
         <div className="p-put-content">
           {Object.keys(previousDetails).map(function (key, idx) {
-            if (idx <= 1) {
+            if (idx === 0) {
+              var str = previousDetails[key].trim();
+              if (str) {
+                var txtToDisplay = [];
+                var frmStart = (<span className="p-put-value">{str.substring(0, str.length - 3)}</span>);
+                var frmLast = (<span className="p-put-value-extra">{str.substring(str.length - 3, str.length)}</span>);
+                txtToDisplay.push(frmStart, frmLast);
+              }
+              return (<section key={key + idx} className="p-put-row">
+                <p className="p-put-key">{_(key) + " :"}</p>
+                <p style={{ "display": "flex", "flexFlow": "row", "alignItems": "center" }}>
+                  {str ? txtToDisplay : "--"}
+                </p>
+              </section>)
+            }
+            if (idx === 1) {
               return (<section key={key + idx} className="p-put-row">
                 <p className="p-put-key">{_(key) + " :"}</p>
                 <p className="p-put-value">{(previousDetails[key]).trim() || "--"}</p>
@@ -78,14 +93,19 @@ var PreviousDetails = React.createClass({
             }
           })}
         </div>
+
+
         <div className="p-put-head">
           {_("PREVIOUS LOCATION").toUpperCase()}
         </div>
         <div className="p-put-content">
           {Object.keys(previousDetails).map(function (key, idx) {
             if (key === "Location") {
+              var str = previousDetails[key].trim();
               return (<section key={key + idx} className="p-put-row">
-                <p className="p-put-value-location">{(previousDetails[key]).trim() || "--"}</p>
+                {str ?
+                  <p className="p-put-value-location">{str}</p> : "--"
+                }
               </section>)
             }
           })}

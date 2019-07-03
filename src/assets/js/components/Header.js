@@ -3,10 +3,12 @@ var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
+var Modal = require('./Modal/Modal')
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
 var appConstants = require('../constants/appConstants');
+var ActionCreators = require('../actions/CommonActions');
 
 function getState() {
     return {
@@ -14,13 +16,16 @@ function getState() {
         systemIsIdle: mainstore.getSystemIdleState(),
         logoutState: mainstore.getLogoutState(),
         scanAllowed: mainstore.getScanAllowedStatus(),
-        ppsMode: mainstore.getPpsMode()
+        ppsMode: mainstore.getPpsMode(),
+        username: mainstore.getUsername(),
+        AraPickFrontModal: mainstore.getConfirmModalDetails()
     }
 }
 var Header = React.createClass({
     virtualKeyBoard: '',
     exceptionMenu: '',
     searchMenu: '',
+    usernameMenu: '',
     getInitialState: function () {
         return getState();
     },
@@ -65,12 +70,35 @@ var Header = React.createClass({
     },
     logoutSession: function () {
         $("#actionMenu").hide();
-        if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
-            return false;
+        
+        if(mainstore.getScreenId() === appConstants.ARA_PICK_FRONT) {
+            mainstore.getConfirmModalDetails();
+            console.log(this.state.AraPickFrontModal);
+            if (
+                this.state.AraPickFrontModal['showModal'] !== undefined &&
+                this.state.AraPickFrontModal['showModal'] === true
+              ) {
+                var self = this;
+                // this.state.AraPickFrontModal['showModal'] = false;
+                var r = self.state.AraPickFrontModal.message;
+                setTimeout(function() {
+                  ActionCreators.showModal({
+                    data: {
+                      message: r
+                    },
+                    type: 'message'
+                  });
+                  $('.modal').modal();
+                }, 0);
+              }
         }
-        else {
-            CommonActions.logoutSession(true);
-        }
+
+        // if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
+        //     return false;
+        // }
+        // else {
+        //     CommonActions.logoutSession(true);
+        // }
 
     },
     componentDidMount: function () {
@@ -128,7 +156,7 @@ var Header = React.createClass({
                 }
             }
         }
-        if (x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS || screenId === appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
+        if (x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS || screenId === appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN || screenId === appConstants.ARA_PICK_FRONT)
             this.exceptionMenu = '';
         else if (mainstore.getExceptionAllowed().length > 0)
             this.exceptionMenu = (<div className="actionItem" onClick={this.enableException} >
@@ -140,9 +168,16 @@ var Header = React.createClass({
             </div>);
     },
     getSearchItemMenu: function () {
-        if (mainstore.orphanSearchAllowed()) {
+        if (mainstore.orphanSearchAllowed() && mainstore.getScreenId() !== appConstants.ARA_PICK_FRONT ) {
             this.searchMenu = (<div className="actionItem" onClick={this.enableSearch}>
                 {_("Item Search")}
+            </div>);
+        }
+    },
+    getUsernameMenu: function () {
+        if (mainstore.getScreenId() === appConstants.ARA_PICK_FRONT) {
+            this.usernameMenu = (<div className="actionItem">
+                {this.state.username}
             </div>);
         }
     },
@@ -162,6 +197,7 @@ var Header = React.createClass({
         var invoiceFlow = mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false;
         this.getExceptionMenu();
         this.getSearchItemMenu();
+        this.getUsernameMenu();
         if (this.state.spinner || this.state.systemIsIdle || invoiceFlow) {
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else {
@@ -195,7 +231,7 @@ var Header = React.createClass({
             <div className="actionMenu" id="actionMenu" >
 
                 {this.exceptionMenu}
-                <div className="actionItem" onClick={this.utilityMenu} >
+                {mainstore.getScreenId() !== appConstants.ARA_PICK_FRONT ? <div className="actionItem" onClick={this.utilityMenu} >
                     {_("Utility")}
                     <div className="subMenu" onClick={this.peripheralData.bind(this, 'pptl')}>
                         {_("PPTL Management")}
@@ -203,8 +239,9 @@ var Header = React.createClass({
                     <div className="subMenu" onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
                         {_("Scanner Management")}
                     </div>
-                </div>
+                </div> : ''}
                 {this.searchMenu}
+                {this.usernameMenu}
                 <div className={logoutClass} onClick={this.logoutSession} >
                     {_("Logout")}
                 </div>

@@ -501,9 +501,15 @@ var navData = {
             "showImage": true,
             "level": 2,
             "type": 'passive'
+        }],
+        [{
+            "screen_id": "ara_pick_front",
+            "code": "Common.000",
+            "image": svgConstants.pptl,
+            "message": "Operation in progress",
+            "showImage": true,
+            "type": 'passive'
         }]
-
-
     ],
     "pickBack": [
         [{

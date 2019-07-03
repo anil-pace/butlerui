@@ -190,6 +190,21 @@ var PickFront = React.createClass({
 
   getScreenComponent: function (screen_id) {
     switch (screen_id) {
+      case appConstants.ARA_PICK_FRONT:
+      this._navigation = (
+        <Navigation
+          navData={this.state.PickFrontNavData}
+          serverNavData={this.state.PickFrontServerNavData}
+          navMessagesJson={this.props.navMessagesJson}
+        />
+      )
+      var loader = <Spinner />
+      this._component = (
+        <div className='grid-container'>
+          <div className='main-container'>{loader}</div>
+        </div>
+      )
+        break
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         var previousPickDetails = ''
         var loader = <Spinner />
@@ -231,7 +246,7 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent()
         }
         break
-
+      
       case appConstants.PICK_FRONT_LOCATION_CONFIRM:
       case appConstants.PICK_FRONT_LOCATION_SCAN:
         var locationBtnEnable = this.state.PickFrontLocationButtonEnable

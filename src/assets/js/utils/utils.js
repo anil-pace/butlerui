@@ -535,7 +535,45 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
-
+  data.state_data={
+    "error_popup_disabled": "undefined",
+    "user_loggedin": "default_user_name",
+    "api_version": "1",
+    "screen_id": "ara_pick_front",
+    "screen_version": "1",
+    "notification_list": [
+      
+    ],
+    "seat_type": "front",
+    "docked": [
+      
+    ],
+    "group_info": {
+      "1": "center"
+    },
+    "time_stamp": "2019-06-27T10:46:20Z",
+    "header_msge_list": [
+      {
+        "level": "info",
+        "code": "PkF.H.037",
+        "details": [
+          
+        ],
+        "description": "Operation in progress"
+      }
+    ],
+    "logout_allowed": false,
+    "exception_allowed": [
+      
+    ],
+    "mode": "pick",
+    "is_idle": false,
+    "operator_orientation": "0",
+    "bin_coordinate_plotting": false,
+    "event": "undefined",
+    "seat_name": "front_3",
+    "roll_cage_flow": false
+  };
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

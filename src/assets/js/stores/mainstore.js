@@ -4420,247 +4420,49 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   _getDamagedItemsDataForAudit: function () {
     var _damagedQuantity = 0;
     var data = {};
-    data['header'] = [];
-    data['footer'] = [];
-    data['header'].push(
-      new this.tableCol(
-        _('Type'),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false,
-        true
-      )
-    );
-    data['header'].push(
-      new this.tableCol(
-        _('SKU'),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false,
-        true
-      )
-    );
-    data['header'].push(
-      new this.tableCol(
-        _('Serial'),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false,
-        true
-      )
-    );
-    data['header'].push(
-      new this.tableCol(
-        _('Quantity'),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false,
-        true
-      )
-    );
-    data['footer'].push(
-      new this.tableCol(
-        _(''),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false
-      )
-    );
-    data['footer'].push(
-      new this.tableCol(
-        _(''),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false
-      )
-    );
-    data['footer'].push(
-      new this.tableCol(
-        _(''),
-        'header',
-        false,
-        'small',
-        false,
-        true,
-        true,
-        false
-      )
-    );
-    data['tableRows'] = [];
-    data['image_url'] = null;
+    data["header"] = [];
+    data["footer"] = [];
+    data["header"].push(new this.tableCol(_("Type"), "header", false, "small", false, true, true, false, true));
+    data["header"].push(new this.tableCol(_("SKU"), "header", false, "small", false, true, true, false, true));
+    data["header"].push(new this.tableCol(_("Serial"), "header", false, "small", false, true, true, false, true));
+    data["header"].push(new this.tableCol(_("Quantity"), "header", false, "small", false, true, true, false, true));
+    data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+    data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+    data["footer"].push(new this.tableCol(_(""), "header", false, "small", false, true, true, false));
+    data["tableRows"] = [];
+    data["image_url"] = null;
     var self = this;
     if (_seatData.damaged_boxes && _seatData.damaged_boxes.length > 0) {
-      var isKQEnabled,
-        product_details,
-        product_sku,
-        type,
-        serial,
-        quantity,
-        total_damaged = 0;
-      _seatData.damaged_boxes.map(function (value, index) {
-        type = value.uom_level;
-        product_sku = value.sku;
-        serial = value.serial === 'undefined' ? '--' : value.serial;
-        quantity = value.damaged_qty; //value.qty;
-        isKQEnabled = value.enable_kq_row;
-        total_damaged = mainstore.getDamagedQuantity();
+        var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0;
+        _seatData.damaged_boxes.map(function (value, index) {
+            type = value.uom_level;
+            product_sku = value.sku;
+            serial = value.serial === "undefined" ? "--" : value.serial;
+            quantity = value.damaged_qty; //value.qty;
+            isKQEnabled = value.enable_kq_row;
+            total_damaged = mainstore.getDamagedQuantity();
 
-        data['tableRows'].push([
-          new self.tableCol(
-            type,
-            'enabled',
-            false,
-            'small',
-            false,
-            true,
-            false,
-            false,
-            true,
-            true,
-            'shoshowUOMDropDownwUOM'
-          ),
-          new self.tableCol(
-            product_sku,
-            'enabled',
-            false,
-            'small',
-            false,
-            true,
-            false,
-            false,
-            true
-          ),
-          new self.tableCol(
-            serial,
-            'enabled',
-            false,
-            'small',
-            false,
-            true,
-            false,
-            false,
-            true,
-            true
-          ),
-          new self.tableCol(
-            quantity,
-            'enabled',
-            false,
-            'small',
-            false,
-            true,
-            false,
-            false,
-            true,
-            true,
-            'showKQRow',
-            isKQEnabled
-          )
-        ]);
-        //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
-      });
-      data['footer'].push(
-        new this.tableCol(
-          _('Total: ') + total_damaged + _(' entities'),
-          'header',
-          false,
-          'small',
-          false,
-          true,
-          true,
-          false
-        )
-      );
+            data["tableRows"].push([
+                new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+                new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+                new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
+            ]);
+            //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
+        });
+        data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" entities"), "header", false, "small", false, true, true, false));
     } else {
-      var isKQEnabled = false;
-      data['tableRows'].push([
-        new self.tableCol(
-          _('--'),
-          'enabled',
-          false,
-          'small',
-          false,
-          true,
-          false,
-          false,
-          true
-        ),
-        new self.tableCol(
-          '--',
-          'enabled',
-          false,
-          'small',
-          false,
-          true,
-          false,
-          false,
-          true
-        ),
-        new self.tableCol(
-          '--',
-          'enabled',
-          false,
-          'small',
-          false,
-          true,
-          false,
-          false,
-          true
-        ),
-        new self.tableCol(
-          '--',
-          'enabled',
-          false,
-          'small',
-          false,
-          true,
-          false,
-          false,
-          true,
-          true,
-          'showKQRow',
-          isKQEnabled
-        )
-      ]);
-      data['footer'].push(
-        new this.tableCol(
-          _('Total: '),
-          'header',
-          false,
-          'small',
-          false,
-          true,
-          true,
-          false
-        )
-      );
+        var isKQEnabled = false;
+        data["tableRows"].push([
+            new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+            new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+            new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+            new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
+        ]);
+        data["footer"].push(new this.tableCol(_("Total: ")+ _(" 0 entities"), "header", false, "small", false, true, true, false));
     }
     return data;
-  },
+},
   _getExcessExceptionFlag: function () {
     if (
       _seatData.excess_items != undefined &&

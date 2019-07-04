@@ -167,13 +167,13 @@ var PutFront = React.createClass({
           if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting) {
             binComponent = (<div style={{ width: "100%", marginLeft: "0" }} className="binsFlexWrapperContainer">
               <BinsFlex binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} seatType={this.state.SeatType} binCoordinatePlotting={true} />
-              <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+              <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
           }
           else {
             binComponent = (<div className='main-container'>
               <Bins binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} />
-              <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+              <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
           }
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);

@@ -470,7 +470,7 @@ function loadComponent(modalType,modalData,ths){
                   <div className="modal-footer removeBorder">
                       <div className="buttonContainer center-block chklstButtonContainer">
                           <div className="row removeBorder">
-                              <div className="col-md-4 col-md-offset-3"><Button1 disabled = {false} text ={_("OK")} color={"orange"} module ={appConstants.ERROR_NOTIFICATION} action={appConstants.HIDE_ERROR_NOTIFICATION}/></div>
+                              <div className="col-md-4 col-md-offset-4"><Button1 disabled = {false} text ={_("OK")} color={"orange"} module ={appConstants.ERROR_NOTIFICATION} action={appConstants.HIDE_ERROR_NOTIFICATION}/></div>
                           </div>
                       </div>
                   </div>

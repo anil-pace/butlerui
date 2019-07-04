@@ -90,10 +90,15 @@ var PutWrapper = React.createClass({
                         </div>
                     </div>
                 </div>
+                {
+                    this.props.scanDetails ?
+                        (
+                            <div className="kqContainer">
+                                <KQ scanDetails={this.props.scanDetails} itemUid={this.props.itemUid} />
+                            </div>
+                        ) : (null)
+                }
 
-                <div className="kqContainer">
-                    <KQ scanDetails={this.props.scanDetails} itemUid={this.props.itemUid} />
-                </div>
             </div>
         );
     }

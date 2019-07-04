@@ -810,7 +810,7 @@ function loadComponent(modalType, modalData, ths) {
           <div className='modal-footer removeBorder'>
             <div className='buttonContainer center-block chklstButtonContainer'>
               <div className='row removeBorder'>
-                <div className='col-md-4 col-md-offset-3'>
+                <div className='col-md-4 col-md-offset-4'>
                   <Button1
                     disabled={false}
                     text={_('OK')}

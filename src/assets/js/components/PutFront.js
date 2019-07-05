@@ -27,6 +27,7 @@ var BinMap = require('./BinMap');
 var SplitPPS = require('./SplitPPS');
 var utils = require('../utils/utils.js');
 var PreviousDetails = require('./PreviousDetails');
+var PreviousLocation = require('./PreviousLocation');
 var ProductDetUDP = require('./ProductDetails/ProductDetUDP');
 var ActionCreators = require('../actions/CommonActions');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
@@ -760,6 +761,7 @@ var PutFront = React.createClass({
                 <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
                 <CurrentBin details={this.state.PutFrontCurrentBinCount} />
                 <PreviousDetails previousDetails={this.state.PreviousDetails} />
+                <PreviousLocation previousDetails={this.state.PreviousDetails} />
               </div>
               <div className='main-container'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
@@ -852,7 +854,7 @@ var PutFront = React.createClass({
                 <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
                 <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
                 <PreviousDetails previousDetails={this.state.PreviousDetails} />
-
+                <PreviousLocation previousDetails={this.state.PreviousDetails} />
               </div>
               <div className='main-container udp-flow'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />

@@ -1,5 +1,5 @@
 var React = require('react');
-var PreviousDetails = React.createClass({
+var PreviousLocation = React.createClass({
   getInitialState: function () {
     return {
       product_info_locale: null
@@ -52,36 +52,21 @@ var PreviousDetails = React.createClass({
     return product_info_locale;
   },
   render: function () {
-    var type = this.props.type || "";
-    var typeToShow = (type === "pick") ? _("Previous Pick Details") : _("Previous Put Details")
     var customizeClass = this.props.customizeClass;
     var previousDetails = this.displayLocale(this.props.previousDetails);
     return (
       <div className={customizeClass ? "p-put-details " + customizeClass : "p-put-details"}>
         <div className="p-put-head">
-          {typeToShow.toUpperCase()}
+          {_("PREVIOUS LOCATION").toUpperCase()}
         </div>
         <div className="p-put-content">
           {Object.keys(previousDetails).map(function (key, idx) {
-            if (idx === 0) {
+            if (key === "Location") {
               var str = previousDetails[key].trim();
-              if (str) {
-                var txtToDisplay = [];
-                var frmStart = (<span className="p-put-value">{str.substring(0, str.length - 3)}</span>);
-                var frmLast = (<span className="p-put-value-extra">{str.substring(str.length - 3, str.length)}</span>);
-                txtToDisplay.push(frmStart, frmLast);
-              }
               return (<section key={key + idx} className="p-put-row">
-                <p className="p-put-key">{_(key) + " :"}</p>
-                <p style={{ "display": "flex", "flexFlow": "row", "alignItems": "center" }}>
-                  {str ? txtToDisplay : "--"}
-                </p>
-              </section>)
-            }
-            if (idx === 1) {
-              return (<section key={key + idx} className="p-put-row">
-                <p className="p-put-key">{_(key) + " :"}</p>
-                <p className="p-put-value">{(previousDetails[key]).trim() || "--"}</p>
+                {str ?
+                  <p className="p-put-value-location">{str}</p> : "--"
+                }
               </section>)
             }
           })}
@@ -90,4 +75,4 @@ var PreviousDetails = React.createClass({
     );
   }
 });
-module.exports = PreviousDetails
+module.exports = PreviousLocation

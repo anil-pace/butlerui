@@ -369,7 +369,10 @@ var appConstants = {
   PICK_FRONT_SKIP_BIN: 'pick_front_skip_bin',
   GET_BOI_CONFIG: 'GET_BOI_CONFIG',
   KEYBOARD: 'KEYBOARD',
-  SCANNER: 'SCANNER'
+  SCANNER: 'SCANNER',
+  QL_CODE: "QL Code",
+  SLOT_ID: "Slot ID",
+  PREV_LOCATION: "Location"
 };
 
 module.exports = appConstants;

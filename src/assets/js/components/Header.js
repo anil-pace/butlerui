@@ -73,32 +73,14 @@ var Header = React.createClass({
         
         if(mainstore.getScreenId() === appConstants.ARA_PICK_FRONT) {
             mainstore.getConfirmModalDetails();
-            console.log(this.state.AraPickFrontModal);
-            if (
-                this.state.AraPickFrontModal['showModal'] !== undefined &&
-                this.state.AraPickFrontModal['showModal'] === true
-              ) {
-                var self = this;
-                // this.state.AraPickFrontModal['showModal'] = false;
-                var r = self.state.AraPickFrontModal.message;
-                setTimeout(function() {
-                  ActionCreators.showModal({
-                    data: {
-                      message: r
-                    },
-                    type: 'message'
-                  });
-                  $('.modal').modal();
-                }, 0);
-              }
         }
 
-        // if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
-        //     return false;
-        // }
-        // else {
-        //     CommonActions.logoutSession(true);
-        // }
+        if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
+            return false;
+        }
+        else {
+            CommonActions.logoutSession(true);
+        }
 
     },
     componentDidMount: function () {

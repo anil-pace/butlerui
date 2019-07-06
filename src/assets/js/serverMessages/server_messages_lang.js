@@ -765,5 +765,9 @@ function server_messages_list() {
     _("Put Pack list in {0} and press PPTL to confirm");
     _("System is Idle");
     _("Please scan PPTL which has excess item");
+    _("Please put unscannable tote in exception area");
+    _("Sum of good and exception quantity should be equal to {0}");
+    _("{0} Unscannable entities recorded. WMS notified");
+    _("Scan item or enter barcode details");
 }
 

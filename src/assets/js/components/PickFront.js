@@ -201,7 +201,7 @@ var PickFront = React.createClass({
       var loader = <Spinner />
       this._component = (
         <div className='grid-container'>
-          <div className='main-container'>{loader}</div>
+          <div className='main-container ara-pick-loader'>{loader}</div>
         </div>
       )
         break

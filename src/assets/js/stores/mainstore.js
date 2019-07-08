@@ -578,16 +578,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getConfirmModalDetails: function(){
-    var data = {};
-    data[showModal] = false;
-    data['message'] = '';
-    return {
-      showModal: true,
-      message: _('Are you sure you want to logout?')
-    };
-  },
-
   getModalStatus: function () {
     var data = {};
     data['showModal'] = '';
@@ -5346,7 +5336,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data['SeatType'] = this.getSeatType();
     data['ppsMode'] = this.getPpsMode();
     data['username'] = this.getUsername();
-    data['AraPickFrontModal'] = this.getConfirmModalDetails();
+
     switch (_screenId) {
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:

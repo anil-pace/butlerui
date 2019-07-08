@@ -711,7 +711,45 @@ function loadComponent(modalType, modalData, ths) {
       );
       title = _('New carrying unit');
       break;
+    
+      // BSS-14025 confirm logout for pick ara flow
+      case appConstants.CONFIRM_LOGOUT:
+      component = [];
+      component.push(
+        <div>
+          <div className='row'>
+            <p>{_('Are you sure you would like to logout?')}</p>
+          </div>
+          <div className='modal-footer removeBorder'>
+            <div className='buttonContainer center-block chklstButtonContainer'>
+              <div className='row removeBorder'>
+                <div className='col-md-6'>
+                  <Button1
+                    disabled={false}
+                    text={_('Cancel')}
+                    color={'black'}
+                    module={appConstants.PICK_FRONT}
+                    action={appConstants.CANCEL_LOGOUT_REQUEST}
+                  />
+                </div>
+                <div className='col-md-6'>
+                  <Button1
+                    disabled={false}
+                    text={_('Confirm')}
+                    color={'orange'}
+                    module={appConstants.PICK_FRONT}
+                    action={appConstants.CONFIRM_LOGOUT_REQUEST}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+      title = _('Confirm Logout');
+      break;
 
+    
     case appConstants.SKIP_DOCKING:
       component = [];
       component.push(

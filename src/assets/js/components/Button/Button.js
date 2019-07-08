@@ -548,6 +548,21 @@ var Button1 = React.createClass({
             -ActionCreators.postDataToInterface(data);
             closeModalBox();
             break;
+            case appConstants.CANCEL_LOGOUT_REQUEST:
+            data['event_name'] = appConstants.CANCEL_REPRINT_REQUEST;
+            data['event_data'] = null;
+            ActionCreators.setCancelButtonStatus(true);
+            -ActionCreators.postDataToInterface(data);
+            closeModalBox();
+            break;
+          case appConstants.CONFIRM_LOGOUT_REQUEST:
+            data['event_name'] = appConstants.CONFIRM_REPRINT_LAST_REQUEST;
+            if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
+              return false;
+            }else {
+              ActionCreators.logoutSession(true);
+            }
+            break;
           default:
             return true;
         }

@@ -18,7 +18,6 @@ function getState() {
         scanAllowed: mainstore.getScanAllowedStatus(),
         ppsMode: mainstore.getPpsMode(),
         username: mainstore.getUsername(),
-        AraPickFrontModal: mainstore.getConfirmModalDetails()
     }
 }
 var Header = React.createClass({
@@ -68,20 +67,26 @@ var Header = React.createClass({
         })
         $('#barcode').data('keyboard').reveal();
     },
+    showModal: function(data, type, e) {
+        $("#actionMenu").hide();
+        ActionCreators.showModal({
+          data: data,
+          type: type
+        });
+        $('.modal').modal('show');
+        $('.modal').data('bs.modal').options.backdrop = 'static';
+        $('.modal-backdrop').css( "zIndex", 0 );
+        e.stopPropagation();
+        return false;
+      },
     logoutSession: function () {
         $("#actionMenu").hide();
-        
-        if(mainstore.getScreenId() === appConstants.ARA_PICK_FRONT) {
-            mainstore.getConfirmModalDetails();
-        }
-
         if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
             return false;
         }
         else {
             CommonActions.logoutSession(true);
         }
-
     },
     componentDidMount: function () {
     },
@@ -176,10 +181,12 @@ var Header = React.createClass({
         var logoutClass;
         var cssClass;
         var disableScanClass;
+        var araPickFrontFlow = mainstore.getScreenId() === appConstants.ARA_PICK_FRONT ? true : false;
         var invoiceFlow = mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false;
         this.getExceptionMenu();
         this.getSearchItemMenu();
         this.getUsernameMenu();
+
         if (this.state.spinner || this.state.systemIsIdle || invoiceFlow) {
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else {
@@ -195,6 +202,7 @@ var Header = React.createClass({
         } else {
             disableScanClass = 'disableScanClass'
         }
+
         return (<div>
             <div className="head">
                 <div className="logo">
@@ -207,8 +215,8 @@ var Header = React.createClass({
                 </div>
                 <div className="header-actions" onClick={this.showMenu} >
                     <img src={allSvgConstants.menu} />
-
                 </div>
+                <Modal/>
             </div>
             <div className="actionMenu" id="actionMenu" >
 
@@ -224,7 +232,7 @@ var Header = React.createClass({
                 </div> : ''}
                 {this.searchMenu}
                 {this.usernameMenu}
-                <div className={logoutClass} onClick={this.logoutSession} >
+                <div className={logoutClass} onClick={araPickFrontFlow ? this.showModal.bind(this,null,appConstants.CONFIRM_LOGOUT) : this.logoutSession} >
                     {_("Logout")}
                 </div>
             </div>

@@ -379,7 +379,10 @@ var appConstants = {
   KEYBOARD: 'KEYBOARD',
   SCANNER: 'SCANNER',
   UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock",
-  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist'
+  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist',
+  QL_CODE: "QL Code",
+  SLOT_ID: "Slot ID",
+  PREV_LOCATION: "Location"
 };
 
 module.exports = appConstants;

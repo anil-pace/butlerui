@@ -200,7 +200,7 @@ var PickFront = React.createClass({
               customizeClass={'customize_WaitingForMsu'}
               type='pick'
             />
-          )
+          );
         }
         if (this.state.BinMapDetails && this.state.rollCageStatus) {
           loader = (
@@ -1953,7 +1953,6 @@ var PickFront = React.createClass({
                 customizeClass={'customize_WaitingForMsu'}
                 type='pick'
               />
-
               <div className='main-container leftJustify'>
                 <Rack
                   isDrawer={this.state.isDrawer}

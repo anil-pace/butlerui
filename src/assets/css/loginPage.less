@@ -1,3 +1,4 @@
+// For desktop screen
 .containerLogin {
     padding:20px;
     display: grid;    
@@ -53,6 +54,7 @@
                
             }
         }
+        
     }
     
     .subHeading {
@@ -112,8 +114,6 @@
 }
   
 }
-
-
 
 
 main {
@@ -255,6 +255,7 @@ main {
     .divider{
         width:10%;
         text-align: center;
+
         .dividerUpper{
             height: 40%;
             border: 2px solid #6C6C6C;
@@ -383,9 +384,132 @@ main {
 }
 
 
-footer {
-    grid-column: 1/ span 12;
-    grid-row: 14 / span 1;
-    place-self: center;
+    footer {
+        grid-column: 1/ span 12;
+        grid-row: 14 / span 1;
+        place-self: center;
+    }
+
 }
+
+// For mobile screen
+
+@media all and (max-width: 768px) {
+    .containerLogin {
+        grid-template-rows: repeat(15, 1fr);
+        padding: 45px;
+        header {
+            .logo{
+                width: 30%;
+                .imgLogo{
+                    padding-top:20px;
+                    width:100%;
+                }
+            }
+            .languageDropDown{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items:center;
+                .selectWrapper{
+                    .selectLang{
+                        width:100%; 
+                        font-size:  2vh; 
+                        option{
+                            font-size: 2vh;
+                        }
+                    }
+            }
+                .langText{
+                    padding: 3%; 
+                    font-size: 3vh;
+                }
+            }
+            
+        }
+        
+        .subHeading {
+            grid-column: 1 / span 12;
+            grid-row: 2 / span 4;
+            place-self:start center;
+            
+        .selectWrapper{
+            .selectPPS{
+                font-size:  2vh;  
+                option {
+                    width: 50%;
+                }
+            }
+        }
+    
+        .langText{
+            font-size: 3vh;
+            margin-top:5%;
+        } 
+    }
+    
+    main {
+        display: block;
+        grid-row: 5 / span 8;
+        .keyboardLogin {
+            width:100%;
+        .unameContainer{
+           float: none;
+           width: 100%;
+           margin-bottom: 25px;
+           .textboxContainer {
+               padding: 15px;
+           }
+        }
+        .passContainer{
+            float: none;
+            width: 100%;
+            margin-bottom: 40px;
+            .textboxContainer {
+                padding: 15px;
+            }
+        
+        }
+        .buttonContainer{
+            float: none;
+            width: 100%;
+            .loginButton {
+                padding: 15px;
+            }
+        }
+    }
+        .divider{
+            width:100%;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            margin-bottom: 20px;
+            .dividerUpper{
+                width: 100%;
+            }
+            .dividerText{
+               padding: 0 10px 10px 10px;
+               margin-top: -15px;
+               font-size: 2vh;
+            }
+            .dividerBelow{
+                width: 100%;
+            }
+        }
+        
+        .scanIdLogin{
+            width:100%;
+            display: flex;
+            justify-content: center;
+           .outerDiv{
+               width: 35%;
+           }
+    
+        }
+    }  
+    footer {
+        grid-row: 16 / span 1;
+    }  
+    }
 }

@@ -11,6 +11,9 @@
         margin-left: 2.5em;
         padding-top: 1em;
         padding-bottom: 1em;
+        img {
+            width: 142px;
+        }
     }
     .ppsMode{
         order:2;
@@ -72,3 +75,24 @@
             }
 
         }
+
+@media all and (max-width: 769px) {
+    .head {
+        .logo {
+            img {
+                width:200px;
+            }
+        }
+        .ppsMode{
+            font-size: 3.5rem;
+            margin:4px 15% 0 2%;
+        }
+    }
+    .actionMenu{
+        font-size: 4rem;
+        width: 35vw;
+        .actionItem {
+            word-wrap: break-word;
+        }
+    }
+}

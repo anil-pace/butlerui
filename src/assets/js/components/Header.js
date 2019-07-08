@@ -3,10 +3,12 @@ var React = require('react');
 var allSvgConstants = require('../constants/svgConstants');
 var CommonActions = require('../actions/CommonActions');
 var mainstore = require('../stores/mainstore');
+var Modal = require('./Modal/Modal')
 var virtualkeyboard = require('virtual-keyboard');
 var jqueryPosition = require('jquery-ui/position');
 var virtualKeyBoard_header = null;
 var appConstants = require('../constants/appConstants');
+var ActionCreators = require('../actions/CommonActions');
 
 function getState() {
     return {
@@ -14,13 +16,15 @@ function getState() {
         systemIsIdle: mainstore.getSystemIdleState(),
         logoutState: mainstore.getLogoutState(),
         scanAllowed: mainstore.getScanAllowedStatus(),
-        ppsMode: mainstore.getPpsMode()
+        ppsMode: mainstore.getPpsMode(),
+        username: mainstore.getUsername(),
     }
 }
 var Header = React.createClass({
     virtualKeyBoard: '',
     exceptionMenu: '',
     searchMenu: '',
+    usernameMenu: '',
     getInitialState: function () {
         return getState();
     },
@@ -63,6 +67,18 @@ var Header = React.createClass({
         })
         $('#barcode').data('keyboard').reveal();
     },
+    showModal: function(data, type, e) {
+        $("#actionMenu").hide();
+        ActionCreators.showModal({
+          data: data,
+          type: type
+        });
+        $('.modal').modal('show');
+        $('.modal').data('bs.modal').options.backdrop = 'static';
+        $('.modal-backdrop').css( "zIndex", 0 );
+        e.stopPropagation();
+        return false;
+      },
     logoutSession: function () {
         $("#actionMenu").hide();
         if (mainstore.getLogoutState() === "false" || mainstore.getLogoutState() === false) {
@@ -71,7 +87,6 @@ var Header = React.createClass({
         else {
             CommonActions.logoutSession(true);
         }
-
     },
     componentDidMount: function () {
     },
@@ -128,7 +143,7 @@ var Header = React.createClass({
                 }
             }
         }
-        if (x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS || screenId === appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN)
+        if (x.search("EXCEPTION") != -1 || screenId === appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY || screenId === appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS || screenId === appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN || screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM || screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY || screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN || screenId === appConstants.ARA_PICK_FRONT)
             this.exceptionMenu = '';
         else if (mainstore.getExceptionAllowed().length > 0)
             this.exceptionMenu = (<div className="actionItem" onClick={this.enableException} >
@@ -140,9 +155,16 @@ var Header = React.createClass({
             </div>);
     },
     getSearchItemMenu: function () {
-        if (mainstore.orphanSearchAllowed()) {
+        if (mainstore.orphanSearchAllowed() && mainstore.getScreenId() !== appConstants.ARA_PICK_FRONT ) {
             this.searchMenu = (<div className="actionItem" onClick={this.enableSearch}>
                 {_("Item Search")}
+            </div>);
+        }
+    },
+    getUsernameMenu: function () {
+        if (mainstore.getScreenId() === appConstants.ARA_PICK_FRONT) {
+            this.usernameMenu = (<div className="actionItem">
+                {this.state.username}
             </div>);
         }
     },
@@ -159,9 +181,12 @@ var Header = React.createClass({
         var logoutClass;
         var cssClass;
         var disableScanClass;
+        var araPickFrontFlow = mainstore.getScreenId() === appConstants.ARA_PICK_FRONT ? true : false;
         var invoiceFlow = mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false;
         this.getExceptionMenu();
         this.getSearchItemMenu();
+        this.getUsernameMenu();
+
         if (this.state.spinner || this.state.systemIsIdle || invoiceFlow) {
             cssClass = 'keyboard-actions hide-manual-barcode'
         } else {
@@ -177,6 +202,7 @@ var Header = React.createClass({
         } else {
             disableScanClass = 'disableScanClass'
         }
+
         return (<div>
             <div className="head">
                 <div className="logo">
@@ -189,13 +215,13 @@ var Header = React.createClass({
                 </div>
                 <div className="header-actions" onClick={this.showMenu} >
                     <img src={allSvgConstants.menu} />
-
                 </div>
+                <Modal/>
             </div>
             <div className="actionMenu" id="actionMenu" >
 
                 {this.exceptionMenu}
-                <div className="actionItem" onClick={this.utilityMenu} >
+                {mainstore.getScreenId() !== appConstants.ARA_PICK_FRONT ? <div className="actionItem" onClick={this.utilityMenu} >
                     {_("Utility")}
                     <div className="subMenu" onClick={this.peripheralData.bind(this, 'pptl')}>
                         {_("PPTL Management")}
@@ -203,9 +229,10 @@ var Header = React.createClass({
                     <div className="subMenu" onClick={this.peripheralData.bind(this, 'barcode_scanner')}>
                         {_("Scanner Management")}
                     </div>
-                </div>
+                </div> : ''}
                 {this.searchMenu}
-                <div className={logoutClass} onClick={this.logoutSession} >
+                {this.usernameMenu}
+                <div className={logoutClass} onClick={araPickFrontFlow ? this.showModal.bind(this,null,appConstants.CONFIRM_LOGOUT) : this.logoutSession} >
                     {_("Logout")}
                 </div>
             </div>

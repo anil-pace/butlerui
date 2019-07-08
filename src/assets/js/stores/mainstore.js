@@ -5158,7 +5158,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.hasOwnProperty('auto_stage')) return _seatData.auto_stage;
   },
   getUDPMapDetails: function () {
-    var groupInfo = {};
+    var ppsBinIds = {};
+    var ppsBinIdColors = {};
     var leftBins = [];
     var rightBins = [];
     var centerBins = [];
@@ -5193,10 +5194,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
       leftBins = leftBins.concat(rightBins, centerBins);
       leftBins.forEach(function (bin) {
-        groupInfo[bin['ppsbin_id']] = bin['direction'];
+        ppsBinIds[bin['ppsbin_id']] = bin['direction'];
+      });
+      leftBins.forEach(function (bin) {
+        ppsBinIdColors[bin['ppsbin_id']] = bin['ppsbin_light_color'];
       });
     }
-    return groupInfo;
+    return {
+      ppsBinIds: ppsBinIds,
+      ppsBinIdColors: ppsBinIdColors
+    };
   },
 
   getDockStationList: function () {

@@ -5,7 +5,8 @@ var mainstore = require('../stores/mainstore');
 var SplitPPS = React.createClass({
 
 	processData: function () {
-		var data = Object.assign({}, (this.props.groupInfo || {}));
+		var data = Object.assign({}, (this.props.groupInfo.ppsBinIds || {}));
+		var binColors = Object.assign({}, (this.props.groupInfo.ppsBinIdColors || {}));
 		var leftCol = [],
 			dockedGroup = this.props.docked || [],
 			undockAwaited = this.props.undockAwaited || [],
@@ -73,7 +74,7 @@ var SplitPPS = React.createClass({
 					}
 					else if (undockAwaited.indexOf(k) >= 0) {
 						leftCol.push(<li key={k} style={style} className={undockclassName}>
-							<span className="undock left">&nbsp;</span>
+							<span style={{ backgroundColor: binColors[k] }} className="undock left">&nbsp;</span>
 						</li>);
 					}
 					else if (printReady.indexOf(k) >= 0) {
@@ -104,7 +105,7 @@ var SplitPPS = React.createClass({
 					}
 					else if (undockAwaited.indexOf(k) >= 0) {
 						rightCol.push(<li key={k} style={style} className={undockRigtclassName}>
-							<span className="undock right">&nbsp;</span>
+							<span style={{ backgroundColor: binColors[k] }} className="undock right">&nbsp;</span>
 						</li>);
 					}
 					else if (printReady.indexOf(k) >= 0) {
@@ -135,7 +136,7 @@ var SplitPPS = React.createClass({
 					else if (undockAwaited.indexOf(k) >= 0) {
 						centerCol.push(<li key={k} style={style} className="undockedCont">
 							<span >{this.props.displayBinId ? k : null}</span>
-							<span className="undock below">
+							<span style={{ backgroundColor: binColors[k] }} className="undock below">
 							</span>
 						</li>);
 					}

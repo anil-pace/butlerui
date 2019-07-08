@@ -852,7 +852,6 @@ var PutFront = React.createClass({
                 <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
                 <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
                 <PreviousDetails previousDetails={this.state.PreviousDetails} />
-
               </div>
               <div className='main-container udp-flow'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />

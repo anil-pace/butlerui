@@ -18,6 +18,7 @@ var appConstants = {
   TOGGLE_BIN_SELECTION: 'TOGGLE_BIN_SELECTION',
   SET_PUT_DATA: 'SET_PUT_DATA',
   SET_PICK_BACK_DATA: 'SET_PICK_BACK_DATA',
+  ARA_PICK_FRONT: 'ara_pick_front',
   SET_SEARCH_DATA: 'SET_SEARCH_DATA',
   PICK_BACK: 'pick_back',
   PICK_FRONT: 'pick_front',
@@ -263,6 +264,9 @@ var appConstants = {
   CANCEL_BIN_FULL_REQUEST: 'bin_full_cancel',
   CONFIRM_BIN_FULL_REQUEST: 'bin_full_confirmed',
   CANCEL_LAST_SCAN: 'cancel_last_scan',
+  CONFIRM_LOGOUT: 'confirm_logout',
+  CONFIRM_LOGOUT_REQUEST: 'confirm_logout_request',
+  CANCEL_LOGOUT_REQUEST: 'cancel_logout_request',
   REPRINT_REQUEST: 'reprint_request',
   CANCEL_REPRINT_REQUEST: 'cancel_reprint_request',
   CONFIRM_REPRINT_LAST_REQUEST: 'reprint_last_confirm',
@@ -375,7 +379,10 @@ var appConstants = {
   KEYBOARD: 'KEYBOARD',
   SCANNER: 'SCANNER',
   UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock",
-  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist'
+  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist',
+  QL_CODE: "QL Code",
+  SLOT_ID: "Slot ID",
+  PREV_LOCATION: "Location"
 };
 
 module.exports = appConstants;

@@ -20,6 +20,7 @@ var _seatData,
   _currentSeat,
   _peripheralScreen = false,
   _seatMode,
+  _username,
   _seatType,
   _seatName,
   _utility,
@@ -494,9 +495,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           ) {
             _NavData = navConfig.pickFront[11];
           } else if (_seatData.screen_id == appConstants.PER_ITEM_PRINT) {
-            _NavData = navConfig.print[0];
-          } else _NavData = navConfig.pickFront[1];
-          break;
+            _NavData = navConfig.print[0]
+          } else if (_seatData.screen_id == appConstants.ARA_PICK_FRONT) {
+            _NavData = navConfig.pickFront[12]
+          }
+          else _NavData = navConfig.pickFront[1]
+          break
 
         case appConstants.AUDIT:
           if (
@@ -3601,6 +3605,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     _seatName = data.seat_name;
     _seatMode = data.mode;
+    _username = data.user_loggedin ? data.user_loggedin : '';
     _seatType = data.seat_type;
     _currentSeat = data.mode + '_' + data.seat_type;
     _itemUid = data['item_uid'] != undefined ? data['item_uid'] : '';
@@ -3757,6 +3762,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getPpsMode: function () {
     return _seatMode;
+  },
+  getUsername: function () {
+      return _username;
   },
   getSeatType: function () {
     return _seatType;
@@ -5129,6 +5137,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data['OrigBinUse'] = this._getOrigBinUse();
     data['SeatType'] = this.getSeatType();
     data['ppsMode'] = this.getPpsMode();
+    data['username'] = this.getUsername();
+
     switch (_screenId) {
       case appConstants.PUT_BACK_STAGE:
       case appConstants.PUT_BACK_SCAN_TOTE:
@@ -5546,6 +5556,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['UndockAwaited'] = this._getUndockAwaitedGroup();
         data['DockedGroup'] = this._getDockedGroup();
         break;
+
+      case appConstants.ARA_PICK_FRONT:
+      data['PickFrontNavData'] = this.getNavData()
+      data['PickFrontServerNavData'] = this.getServerNavData()
+      data['PickFrontScreenId'] = this.getScreenId()
+      break
 
       case appConstants.PICK_FRONT_LOCATION_CONFIRM:
       case appConstants.PICK_FRONT_LOCATION_SCAN:

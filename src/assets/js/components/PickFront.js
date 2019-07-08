@@ -34,7 +34,6 @@ var utils = require('../utils/utils.js');
 var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
-var PreviousLocation = require('./PreviousLocation')
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable');
 
@@ -173,13 +172,6 @@ var PickFront = React.createClass({
         var loader = <Spinner />;
         if (this.state.PreviousDetails) {
           previousPickDetails = (<PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick" />);
-          previousPickLocation = (
-            <PreviousLocation
-              previousDetails={this.state.PreviousDetails}
-              customizeClass={'renderPrevLocation'}
-              type='pick'
-            />
-          )
         }
         if (this.state.BinMapDetails && this.state.rollCageStatus) {
           loader = (
@@ -198,7 +190,6 @@ var PickFront = React.createClass({
             <div className='grid-container'>
               <Modal />
               {previousPickDetails}
-              {previousPickLocation}
               <div className='main-container'>
                 {loader}
               </div>
@@ -1315,11 +1306,6 @@ var PickFront = React.createClass({
             <div className='grid-container'>
               <Modal />
               <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="pick" />
-              <PreviousLocation
-                previousDetails={this.state.PreviousDetails}
-                customizeClass={'renderPrevLocation'}
-                type='pick'
-              />
 
               <div className='main-container leftJustify'>
 

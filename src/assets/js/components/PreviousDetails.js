@@ -88,6 +88,21 @@ var PreviousDetails = React.createClass({
             }
           })}
         </div>
+        <div className="p-put-head">
+          {_("PREVIOUS LOCATION").toUpperCase()}
+        </div>
+        <div className="p-put-content">
+          {Object.keys(previousDetails).map(function (key, idx) {
+            if (key === "Location") {
+              var str = previousDetails[key].trim();
+              return (<section key={key + idx} className="p-put-row">
+                {str ?
+                  <p className="p-put-value-location">{str}</p> : "--"
+                }
+              </section>)
+            }
+          })}
+        </div>
       </div>
     );
   }

@@ -58,6 +58,7 @@ var PreviousDetails = React.createClass({
     var typeToShow = (type === "pick") ? _("Previous Pick Details") : _("Previous Put Details")
     var customizeClass = this.props.customizeClass;
     var previousDetails = this.displayLocale(this.props.previousDetails);
+    var showPrevLocation = false;
     return (
       <div className={customizeClass ? "p-put-details " + customizeClass : "p-put-details"}>
         <div className="p-put-head">
@@ -80,29 +81,37 @@ var PreviousDetails = React.createClass({
                 </p>
               </section>)
             }
-            if (key === appConstants.SLOT_ID) {
+            else if (key === appConstants.SLOT_ID) {
               return (<section key={key + idx} className="p-put-row">
                 <p className="p-put-key">{_(key) + " :"}</p>
                 <p className="p-put-value">{(previousDetails[key]).trim() || "--"}</p>
               </section>)
             }
-          })}
-        </div>
-        <div className="p-put-head">
-          {_("PREVIOUS LOCATION").toUpperCase()}
-        </div>
-        <div className="p-put-content">
-          {Object.keys(previousDetails).map(function (key, idx) {
-            if (key === "Location") {
-              var str = previousDetails[key].trim();
-              return (<section key={key + idx} className="p-put-row">
-                {str ?
-                  <p className="p-put-value-location">{str}</p> : "--"
-                }
-              </section>)
+            else if (key === appConstants.PREV_LOCATION) {
+              showPrevLocation = true;
             }
           })}
         </div>
+        {showPrevLocation === true ?
+          (<div>
+            <div className="p-put-head">
+              {_("PREVIOUS LOCATION").toUpperCase()}
+            </div>
+            <div className="p-put-content">
+              {Object.keys(previousDetails).map(function (key, idx) {
+                if (key === appConstants.PREV_LOCATION) {
+                  var str = previousDetails[key].trim();
+                  return (<section key={key + idx} className="p-put-row">
+                    {str ?
+                      <p className="p-put-value-location">{str}</p> : "--"
+                    }
+                  </section>)
+                }
+              })}
+            </div>
+          </div>)
+          : (null)
+        }
       </div>
     );
   }

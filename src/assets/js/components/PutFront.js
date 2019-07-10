@@ -77,7 +77,8 @@ var PutFront = React.createClass({
       missingItemList: mainstore.getMissingItemList(),
       ToteId: mainstore.getToteId(),
       selectedPPSBin: mainstore._getSelectedPpsBin(),
-      PutFrontItemUid: mainstore.getItemUid()
+      PutFrontItemUid: mainstore.getItemUid(),
+      PutFrontIsCrossDockEnabled: mainstore.IsCrossDockEnabled()
     }
 
 
@@ -893,11 +894,17 @@ var PutFront = React.createClass({
       case appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK:
         this._modalContent = '';
         this._component = '';
+        this._subComponent = '';
         if (this.state.PutFrontExceptionStatus == false) {
+          if (this.state.PutFrontIsCrossDockEnabled === true) {
+            this._subComponent = (
+              <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={'customize_WaitingForMsu'} type="put" />)
+          }
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} showSpinner={this.state.MobileFlag} />);
           this._component = (
             <div className='grid-container'>
               <Modal />
+              {this._subComponent}
               <div className='main-container'>
                 <Spinner />
               </div>

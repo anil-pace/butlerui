@@ -196,6 +196,7 @@ var serverMessages = {
     "Common.E.027": "Service request not in correct state",
     "Common.E.028": "Multiple Service request found",
     "Common.E.029": "Unknown error",
+    "Common.E.030": "Item unexpected. No service request found for this item",
     "Common.H.001": "System is Idle",
     "Common.H.002": "Dock {0}",
     "Common.H.003": "Undock {0}",

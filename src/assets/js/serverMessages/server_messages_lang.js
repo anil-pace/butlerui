@@ -776,5 +776,6 @@ function server_messages_list() {
     _("Unknown error");
     _("Scan item");
     _("Item scan successful");
+    _("Item unexpected. No service request found for this item");
 }
 

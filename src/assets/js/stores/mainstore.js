@@ -196,10 +196,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   IsCrossDockEnabled: function () {
-    if (_seatData.is_ud_without_staging)
+    if (_seatData && _seatData.hasOwnProperty('is_ud_without_staging'))
       return _seatData.is_ud_without_staging;
-    else
-      return null;
   },
 
   getBoxBarcode: function () {

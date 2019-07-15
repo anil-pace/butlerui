@@ -98,7 +98,7 @@ var PreviousDetails = React.createClass({
             </div>
             <div className="p-put-content">
               {Object.keys(previousDetails).map(function (key, idx) {
-                if (key === appConstants.PREV_LOCATION) {
+                if (idx === 2) { // comparing with idx & not key as key is client configurable
                   var str = previousDetails[key].trim();
                   return (<section key={key + idx} className="p-put-row">
                     {str ?

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 06:57+0000\n"
+"POT-Creation-Date: 2019-07-16 07:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -518,6 +518,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:139
 #: src/assets/js/serverMessages/server_messages_lang.js:107
 #: src/assets/js/serverMessages/server_messages_lang.js:144
+#: src/assets/js/serverMessages/server_messages_lang.js:778
 msgid "Item scan successful"
 msgstr ""
 
@@ -3638,4 +3639,37 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:771
 msgid "Scan item or enter barcode details"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:584
+#: src/assets/js/serverMessages/server_messages_lang.js:660
+msgid "{0} unexpected. Service request not present in {1}."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:772
+msgid "MSU Sent"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:773
+msgid "This put request is not supported in current flow"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:774
+msgid "Service request not in correct state"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:775
+msgid "Multiple Service request found"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:776
+msgid "Unknown error"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:777
+msgid "Scan item"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:779
+msgid "Item unexpected. No service request found for this item"
 msgstr ""

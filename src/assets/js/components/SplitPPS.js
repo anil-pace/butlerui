@@ -5,9 +5,7 @@ var mainstore = require('../stores/mainstore');
 var SplitPPS = React.createClass({
 
 	processData: function () {
-		let groupInfo = this.props.groupInfo && this.props.groupInfo.ppsBinIds
-        ? this.props.groupInfo.ppsBinIds
-        : this.props.groupInfo;
+		let groupInfo = this.props.groupInfo && this.props.groupInfo.ppsBinIds ? this.props.groupInfo.ppsBinIds : this.props.groupInfo;
 		var data = Object.assign({}, (groupInfo || {}));
 		var binColors = Object.assign({}, (groupInfo.ppsBinIdColors || {}));
 		var leftCol = [],

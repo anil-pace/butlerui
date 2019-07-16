@@ -1,5 +1,4 @@
 var React = require('react');
-var appConstants = require('../constants/appConstants');
 
 var PreviousDetails = React.createClass({
   getInitialState: function () {
@@ -66,7 +65,7 @@ var PreviousDetails = React.createClass({
         </div>
         <div className="p-put-content">
           {Object.keys(previousDetails).map(function (key, idx) {
-            if (key === appConstants.QL_CODE) {
+            if (idx === 0) {
               var str = previousDetails[key].trim();
               if (str) {
                 var txtToDisplay = [];
@@ -81,13 +80,13 @@ var PreviousDetails = React.createClass({
                 </p>
               </section>)
             }
-            else if (key === appConstants.SLOT_ID) {
+            else if (idx === 1) {
               return (<section key={key + idx} className="p-put-row">
                 <p className="p-put-key">{_(key) + " :"}</p>
                 <p className="p-put-value">{(previousDetails[key]).trim() || "--"}</p>
               </section>)
             }
-            else if (key === appConstants.PREV_LOCATION) {
+            else if (idx === 2) {
               showPrevLocation = true;
             }
           })}
@@ -99,7 +98,7 @@ var PreviousDetails = React.createClass({
             </div>
             <div className="p-put-content">
               {Object.keys(previousDetails).map(function (key, idx) {
-                if (key === appConstants.PREV_LOCATION) {
+                if (idx === 2) { // comparing with idx & not key as key is client configurable
                   var str = previousDetails[key].trim();
                   return (<section key={key + idx} className="p-put-row">
                     {str ?

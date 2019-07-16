@@ -216,7 +216,7 @@ var Header = React.createClass({
                 <div className="header-actions" onClick={this.showMenu} >
                     <img src={allSvgConstants.menu} />
                 </div>
-                <Modal/>
+                {araPickFrontFlow ? <Modal/> : ''}
             </div>
             <div className="actionMenu" id="actionMenu" >
 

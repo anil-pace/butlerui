@@ -8,7 +8,7 @@ var SplitPPS = React.createClass({
 	let groupInfo = this.props.groupInfo && this.props.groupInfo.ppsBinIds
         ? this.props.groupInfo.ppsBinIds
         : this.props.groupInfo;
-		var data = Object.assign({}, (groupInfo.ppsBinIds || {}));
+		var data = Object.assign({}, (groupInfo || {}));
 		var binColors = Object.assign({}, (groupInfo.ppsBinIdColors || {}));
 		var leftCol = [],
 			dockedGroup = this.props.docked || [],

@@ -8,4 +8,4 @@ zanata-cli -B push;
 zanata-cli -B pull;
 node translationUtils/po2json2js.js;
 git add src/
-git commit -m 'Commit from Jenkins Job' ;
+git commit -m 'BSS-6765 Commit from Jenkins Job' ;

@@ -5022,7 +5022,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getDockStationList: function () {
-    var groupInfo = {};
+    var ppsBinIds = {};
+    var ppsBinIdColors = {};
     var leftBins = [];
     var rightBins = [];
     var centerBins = [];
@@ -5041,10 +5042,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       });
       leftBins = leftBins.concat(rightBins, centerBins, centerTopBins);
       leftBins.forEach(function (bin) {
-        groupInfo[bin['dock_station_label']] = bin['direction'];
+        ppsBinIds[bin['dock_station_label']] = bin['direction'];
+      });
+      leftBins.forEach(function (bin) {
+        ppsBinIdColors[bin['dock_station_label']] = bin['ppsbin_light_color'];
       });
     }
-    return groupInfo;
+    return {
+      ppsBinIds: ppsBinIds,
+      ppsBinIdColors: ppsBinIdColors
+    };
   },
 
   getDockedList: function () {

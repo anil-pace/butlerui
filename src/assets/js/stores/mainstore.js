@@ -3150,6 +3150,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData.loose_item_barcode_damage != 0
       )
         c = c + 1;
+        if (_seatData.k_deep_audit) {
+          looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
+        }
     });
 
     _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(

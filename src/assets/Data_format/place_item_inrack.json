@@ -211,7 +211,7 @@
         ],
         "time_stamp": "1530347188",
         "ppsbin_list": [{
-            "breadth": "200",
+            "height": "200",
             "direction": "right",
             "bin_info": [],
             "ppsbin_id": "6",
@@ -224,7 +224,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "left",
             "bin_info": [],
             "ppsbin_id": "1",
@@ -237,7 +237,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "right",
             "bin_info": [],
             "ppsbin_id": "7",
@@ -250,7 +250,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "left",
             "bin_info": [],
             "ppsbin_id": "2",
@@ -263,7 +263,7 @@
             "group_id": "2",
             "totes_associated": "true"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "right",
             "bin_info": [],
             "ppsbin_id": "8",
@@ -276,7 +276,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "left",
             "bin_info": [],
             "ppsbin_id": "3",
@@ -289,7 +289,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "right",
             "bin_info": [],
             "ppsbin_id": "9",
@@ -302,7 +302,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "left",
             "bin_info": [],
             "ppsbin_id": "4",
@@ -315,7 +315,7 @@
             "group_id": "2",
             "totes_associated": "false"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "right",
             "bin_info": [{
                 "product_sku": "item4",
@@ -333,7 +333,7 @@
             "group_id": "2",
             "totes_associated": "true"
         }, {
-            "breadth": "200",
+            "height": "200",
             "direction": "left",
             "bin_info": [],
             "ppsbin_id": "5",

@@ -3628,7 +3628,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _utility = _seatData.utility;
     }
     if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
-      _putFrontExceptionScreen = 'take_item_from_bin';
+      _putFrontExceptionScreen = 'revised_quantity';
     else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
       _pickFrontExceptionScreen = 'box_serial';
     else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)

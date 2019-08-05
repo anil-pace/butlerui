@@ -66,14 +66,14 @@ var Bins = React.createClass({
          // .bins container.
          // for reference orig_coordinate[0] === x axis and orig_coordinate[1] === y axis
          var horFactor = parseFloat(100/(Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)));
-         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.breadth)));
+         var vertFactor = parseFloat(100/(Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.height)));
 
          var totalPpsWidth = Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)
 
 
          for (var i =0; i<aBins.length ;i++){
                 var binWidth = aBins[i].length * horFactor +'%';
-                var binHeight = aBins[i].breadth * vertFactor +'%';
+                var binHeight = aBins[i].height * vertFactor +'%';
                 var ileft=0;
                 var itop=0;
 

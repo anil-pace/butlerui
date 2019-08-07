@@ -4686,7 +4686,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var _allowedQuantity;
     _allowedQuantity =
       _seatData.put_quantity > 0 ? _seatData.put_quantity - 1 : 0;
-    if (_KQQty > _allowedQuantity) {
+    if (_KQQty === _seatData.put_quantity) {
+      var data = {};
+      data['code'] = resourceConstants.CLIENTCODE_012;
+      data['level'] = 'error';
+      data['type'] = appConstants.CLIENT_NOTIFICATION;
+      data['details'] = [_allowedQuantity];
+      _seatData.notification_list[0] = data;
+    } else if(_KQQty > _allowedQuantity) {
       if (_seatData.notification_list.length == 0) {
         var data = {};
         data['code'] = resourceConstants.SERVERMSGCODE_007;

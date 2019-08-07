@@ -3628,7 +3628,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _utility = _seatData.utility;
     }
     if (_screenId == appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE)
-      _putFrontExceptionScreen = 'take_item_from_bin';
+      _putFrontExceptionScreen = 'revised_quantity';
     else if (_screenId == appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX)
       _pickFrontExceptionScreen = 'box_serial';
     else if (_screenId == appConstants.PUT_BACK_EXCEPTION_DAMAGED_BARCODE)
@@ -4686,16 +4686,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var _allowedQuantity;
     _allowedQuantity =
       _seatData.put_quantity > 0 ? _seatData.put_quantity - 1 : 0;
-    if (_KQQty > _allowedQuantity) {
+    if (_KQQty === _seatData.put_quantity) {
+      var data = {};
+      data['code'] = resourceConstants.CLIENTCODE_012;
+      data['level'] = 'error';
+      data['type'] = appConstants.CLIENT_NOTIFICATION;
+      data['details'] = [_allowedQuantity];
+      _seatData.notification_list[0] = data;
+    } else if(_KQQty > _allowedQuantity) {
       if (_seatData.notification_list.length == 0) {
         var data = {};
-        data['code'] = resourceConstants.CLIENTCODE_012;
+        data['code'] = resourceConstants.SERVERMSGCODE_007;
         data['level'] = 'error';
         data['type'] = appConstants.CLIENT_NOTIFICATION;
         data['details'] = [_allowedQuantity];
         _seatData.notification_list[0] = data;
       } else {
-        _seatData.notification_list[0].code = resourceConstants.CLIENTCODE_012;
+        _seatData.notification_list[0].code = resourceConstants.SERVERMSGCODE_007;
         _seatData.notification_list[0].details = [_allowedQuantity];
         _seatData.notification_list[0].level = 'error';
         _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION;

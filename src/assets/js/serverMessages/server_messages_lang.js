@@ -777,5 +777,7 @@ function server_messages_list() {
     _("Scan item");
     _("Item scan successful");
     _("Item unexpected. No service request found for this item");
+    _("Scan entity");
+    _("Put entity in slot and scan slot to confirm");
 }
 

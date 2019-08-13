@@ -1587,7 +1587,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   isReprintPopUpEnabled: function () {
     return _seatData.reprint_popup_enabled;
   },
-
+  getHeavyItemsFlag: function() {
+    return _seatData.lifting_product !== 'safe';
+  },
   productDetails: function () {
     _prodDetails = _seatData.product_info;
     return _prodDetails;
@@ -5733,7 +5735,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontPickDirection'] = this.getDirectionDetails();
         data['PickFrontRackTypeMPU'] = this.getRackType();
         data['PickFrontCancelScan'] = this.cancelScanDetails();
-
+        data['PickFrontHeavyItemsFlag'] = this.getHeavyItemsFlag();
         break;
 
       case appConstants.PICK_FRONT_CHECKLIST:

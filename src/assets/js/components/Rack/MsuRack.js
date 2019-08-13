@@ -15,7 +15,8 @@ var MsuRack = React.createClass({
                     			 putDirectionFlex={this.props.putDirection} 
                     			 QLCodeDetails={this.props.QLCodeDetails}
                     			 screenId={this.props.screenId}
-                    			 PickFrontProductDetails={this.props.PickFrontProductDetails}/>
+                    			 PickFrontProductDetails={this.props.PickFrontProductDetails}
+								 PickFrontHeavyItem={this.props.pickFrontHeavyItemInfo}/>
                 </div>
 			);
 	}

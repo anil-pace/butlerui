@@ -5580,6 +5580,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PutFrontExceptionStatus'] = this.getExceptionStatus();
         data['PutFrontItemUid'] = this.getItemUid();
         data['PutFrontPutDirection'] = this.getDirectionDetails();
+        data['PutFrontHeavyItemsFlag'] = this.getHeavyItemsFlag();
         break;
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data['PutFrontNavData'] = this.getNavData();

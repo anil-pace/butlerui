@@ -311,7 +311,7 @@ var PickFront = React.createClass({
                 slotType={this.state.SlotType}
                 rackData={this.state.PickFrontRackDetails}
                 putDirection={this.state.PickFrontPickDirection}
-                pickFrontHeavyItemInfo={isHeavyItem}
+                heavyItemInfo={isHeavyItem}
               />
             )
           }

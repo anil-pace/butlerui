@@ -203,6 +203,8 @@ var PutFront = React.createClass({
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           //need to check this case, if we need flexible bins here?
+        let isHeavyItem = this.state.PutFrontHeavyItemsFlag;
+
           this._component = (
             <div className='grid-container'>
               <Modal />
@@ -212,7 +214,7 @@ var PutFront = React.createClass({
                 <div className="text">{_("CURRENT BIN")}</div>
               </div>
               <div className='main-container'>
-                <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
+                <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>
                 <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
               </div>
               <div className='cancel-scan'>

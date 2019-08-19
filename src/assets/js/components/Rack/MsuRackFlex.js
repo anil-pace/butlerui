@@ -287,7 +287,7 @@ var MsuRackFlex = React.createClass({
       nestable_direction,
       stackicon
     var putDirection = this.props.putDirectionFlex
-    var pickFrontHeavyItem = this.props.PickFrontHeavyItem
+    var heavyItemFlag = this.props.HeavyItemFlag
     var QLCodeDetails = this.props.QLCodeDetails
     var vHTMLSlots = this._createSlotLayouts(
       this.state.vSlots,
@@ -363,7 +363,7 @@ var MsuRackFlex = React.createClass({
               </span>
             </div>
           )}
-          {(putDirection.length > 0 || pickFrontHeavyItem)  ? (
+          {(putDirection.length > 0 || heavyItemFlag)  ? (
             <div className='specialContainer'>
               <img className={orientation} src={orientationClass} />
               <div className={stackClass}>
@@ -375,7 +375,7 @@ var MsuRackFlex = React.createClass({
                 <span className='fragileicons' />
                 <span className='fragileText'>{_('FRAGILE')}</span>
               </div>
-              {pickFrontHeavyItem && <div className="heavyItemContainer">
+              {heavyItemFlag && <div className="heavyItemContainer">
               <img
                     className='itemLogo'
                     src={'./assets/images/ic-heavy.svg'}

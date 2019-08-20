@@ -16,7 +16,7 @@ var MsuRack = React.createClass({
                     			 QLCodeDetails={this.props.QLCodeDetails}
                     			 screenId={this.props.screenId}
                     			 PickFrontProductDetails={this.props.PickFrontProductDetails}
-								 PickFrontHeavyItem={this.props.pickFrontHeavyItemInfo}/>
+								 HeavyItemFlag={this.props.heavyItemInfo}/>
                 </div>
 			);
 	}

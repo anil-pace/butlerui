@@ -363,7 +363,7 @@ var MsuRackFlex = React.createClass({
               </span>
             </div>
           )}
-          {(putDirection.length > 0 || heavyItemFlag)  ? (
+          {(putDirection || heavyItemFlag)  ? (
             <div className='specialContainer'>
               <img className={orientation} src={orientationClass} />
               <div className={stackClass}>

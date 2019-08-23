@@ -1588,7 +1588,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.reprint_popup_enabled;
   },
   getHeavyItemsFlag: function() {
-    return _seatData.lifting_product !== 'safe';
+    return _seatData.is_heavy ? _seatData.is_heavy : false;
   },
   productDetails: function () {
     _prodDetails = _seatData.product_info;

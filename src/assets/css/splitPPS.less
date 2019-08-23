@@ -407,19 +407,49 @@
     border-bottom: solid 2px #aaaaaa;
 }
 
-.gor-invoice-input-box-wrap{
-	width: 676px;
-    height: 60px;
-    background-color: #ffffff;
-    border: solid 1px #aaaaaa;
-    font-size: 24px;
-    color: #aaaaaa;
-    
-}
 
 .gor-invoice-input-keyboard-wrap {
 	padding-top: 40px;
-    padding-left: 87px;
+	padding-left: 87px;
+	.barcode{
+		background: url(../images/Icon.png) no-repeat;
+		width: 10%;
+		height: 100%;
+		display: inline-block;
+		zoom: 50%;
+		margin-left: 2%;
+	}
+	.inputWrapper{
+		width: 675px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		.gor-invoice-input-box-wrap{
+			width: 93%;
+			height: 99%;
+			background-color: #ffffff;
+			border: none;
+			font-size: 24px;
+			color: #aaaaaa;
+			margin-left: 1%;
+		}
+		.closeIcon{
+			color: #aaa;
+		}
+		&.showError{
+			border: 1px solid #E83033;
+		}
+		&.noError{
+			border: 1px solid #aaaaaa;
+		}
+	}
+	.ErrorMessage{
+		font-size: 20px;
+		font-weight: 400;
+		line-height: 24px;
+		text-align: left;
+		color: #E83033;
+	}
 }
 
 .gor-invoice-put-back {

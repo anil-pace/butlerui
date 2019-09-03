@@ -46,7 +46,7 @@ var serverMessages = {
     "PtB.E.024": "Length of {0} should not be greater than {1}",
     "PtB.E.026": "Invalid {0}",
     "PtB.E.027": "{0} closed.",
-    "PtB.E.028": "Excess detected, remove '{0}' items and confirm again",
+    "PtB.E.028": "Excess quantity detected, remove '{0}' quantity and confirm again",
     "PtF.H.001": "Place Entity in Slot and Scan More",
     "PtF.H.002": "Scan Slot to Confirm",
     "PtF.H.003": "Wait for MSU",

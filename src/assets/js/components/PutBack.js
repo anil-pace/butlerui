@@ -28,6 +28,8 @@ var NumericIndicator = require('./ProductDetails/NumericIndicator');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable');
 var Spinner = require("./Spinner/LoaderButler");
+var STNInput = require("./stnInput");
+
 function getStateData() {
   return mainstore.getScreenData();
 }
@@ -50,40 +52,6 @@ var PutBack = React.createClass({
   },
   onChange: function () {
     this.setState(getStateData());
-  },
-  openKeyboard: function () {
-    $("#actionMenu").hide();
-    $(".form-control").blur();
-    virtualKeyBoard_header = $('#invoiceNumber').keyboard({
-      layout: 'custom',
-      customLayout: {
-        'default': ['! @ # $ % ^ & * + _', '1 2 3 4 5 6 7 8 9 0 {b}', 'q w e r t y u i o p', 'a s d f g h j k l', '{shift} z x c v b n m . {shift}', '{space}', '{a} {c}'],
-        'shift': ['( ) { } [ ] = ~ ` -', '< > | ? / " : ; , \' {b}', 'Q W E R T Y U I O P', 'A S D F G H J K L', '{shift} Z X C V B N M . {shift}', '{space}', '{a} {c}']
-      },
-      css: {
-        container: "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
-      },
-      reposition: true,
-      alwaysOpen: false,
-      initialFocus: true,
-      visible: function (e, keypressed, el) {
-        el.value = '';
-      },
-      accepted: function (e, keypressed, el) {
-        if (e.target.value.trim() === '') {
-        } else {
-          var data = {
-            "event_name": "process_barcode",
-            "event_data": {
-              "barcode": e.target.value.trim(),
-            },
-            "source": "ui"
-          }
-          CommonActions.postDataToInterface(data);
-        }
-      }
-    })
-    $('#invoiceNumber').data('keyboard').reveal();
   },
   getExceptionComponent: function () {
     var _rightComponent = '';
@@ -188,12 +156,15 @@ var PutBack = React.createClass({
             <Modal />
             <div className='gor-invoice-input-wrap'>
               <div className='gor-invoice-h1-wrap'>{componentModalString}</div>
-              <div className='gor-invoice-input-keyboard-wrap' onClick={this.openKeyboard}>
-                <input type="text" className="form-control gor-invoice-input-box-wrap" id="invoiceNumber" placeholder={componentModalString} ref='invoiceNumber' />
-              </div>
+              <STNInput
+                errorFound={this.state.PutBackNotificationForStnInput}
+                invoiceType={this.state.InvoiceType}
+                inputPlaceHolder={componentModalString}
+              />
             </div>
           </div>);
         break;
+
       case appConstants.PUT_BACK_SCAN:
         var invoiceStringArg = [];
         invoiceStringArg[0] = this.state.InvoiceType;

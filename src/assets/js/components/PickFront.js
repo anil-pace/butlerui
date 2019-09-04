@@ -291,6 +291,7 @@ var PickFront = React.createClass({
         var cancelScanFlag = this.state.PickFrontCancelScan
         var cancelButton
         var rackType = ''
+        let isHeavyItem = this.state.PickFrontHeavyItemsFlag
         if (cancelScanFlag) {
           cancelButton = (
             <div>
@@ -306,6 +307,7 @@ var PickFront = React.createClass({
         } else {
           cancelButton = <div />
         }
+
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -324,6 +326,7 @@ var PickFront = React.createClass({
                 slotType={this.state.SlotType}
                 rackData={this.state.PickFrontRackDetails}
                 putDirection={this.state.PickFrontPickDirection}
+                heavyItemInfo={isHeavyItem}
               />
             )
           }
@@ -335,6 +338,7 @@ var PickFront = React.createClass({
                 {rackType}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
               </div>
+              
               <div className='actions'>{cancelButton}</div>
             </div>
           )

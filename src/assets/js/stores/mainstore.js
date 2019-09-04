@@ -1587,7 +1587,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   isReprintPopUpEnabled: function () {
     return _seatData.reprint_popup_enabled;
   },
-
+  getHeavyItemsFlag: function() {
+    return _seatData.is_heavy ? _seatData.is_heavy : false;
+  },
   productDetails: function () {
     _prodDetails = _seatData.product_info;
     return _prodDetails;
@@ -5215,7 +5217,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['HeaderMessg'] = this.getHeaderMessg();
         data['PutBackScreenId'] = this.getScreenId();
         data['InvoiceType'] = this.getInvoiceType();
-        data['PutBackNotification'] = this.getNotificationData();
+        data['PutBackNotificationForStnInput'] = this.getNotificationData();
         break;
       case appConstants.PUT_BACK_TOTE_CLOSE:
         data['PutBackScreenId'] = this.getScreenId();
@@ -5402,6 +5404,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PutFrontExceptionStatus'] = this.getExceptionStatus();
         data['PutFrontItemUid'] = this.getItemUid();
         data['PutFrontPutDirection'] = this.getDirectionDetails();
+        data['PutFrontHeavyItemsFlag'] = this.getHeavyItemsFlag();
         break;
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data['PutFrontNavData'] = this.getNavData();
@@ -5733,7 +5736,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontPickDirection'] = this.getDirectionDetails();
         data['PickFrontRackTypeMPU'] = this.getRackType();
         data['PickFrontCancelScan'] = this.cancelScanDetails();
-
+        data['PickFrontHeavyItemsFlag'] = this.getHeavyItemsFlag();
         break;
 
       case appConstants.PICK_FRONT_CHECKLIST:

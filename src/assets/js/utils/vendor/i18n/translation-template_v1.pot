@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-18 12:51+0000\n"
+"POT-Creation-Date: 2019-09-03 06:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3672,4 +3672,32 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:779
 msgid "Item unexpected. No service request found for this item"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:780
+msgid "Scan entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:781
+msgid "Put entity in slot and scan slot to confirm"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:782
+msgid "Excess detected, remove '{0}' items and confirm again"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:783
+msgid "Invalid {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:784
+msgid "{0} closed"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:785
+msgid "Unknown barcode"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:786
+msgid "Unexpected entity"
 msgstr ""

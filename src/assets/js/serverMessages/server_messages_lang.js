@@ -779,7 +779,7 @@ function server_messages_list() {
     _("Item unexpected. No service request found for this item");
     _("Scan entity");
     _("Put entity in slot and scan slot to confirm");
-    _("Excess detected, remove '{0}' items and confirm again");
+    _("Excess quantity detected, remove '{0}' quantity and confirm again");
     _("Invalid {0}");
     _("{0} closed");
     _("Unknown barcode");

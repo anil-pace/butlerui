@@ -292,6 +292,9 @@ var serverMessages = {
     "PkF.E.015": "Wrong entity scan.Please scan the correct entity",
     "PkF.E.017": "Extra entity scan found.",
     "PkF.E.018": "Physically Damaged Reported should equal Scanned Quantity",
+    "PkF.E.019": "Packing box not empty",
+    "PkF.E.020": "Packing box already reserved",
+    "PkF.E.021": "Packing box validation failed",
 
     "PkB.E.001": "Incorrect {0} barcode scanned. Please try again",
     "PkB.E.002": "System not configured for {0}",

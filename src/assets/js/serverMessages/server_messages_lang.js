@@ -784,5 +784,6 @@ function server_messages_list() {
     _("{0} closed");
     _("Unknown barcode");
     _("Unexpected entity");
+    _("Tote unexpected. Empty totes scanned");
 }
 

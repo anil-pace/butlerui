@@ -46,7 +46,7 @@ var serverMessages = {
     "PtB.E.024": "Length of {0} should not be greater than {1}",
     "PtB.E.026": "Invalid {0}",
     "PtB.E.027": "{0} closed.",
-    "PtB.E.028": "Excess detected, remove '{0}' items and confirm again",
+    "PtB.E.028": "Excess quantity detected, remove '{0}' quantity and confirm again",
     "PtF.H.001": "Place Entity in Slot and Scan More",
     "PtF.H.002": "Scan Slot to Confirm",
     "PtF.H.003": "Wait for MSU",
@@ -292,6 +292,9 @@ var serverMessages = {
     "PkF.E.015": "Wrong entity scan.Please scan the correct entity",
     "PkF.E.017": "Extra entity scan found.",
     "PkF.E.018": "Physically Damaged Reported should equal Scanned Quantity",
+    "PkF.E.019": "Packing box not empty",
+    "PkF.E.020": "Packing box already reserved",
+    "PkF.E.021": "Packing box validation failed",
 
     "PkB.E.001": "Incorrect {0} barcode scanned. Please try again",
     "PkB.E.002": "System not configured for {0}",

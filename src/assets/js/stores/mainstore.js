@@ -6344,6 +6344,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PrePutExceptionData'] = this.getExceptionData();
         data['PrePutNotification'] = this.getNotificationData();
         data['PrePutExceptionStatus'] = this.getExceptionStatus();
+
+        data['SearchItemScreenId'] = this.getScreenId();
         break;
       default:
     }

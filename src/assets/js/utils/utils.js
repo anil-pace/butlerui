@@ -309,6 +309,32 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         alert('Logout Failed');
       });
   },
+  postDataToTower: function(data) {
+    var retrieved_token = sessionStorage.getItem('sessionData');
+    var authentication_token = JSON.parse(retrieved_token)['data'][
+      'auth-token'
+    ];
+    $.ajax({
+      type: 'POST',
+      url: configConstants.INTERFACE_IP + '/tower/api/v1/mle/pps-call',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      headers: {
+        'content-type': 'application/json',
+        accept: 'application/json',
+        'Authentication-Token': authentication_token
+      }
+    })
+      .done(function(response) {
+        alert('Your call ticket was submitted successfully');
+        CommonActions.hideSpinner();
+      })
+      .fail(function(jqXhr) {
+        console.log(jqXhr);
+        alert('There was a problem in submitting your call ticket.');
+        CommonActions.hideSpinner();
+      });
+  },
   postDataToInterface: function(data, seat_name) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][

@@ -332,7 +332,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       .fail(function(jqXhr) {
         console.log(jqXhr);
         CommonActions.hideSpinner();
-        CommonActions.showErrorMessage(serverMessages['CLIENTCODE_403']);
+        alert(jqXhr.statusText);
+        //CommonActions.showErrorMessage(serverMessages['CLIENTCODE_403']);
         // if (jqXhr.status == 401 || jqXhr.status == 403) {
         //   var msgCode =
         //     jqXhr.status == 401 ? 'CLIENTCODE_401' : 'CLIENTCODE_403';

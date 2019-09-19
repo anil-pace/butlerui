@@ -17,8 +17,6 @@ function getState() {
     scanAllowed: mainstore.getScanAllowedStatus(),
     ppsMode: mainstore.getPpsMode(),
     username: mainstore.getUsername(),
-    // ppsId: mainstore.getCurrentSeat(),
-    // ppsId_1: mainstore.getSeatType(),
     ppsId: mainstore.getSeatName()
   };
 }
@@ -218,9 +216,6 @@ var Header = React.createClass({
   },
   notifyTower: function() {
     var data = {
-      //pss_id_1: this.state.ppsMode,
-      //pps_id_2: this.state.ppsId,
-      //pps_id_3: this.state.ppsId_1,
       pps_id: this.state.ppsId
     };
     CommonActions.postDataToTower(data);

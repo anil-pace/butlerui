@@ -327,21 +327,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       }
     })
       .done(function(response) {
+        alert('Your call ticket was submitted successfully');
         CommonActions.hideSpinner();
       })
       .fail(function(jqXhr) {
         console.log(jqXhr);
+        alert('There was a problem in submitting your call ticket.');
         CommonActions.hideSpinner();
-        alert(jqXhr.statusText);
-        //CommonActions.showErrorMessage(serverMessages['CLIENTCODE_403']);
-        // if (jqXhr.status == 401 || jqXhr.status == 403) {
-        //   var msgCode =
-        //     jqXhr.status == 401 ? 'CLIENTCODE_401' : 'CLIENTCODE_403';
-        //   CommonActions.showErrorMessage(serverMessages[msgCode]);
-        //   sessionStorage.setItem('sessionData', null);
-        //   CommonActions.loginSeat(false);
-        //   utils.enableKeyboard();
-        // }
       });
   },
 

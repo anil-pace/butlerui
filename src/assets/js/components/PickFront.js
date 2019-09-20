@@ -36,7 +36,7 @@ var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable');
-
+var CurrentBin = require('./CurrentBin');
 
 var checkListOpen = false;
 
@@ -430,7 +430,9 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
 
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-
+              <div style={{"position": "absolute", "top": "-35px", "left": "0px", "border": "1px solid red"}}>
+              <CurrentBin  details={this.state.PickCurrentBin} />
+              </div>
               {this.state.SplitScreenFlag &&
                 <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontFlow' />}

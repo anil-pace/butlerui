@@ -5904,6 +5904,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontButtonType'] = this.getPickFrontButtonType();
         data['PickFrontButtonStatus'] = this.getPickFrontButtonStatus();
         data['PickFrontCancelScan'] = this.cancelScanDetails();
+        data['PickCurrentBin'] = this.getPutFrontCurrentBinCount();
         break;
 
       case appConstants.PICK_FRONT_PACKING_BOX:

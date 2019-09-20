@@ -6184,7 +6184,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["isPrinterVisible"] = this.getPrinterVisibility()
         data["bindata"] = this.getBinData()
         data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
-    break
+        data['PickCurrentBin'] = this.getPutFrontCurrentBinCount();
+
+        break;
       case appConstants.ITEM_SEARCH:
         data["PickFrontScreenId"] = this.getScreenId()
         data["PutBackScreenId"] = this.getScreenId()

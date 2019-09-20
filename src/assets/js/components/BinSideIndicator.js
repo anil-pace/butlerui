@@ -82,7 +82,32 @@ var BinSideIndicator = React.createClass({
       rightColCount: rightColCount
     };
   },
+
+  highLightActiveSide: function(binsData) {
+    var leftSide = [1, 2, 3, 7, 8, 9];
+    var rightSide = [4, 5, 6, 10, 11, 12];
+    var activeBin;
+    for (var i = 0; i < binsData.ppsbin_list.length; i++) {
+      if (binsData.ppsbin_list[i].selected_state === true) {
+        activeBin = parseInt(binsData.ppsbin_list[i].ppsbin_id, 10);
+      }
+    }
+    if (leftSide.includes(activeBin)) {
+      return 'LEFT';
+    } else {
+      return 'RIGHT';
+    }
+  },
   render: function() {
+    var processBinsData = this.highLightActiveSide(this.props.binsData);
+    var leftBackground, rightBackground;
+    if (processBinsData === 'LEFT') {
+      leftBackground = '#0090ff';
+      rightBackground = '#ffffff';
+    } else {
+      leftBackground = '#ffffff';
+      rightBackground = '#0090ff';
+    }
     var transformStyle = {
       transform: 'rotate(' + (Number(this.props.orientation || 0) + 'deg)')
     };
@@ -93,11 +118,11 @@ var BinSideIndicator = React.createClass({
         className={'binMapWrapper ' + this.props.screenClass}
       >
         <div className='mapCont'>
-          {/* <div className='msuSpace'></div> */}
           <div
             style={{
               border: '1px solid grey',
-              height: '50px'
+              height: '50px',
+              background: leftBackground
             }}
             className={'col1 ' + mapStructure.leftColCount}
           >
@@ -107,7 +132,8 @@ var BinSideIndicator = React.createClass({
           <div
             style={{
               border: '1px solid grey',
-              height: '50px'
+              height: '50px',
+              background: rightBackground
             }}
             className={'col3 ' + mapStructure.rightColCount}
           >

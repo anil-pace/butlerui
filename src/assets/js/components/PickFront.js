@@ -436,7 +436,7 @@ var PickFront = React.createClass({
               </div>
 
               <div style={{"position": "absolute", "top": "300px", "left": "0px", "border": "1px solid grey"}}>
-              <BinSideIndicator />
+              <BinSideIndicator binsData={this.state.PickFrontBinData}/>
               </div>
               
               {/* {this.state.SplitScreenFlag &&

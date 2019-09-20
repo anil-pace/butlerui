@@ -23,6 +23,7 @@ var Modal = require('./Modal/Modal');
 var Modal1 = require('./Modal/Modal1');
 var CurrentSlot = require('./CurrentSlot');
 var BinMap = require('./BinMap');
+var BinSideIndicator = require('./BinSideIndicator');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
@@ -36,7 +37,8 @@ var SplitPPS = require('./SplitPPS');
 var PreviousDetails = require('./PreviousDetails');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable');
-
+var CurrentBin = require('./CurrentBin');
+var CurrentActiveBin= require('./CurrentActiveBin');
 
 var checkListOpen = false;
 
@@ -428,11 +430,11 @@ var PickFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal cancelClicked={cancelClicked} />
-
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-
-              {this.state.SplitScreenFlag &&
-                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
+            {this.state.SplitScreenFlag &&
+                <BinMap orientation={this.state.groupOrientation} 
+                  mapDetails={this.state.BinMapDetails} 
+                  selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontFlow' />}
               {binComponent}
               <div className='actions'>
@@ -596,6 +598,14 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
 
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+
+              <div style={{"position": "absolute", "top": "-35px", "left": "0px"}}>
+              <CurrentActiveBin  details={this.state.PickCurrentBin} />
+              </div>
+
+              <div style={{"position": "absolute","left": "0px", "border": "1px solid grey"}}>
+              <BinSideIndicator binsData={this.state.PickFrontBinData}/>
+              </div>
               {this.state.SplitScreenFlag &&
                 <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontFlow' />}

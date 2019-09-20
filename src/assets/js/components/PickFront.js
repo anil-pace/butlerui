@@ -23,6 +23,7 @@ var Modal = require('./Modal/Modal');
 var Modal1 = require('./Modal/Modal1');
 var CurrentSlot = require('./CurrentSlot');
 var BinMap = require('./BinMap');
+var BinMapNew = require('./BinMapNew');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
@@ -428,14 +429,21 @@ var PickFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal cancelClicked={cancelClicked} />
-
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-              <div style={{"position": "absolute", "top": "-35px", "left": "0px", "border": "1px solid red"}}>
+
+              <div style={{"position": "absolute", "top": "-35px", "left": "0px"}}>
               <CurrentBin  details={this.state.PickCurrentBin} />
               </div>
-              {this.state.SplitScreenFlag &&
-                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass='frontFlow' />}
+
+              <div style={{"position": "absolute", "top": "300px", "left": "0px", "border": "1px solid grey"}}>
+              <BinMapNew />
+              </div>
+              
+              {/* {this.state.SplitScreenFlag &&
+                <BinMap orientation={this.state.groupOrientation} 
+                  mapDetails={this.state.BinMapDetails} 
+                  selectedGroup={this.state.BinMapGroupDetails}
+                  screenClass='frontFlow' />} */}
               {binComponent}
               <div className='actions'>
                 <Button1 disabled={cancelScanDisabled} text={_("Cancel Scan")}

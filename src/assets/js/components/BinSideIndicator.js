@@ -1,7 +1,7 @@
 var React = require('react');
 var allresourceConstants = require('../constants/resourceConstants');
 
-var BinIndicator = React.createClass({
+var BinSideIndicator = React.createClass({
   processData: function() {
     var data = Object.assign({}, this.props.mapDetails || {});
     var leftCol = [],
@@ -119,4 +119,4 @@ var BinIndicator = React.createClass({
   }
 });
 
-module.exports = BinIndicator;
+module.exports = BinSideIndicator;

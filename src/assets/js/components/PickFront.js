@@ -23,7 +23,7 @@ var Modal = require('./Modal/Modal');
 var Modal1 = require('./Modal/Modal1');
 var CurrentSlot = require('./CurrentSlot');
 var BinMap = require('./BinMap');
-var BinIndicator = require('./BinIndicator');
+var BinSideIndicator = require('./BinSideIndicator');
 var PrdtDetails = require('./PrdtDetails/ProductDetails.js');
 var CommonActions = require('../actions/CommonActions');
 var Exception = require('./Exception/Exception');
@@ -436,7 +436,7 @@ var PickFront = React.createClass({
               </div>
 
               <div style={{"position": "absolute", "top": "300px", "left": "0px", "border": "1px solid grey"}}>
-              <BinIndicator />
+              <BinSideIndicator />
               </div>
               
               {/* {this.state.SplitScreenFlag &&

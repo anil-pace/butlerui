@@ -606,6 +606,14 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
 
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+
+              <div style={{"position": "absolute", "top": "-35px", "left": "0px"}}>
+              <CurrentBin  details={this.state.PickCurrentBin} />
+              </div>
+
+              <div style={{"position": "absolute", "top": "300px", "left": "0px", "border": "1px solid grey"}}>
+              <BinSideIndicator binsData={this.state.PickFrontBinData}/>
+              </div>
               {this.state.SplitScreenFlag &&
                 <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontFlow' />}

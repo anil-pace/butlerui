@@ -122,17 +122,19 @@ var BinSideIndicator = React.createClass({
             style={{
               border: '1px solid grey',
               height: '50px',
+              marginTop: '35%',
               background: leftBackground
             }}
             className={'col1 ' + mapStructure.leftColCount}
           >
             <ul>{mapStructure.leftCol}</ul>
           </div>
-          <div style={{ marginTop: '35%' }} className='col2 spriteIcons'></div>
+          <div style={{ marginTop: '-15%' }} className='col2 spriteIcons'></div>
           <div
             style={{
               border: '1px solid grey',
               height: '50px',
+              marginTop: '35%',
               background: rightBackground
             }}
             className={'col3 ' + mapStructure.rightColCount}

@@ -38,6 +38,7 @@ var PreviousDetails = require('./PreviousDetails');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable');
 var CurrentBin = require('./CurrentBin');
+var CurrentActiveBin= require('./CurrentActiveBin');
 
 var checkListOpen = false;
 
@@ -599,10 +600,10 @@ var PickFront = React.createClass({
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
 
               <div style={{"position": "absolute", "top": "-35px", "left": "0px"}}>
-              <CurrentBin  details={this.state.PickCurrentBin} />
+              <CurrentActiveBin  details={this.state.PickCurrentBin} />
               </div>
 
-              <div style={{"position": "absolute", "top": "300px", "left": "0px", "border": "1px solid grey"}}>
+              <div style={{"position": "absolute","left": "0px", "border": "1px solid grey"}}>
               <BinSideIndicator binsData={this.state.PickFrontBinData}/>
               </div>
               {this.state.SplitScreenFlag &&

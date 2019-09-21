@@ -1,57 +1,57 @@
-var React = require('react');
-var Bin = require('./BinsFlex.react');
-var PutBackStore = require('../../stores/PutBackStore');
+var React = require('react')
+var Bin = require('./BinsFlex.react')
+var PutBackStore = require('../../stores/PutBackStore')
 
 var Bins = React.createClass({
   getInitialState: function() {
-    return this._sortBins(this.props.binsData.ppsbin_list, false);
+    return this._sortBins(this.props.binsData.ppsbin_list, false)
   },
   componentWillReceiveProps: function() {
-    this._sortBins(this.props.binsData.ppsbin_list, true);
+    this._sortBins(this.props.binsData.ppsbin_list, true)
   },
 
   _sortBins: function(aBins, shouldSetState) {
     if (!aBins || (aBins.constructor !== Array && aBins.length < 1)) {
       //no bins found
-      return;
+      return
     }
 
-    var totalBins = aBins.length;
+    var totalBins = aBins.length
     var totalWidth = 0,
       totalHeight = 0,
       lastHBin = {},
-      lastVBin = {};
+      lastVBin = {}
 
     lastHBin = aBins.reduce(function(oBinPrev, oBinCurr) {
       if (oBinPrev.orig_coordinate[0] < oBinCurr.orig_coordinate[0]) {
-        return oBinCurr;
+        return oBinCurr
       } else if (oBinPrev.orig_coordinate[0] === oBinCurr.orig_coordinate[0]) {
-        return oBinCurr;
+        return oBinCurr
       } else {
-        return oBinPrev;
+        return oBinPrev
       }
-    });
+    })
     lastVBin = aBins.reduce(function(oBinPrev, oBinCurr) {
       if (oBinPrev.orig_coordinate[1] < oBinCurr.orig_coordinate[1]) {
-        return oBinCurr;
+        return oBinCurr
       } else if (oBinPrev.orig_coordinate[1] === oBinCurr.orig_coordinate[1]) {
-        return oBinCurr;
+        return oBinCurr
       } else {
-        return oBinPrev;
+        return oBinPrev
       }
-    });
+    })
     if (shouldSetState) {
       this.setState({
         aBins: aBins,
         lastHBin: lastHBin,
         lastVBin: lastVBin
-      });
+      })
     } else {
       return {
         aBins: aBins,
         lastHBin: lastHBin,
         lastVBin: lastVBin
-      };
+      }
     }
   },
 
@@ -70,39 +70,31 @@ var Bins = React.createClass({
       !lastVBin.length
     ) {
       //no bins found
-      return;
+      return
     }
-    var aHTMLBins = [];
+    var aHTMLBins = []
     // since the total width would be 100% but the bins would be divided into
     // ratios, hence each of the bin would have to have the factor into % of the
     // .bins container.
     // for reference orig_coordinate[0] === x axis and orig_coordinate[1] === y axis
     var horFactor = parseFloat(
       100 / (Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length))
-    );
+    )
     var vertFactor = parseFloat(
       100 / (Number(lastVBin.orig_coordinate[1]) + Number(lastVBin.breadth))
-    );
+    )
 
     var totalPpsWidth =
-      Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length);
+      Number(lastHBin.orig_coordinate[0]) + Number(lastHBin.length)
 
     for (var i = 0; i < aBins.length; i++) {
-      var binWidth = aBins[i].length * horFactor + '%';
-      var binHeight = aBins[i].breadth * vertFactor + '%';
-      var ileft = 0;
-      var itop = 0;
+      var binWidth = aBins[i].length * horFactor + '%'
+      var binHeight = aBins[i].breadth * vertFactor + '%'
+      var ileft = ''
+      var itop = ''
 
-      // if the seat type is front then we have to modify the x co-ordinate as per the formula:
-      // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
-
-      ileft =
-        seatType !== 'back'
-          ? aBins[i].orig_coordinate[0] * horFactor + '%'
-          : (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) *
-              horFactor +
-            '%';
-      itop = aBins[i].orig_coordinate[1] * vertFactor + '%';
+      ileft = aBins[i].orig_coordinate[0] * horFactor + '%'
+      itop = aBins[i].orig_coordinate[1] * vertFactor + '%'
 
       if (binCoordinatePlotting == true || binCoordinatePlotting == 'true') {
         aHTMLBins.push(
@@ -122,7 +114,7 @@ var Bins = React.createClass({
               binCoordinatePlotting={true}
             />
           </div>
-        );
+        )
       } else {
         aHTMLBins.push(
           <div
@@ -140,10 +132,10 @@ var Bins = React.createClass({
               screenId={screenId}
             />
           </div>
-        );
+        )
       }
     }
-    return aHTMLBins;
+    return aHTMLBins
   },
 
   render: function() {
@@ -157,8 +149,8 @@ var Bins = React.createClass({
       this.props.screenId,
       this.props.binCoordinatePlotting,
       this.props.dataToDisassociateTote
-    );
-    var self = this;
+    )
+    var self = this
     return (
       <div
         className='bins-flex'
@@ -169,8 +161,8 @@ var Bins = React.createClass({
       >
         {aHTMLBins}
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = Bins;
+module.exports = Bins

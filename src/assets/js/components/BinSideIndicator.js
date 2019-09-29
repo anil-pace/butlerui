@@ -1,9 +1,9 @@
-var React = require('react');
-var allresourceConstants = require('../constants/resourceConstants');
+var React = require('react')
+var allresourceConstants = require('../constants/resourceConstants')
 
 var BinSideIndicator = React.createClass({
   processData: function() {
-    var data = Object.assign({}, this.props.mapDetails || {});
+    var data = Object.assign({}, this.props.mapDetails || {})
     var leftCol = [],
       leftColCount,
       rightColCount,
@@ -15,64 +15,64 @@ var BinSideIndicator = React.createClass({
       maxRightCount = 0,
       maxBlockHeight = 0,
       style = null,
-      maxWidth = null;
+      maxWidth = null
 
     for (var key in data) {
       if (data[key] === allresourceConstants.BIN_GROUP_LEFT) {
-        maxLeftCount++;
+        maxLeftCount++
       } else if (data[key] === allresourceConstants.BIN_GROUP_RIGHT) {
-        maxRightCount++;
+        maxRightCount++
       }
     }
-    maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount : maxRightCount;
-    maxBlockHeight = 40 / maxBlockCount;
-    maxWidth = (maxBlockHeight / 100) * 150;
+    maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount : maxRightCount
+    maxBlockHeight = 40 / maxBlockCount
+    maxWidth = (maxBlockHeight / 100) * 150
     style = {
       height: maxBlockHeight + '%',
       width: maxWidth <= 38 ? maxWidth : 38
-    };
+    }
 
     for (var k in data) {
       if (data.hasOwnProperty(k)) {
-        isSelected = selectedGroup === k ? 'sel' : '';
+        isSelected = selectedGroup === k ? 'sel' : ''
         if (data[k] === allresourceConstants.BIN_GROUP_LEFT) {
-          leftCol.push(<li key={k} style={style} className={isSelected}></li>);
+          leftCol.push(<li key={k} style={style} className={isSelected}></li>)
         } else if (data[k] === allresourceConstants.BIN_GROUP_RIGHT) {
-          rightCol.push(<li key={k} style={style} className={isSelected}></li>);
+          rightCol.push(<li key={k} style={style} className={isSelected}></li>)
         }
       }
     }
     switch (leftCol.length) {
       case 1:
-        leftColCount = 'one';
-        break;
+        leftColCount = 'one'
+        break
       case 2:
-        leftColCount = 'two';
-        break;
+        leftColCount = 'two'
+        break
       case 3:
-        leftColCount = 'three';
-        break;
+        leftColCount = 'three'
+        break
       case 4:
-        leftColCount = 'four';
-        break;
+        leftColCount = 'four'
+        break
       default:
-        leftColCount = 'zero';
+        leftColCount = 'zero'
     }
     switch (rightCol.length) {
       case 1:
-        rightColCount = 'one';
-        break;
+        rightColCount = 'one'
+        break
       case 2:
-        rightColCount = 'two';
-        break;
+        rightColCount = 'two'
+        break
       case 3:
-        rightColCount = 'three';
-        break;
+        rightColCount = 'three'
+        break
       case 4:
-        rightColCount = 'four';
-        break;
+        rightColCount = 'four'
+        break
       default:
-        rightColCount = 'zero';
+        rightColCount = 'zero'
     }
 
     return {
@@ -80,38 +80,48 @@ var BinSideIndicator = React.createClass({
       rightCol: rightCol,
       leftColCount: leftColCount,
       rightColCount: rightColCount
-    };
+    }
   },
 
   highLightActiveSide: function(binsData) {
-    var leftSide = [1, 2, 3, 7, 8, 9];
-    var rightSide = [4, 5, 6, 10, 11, 12];
-    var activeBin;
+    let totalNumberOfBins = binsData.ppsbin_list.length
+    // it is assumed that the number of bins will always be even number
+    let leftSide = [1, 2, 3, 7, 8, 9]
+    // currently we are supoprting onl 24 bins, 16 bins and 12 bins config
+    if (totalNumberOfBins == 24) {
+      leftSide = [1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18]
+    } else if (totalNumberOfBins == 16) {
+      leftSide = [1, 2, 3, 4, 9, 10, 11, 12]
+    } else if (totalNumberOfBins == 12) {
+      leftSide = [1, 2, 3, 7, 8, 9]
+    }
+
+    var activeBin
     for (var i = 0; i < binsData.ppsbin_list.length; i++) {
       if (binsData.ppsbin_list[i].selected_state === true) {
-        activeBin = parseInt(binsData.ppsbin_list[i].ppsbin_id, 10);
+        activeBin = parseInt(binsData.ppsbin_list[i].ppsbin_id, 10)
       }
     }
     if (leftSide.includes(activeBin)) {
-      return 'LEFT';
+      return 'LEFT'
     } else {
-      return 'RIGHT';
+      return 'RIGHT'
     }
   },
   render: function() {
-    var processBinsData = this.highLightActiveSide(this.props.binsData);
-    var leftBackground, rightBackground;
+    var processBinsData = this.highLightActiveSide(this.props.binsData)
+    var leftBackground, rightBackground
     if (processBinsData === 'LEFT') {
-      leftBackground = '#0090ff';
-      rightBackground = '#ffffff';
+      leftBackground = '#0090ff'
+      rightBackground = '#ffffff'
     } else {
-      leftBackground = '#ffffff';
-      rightBackground = '#0090ff';
+      leftBackground = '#ffffff'
+      rightBackground = '#0090ff'
     }
     var transformStyle = {
       transform: 'rotate(' + (Number(this.props.orientation || 0) + 'deg)')
-    };
-    var mapStructure = this.processData();
+    }
+    var mapStructure = this.processData()
     return (
       <div
         style={transformStyle}
@@ -143,8 +153,8 @@ var BinSideIndicator = React.createClass({
           </div>
         </div>
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = BinSideIndicator;
+module.exports = BinSideIndicator

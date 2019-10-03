@@ -3754,6 +3754,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     showModal = false;
     utils.postDataToInterface(data, _seatName);
   },
+  postDataToTower: function(data) {
+    showModal = false;
+    utils.postDataToTower(data, _seatName);
+  },
   logError: function (data) {
     utils.logError(data);
   },
@@ -3765,6 +3769,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getSeatType: function () {
     return _seatType;
+  },
+  getSeatName: function() {
+    return _seatName;
   },
   enableException: function (data) {
     _KQQty = 0;
@@ -6560,6 +6567,10 @@ AppDispatcher.register(function (payload) {
       mainstore.hideSpinner();
       mainstore.emit(CHANGE_EVENT);
       break;
+    case appConstants.POST_DATA_TO_TOWER:
+        mainstore.postDataToTower(action.data);
+        mainstore.emit(CHANGE_EVENT);
+        break;
     case appConstants.POST_DATA_TO_INTERFACE:
       mainstore.showSpinner();
       mainstore.postDataToInterface(action.data);

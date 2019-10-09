@@ -144,7 +144,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     }
     return trailedText;
   },
-  displayData: function(data, serial) {
+  displayData: function(
+    data,
+    serial,
+    uomConversionFactor = 1,
+    uomDisplayUnit = ''
+  ) {
     product_info_locale = {};
     image_url = {};
     var language_locale = sessionStorage.getItem('localeData');
@@ -162,11 +167,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           var dimension = value[0][key];
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
-              keyValue = dimension[i] + '';
+              keyValue = dimension[i] * uomConversionFactor + '';
             } else {
-              keyValue = keyValue + ' X ' + dimension[i];
+              keyValue = keyValue + ' X ' + dimension[i] * uomConversionFactor;
             }
           }
+          uomDisplayUnit !== ''
+            ? (keyValue =
+                keyValue + ' (' + appConstants.IN + uomDisplayUnit + ')')
+            : (keyValue = keyValue);
         } else if (key != 'display_data' && key != 'product_local_image_url') {
           keyValue = value[0][key] + ' ';
         } else if (key != 'display_data' && key == 'product_local_image_url') {

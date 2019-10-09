@@ -540,7 +540,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 
   frntStringTransform: function(messgCode, stringArg) {
     var message_args = [];
-    message_args = stringArg ? stringArg : [];
+    if (stringArg.length > 1) {
+      message_args = stringArg ? ['STN', '20'] : []; // 20 is max length...fixed from backend
+    } else {
+      message_args = stringArg ? stringArg : [];
+    }
     message_args.unshift(
       serverMessages[messgCode] ? serverMessages[messgCode] : ''
     );

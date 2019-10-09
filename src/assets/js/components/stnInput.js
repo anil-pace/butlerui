@@ -74,10 +74,9 @@ var STNInput = React.createClass({
     var applyClassName,
       showErrorMsg,
       invoiceStringArg = [];
-    invoiceStringArg[0] = this.props.invoiceType;
+    invoiceStringArg = this.props.errorFound.details;
     var errorCode = this.props.errorFound ? this.props.errorFound.code : '';
     var errorMsg = utils.frntStringTransform(errorCode, invoiceStringArg);
-
     if (
       this.props.errorFound && this.props.errorFound.level === 'error'
         ? ((applyClassName = 'inputWrapper showError'),

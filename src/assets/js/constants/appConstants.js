@@ -374,7 +374,8 @@ var appConstants = {
   SCANNER: 'SCANNER',
   QL_CODE: 'QL Code',
   SLOT_ID: 'Slot ID',
-  PREV_LOCATION: 'Location'
+  PREV_LOCATION: 'Location',
+  IN: 'in '
 };
 
 module.exports = appConstants;

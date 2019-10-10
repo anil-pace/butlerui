@@ -8,7 +8,7 @@ var serverMessages = require('../serverMessages/server_messages');
 var ws, self;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-  enableKeyboard: function () {
+  enableKeyboard: function() {
     virtualKeyBoard_login = $('#username, #password').keyboard({
       layout: 'custom',
       customLayout: {
@@ -38,12 +38,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       reposition: true,
       alwaysOpen: false,
       initialFocus: true,
-      visible: function (e, keypressed, el) {
+      visible: function(e, keypressed, el) {
         el.value = '';
         //$(".authNotify").css("display","none");
       },
 
-      accepted: function (e, keypressed, el) {
+      accepted: function(e, keypressed, el) {
         var usernameValue = document.getElementById('username').value;
         var passwordValue = document.getElementById('password').value;
         if (
@@ -59,17 +59,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       }
     });
   },
-  connectToWebSocket: function (data) {
+  connectToWebSocket: function(data) {
     self = this;
     ws = new WebSocket(configConstants.WEBSOCKET_IP);
     if ('WebSocket' in window) {
-      ws.onopen = function () {
+      ws.onopen = function() {
         $('#username, #password').prop('disabled', false);
         console.log('connected');
         utils.checkSessionStorage();
         clearTimeout(utils.connectToWebSocket);
       };
-      ws.onmessage = function (evt) {
+      ws.onmessage = function(evt) {
         if (
           evt.data == 'CLIENTCODE_409' ||
           evt.data == 'CLIENTCODE_412' ||
@@ -106,7 +106,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           CommonActions.setServerMessages();
         }
       };
-      ws.onclose = function () {
+      ws.onclose = function() {
         //serverMessages.CLIENTCODE_003;
         /* alert(JSON.stringify(evt));
                  if(evt == "CLIENTCODE_409" || evt == "CLIENTCODE_503"){
@@ -123,13 +123,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       alert('WebSocket NOT supported by your Browser!');
     }
   },
-  getCurrentLang: function () {
+  getCurrentLang: function() {
     var localeStr = window.sessionStorage.getItem('localeData'),
       localeObj = localeStr ? JSON.parse(localeStr) : {},
       localeLang = localeObj && localeObj.data ? localeObj.data.locale : null;
     return localeLang;
   },
-  get3dotTrailedText: function (
+  get3dotTrailedText: function(
     serial,
     frontlimit = 5,
     rearLimit = 5,
@@ -144,7 +144,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     }
     return trailedText;
   },
-  displayData: function (data, serial) {
+  displayData: function(
+    data,
+    serial,
+    uomConversionFactor = 1,
+    uomDisplayUnit = ''
+  ) {
     product_info_locale = {};
     image_url = {};
     var language_locale = sessionStorage.getItem('localeData');
@@ -154,7 +159,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     } else {
       locale = JSON.parse(language_locale)['data']['locale'];
     }
-    data.map(function (value, index) {
+    data.map(function(value, index) {
       var keyValue = '';
       var imageKey;
       for (var key in value[0]) {
@@ -162,18 +167,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           var dimension = value[0][key];
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
-              keyValue = dimension[i] + '';
+              keyValue = dimension[i] * uomConversionFactor + '';
             } else {
-              keyValue = keyValue + ' X ' + dimension[i];
+              keyValue = keyValue + ' X ' + dimension[i] * uomConversionFactor;
             }
           }
+          uomDisplayUnit !== ''
+            ? (keyValue =
+                keyValue + ' (' + appConstants.IN + uomDisplayUnit + ')')
+            : (keyValue = keyValue);
         } else if (key != 'display_data' && key != 'product_local_image_url') {
           keyValue = value[0][key] + ' ';
         } else if (key != 'display_data' && key == 'product_local_image_url') {
           imageKey = value[0][key];
         }
       }
-      value[0].display_data.map(function (data_locale, index1) {
+      value[0].display_data.map(function(data_locale, index1) {
         if (data_locale.locale == locale) {
           if (data_locale.display_name != 'product_local_image_url') {
             product_info_locale[data_locale.display_name] = keyValue;
@@ -199,7 +208,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     }
     return product_info_locale;
   },
-  checkSessionStorage: function () {
+
+  checkSessionStorage: function() {
     var sessionData = JSON.parse(sessionStorage.getItem('sessionData'));
     if (sessionData === null) {
     } else {
@@ -213,16 +223,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       utils.postDataToWebsockets(webSocketData);
     }
   },
-  postDataToWebsockets: function (data) {
+  postDataToWebsockets: function(data) {
     console.log(JSON.stringify(data));
     ws.send(JSON.stringify(data));
     setTimeout(CommonActions.operatorSeat, 0, true);
   },
-  storeSession: function (data) {
+  storeSession: function(data) {
     // Put the object into storage
     sessionStorage.setItem('sessionData', JSON.stringify(data));
   },
-  getAuthToken: function (data) {
+  getAuthToken: function(data) {
     sessionStorage.setItem('sessionData', null);
 
     if (data.data.barcode) {
@@ -266,7 +276,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         accept: 'application/json'
       }
     })
-      .done(function (response) {
+      .done(function(response) {
         var webSocketData = {
           data_type: 'auth',
           data: {
@@ -277,12 +287,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         utils.storeSession(webSocketData);
         utils.postDataToWebsockets(webSocketData);
       })
-      .fail(function (data, jqXHR, textStatus, errorThrown) {
+      .fail(function(data, jqXHR, textStatus, errorThrown) {
         CommonActions.showErrorMessage(data.responseJSON.error);
       });
   },
 
-  sessionLogout: function (data) {
+  sessionLogout: function(data) {
     sessionStorage.setItem('sessionData', null);
     location.reload();
     $.ajax({
@@ -301,15 +311,15 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         )['data']['auth-token']
       }
     })
-      .done(function (response) {
+      .done(function(response) {
         sessionStorage.setItem('sessionData', null);
         location.reload();
       })
-      .fail(function (data, jqXHR, textStatus, errorThrown) {
+      .fail(function(data, jqXHR, textStatus, errorThrown) {
         alert('Logout Failed');
       });
   },
-  postDataToInterface: function (data, seat_name) {
+  postDataToInterface: function(data, seat_name) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
       'auth-token'
@@ -330,10 +340,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         'Authentication-Token': authentication_token
       }
     })
-      .done(function (response) {
+      .done(function(response) {
         CommonActions.hideSpinner();
       })
-      .fail(function (jqXhr) {
+      .fail(function(jqXhr) {
         console.log(jqXhr);
         CommonActions.hideSpinner();
         if (jqXhr.status == 401 || jqXhr.status == 403) {
@@ -346,7 +356,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }
       });
   },
-  generateSessionId: function () {
+  generateSessionId: function() {
     var text = '';
     var possible =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -354,7 +364,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     localStorage.setItem('session', text);
   },
-  getPeripheralData: function (type, seat_name, status, method) {
+  getPeripheralData: function(type, seat_name, status, method) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
       'auth-token'
@@ -377,13 +387,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         'Authentication-Token': authentication_token
       }
     })
-      .done(function (response) {
+      .done(function(response) {
         CommonActions.updateSeatData(response.data, type, status, method);
       })
-      .fail(function (jqXhr) { });
+      .fail(function(jqXhr) {});
   },
   ///itemsearch
-  getOrphanItemData: function (data, seat_name) {
+  getOrphanItemData: function(data, seat_name) {
     var dataToSent = '?' + 'barcode=' + data + '&' + 'ppsId=' + seat_name;
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
@@ -407,26 +417,26 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         'Authentication-Token': authentication_token
       }
     })
-      .done(function (response) {
+      .done(function(response) {
         CommonActions.updateSeatData(response.data, 'orphanSearch');
       })
-      .fail(function (jqXhr) {
+      .fail(function(jqXhr) {
         CommonActions.updateSeatData([], 'orphanSearch');
       });
   },
-  getBOIConfig: function () {
+  getBOIConfig: function() {
     $.ajax({
       type: 'GET',
       url: configConstants.BOI_CONFIG
     })
-      .done(function (response) {
+      .done(function(response) {
         CommonActions.updateSeatData(response, 'BOI_CONFIG');
       })
-      .fail(function (jqXhr) {
+      .fail(function(jqXhr) {
         CommonActions.updateSeatData(null, 'BOI_CONFIG');
       });
   },
-  updatePeripherals: function (data, method, seat_name) {
+  updatePeripherals: function(data, method, seat_name) {
     var retrieved_token = sessionStorage.getItem('sessionData');
     var authentication_token = JSON.parse(retrieved_token)['data'][
       'auth-token'
@@ -471,7 +481,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
        }*/
     })
-      .done(function (response, statusText, xhr) {
+      .done(function(response, statusText, xhr) {
         utils.getPeripheralData(
           data.peripheral_type,
           seat_name,
@@ -480,7 +490,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         );
         // CommonActions.updateSeatData(response.data, data.peripheral_type);
       })
-      .fail(function (jqXhr) {
+      .fail(function(jqXhr) {
         if (jqXhr.status == 409)
           utils.getPeripheralData(
             data.peripheral_type,
@@ -504,7 +514,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           );
       });
   },
-  createLogData: function (message, type) {
+  createLogData: function(message, type) {
     var data = {};
     data['message'] = message;
     data['type'] = type;
@@ -512,7 +522,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  frntStringTransform: function (messgCode, stringArg) {
+  frntStringTransform: function(messgCode, stringArg) {
     var message_args = [];
     if (stringArg.length > 1) {
       message_args = stringArg ? ['STN', '20'] : []; // 20 is max length...fixed from backend
@@ -524,13 +534,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     );
     return _.apply(null, message_args);
   },
-  logError: function (data) {
+  logError: function(data) {
     $.ajax({
       type: 'POST',
       url: 'http://192.168.3.93:300/api/log',
       data: data,
       dataType: 'json'
-    }).success(function (response) {
+    }).success(function(response) {
       console.log('Error logged Successfully');
       console.log('Log Details :');
       console.log(JSON.stringify(data));
@@ -538,7 +548,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   }
 });
 
-var putSeatData = function (data) {
+var putSeatData = function(data) {
   console.log(data);
   switch (data.state_data.mode + '_' + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

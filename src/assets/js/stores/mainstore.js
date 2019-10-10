@@ -57,6 +57,9 @@ _auditModalStatus = false;
 _boiConfig = null;
 _itemSearchEnabled = false;
 _scannerLoginEnabled = false;
+_unitConversionAllowed = false;
+_uomConversionFactor = 1;
+_uomDisplayUnit = "";
 
 var modalContent = {
   data: '',
@@ -1565,9 +1568,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   setLoginScannerAllowed: function (data) {
     _scannerLoginEnabled = data;
   },
+  setUnitConversionAllowed: function(data) {
+    _unitConversionAllowed = data;
+  },
+  setUOMConversionFactor: function(data) {
+    _uomConversionFactor = data;
+  },
+  setUOMDisplayUnit: function(data) {
+    _uomDisplayUnit = data;
+  },
   loginScannerAllowed: function () {
     return _scannerLoginEnabled;
   },
+  IsUnitConversionAllowed: function() {
+    return _unitConversionAllowed;
+  },
+  getUOMConversionFactor: function(){
+    return _uomConversionFactor;
+  },
+  getUOMDisplayUnit:function(){
+    return _uomDisplayUnit;
+  }, 
   setBOIConfig: function (data) {
     _boiConfig = data;
   },
@@ -4871,11 +4892,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         (data && data.login_scanner_enabled) || false,
         'LOGIN_SCANNER_CONFIG'
       );
+      this.updateSeatData(
+        (data && data.enable_conversion) || false,
+        'ENABLE_UNIT_CONVERSION'
+      );
     } else if (type === 'ITEM_SEARCH_CONFIG') {
       this.setOrphanSearchAllowed(data);
     } else if (type === 'LOGIN_SCANNER_CONFIG') {
       this.setLoginScannerAllowed(data);
-    } else if (type == 'itemSearch') {
+    } else if (type === 'ENABLE_UNIT_CONVERSION') {
+      this.setUnitConversionAllowed(data);
+      if(data){
+        this.setUOMConversionFactor(data);
+        this.setUOMDisplayUnit(data);
+      } 
+    }else if (type == 'itemSearch') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH;
       _peripheralScreen = true;
     }

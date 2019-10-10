@@ -173,7 +173,8 @@ var appConstants = {
   SEND_EXCESS_ITEMS_BIN: 'SEND_EXCESS_ITEMS_BIN',
   WAREHOUSEFULL_EXCEPTION: 'WAREHOUSEFULL_EXCEPTION',
   CONFIRM_PHYSICALLY_DAMAGED_ITEMS: 'CONFIRM_PHYSICALLY_DAMAGED_ITEMS',
-  SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM: 'SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM',
+  SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM:
+    'SEND_AUDIT_DAMAGED_ENTITY_DETAILS_ON_CONFIRM',
   AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
     'audit_loose_item_damage_exception',
   AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE: 'audit_box_damage_exception',
@@ -183,7 +184,7 @@ var appConstants = {
   AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION: 'audit_sub_pack_unscannable_exception',
   AUDIT_EACH_UNSCANNABLE_EXCEPTION: 'audit_each_unscannable_exception',
   AUDIT_DAMAGED_ENTITY_EXCEPTION: 'audit_physically_damaged_exception',
-  AUDIT_FRONT_IRT_BIN_CONFIRM: "audit_front_irt_bin_confirm",
+  AUDIT_FRONT_IRT_BIN_CONFIRM: 'audit_front_irt_bin_confirm',
   DEFAULT: 'default',
   AUDIT: 'audit_front',
   SET_AUDIT_DATA: 'SET_AUDIT_DATA',
@@ -378,8 +379,9 @@ var appConstants = {
   GET_BOI_CONFIG: 'GET_BOI_CONFIG',
   KEYBOARD: 'KEYBOARD',
   SCANNER: 'SCANNER',
-  UNIVERSAL_DOCK_UNDOCK: "universal_dock_undock",
-  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist'
+  UNIVERSAL_DOCK_UNDOCK: 'universal_dock_undock',
+  PICK_REPRINT_PACKLIST: 'pick_reprint_packlist',
+  IN: 'in '
 };
 
 module.exports = appConstants;

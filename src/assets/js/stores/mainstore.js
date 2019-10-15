@@ -4883,6 +4883,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT;
       _peripheralScreen = true;
     } else if (type === 'BOI_CONFIG') {
+      if(data.enable_conversion){
+        this.setUnitConversionAllowed(data.enable_conversion);
+        this.setUOMConversionFactor(data.dims_conversion_factor);
+        this.setUOMDisplayUnit(data.dims_display_uom);
+      }
       this.setBOIConfig(data || null);
       this.updateSeatData(
         (data && data.item_search_enabled) || false,
@@ -4900,13 +4905,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       this.setOrphanSearchAllowed(data);
     } else if (type === 'LOGIN_SCANNER_CONFIG') {
       this.setLoginScannerAllowed(data);
-    } else if (type === 'ENABLE_UNIT_CONVERSION') {
-      this.setUnitConversionAllowed(data);
-      if(data){
-        this.setUOMConversionFactor(data);
-        this.setUOMDisplayUnit(data);
-      } 
-    }else if (type == 'itemSearch') {
+    } 
+    else if (type == 'itemSearch') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH;
       _peripheralScreen = true;
     }

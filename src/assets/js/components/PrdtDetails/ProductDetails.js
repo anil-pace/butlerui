@@ -113,7 +113,7 @@ var ProductDetails = React.createClass({
         uomDisplayUnit
       );
     } else {
-      this.displayLocale(this.props.productDetails);
+      this.displayLocale(this.props.productInfo);
     }
 
     return (

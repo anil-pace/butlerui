@@ -1571,7 +1571,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   loginScannerAllowed: function () {
     return _scannerLoginEnabled;
   },
-  IsUnitConversionAllowed: function() {
+  isUnitConversionAllowed: function() {
     return _unitConversionAllowed;
   },
   getUOMConversionFactor: function(){

@@ -75,7 +75,7 @@ var PutWrapper = React.createClass({
     });
   },
   render: function(data) {
-    var isUnitConversionAllowed = mainstore.IsUnitConversionAllowed();
+    var isUnitConversionAllowed = mainstore.isUnitConversionAllowed();
     var uomConversionFactor, uomDisplayUnit;
     if (isUnitConversionAllowed) {
       uomConversionFactor = mainstore.getUOMConversionFactor();

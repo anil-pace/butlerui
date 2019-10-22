@@ -56,6 +56,9 @@ _auditModalStatus = false;
 _boiConfig = null;
 _itemSearchEnabled = false;
 _scannerLoginEnabled = false;
+_unitConversionAllowed = false;
+_uomConversionFactor = 1;
+_uomDisplayUnit = "";
 
 var modalContent = {
   data: '',
@@ -1478,9 +1481,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   setLoginScannerAllowed: function(data) {
     _scannerLoginEnabled = data;
   },
+  setUnitConversionAllowed: function(data) {
+    _unitConversionAllowed = data;
+  },
+  setUOMConversionFactor: function(data) {
+    _uomConversionFactor = data;
+  },
+  setUOMDisplayUnit: function(data) {
+    _uomDisplayUnit = data;
+  },
   loginScannerAllowed: function() {
     return _scannerLoginEnabled;
   },
+  isUnitConversionAllowed: function() {
+    return _unitConversionAllowed;
+  },
+  getUOMConversionFactor: function(){
+    return _uomConversionFactor;
+  },
+  getUOMDisplayUnit:function(){
+    return _uomDisplayUnit;
+  }, 
   setBOIConfig: function(data) {
     _boiConfig = data;
   },
@@ -5097,6 +5118,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT;
       _peripheralScreen = true;
     } else if (type === 'BOI_CONFIG') {
+      if(data.enable_conversion){
+        this.setUnitConversionAllowed(data.enable_conversion);
+        this.setUOMConversionFactor(data.dims_conversion_factor);
+        this.setUOMDisplayUnit(data.dims_display_uom);
+      }
       this.setBOIConfig(data || null);
       this.updateSeatData(
         (data && data.item_search_enabled) || false,

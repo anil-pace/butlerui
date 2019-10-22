@@ -148,14 +148,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     data,
     serial,
     uomConversionFactor = 1,
-    uomDisplayUnit = ""
+    uomDisplayUnit = ''
   ) {
-    product_info_locale = {}
-    image_url = {}
-    var language_locale = sessionStorage.getItem("localeData")
-    var locale
-    if (language_locale == "null" || language_locale == null) {
-      locale = "en-US"
+    product_info_locale = {};
+    image_url = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if (language_locale == 'null' || language_locale == null) {
+      locale = 'en-US';
     } else {
       locale = JSON.parse(language_locale)["data"]["locale"]
     }
@@ -167,23 +167,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           var dimension = value[0][key]
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
-              keyValue =
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
+              keyValue = Math.round(dimension[i] * uomConversionFactor) + '';
             } else {
               keyValue =
                 keyValue +
-                " X " +
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10
+                ' X ' +
+                Math.round(dimension[i] * uomConversionFactor);
             }
           }
-          uomDisplayUnit !== ""
+          uomDisplayUnit !== ''
             ? (keyValue =
-                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
-            : (keyValue = keyValue)
-        } else if (key != "display_data" && key != "product_local_image_url") {
-          keyValue = value[0][key] + " "
-        } else if (key != "display_data" && key == "product_local_image_url") {
-          imageKey = value[0][key]
+                keyValue + ' (' + appConstants.IN + uomDisplayUnit + ')')
+            : (keyValue = keyValue);
+        } else if (key != 'display_data' && key != 'product_local_image_url') {
+          keyValue = value[0][key] + ' ';
+        } else if (key != 'display_data' && key == 'product_local_image_url') {
+          imageKey = value[0][key];
         }
       }
       value[0].display_data.map(function(data_locale, index1) {
@@ -569,7 +568,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 })
 
 var putSeatData = function(data) {
-  
+  data.state_data = {"seat_name":"front_2","notification_list":[{"level":"info","code":"PkF.I.001","details":[],"description":"Pick Complete. Waiting for next pick."}],"current_bin_widget":true,"exception_allowed":[],"roll_cage_flow":false,"packing_box_type":"DONALD","bin_coordinate_plotting":true,"event":"box_scan","screen_id":"pick_front_packing_box","logout_allowed":false,"seat_type":"front","time_stamp":"2020-04-07T09:48:39Z","ppsbin_list":[{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"7","packing_box":"false","orig_coordinate":[0,89],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[{"service_request_id":["srpk27304"],"load_unit_id":["1"],"product_sku":"sku6078","load_unit_label":"Bin","serial":[],"type":"Case","quantity":1}],"ppsbin_id":"1","packing_box":"true","selected_state":false,"orig_coordinate":[0,0],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","ppsbin_light_color":"green","ppsbin_state":"pick_processed","ppsbin_count":"1","coordinate":[2,4],"ppsbin_blink_state":false,"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"8","packing_box":"false","orig_coordinate":[58,89],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[{"service_request_id":["srpk17302"],"load_unit_id":["2"],"product_sku":"sku6078","load_unit_label":"Bin","serial":[],"type":"Case","quantity":1}],"ppsbin_id":"2","packing_box":"true","selected_state":false,"orig_coordinate":[58,0],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","ppsbin_light_color":"green","ppsbin_state":"pick_processed","ppsbin_count":"1","coordinate":[2,4],"ppsbin_blink_state":false,"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"9","packing_box":"false","orig_coordinate":[116,89],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[{"service_request_id":["Apr6_0"],"load_unit_id":[],"product_sku":"item_4april","load_unit_label":"Packing Box","serial":[],"type":"Item","quantity":1}],"ppsbin_id":"3","packing_box":"false","selected_state":false,"orig_coordinate":[116,0],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","ppsbin_light_color":"green","ppsbin_state":"pick_processed","ppsbin_count":"1","coordinate":[2,4],"ppsbin_blink_state":false,"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"10","packing_box":"false","orig_coordinate":[277,89],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"4","packing_box":"false","orig_coordinate":[277,0],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,2],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"11","packing_box":"false","orig_coordinate":[335,89],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[{"service_request_id":["srpk37305"],"load_unit_id":[],"product_sku":"sku6078","load_unit_label":"Packing Box","serial":[],"type":"Case","quantity":0}],"ppsbin_id":"5","packing_box":"false","selected_state":true,"orig_coordinate":[335,0],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","ppsbin_light_color":"blue","ppsbin_state":"packing_box_required","ppsbin_count":"0","coordinate":[2,2],"ppsbin_blink_state":false,"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"12","packing_box":"false","orig_coordinate":[393,89],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,1],"group_id":"1","totes_associated":"false"},{"breadth":"89","direction":"center","bin_info":[],"ppsbin_id":"6","packing_box":"false","orig_coordinate":[393,0],"back_drawing_start":"left","height":"56","front_drawing_start":"left","length":"58","selected_state":false,"ppsbin_state":"empty","ppsbin_count":"0","coordinate":[2,2],"group_id":"1","totes_associated":"false"}],"mode":"pick","group_info":{"1":"center"},"is_idle":false,"operator_orientation":"0","grafana_main_url":"https://192.168.9.223:3002/d/MIfSqjwZz1/boi-sample-pick?orgId=1&theme=light&refresh=10s&var-UserName=admin&var-StartTime=1586217600000000000&kiosk","structure":[2,10],"error_popup_disabled":false,"user_loggedin":"admin","header_steps":["PkF.S.002","PkF.S.003","PkF.S.005"],"screen_version":"1","docked":[],"grafana_footer_url":"https://192.168.9.223:3002/d/Pc1vem_Wz1/boi-footer-sample-pick?orgId=1&theme=light&refresh=10s&var-UserName=admin&var-StartTime=1586217600000000000&kiosk","api_version":"1","scan_allowed":true,"uph_count":0,"header_msge_list":[{"level":"info","code":"PkF.H.034","details":[],"description":"Place packing box in bin and scan ID"}]}
   console.log(data)
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

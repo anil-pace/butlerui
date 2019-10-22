@@ -104,7 +104,7 @@ var PutWrapper = React.createClass({
           </div>
         </div>
         {this.props.scanDetails ? (
-          <div className="kqContainer">
+          <div className='kqContainer'>
             <KQ
               scanDetails={this.props.scanDetails}
               itemUid={this.props.itemUid}
@@ -112,8 +112,8 @@ var PutWrapper = React.createClass({
           </div>
         ) : null}
       </div>
-    )
+    );
   }
-})
+});
 
-module.exports = PutWrapper
+module.exports = PutWrapper;

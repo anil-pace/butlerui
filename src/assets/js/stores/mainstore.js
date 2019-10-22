@@ -52,19 +52,20 @@ var _seatData,
   _clearNotification = false,
   _enableButton = true,
   _putBackExceptionScreen,
-  _finishAuditFlag = true
-_errorPopupDisabled = false
-_cancelButtonClicked = false
-_auditModalStatus = false
-_boiConfig = null
-_itemSearchEnabled = false
-_scannerLoginEnabled = false
-_unitConversionAllowed = false,
-_uomConversionFactor = 1
-  ; (_uomDisplayUnit = ""),
-    (_uphActive = false),
-    (pickThreshold = {}),
-    (putThreshold = {})
+  _uomDisplayUnit = "",
+  _uphActive = false,
+  pickThreshold = {},
+  putThreshold = {},
+  _finishAuditFlag = true;
+_errorPopupDisabled = false;
+_cancelButtonClicked = false;
+_auditModalStatus = false;
+_boiConfig = null;
+_itemSearchEnabled = false;
+_scannerLoginEnabled = false;
+_unitConversionAllowed = false;
+_uomConversionFactor = 1;
+_uomDisplayUnit = "";
 
 var modalContent = {
   data: "",

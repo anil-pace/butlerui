@@ -296,6 +296,7 @@ var LoginPage = React.createClass({
           <option value='en-US'>{'English (United States)'}</option>
           <option value='ja-JP'>{'日本語'}</option>
           <option value='de-DE'>{'Deutsche'}</option>
+          <option value='he-IL'>{'עברי'}</option>
           <option value='zh-ZH'>{'中文'}</option>
           <option value='fr-FR'>{'Français'}</option>
           <option value='es-ES'>{'Español'}</option>

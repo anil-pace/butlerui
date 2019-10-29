@@ -1,9 +1,11 @@
 function parseJSON(json){
 	let parsedJSON={};
 	for(let k in json){
+		console.log('=============>' + json);
 		if(k !== ""){
 			let msgId = json[k]["msgid"],
 			msgStr = json[k]["msgstr"][0];
+			console.log(msgStr);
 			parsedJSON[msgId] = msgStr;
 		}
 	}

@@ -16,7 +16,10 @@ fs.readdirSync(fileLoc).forEach(file => {
             let stream = fs.createWriteStream("src/assets/js/serverMessages/" + languageMap[file.split(".")[0]] + ".js");
             stream.once('open', function(fd) {
                 let parsedJSON = translationUtils.parseJSON(jsonData.translations[""]);
+                console.log("=========>");
+                console.log(parsedJSON);
                 let jsObject = "var obj=" + JSON.stringify(parsedJSON) + ";module.exports=obj"
+                console.log(jsObject);
                 stream.write(jsObject);
                 stream.end();
             });

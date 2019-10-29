@@ -7,8 +7,9 @@ const translationUtils = require('/home/jenkins/workspace/workspace/zanata-butle
 const languageMap = require('/home/jenkins/workspace/workspace/zanata-butlerui_latest/translationUtils/languageMap.js');
 const fileLoc = "src/assets/js/utils/vendor/i18n/";
 fs.readdirSync(fileLoc).forEach(file => {
-
+    console.log('reading the file:', file);
     if (file.split(".")[1] === "po" && !fs.lstatSync(fileLoc + file).isDirectory()) {
+        console.log("coming inside if case");
         let contents = fs.readFileSync(fileLoc + file);
         let jsonData = getTextParser.po.parse(contents,'UTF-8');
         if (languageMap[file.split(".")[0]]) {

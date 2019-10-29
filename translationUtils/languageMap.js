@@ -5,5 +5,6 @@ module.exports={
 	"fr":"french",
 	"de":"german",
 	"es":"spanish",
-	"nl":"dutch"
+	"nl":"dutch",
+	"he_IL": "hebrew"
 }

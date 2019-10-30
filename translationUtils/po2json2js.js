@@ -21,6 +21,8 @@ fs.readdirSync(fileLoc).forEach(file => {
       );
       stream.once('open', function(fd) {
         let parsedJSON = translationUtils.parseJSON(jsonData.translations['']);
+        console.log('===============================>');
+        console.log(parsedJSON);
         let jsObject =
           'var obj=' + JSON.stringify(parsedJSON) + ';module.exports=obj';
         stream.write(jsObject);

@@ -7,6 +7,10 @@ function parseJSON(json){
 			parsedJSON[msgId] = msgStr;
 		}
 	}
+	console.log('================================================>');
+  console.log('json' + JSON.stringify(json));
+  console.log('parsedJSON');
+  console.log(parsedJSON);
 	return parsedJSON
 }
 

@@ -1,17 +1,17 @@
-function parseJSON(json){
-	let parsedJSON={};
-	for(let k in json){
-		if(k !== ""){
-			let msgId = json[k]["msgid"],
-			msgStr = json[k]["msgstr"][0];
-			parsedJSON[msgId] = msgStr;
-		}
-	}
-	console.log('================================================>');
+function parseJSON(json) {
+  let parsedJSON = {};
+  for (let k in json) {
+    if (k !== '') {
+      let msgId = json[k]['msgid'],
+        msgStr = json[k]['msgstr'][0];
+      parsedJSON[msgId] = msgStr;
+    }
+  }
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
   console.log('json' + JSON.stringify(json));
-  console.log('parsedJSON');
+  console.log('parsedJSON in parseJSON file');
   console.log(parsedJSON);
-	return parsedJSON
+  return parsedJSON;
 }
 
 /*function toUnicode(theString) {
@@ -27,6 +27,6 @@ function parseJSON(json){
   return unicodeString;
 }*/
 
-module.exports={
-	parseJSON:parseJSON
-}
+module.exports = {
+  parseJSON: parseJSON
+};

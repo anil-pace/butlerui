@@ -9,6 +9,8 @@ function parseJSON(json) {
         msgStr = json[k]['msgstr'][0];
       parsedJSON[msgId] = msgStr;
     }
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>');
+    console.log(parsedJSON);
   }
   return parsedJSON;
 }

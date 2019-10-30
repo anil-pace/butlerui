@@ -2,9 +2,9 @@ const child_process = require('child_process');
 child_process.execSync('npm install gettext-parser --save-dev');
 const fs = require('fs');
 const path = require('path');
-const getTextParser = require('/Users/anil.k/Documents/D/butlerui/node_modules/gettext-parser');
-const translationUtils = require('/Users/anil.k/Documents/D/butlerui/translationUtils/parseJSON.js');
-const languageMap = require('/Users/anil.k/Documents/D/butlerui/translationUtils/languageMap.js');
+const getTextParser = require('/Users/anil.k/Documents/work/butlerui/node_modules/gettext-parser');
+const translationUtils = require('/Users/anil.k/Documents/work/butlerui/translationUtils/parseJSON.js');
+const languageMap = require('/Users/anil.k/Documents/work/butlerui/translationUtils/languageMap.js');
 const fileLoc = 'src/assets/js/utils/vendor/i18n/';
 fs.readdirSync(fileLoc).forEach(file => {
   if (

@@ -7,6 +7,7 @@ var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
+var hebrew = require('../serverMessages/hebrew');
 var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
@@ -3763,6 +3764,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         break;
       case 'en-US':
         _.setTranslation(english);
+        break;
+      case 'he-IL':
+        _.setTranslation(hebrew);
         break;
       case 'de-DE':
         _.setTranslation(german);

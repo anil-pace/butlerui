@@ -785,6 +785,5 @@ function server_messages_list() {
     _("Unknown barcode");
     _("Unexpected entity");
     _("Waiting for {0} to be docked");
-    
 }
 

@@ -96,7 +96,7 @@ var serverMessages = {
     "PkF.H.033": "Scan {0} Serial to Open",
     "PkB.H.001": "Scan a Tote",
     "PkB.H.002": "Press PPTL or Scan a Tote",
-    "PkB.H.003": "Press PPTL to clear the bin",
+    "PkB.H.003": "Press PPTL to clear the Bin",
     "PkB.H.004": "Press bin PPTL to remove entities",
     "PkB.H.005": "Press print button to proceed",
     "PkB.H.006": "Select Bin to skip print",

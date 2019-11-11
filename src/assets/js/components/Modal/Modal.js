@@ -555,7 +555,13 @@ function loadComponent(modalType, modalData, ths) {
       component.push(
         <div>
           <div className='row'>
-            <p>{utils.frntStringTransform('FRNT.PBIM.01', invoiceStringArg)}</p>
+            <p>
+              {utils.frntStringTransform(
+                'FRNT.PBIM.01',
+                invoiceStringArg,
+                appConstants.INVOICE_REQUIRED
+              )}
+            </p>
           </div>
           <div className='modal-footer removeBorder'>
             <div className='buttonContainer center-block chklstButtonContainer'>

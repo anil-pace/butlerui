@@ -381,7 +381,8 @@ var appConstants = {
   QL_CODE: 'QL Code',
   SLOT_ID: 'Slot ID',
   PREV_LOCATION: 'Location',
-  IN: 'in '
+  IN: 'in ',
+  INVOICE_REQUIRED: 'INVOICE_REQUIRED'
 };
 
 module.exports = appConstants;

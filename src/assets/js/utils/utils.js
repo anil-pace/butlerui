@@ -551,12 +551,12 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  frntStringTransform: function(messgCode, stringArg) {
+  frntStringTransform: function(messgCode, stringArg, arg) {
     var message_args = [];
-    if (stringArg.length > 1) {
-      message_args = stringArg ? ['STN', '20'] : []; // 20 is max length...fixed from backend
-    } else {
+    if (stringArg.length < 1 || arg === appConstants.INVOICE_REQUIRED) {
       message_args = stringArg ? stringArg : [];
+    } else {
+      message_args = stringArg ? ['STN', 20] : []; // 20 is max length...fixed from backend
     }
     message_args.unshift(
       serverMessages[messgCode] ? serverMessages[messgCode] : ''

@@ -2,335 +2,340 @@ var AppDispatcher = require('../dispatchers/AppDispatcher');
 var appConstants = require('../constants/appConstants');
 
 var commonActions = {
-  webSocketConnection: function(data){
+  webSocketConnection: function(data) {
     AppDispatcher.handleAction({
-      actionType: appConstants.WEBSOCKET_CONNECT, 
+      actionType: appConstants.WEBSOCKET_CONNECT,
       data: data
     });
   },
-  listSeats: function(data){
+  listSeats: function(data) {
     AppDispatcher.handleAction({
-      actionType : appConstants.LIST_SEATS,
-      data: data
-    })
-  },
-  login: function(data){
-    AppDispatcher.handleAction({
-      actionType: appConstants.LOGIN, 
+      actionType: appConstants.LIST_SEATS,
       data: data
     });
   },
-  operatorSeat: function(data){ 
+  login: function(data) {
     AppDispatcher.handleAction({
-      actionType: appConstants.OPERATOR_SEAT, 
+      actionType: appConstants.LOGIN,
       data: data
     });
   },
-  loginSeat: function(data){ 
+  operatorSeat: function(data) {
     AppDispatcher.handleAction({
-      actionType: appConstants.LOGIN_SEAT, 
+      actionType: appConstants.OPERATOR_SEAT,
       data: data
     });
   },
-  toggleBinSelection:function(bin_id){
-     AppDispatcher.handleAction({
+  loginSeat: function(data) {
+    AppDispatcher.handleAction({
+      actionType: appConstants.LOGIN_SEAT,
+      data: data
+    });
+  },
+  toggleBinSelection: function(bin_id) {
+    AppDispatcher.handleAction({
       actionType: appConstants.TOGGLE_BIN_SELECTION,
-      bin_id:bin_id
-    })
+      bin_id: bin_id
+    });
   },
 
-  setPutData:function(data){
-     AppDispatcher.handleAction({
+  setPutData: function(data) {
+    AppDispatcher.handleAction({
       actionType: appConstants.SET_PUT_DATA,
-      data:data
-    })
+      data: data
+    });
   },
 
-  setCurrentSeat:function(seat){ 
+  setCurrentSeat: function(seat) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_CURRENT_SEAT,
-      data:seat
-    })
+      data: seat
+    });
   },
-  hideSpinner:function(data){ 
+  hideSpinner: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.HIDE_SPINNER,
-      data:data
-    })
+      data: data
+    });
   },
 
-  showErrorMessage:function(seat){
+  showErrorMessage: function(seat) {
     AppDispatcher.handleAction({
       actionType: appConstants.SHOW_ERROR_MESSAGE,
-      data:seat
-    })
+      data: seat
+    });
   },
 
-  postDataToInterface:function(data){
-     AppDispatcher.handleAction({
+  postDataToInterface: function(data) {
+    AppDispatcher.handleAction({
       actionType: appConstants.POST_DATA_TO_INTERFACE,
-      data:data
-    })
-   },
+      data: data
+    });
+  },
 
-  setPutBackData :function(data){
+  postDataToTower: function(data) {
+    AppDispatcher.handleAction({
+      actionType: appConstants.POST_DATA_TO_TOWER,
+      data: data
+    });
+  },
+
+  setPutBackData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PUT_BACK_DATA,
-      data:data
-    })
+      data: data
+    });
   },
-  setPutFrontData :function(data){
+  setPutFrontData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PUT_FRONT_DATA,
-      data:data
-    })
+      data: data
+    });
   },
-  setSearchData :function(data){
+  setSearchData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_SEARCH_DATA,
-      data:data
-    })
+      data: data
+    });
   },
 
-  setPickBackData :function(data){
+  setPickBackData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PICK_BACK_DATA,
-      data:data
-    })
+      data: data
+    });
   },
 
-  setAuditData :function(data){
+  setAuditData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_AUDIT_DATA,
-      data:data
-    })
+      data: data
+    });
   },
 
-  updatePopupVisible:function(status){   
+  updatePopupVisible: function(status) {
     AppDispatcher.handleAction({
       actionType: appConstants.POPUP_VISIBLE,
       status: status
-    })
+    });
   },
-  stageAllBins:function(){   
+  stageAllBins: function() {
     AppDispatcher.handleAction({
       actionType: appConstants.STAGE_ALL
-    })
+    });
   },
-  stageOneBin:function(){   
+  stageOneBin: function() {
     AppDispatcher.handleAction({
       actionType: appConstants.STAGE_ONE_BIN
-    })
+    });
   },
-  resetNumpadVal : function(data){
+  resetNumpadVal: function(data) {
     AppDispatcher.handleAction({
-      actionType: appConstants.RESET_NUMPAD, 
+      actionType: appConstants.RESET_NUMPAD,
       data: data
     });
   },
-  showModal:function(data){
+  showModal: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.LOAD_MODAL,
-      data:data
-    })
+      data: data
+    });
   },
-  pptlPress : function(data){
+  pptlPress: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.PPTL_PRESS,
-      data:data
-    })
+      data: data
+    });
   },
-  setPickFrontData :function(data){  
+  setPickFrontData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_PICK_FRONT_DATA,
-      data:data
-    })
+      data: data
+    });
   },
-  setServerMessages : function(){
+  setServerMessages: function() {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_SERVER_MESSAGES
     });
   },
-  changeLanguage: function(data){
+  changeLanguage: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_LANGUAGE,
-      data:data
-    }); 
+      data: data
+    });
   },
-  setLanguage: function(data){
+  setLanguage: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_LANGUAGE,
-      data:data
-    }); 
+      data: data
+    });
   },
-  logError: function(data){
+  logError: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.LOG_ERROR,
-      data:data
-    }); 
+      data: data
+    });
   },
-  enableException:function(data){
+  enableException: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.ENABLE_EXCEPTION,
-      data:data
-    }); 
+      data: data
+    });
   },
-  enableSearch:function(data){
+  enableSearch: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.ENABLE_SEARCH,
-      data:data
-    }); 
+      data: data
+    });
   },
-  logoutSession:function(data){
+  logoutSession: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.LOGOUT_SESSION,
-      data:data
-    }); 
+      data: data
+    });
   },
-  setActiveException:function(data){
+  setActiveException: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_ACTIVE_EXCEPTION,
-      data:data
-    }); 
+      data: data
+    });
   },
 
-  updateKQQuantity:function(data){
+  updateKQQuantity: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_KQ_QUANTITY,
-      data:data
+      data: data
     });
   },
-  updateMissingQuantity:function(data){
+  updateMissingQuantity: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_MISSING_QUANTITY,
-      data:data
+      data: data
     });
   },
-    updateUnscannableQuantity:function(data){
+  updateUnscannableQuantity: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_UNSCANNABLE_QUANTITY,
-      data:data
+      data: data
     });
   },
 
-  updateGoodQuantity:function(data){
+  updateGoodQuantity: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_GOOD_QUANTITY,
-      data:data
+      data: data
     });
   },
 
-  updateDamagedQuantity:function(data){
+  updateDamagedQuantity: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_DAMAGED_QUANTITY,
-      data:data
+      data: data
     });
   },
 
-
-
-  changePutFrontExceptionScreen:function(data){
+  changePutFrontExceptionScreen: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PUT_FRONT_EXCEPTION_SCREEN,
-      data:data
+      data: data
     });
   },
 
-  changeAuditExceptionScreen:function(data){
+  changeAuditExceptionScreen: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_AUDIT_EXCEPTION_SCREEN,
-      data:data
+      data: data
     });
   },
 
-  changePickFrontExceptionScreen:function(data){
+  changePickFrontExceptionScreen: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PICK_FRONT_EXCEPTION_SCREEN,
-      data:data
+      data: data
     });
   },
 
-  changePutBackExceptionScreen:function(data){
+  changePutBackExceptionScreen: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.CHANGE_PUT_BACK_EXCEPTION_SCREEN,
-      data:data
+      data: data
     });
   },
 
-  validateAndSendDataToServer:function(){
-     AppDispatcher.handleAction({
+  validateAndSendDataToServer: function() {
+    AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_AND_SEND_DATA_TO_SERVER
     });
-   },
-   validateAndSendSpaceUnavailableDataToServer:function(){
-     AppDispatcher.handleAction({
-      actionType: appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
+  },
+  validateAndSendSpaceUnavailableDataToServer: function() {
+    AppDispatcher.handleAction({
+      actionType:
+        appConstants.VALIDATE_AND_SEND_SPACE_UNAVAILABLE_DATA_TO_SERVER
     });
-   },
-   validateUnmarkedDamagedData:function(){
+  },
+  validateUnmarkedDamagedData: function() {
     AppDispatcher.handleAction({
       actionType: appConstants.VALIDATE_UNMARKED_DAMAGED_DATA
     });
-   },
-   getPeriPheralData : function(data){
+  },
+  getPeriPheralData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.PERIPHERAL_DATA,
-      data:data
+      data: data
     });
-   },
-   getOrphanItemData : function(data){
+  },
+  getOrphanItemData: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.ORPHAN_ITEM_DATA,
-      data:data
+      data: data
     });
-   },
-   getBOIConfig : function(){
+  },
+  getBOIConfig: function() {
     AppDispatcher.handleAction({
       actionType: appConstants.GET_BOI_CONFIG
     });
-   },
-   updateSeatData : function(data, type, status, method){
+  },
+  updateSeatData: function(data, type, status, method) {
     AppDispatcher.handleAction({
       actionType: appConstants.UPDATE_SEAT_DATA,
-      data:data,
-      type : type,
+      data: data,
+      type: type,
       status: status,
-      method : method
+      method: method
     });
-   },
-   convertTextBox : function(data, index){
+  },
+  convertTextBox: function(data, index) {
     AppDispatcher.handleAction({
-      actionType : appConstants.CONVERT_TEXTBOX,
-      data : data,
-      index : index
-    })
-   },
-   updateData : function(data, method, index){
+      actionType: appConstants.CONVERT_TEXTBOX,
+      data: data,
+      index: index
+    });
+  },
+  updateData: function(data, method, index) {
     AppDispatcher.handleAction({
-      actionType : appConstants.UPDATE_PERIPHERAL,
-      data : data,
-      method : method,
-      index : index
-    })
-   },
-   generateNotification : function(data){
-     AppDispatcher.handleAction({
-      actionType : appConstants.GENERATE_NOTIFICATION,
-      data : data
-    })
-   },
-   clearNotification : function(){
+      actionType: appConstants.UPDATE_PERIPHERAL,
+      data: data,
+      method: method,
+      index: index
+    });
+  },
+  generateNotification: function(data) {
     AppDispatcher.handleAction({
-      actionType : appConstants.CLEAR_NOTIFICATIONS,
-    })
-   },
-   setCancelButtonStatus:function(data){
+      actionType: appConstants.GENERATE_NOTIFICATION,
+      data: data
+    });
+  },
+  clearNotification: function() {
     AppDispatcher.handleAction({
-      actionType:appConstants.SET_CANCEL_BUTTON_STATUS,
-      data:data
-    })
-   }
-
+      actionType: appConstants.CLEAR_NOTIFICATIONS
+    });
+  },
+  setCancelButtonStatus: function(data) {
+    AppDispatcher.handleAction({
+      actionType: appConstants.SET_CANCEL_BUTTON_STATUS,
+      data: data
+    });
+  }
 };
 
 module.exports = commonActions;

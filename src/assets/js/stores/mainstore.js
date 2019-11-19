@@ -4106,6 +4106,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   _getDockedGroup: function () {
     return _seatData && _seatData.docked ? Object.keys(_seatData.docked) : [];
   },
+  _getMsuEstimatedArrival: function(){
+    return _seatData && _seatData.msu_eta
+  },
   _getUndockAwaitedGroup: function () {
     return _seatData && _seatData.undock_awaited
       ? Object.keys(_seatData.undock_awaited)

@@ -167,12 +167,13 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           var dimension = value[0][key];
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
-              keyValue = Math.round(dimension[i] * uomConversionFactor) + '';
+              keyValue =
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
             } else {
               keyValue =
                 keyValue +
-                ' X ' +
-                Math.round(dimension[i] * uomConversionFactor);
+                " X " +
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10
             }
           }
           uomDisplayUnit !== ''

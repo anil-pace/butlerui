@@ -261,7 +261,7 @@ var KQ = React.createClass({
             },
             change : function(e, keypressed, el){
                 var data ={};
-               if(_scanDetails.kq_allowed == false){
+               if(_scanDetails.kq_allowed === false){
                     $('.ui-keyboard-preview').val("");
                     data["code"] = resourceConstants.CLIENTCODE_013;
                     data["level"] = 'error'

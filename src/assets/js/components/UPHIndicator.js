@@ -31,7 +31,14 @@ var UPHIndicator = React.createClass({
   },
   render: function(props) {
     const { lowerThreshold, upperThreshold } = this.props
-    const { dangerZoneValue, warningZoneValue, comfortZoneValue } = this.state
+    const {
+      dangerZoneValue,
+      warningZoneValue,
+      comfortZoneValue,
+      dangerZone,
+      warningZone,
+      comfortZone
+    } = this.state
 
     return (
       <div className="uphIndicator-wrapper">
@@ -40,25 +47,17 @@ var UPHIndicator = React.createClass({
             <span>UPH Indicator</span>
           </div>
           <div
-            className={
-              "zones dangerZone " + (dangerZoneValue ? "dangerZoneValue" : "")
-            }
+            className={"zones dangerZone " + (dangerZone ? "zoneValue" : "")}
           >
             {dangerZoneValue}
           </div>
           <div
-            className={
-              "zones warningZone " +
-              (warningZoneValue ? "warningZoneValue" : "")
-            }
+            className={"zones warningZone " + (warningZone ? "zoneValue" : "")}
           >
             {warningZoneValue}
           </div>
           <div
-            className={
-              "zones comfortZone " +
-              (comfortZoneValue ? "comfortZoneValue" : "")
-            }
+            className={"zones comfortZone " + (comfortZone ? "zoneValue" : "")}
           >
             {comfortZoneValue}
           </div>

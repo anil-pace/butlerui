@@ -776,11 +776,11 @@ var PutFront = React.createClass({
               {this._subComponent}
               <div className='main-container'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
-                <div className="product-details-container">
+                <div className="product-details-container extraHandling">
                   <PrdtDetails productInfo={this.state.PutFrontProductDetails} />
                 </div>
                 <div className="msu-send-container">
-                  <div className="msu-send-button">
+                  <div style={{"marginLeft": "10%"}} className="msu-send-button">
                     <Button1 disabled={false} text={_("Send MSU")} module={appConstants.PUT_FRONT} action={appConstants.SEND_MSU} color={"orange"} />
                   </div>
                 </div>

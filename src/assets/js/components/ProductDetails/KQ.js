@@ -285,7 +285,7 @@ var KQ = React.createClass({
   openNumpad : function(id){
     var self = this;
     var action = this.props.action;
-    if (_scanDetails.kq_allowed == true) {
+    if (_scanDetails.kq_allowed === true) {
         var qty = _scanDetails.current_qty;
         var itemUid = this.props.itemUid;
         /**
@@ -314,7 +314,7 @@ var KQ = React.createClass({
             },
             change : function(e, keypressed, el){
                 var data ={}
-               if(_scanDetails.kq_allowed == false){
+               if(_scanDetails.kq_allowed === false){
                     $('.ui-keyboard-preview').val("");
                     data["code"] = resourceConstants.CLIENTCODE_013;
                     data["level"] = 'error'

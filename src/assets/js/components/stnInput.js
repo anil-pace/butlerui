@@ -1,24 +1,24 @@
-var React = require('react');
-var mainstore = require('../stores/mainstore');
-var utils = require('../utils/utils.js');
-var CommonActions = require('../actions/CommonActions');
+var React = require('react')
+var mainstore = require('../stores/mainstore')
+var utils = require('../utils/utils.js')
+var CommonActions = require('../actions/CommonActions')
 
 function getStateData() {
-  return {};
+  return {}
 }
 var STNInput = React.createClass({
   componentWillMount: function() {
-    mainstore.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange)
   },
   componentWillUnmount: function() {
-    mainstore.addChangeListener(this.onChange);
+    mainstore.addChangeListener(this.onChange)
   },
   onChange: function() {
-    this.setState(getStateData());
+    this.setState(getStateData())
   },
   openKeyboard: function() {
-    $('#actionMenu').hide();
-    $('.form-control').blur();
+    $('#actionMenu').hide()
+    $('.form-control').blur()
     virtualKeyBoard_header = $('#invoiceNumber').keyboard({
       layout: 'custom',
       customLayout: {
@@ -49,7 +49,7 @@ var STNInput = React.createClass({
       alwaysOpen: false,
       initialFocus: true,
       visible: function(e, keypressed, el) {
-        el.value = '';
+        el.value = ''
       },
       accepted: function(e, keypressed, el) {
         if (e.target.value.trim() === '') {
@@ -60,24 +60,30 @@ var STNInput = React.createClass({
               barcode: e.target.value.trim()
             },
             source: 'ui'
-          };
-          CommonActions.postDataToInterface(data);
+          }
+          CommonActions.postDataToInterface(data)
         }
       }
-    });
+    })
     $('#invoiceNumber')
       .data('keyboard')
-      .reveal();
+      .reveal()
   },
 
   render: function(data) {
     var applyClassName,
       showErrorMsg,
-      invoiceStringArg = [];
-    invoiceStringArg[0] = this.props.invoiceType;
-    var errorCode = this.props.errorFound ? this.props.errorFound.code : '';
-    var errorMsg = utils.frntStringTransform(errorCode, invoiceStringArg);
-
+      invoiceStringArg = []
+    if (
+      this.props.invoiceType.constructor === String &&
+      this.props.invoiceType.length > 0
+    ) {
+      invoiceStringArg = this.props.invoiceType
+    } else if (this.props.errorFound) {
+      invoiceStringArg = this.props.errorFound.details
+    }
+    var errorCode = this.props.errorFound ? this.props.errorFound.code : ''
+    var errorMsg = utils.frntStringTransform(errorCode, invoiceStringArg)
     if (
       this.props.errorFound && this.props.errorFound.level === 'error'
         ? ((applyClassName = 'inputWrapper showError'),
@@ -100,8 +106,8 @@ var STNInput = React.createClass({
         </div>
         <span className='ErrorMessage'>{showErrorMsg}</span>
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = STNInput;
+module.exports = STNInput

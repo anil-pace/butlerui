@@ -7,6 +7,7 @@ var utils = require('../utils/utils');
 var serverMessages = require('../serverMessages/server_messages');
 var chinese = require('../serverMessages/chinese');
 var english = require('../serverMessages/english');
+var hebrew = require('../serverMessages/hebrew');
 var japanese = require('../serverMessages/japanese');
 var german = require('../serverMessages/german');
 var french = require('../serverMessages/french');
@@ -57,6 +58,9 @@ _auditModalStatus = false;
 _boiConfig = null;
 _itemSearchEnabled = false;
 _scannerLoginEnabled = false;
+_unitConversionAllowed = false;
+_uomConversionFactor = 1;
+_uomDisplayUnit = "";
 
 var modalContent = {
   data: '',
@@ -1565,9 +1569,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   setLoginScannerAllowed: function (data) {
     _scannerLoginEnabled = data;
   },
+  setUnitConversionAllowed: function(data) {
+    _unitConversionAllowed = data;
+  },
+  setUOMConversionFactor: function(data) {
+    _uomConversionFactor = data;
+  },
+  setUOMDisplayUnit: function(data) {
+    _uomDisplayUnit = data;
+  },
   loginScannerAllowed: function () {
     return _scannerLoginEnabled;
   },
+  isUnitConversionAllowed: function() {
+    return _unitConversionAllowed;
+  },
+  getUOMConversionFactor: function(){
+    return _uomConversionFactor;
+  },
+  getUOMDisplayUnit:function(){
+    return _uomDisplayUnit;
+  }, 
   setBOIConfig: function (data) {
     _boiConfig = data;
   },
@@ -3743,6 +3765,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       case 'en-US':
         _.setTranslation(english);
         break;
+      case 'he-IL':
+        _.setTranslation(hebrew);
+        break;
       case 'de-DE':
         _.setTranslation(german);
         break;
@@ -3764,6 +3789,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     showModal = false;
     utils.postDataToInterface(data, _seatName);
   },
+  postDataToTower: function(data) {
+    showModal = false;
+    utils.postDataToTower(data, _seatName);
+  },
   logError: function (data) {
     utils.logError(data);
   },
@@ -3778,6 +3807,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getSeatType: function () {
     return _seatType;
+  },
+  getSeatName: function() {
+    return _seatName;
   },
   enableException: function (data) {
     _KQQty = 0;
@@ -4862,6 +4894,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT;
       _peripheralScreen = true;
     } else if (type === 'BOI_CONFIG') {
+      if(data.enable_conversion){
+        this.setUnitConversionAllowed(data.enable_conversion);
+        this.setUOMConversionFactor(data.dims_conversion_factor);
+        this.setUOMDisplayUnit(data.dims_display_uom);
+      }
       this.setBOIConfig(data || null);
       this.updateSeatData(
         (data && data.item_search_enabled) || false,
@@ -4871,11 +4908,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         (data && data.login_scanner_enabled) || false,
         'LOGIN_SCANNER_CONFIG'
       );
+      this.updateSeatData(
+        (data && data.enable_conversion) || false,
+        'ENABLE_UNIT_CONVERSION'
+      );
     } else if (type === 'ITEM_SEARCH_CONFIG') {
       this.setOrphanSearchAllowed(data);
     } else if (type === 'LOGIN_SCANNER_CONFIG') {
       this.setLoginScannerAllowed(data);
-    } else if (type == 'itemSearch') {
+    } 
+    else if (type == 'itemSearch') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH;
       _peripheralScreen = true;
     }
@@ -6390,6 +6432,10 @@ AppDispatcher.register(function (payload) {
       mainstore.hideSpinner();
       mainstore.emit(CHANGE_EVENT);
       break;
+    case appConstants.POST_DATA_TO_TOWER:
+        mainstore.postDataToTower(action.data);
+        mainstore.emit(CHANGE_EVENT);
+        break;
     case appConstants.POST_DATA_TO_INTERFACE:
       mainstore.showSpinner();
       mainstore.postDataToInterface(action.data);

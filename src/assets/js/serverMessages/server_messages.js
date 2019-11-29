@@ -96,7 +96,7 @@ var serverMessages = {
     "PkF.H.033": "Scan {0} Serial to Open",
     "PkB.H.001": "Scan a Tote",
     "PkB.H.002": "Press PPTL or Scan a Tote",
-    "PkB.H.003": "Press PPTL to clear the bin",
+    "PkB.H.003": "Press PPTL to clear the Bin",
     "PkB.H.004": "Press bin PPTL to remove entities",
     "PkB.H.005": "Press print button to proceed",
     "PkB.H.006": "Select Bin to skip print",
@@ -292,6 +292,9 @@ var serverMessages = {
     "PkF.E.015": "Wrong entity scan.Please scan the correct entity",
     "PkF.E.017": "Extra entity scan found.",
     "PkF.E.018": "Physically Damaged Reported should equal Scanned Quantity",
+    "PkF.E.019": "Packing box not empty",
+    "PkF.E.020": "Packing box already reserved",
+    "PkF.E.021": "Packing box validation failed",
 
     "PkB.E.001": "Incorrect {0} barcode scanned. Please try again",
     "PkB.E.002": "System not configured for {0}",

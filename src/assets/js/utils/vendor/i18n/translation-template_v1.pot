@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-03 06:37+0000\n"
+"POT-Creation-Date: 2019-11-04 13:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3614,6 +3614,7 @@ msgid "Scan entities"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:764
+#: src/assets/js/serverMessages/server_messages_lang.js:787
 msgid "Waiting for {0} to be docked"
 msgstr ""
 
@@ -3700,4 +3701,8 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:786
 msgid "Unexpected entity"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:782
+msgid "Excess quantity detected, remove '{0}' quantity and confirm again"
 msgstr ""

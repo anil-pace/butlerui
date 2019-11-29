@@ -5,6 +5,7 @@ var mainstore = require("../stores/mainstore")
 var virtualkeyboard = require("virtual-keyboard")
 var jqueryPosition = require("jquery-ui/position")
 var virtualKeyBoard_header = null
+var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
 
 function getState() {
@@ -16,6 +17,10 @@ function getState() {
     ppsMode: mainstore.getPpsMode(),
     ppsId: mainstore.getSeatName(),
     ppsRequestedStatus: mainstore.getPpsRequestedStatus(),
+    uphCount: mainstore.getUPHCount(),
+    isUPHActive: mainstore.isUPHActive(),
+    frontScreen: mainstore.getSeatType(),
+    uphThreshold: mainstore.getUPHThreshold(),
   }
 }
 var Header = React.createClass({
@@ -213,6 +218,9 @@ var Header = React.createClass({
         </div>
       )
     }
+    var isFrontScreen = this.state.frontScreen === appConstants.FRONT
+    const { uphThreshold, uphCount } = this.state
+
     return (
       <div>
         <div className="head">
@@ -225,6 +233,15 @@ var Header = React.createClass({
           </div>
 
           {ppsRequestedStatus}
+          {this.state.isUPHActive && isFrontScreen ? (
+            <UPHIndicator
+              uphCount={uphCount}
+              lowerThreshold={uphThreshold && uphThreshold.lower_threshold}
+              upperThreshold={uphThreshold && uphThreshold.upper_threshold}
+            />
+          ) : (
+            ""
+          )}
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}

@@ -62,7 +62,10 @@ _itemSearchEnabled = false
 _scannerLoginEnabled = false
 _unitConversionAllowed = false
 _uomConversionFactor = 1
-_uomDisplayUnit = ""
+;(_uomDisplayUnit = ""),
+  (_uphActive = false),
+  (pickThreshold = {}),
+  (putThreshold = {})
 
 var modalContent = {
   data: "",
@@ -127,6 +130,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getLogoutState: function () {
     if (_seatData && _seatData.hasOwnProperty("logout_allowed"))
       return _seatData.logout_allowed
+  },
+  getUPHCount: function () {
+    if (_seatData && _seatData.hasOwnProperty("uph_count")) {
+      return _seatData.uph_count
+    }
   },
   getScanAllowedStatus: function () {
     if (_seatData.hasOwnProperty("scan_allowed")) {
@@ -1590,6 +1598,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   isUnitConversionAllowed: function () {
     return _unitConversionAllowed
   },
+  setUPHActive: function (data) {
+    _uphActive = data
+  },
+  isUPHActive: function () {
+    return _uphActive
+  },
+  setPutUPHThreshold: function (data) {
+    const putThresholdArr = data.filter((elem) => elem.mode === "put")
+    Object.assign(putThreshold, putThresholdArr[0])
+  },
+  setPickUPHThreshold: function (data) {
+    const pickThresholdArr = data.filter((elem) => elem.mode === "pick")
+    Object.assign(pickThreshold, pickThresholdArr[0])
+  },
+  getUPHThreshold: function () {
+    return _seatMode === "pick" ? pickThreshold : putThreshold
+  },
+
   getUOMConversionFactor: function () {
     return _uomConversionFactor
   },
@@ -5270,6 +5296,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.setUOMConversionFactor(data.dims_conversion_factor)
         this.setUOMDisplayUnit(data.dims_display_uom)
       }
+      if (data.uph_thresholds) {
+        this.setUPHActive(data.uph_active)
+        this.setPickUPHThreshold(data.uph_thresholds)
+        this.setPutUPHThreshold(data.uph_thresholds)
+      }
       this.setBOIConfig(data || null)
       this.updateSeatData(
         (data && data.item_search_enabled) || false,
@@ -5575,6 +5606,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data["ppsMode"] = this.getPpsMode()
     data["ppsRequestedStatus"] = this.getPpsRequestedStatus()
     data["username"] = this.getUsername()
+    data["username"] = this.getUsername()
+    data["isUPHActive"] = this.isUPHActive()
 
     switch (_screenId) {
       case appConstants.PUT_BACK_STAGE:

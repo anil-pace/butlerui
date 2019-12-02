@@ -1,0 +1,49 @@
+.uphIndicator-wrapper {
+  order: 3;
+  margin-top: 10px;
+  .zoneWrapper {
+    display: flex;
+    .uph-label {
+      display: inline-block;
+      text-transform: uppercase;
+      white-space: normal;
+      word-break: break-all;
+      color: #1b242d;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 3px 10px 10px 10px;
+    }
+    .zones {
+      color: #fff;
+      display: inline-block;
+      border-right: 2px solid #fff;
+      width: 90px;
+      height: 25px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      opacity: 0.2;
+    }
+    .dangerZone {
+      background-color: #ff0000;
+    }
+    .warningZone {
+      background-color: #ff8c00;
+    }
+    .zoneValue {
+      opacity: 1;
+    }
+    .comfortZone {
+      background-color: #00ad07;
+    }
+  }
+  .threshold-wrapper {
+    display: block;
+    .lowerThreshold {
+      margin-left: 200px;
+    }
+    .upperThreshold {
+      margin-left: 70px;
+    }
+  }
+}

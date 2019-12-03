@@ -1,22 +1,22 @@
-var AppDispatcher = require('../dispatchers/AppDispatcher');
-var appConstants = require('../constants/appConstants');
-var objectAssign = require('react/lib/Object.assign');
-var SVGConstants = require('../constants/svgConstants');
-var EventEmitter = require('events').EventEmitter;
-var utils = require('../utils/utils');
-var serverMessages = require('../serverMessages/server_messages');
-var chinese = require('../serverMessages/chinese');
-var english = require('../serverMessages/english');
-var hebrew = require('../serverMessages/hebrew');
-var japanese = require('../serverMessages/japanese');
-var german = require('../serverMessages/german');
-var french = require('../serverMessages/french');
-var spanish = require('../serverMessages/spanish');
-var dutch = require('../serverMessages/dutch');
-var navConfig = require('../config/navConfig');
-var resourceConstants = require('../constants/resourceConstants');
-var CommonActions = require('../actions/CommonActions');
-var CHANGE_EVENT = 'change';
+var AppDispatcher = require("../dispatchers/AppDispatcher")
+var appConstants = require("../constants/appConstants")
+var objectAssign = require("react/lib/Object.assign")
+var SVGConstants = require("../constants/svgConstants")
+var EventEmitter = require("events").EventEmitter
+var utils = require("../utils/utils")
+var serverMessages = require("../serverMessages/server_messages")
+var chinese = require("../serverMessages/chinese")
+var english = require("../serverMessages/english")
+var hebrew = require("../serverMessages/hebrew")
+var japanese = require("../serverMessages/japanese")
+var german = require("../serverMessages/german")
+var french = require("../serverMessages/french")
+var spanish = require("../serverMessages/spanish")
+var dutch = require("../serverMessages/dutch")
+var navConfig = require("../config/navConfig")
+var resourceConstants = require("../constants/resourceConstants")
+var CommonActions = require("../actions/CommonActions")
+var CHANGE_EVENT = "change"
 var _seatData,
   _currentSeat,
   _peripheralScreen = false,
@@ -60,10 +60,10 @@ _itemSearchEnabled = false
 _scannerLoginEnabled = false
 _unitConversionAllowed = false
 _uomConversionFactor = 1
-_uomDisplayUnit = "",
-_uphActive= false,
-pickThreshold={},
-putThreshold={}
+;(_uomDisplayUnit = ""),
+  (_uphActive = false),
+  (pickThreshold = {}),
+  (putThreshold = {})
 
 var modalContent = {
   data: "",
@@ -1597,18 +1597,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   isUPHActive: function() {
     return _uphActive
   },
-  setPutUPHThreshold: function(data){
-    const putThresholdArr= data.filter(elem=>elem.mode ==='put')
-    Object.assign(putThreshold,putThresholdArr[0])
+  setPutUPHThreshold: function(data) {
+    const putThresholdArr = data.filter(elem => elem.mode === "put")
+    Object.assign(putThreshold, putThresholdArr[0])
   },
-  setPickUPHThreshold: function(data){
-    const pickThresholdArr= data.filter(elem=>elem.mode === "pick")
-    Object.assign(pickThreshold,pickThresholdArr[0]);
+  setPickUPHThreshold: function(data) {
+    const pickThresholdArr = data.filter(elem => elem.mode === "pick")
+    Object.assign(pickThreshold, pickThresholdArr[0])
   },
-  getUPHThreshold: function(){
-    return (_seatMode === 'pick' ? pickThreshold : putThreshold)
+  getUPHThreshold: function() {
+    return _seatMode === "pick" ? pickThreshold : putThreshold
   },
-  
+
   getUOMConversionFactor: function() {
     return _uomConversionFactor
   },
@@ -3901,30 +3901,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       }
     }
     switch (data) {
-      case 'ja-JP':
-        _.setTranslation(japanese);
-        break;
-      case 'zh-ZH':
-        _.setTranslation(chinese);
-        break;
-      case 'en-US':
-        _.setTranslation(english);
-        break;
-      case 'he-IL':
-        _.setTranslation(hebrew);
-        break;
-      case 'de-DE':
-        _.setTranslation(german);
-        break;
-      case 'fr-FR':
-        _.setTranslation(french);
-        break;
-      case 'es-ES':
-        _.setTranslation(spanish);
-        break;
-      case 'nl':
-        _.setTranslation(dutch);
-        break;
+      case "ja-JP":
+        _.setTranslation(japanese)
+        break
+      case "zh-ZH":
+        _.setTranslation(chinese)
+        break
+      case "en-US":
+        _.setTranslation(english)
+        break
+      case "he-IL":
+        _.setTranslation(hebrew)
+        break
+      case "de-DE":
+        _.setTranslation(german)
+        break
+      case "fr-FR":
+        _.setTranslation(french)
+        break
+      case "es-ES":
+        _.setTranslation(spanish)
+        break
+      case "nl":
+        _.setTranslation(dutch)
+        break
       default:
         return true
     }
@@ -3956,7 +3956,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getSeatName: function() {
     return _seatName
   },
-  
+
   enableException: function(data) {
     _KQQty = 0
     _activeException = null
@@ -4261,6 +4261,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   _getReleaseActiveStatus: function() {
     return _seatData && _seatData.release_mtu ? true : false
+  },
+  _getMsuEstimatedArrival: function() {
+    return _seatData && _seatData.msu_eta
   },
   _getDamagedItemsData: function() {
     var data = {}
@@ -5241,7 +5244,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   updateSeatData: function(data, type, status, method) {
     var dataNotification = {}
-    
+
     if (type === "pptl") {
       _seatData["screen_id"] = appConstants.PPTL_MANAGEMENT
       if (_seatData["header_steps"]) {
@@ -5263,7 +5266,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         this.setUOMConversionFactor(data.dims_conversion_factor)
         this.setUOMDisplayUnit(data.dims_display_uom)
       }
-      if(data.uph_thresholds){
+      if (data.uph_thresholds) {
         this.setUPHActive(data.uph_active)
         this.setPickUPHThreshold(data.uph_thresholds)
         this.setPutUPHThreshold(data.uph_thresholds)
@@ -5572,7 +5575,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data["SeatType"] = this.getSeatType()
     data["ppsMode"] = this.getPpsMode()
     data["username"] = this.getUsername()
-    data['isUPHActive'] = this.isUPHActive()
+    data["isUPHActive"] = this.isUPHActive()
 
     switch (_screenId) {
       case appConstants.PUT_BACK_STAGE:

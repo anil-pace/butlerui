@@ -182,7 +182,7 @@ function loadComponent(modalType,modalData,ths){
     case "message":
       component = [];
       component.push((<div className="col-md-12 value">{modalData["message"]} </div>));
-      component.push(<div className='extraEntity'><Button1 disabled = {false} text = {_("Confirm")} module ={appConstants.AUDIT} action={appConstants.CLOSE_MODAL} color={"orange"}/></div>);
+      component.push(<div className='extraEntity modal-footer'><Button1 disabled = {false} text = {_("Confirm")} module ={appConstants.AUDIT} action={appConstants.CLOSE_MODAL} color={"orange"}/></div>);
       title = _("Extra Entity Found");
     break;
     case "pick_checklist":

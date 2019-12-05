@@ -5179,7 +5179,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ? _seatData.Current_box_details[0].Box_Actual_Qty
             : 0,
           total_qty: 0,
-          kq_allowed: _seatData.enable_kq === "true" ? true : false /* BSS-10640 */
+          kq_allowed:
+            _seatData.enable_kq === "true" ? true : false /* BSS-10640 */
         }
       }
       return data.scan_details
@@ -5372,6 +5373,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.invoice_type) {
       return _seatData.invoice_type
     }
+  },
+
+  getInvoiceId: function(data) {
+    if (_seatData.invoice_id) {
+      return _seatData.invoice_id
+    }
+  },
+
+  getMissingItems: function() {
+    if (_seatData.hasOwnProperty("missing_items"))
+      return _seatData.missing_items
   },
 
   getKQQuantity: function() {
@@ -5593,6 +5605,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["InvoiceType"] = this.getInvoiceType()
         data["ToteId"] = this.getToteId()
         data["StageButtonHideFlag"] = this.getStageButtonHideStatus()
+        data["PutBackMissingItems"] = this.getMissingItems()
+        data["PutBackInvoiceId"] = this.getInvoiceId()
         break
       case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
         data["PutBackNavData"] = this.getNavData()

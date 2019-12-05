@@ -386,7 +386,9 @@ var appConstants = {
   IN: "in ",
   QL_CODE: "QL Code",
   SLOT_ID: "Slot ID",
-  PREV_LOCATION: "Location"
+  PREV_LOCATION: "Location",
+  CONFIRM_CLOSE_INVOICE: "confirm_close_invoice",
+  INVOICE_REQUIRED: "INVOICE_REQUIRED"
 }
 
 module.exports = appConstants

@@ -805,4 +805,5 @@ function server_messages_list() {
   _("hr")
   _("min")
   _("sec")
+  _("Exit LPN")
 }

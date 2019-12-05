@@ -29,6 +29,7 @@ var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable');
 var Spinner = require("./Spinner/LoaderButler");
 var STNInput = require("./stnInput");
+var ReactModal = require('./Modal/ReactModal');
 
 function getStateData() {
   return mainstore.getScreenData();
@@ -39,6 +40,7 @@ var PutBack = React.createClass({
   _notification: '',
   _exception: '',
   _navigation: '',
+  _modalContent:'',
   getInitialState: function () {
     return getStateData();
   },
@@ -108,6 +110,53 @@ var PutBack = React.createClass({
               <Bins binsData={this.state.PutBackBinData} screenId={this.state.PutBackScreenId} />
             </div>)
           }
+          if(this.state.PutBackMissingItems.length > 0){
+          this._modalContent = (
+            <ReactModal title={_("Exit LPN")}>
+              <div>
+                <div className="row" style={{fontSize: "1.5em", color:"#4D5055"}}>
+                  <div className="col-md-12" >
+                    <p>{(_("Are you sure you want to exit from {0} LPN and stage all bin(s)?")).replace("{0}",this.state.PutBackInvoiceId)}</p>
+                    <p>{(_("The following {0} items were found missing:")).replace("{0}", this.state.PutBackMissingItems.length)}</p>
+                    <div className="missing-list">
+                      <section className="list-head">
+                        <span className="list-head-cell-col-4">
+                          {_("Product SKU")}
+                        </span>
+                        <span className="list-head-cell-col-4">
+                          {_("UOM")}
+                        </span>
+                        <span className="list-head-cell-col-4">
+                          {_("Quantity")}
+                        </span>
+                      </section>
+                      <div className="list-content">
+                        {this.state.PutBackMissingItems.map(function (tuple, idx) {
+                          return (<section key={tuple.product_sku + idx} className="tuple-row">
+                            <span className="tuple-row-cell-col-4">{tuple.product_sku ? tuple.product_sku : "--"}</span>
+                            <span className="tuple-row-cell-col-4">{tuple.label ? tuple.label : "--"}</span>
+                            <span className="tuple-row-cell-col-4">{tuple.quantity ? tuple.quantity : "--"}</span>
+                          </section>)
+                        })} 
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div className="modal-footer removeBorder">
+                  <div className="buttonContainer center-block chklstButtonContainer">
+                    <div className="row removeBorder">
+                      <div className="col-md-6"><Button1 disabled={false} text={_("Confirm")} color={"orange"} status={true} barcode={this.state.PutBackInvoiceId} module={appConstants.PUT_BACK} action={appConstants.CONFIRM_CLOSE_INVOICE} /></div>
+                      <div className="col-md-6"><Button1 disabled={false} text={_("Cancel")} color={"black"} status={false} barcode={this.state.PutBackInvoiceId} module={appConstants.PUT_BACK} action={appConstants.CONFIRM_CLOSE_INVOICE} /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </ReactModal>)
+          }else{
+            this._modalContent = ""
+          }
           this._component = (
             <div className='grid-container'>
               {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) ? (<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03", invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>) : ""}
@@ -129,6 +178,7 @@ var PutBack = React.createClass({
       case appConstants.PUT_BACK_WAREHOUSE_FULL_IRT_SCAN:
         this._navigation = (<Navigation navData={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
         var binComponent = "";
+        this._modalContent = "";
         if (this.state.OrigBinUse) {
           binComponent = (<BinsFlex binsData={this.state.PutBackBinData} screenId={this.state.PutBackScreenId} seatType={this.state.SeatType} />)
         } else {
@@ -147,6 +197,7 @@ var PutBack = React.createClass({
         break;
 
       case appConstants.PUT_BACK_INVOICE:
+          this._modalContent = "";
         var invoiceStringArg = [];
         invoiceStringArg[0] = this.state.InvoiceType;
         var componentModalString = utils.frntStringTransform("FRNT.PBI.01", invoiceStringArg);
@@ -166,6 +217,7 @@ var PutBack = React.createClass({
         break;
 
       case appConstants.PUT_BACK_SCAN:
+          this._modalContent = "";
         var invoiceStringArg = [];
         invoiceStringArg[0] = this.state.InvoiceType;
         if (this.state.PutBackExceptionStatus == false) {
@@ -200,6 +252,7 @@ var PutBack = React.createClass({
         }
         break;
       case appConstants.PUT_BACK_TOTE_CLOSE:
+          this._modalContent = "";
         if (this.state.PutBackExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           var subComponent = '';
@@ -239,6 +292,7 @@ var PutBack = React.createClass({
         break;
 
       case appConstants.PUT_BACK_PRESS_PPTL_TOTE:
+          this._modalContent = "";
         if (this.state.PutBackExceptionStatus === false) {
           this._navigation = (<Navigation navData={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           var binComponent = "";
@@ -265,6 +319,7 @@ var PutBack = React.createClass({
 
 
       case appConstants.PUT_BACK_NO_SCAN_TOTE:
+          this._modalContent = "";
         if (this.state.PutBackExceptionStatus === false) {
           this._navigation = (<Navigation navData={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           var stageButtonobj = "";
@@ -295,6 +350,7 @@ var PutBack = React.createClass({
         break;
 
       case appConstants.PUT_BACK_UNSCANNABLE:
+          this._modalContent = "";
         var buttonActivateFlag = mainstore.getExeptionQuanity();
         var toteDisplayName = this.getToteDisplayName() || "Tote";
         var numericIndicator = "";
@@ -340,6 +396,7 @@ var PutBack = React.createClass({
 
       case appConstants.PUT_BACK_PHYSICALLY_DAMAGED_ITEMS:
         this._navigation = '';
+        this._modalContent = "";
         if (this.state.PutBackExceptionScreen === appConstants.ENTITY_DAMAGED)
           this._component = (
             <div className='grid-container exception'>
@@ -366,6 +423,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.PUT_BACK_EXCEPTION_OVERSIZED_ITEMS:
         this._navigation = '';
+        this._modalContent = "";
         if (this.state.PutBackExceptionScreen == "oversized")
           this._component = (
             <div className='grid-container exception'>
@@ -391,6 +449,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.PUT_BACK_EXCEPTION_EXCESS_ITEMS_IN_BINS:
         this._navigation = '';
+        this._modalContent = "";
         var binComponent = "";
         if (this.state.OrigBinUse) {
           binComponent = (<div className="exception1">
@@ -420,6 +479,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.PUT_BACK_EXCEPTION_EXTRA_ITEM_QUANTITY_UPDATE:
         this._navigation = '';
+        this._modalContent = "";
         if (this.state.PutBackExceptionScreen == "extra_quantity")
           this._component = (
             <div className='grid-container exception'>
@@ -445,6 +505,7 @@ var PutBack = React.createClass({
 
       case appConstants.PUT_BACK_SCAN_EXCESS_ITEM_BACKUP:
         var _button;
+        this._modalContent = "";
         _button = (<div className="staging-action">
           <Button1 disabled={this.state.PutBackExceptionFlag} text={_("Next")} module={appConstants.PUT_BACK} action={appConstants.EXCESS_ITEM_BIN} color={"orange"} />
         </div>);
@@ -470,6 +531,7 @@ var PutBack = React.createClass({
 
       case appConstants.PUT_BACK_SCAN_EXCESS_ITEM:
         var _button;
+        this._modalContent = "";
         _button = (<div className="staging-action">
           <Button1 disabled={this.state.PutBackExceptionFlag} text={_("Next")} module={appConstants.PUT_BACK} action={appConstants.EXCESS_ITEM_BIN} color={"orange"} />
         </div>);
@@ -496,6 +558,7 @@ var PutBack = React.createClass({
 
       case appConstants.PUT_BACK_EXCEPTION_ENITY_IRT_BIN:
         var selected_screen;
+        this._modalContent = "";
         var messageIRTenable, messageIRTdisable;
         if (this.state.GetExceptionType == appConstants.PHYSICALLY_DAMAGED) {
           messageIRTenable = (<div className="gor-exceptionConfirm-text">{_("Please put damaged entities in IRT bin and scan the bin")}</div>);
@@ -554,6 +617,7 @@ var PutBack = React.createClass({
 
       case appConstants.PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
         this._navigation = '';
+        this._modalContent = "";
         this._component = (
           <div className='grid-container exception'>
             <Modal />
@@ -572,6 +636,7 @@ var PutBack = React.createClass({
         break;
 
       case appConstants.PUT_BACK_INVALID_TOTE_ITEM:
+          this._modalContent = "";
         this._navigation = (<Navigation navData={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson} />)
 
         this._component = (
@@ -587,6 +652,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
+          this._modalContent = "";
         this._navigation = (<Navigation navData={this.state.PutBackNavData} serverNavData={this.state.PutBackServerNavData} navMessagesJson={this.props.navMessagesJson} />)
         var _button;
         if (this.state.PutBackScreenId == appConstants.SCANNER_MANAGEMENT) {
@@ -616,6 +682,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.ITEM_SEARCH:
         this._navigation = '';
+        this._modalContent = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -636,6 +703,7 @@ var PutBack = React.createClass({
         break;
       case appConstants.ITEM_SEARCH_RESULT:
         this._navigation = '';
+        this._modalContent = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -696,6 +764,7 @@ var PutBack = React.createClass({
         <Header />
         {this._navigation}
         {this._component}
+        {this._modalContent}
         {this._notification}
       </div>
 

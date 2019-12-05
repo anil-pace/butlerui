@@ -17,8 +17,10 @@ var LoaderButler = React.createClass({
       result["hrs"] = hrs
       result["min"] = min
       result["seconds"] = seconds
-    } else {
+    } else if (typeof arg === "string") {
       result = _("Estimated time for MSU arrival is") + " " + _("unknown")
+    } else {
+      result = ""
     }
     return result
   },

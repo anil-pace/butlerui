@@ -23,13 +23,31 @@ function getStateData(ths) {
         modalData[i].type !== undefined &&
         modalData[i].product_sku !== undefined &&
         modalData[i].serial !== undefined &&
-        modalData[i].quantity !== undefined
+        modalData[i].quantity !== undefined &&
+        modalData[i].load_unit_id !== undefined &&
+        modalData[i].load_unit_label !== undefined &&
+        modalData[i].service_request_id !== undefined
       ) {
         modalData[i] = {
           type: modalData[i].type,
           product_sku: modalData[i].product_sku,
           serial: modalData[i].serial,
-          quantity: modalData[i].quantity
+          quantity: modalData[i].quantity,
+          load_unit_id: modalData[i].load_unit_id,
+          load_unit_label: modalData[i].load_unit_label,
+          service_request_id: modalData[i].service_request_id
+        }
+        if (modalData[i].service_request_id.length === 0) {
+          modalData[i].service_request_id = "--"
+        }
+        if (modalData[i].type.length === 0) {
+          modalData[i].type = "--"
+        }
+        if (modalData[i].product_sku.length === 0) {
+          modalData[i].product_sku = "--"
+        }
+        if (modalData[i].load_unit_id.length === 0) {
+          modalData[i].load_unit_id = "--"
         }
         if (modalData[i].serial.length === 0) {
           modalData[i].serial = "--"
@@ -130,6 +148,17 @@ function removeTextField() {
     .val("")
 }
 
+function parseValue(rowValue, arg) {
+  rowValue.push(
+    <span
+      style={{ fontWeight: "normal", fontSize: "24px" }}
+      className="col-md-5"
+    >
+      {arg.constructor.name === "Array" ? arg.join(", ") : arg}
+    </span>
+  )
+}
+
 function loadComponent(modalType, modalData, ths) {
   switch (modalType) {
     case "product-detail":
@@ -150,12 +179,35 @@ function loadComponent(modalType, modalData, ths) {
     case "bin-info":
       component = []
       var headerArray = []
+      var serverMessages = []
+      var rowHeader = []
+      var rowValue = []
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
-          keys = mainstore.getServerMessages()
-          key = keys[key]
-          //component.push((<div className="col-md-4 heading">{key} </div>));
-          headerArray.push(<th>{_(key)}</th>)
+          serverMessages = mainstore.getServerMessages()
+          var keyName = serverMessages[key]
+          if (keyName === "Load_Unit_Label") {
+            rowHeader.push(
+              <span
+                style={{ fontWeight: "bold", fontSize: "24px" }}
+                className="col-md-5"
+              >
+                {_(modalData[0]["load_unit_label"]) + " " + _("ID") + ":"}{" "}
+              </span>
+            )
+          } else if (keyName === "Load_Unit_Id") {
+            parseValue(rowValue, modalData[0][key])
+          } else if (keyName === "Service_Request_Id") {
+            rowHeader.push(
+              <span
+                style={{ fontWeight: "bold", fontSize: "24px" }}
+                className="col-md-5"
+              >
+                {_("Service Request ID") + ":"}
+              </span>
+            )
+            parseValue(rowValue, modalData[0][key])
+          } else headerArray.push(<th>{_(keyName)}</th>)
         }
       }
       var tr = []
@@ -169,20 +221,30 @@ function loadComponent(modalType, modalData, ths) {
                 serialNumbers.push(<div>{val}</div>)
               })
             }
-            rowData.push(
-              <td>
-                {value[key].constructor.name === "Array"
-                  ? serialNumbers
-                  : value[key]}
-              </td>
-            )
+            if (
+              key === "load_unit_id" ||
+              key === "load_unit_label" ||
+              key === "service_request_id"
+            ) {
+              rowData.push("")
+            } else {
+              rowData.push(
+                <td>
+                  {value[key].constructor.name === "Array"
+                    ? serialNumbers
+                    : value[key]}
+                </td>
+              )
+            }
           }
         }
         tr.push(<tr>{rowData}</tr>)
       })
       component.push(
         <div className="binInfoValue">
-          <table className="table">
+          <div className="row">{rowHeader}</div>
+          <div className="row">{rowValue}</div>
+          <table style={{ marginTop: "1em" }} className="table">
             <thead className="heading">
               <tr>{headerArray}</tr>
             </thead>
@@ -191,7 +253,6 @@ function loadComponent(modalType, modalData, ths) {
         </div>
       )
       title = _("Bin Info")
-
       break
 
     case "scan_bin_barcode":
@@ -555,13 +616,11 @@ function loadComponent(modalType, modalData, ths) {
       component.push(
         <div>
           <div className="row">
-            <p>
-              {utils.frntStringTransform(
-                "FRNT.PBIM.01",
-                invoiceStringArg,
-                appConstants.INVOICE_REQUIRED
-              )}
-            </p>
+            {utils.frntStringTransform(
+              "FRNT.PBIM.01",
+              invoiceStringArg,
+              appConstants.INVOICE_REQUIRED
+            )}
           </div>
           <div className="modal-footer removeBorder">
             <div className="buttonContainer center-block chklstButtonContainer">

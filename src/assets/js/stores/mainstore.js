@@ -5412,6 +5412,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getUDPMapDetails: function() {
     var ppsBinIds = {}
     var ppsBinIdColors = {}
+    var ppsBinInfo = {};
     var leftBins = []
     var rightBins = []
     var centerBins = []
@@ -5451,10 +5452,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       leftBins.forEach(function(bin) {
         ppsBinIdColors[bin["ppsbin_id"]] = bin["ppsbin_light_color"]
       })
+      leftBins.forEach(function (bin) {
+              ppsBinInfo[bin['ppsbin_id']] = bin['bin_info'];
+      });
     }
     return {
       ppsBinIds: ppsBinIds,
-      ppsBinIdColors: ppsBinIdColors
+      ppsBinIdColors: ppsBinIdColors,
+      ppsBinInfo: ppsBinInfo
     }
   },
 

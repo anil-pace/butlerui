@@ -5376,14 +5376,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getInvoiceId: function(data) {
-    if (_seatData.invoice_id) {
+    if (_seatData.hasOwnProperty("invoice_id")) {
       return _seatData.invoice_id
     }
+    else return []
   },
 
   getMissingItems: function() {
-    if (_seatData.hasOwnProperty("missing_items"))
+    if (_seatData.hasOwnProperty("missing_items")){
       return _seatData.missing_items
+  }
+  else return []
   },
 
   getKQQuantity: function() {

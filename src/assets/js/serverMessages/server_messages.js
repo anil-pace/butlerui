@@ -52,6 +52,7 @@ var serverMessages = {
   "PtB.E.027": "{0} closed.",
   "PtB.E.028":
     "Excess quantity detected, remove '{0}' quantity and confirm again",
+  "PtB.E.029": "Invalid Scan. Invoice open on another PPS",
   "PtF.H.001": "Place Entity in Slot and Scan More",
   "PtF.H.002": "Scan Slot to Confirm",
   "PtF.H.003": "Wait for MSU",
@@ -136,6 +137,7 @@ var serverMessages = {
   "PtB.I.017": "PPS mode change requested:scan not allowed",
   "PtB.I.018": "PPS mode change requested:auto staging all bins",
   "PtB.I.020": "{0} Physically damaged entity recorded.WMS notified",
+  "PtB.I.021": "Invoice closed successfully",
   "PtB.W.001": "Box with same serial number already exists in the warehouse",
   "PtB.W.002": "Entity already scanned.Waiting for PPTL press",
   "PtB.W.003": "No bins available to stage",

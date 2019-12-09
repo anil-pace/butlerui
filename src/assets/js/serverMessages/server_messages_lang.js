@@ -799,8 +799,8 @@ function server_messages_list() {
   _("{0} closed")
   _("Unknown barcode")
   _("Unexpected entity")
+  _("{0} unexpected. Scanned {1} does not exist.")
   _("Waiting for {0} to be docked")
   _("Call for Help")
   _("Tote Unscannable")
-  _("{0} unexpected. Scanned {1} does not exist.")
 }

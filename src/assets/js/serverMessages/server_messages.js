@@ -97,7 +97,7 @@ var serverMessages = {
   "PkF.H.035": "Pick all items from slot and scan slot",
   "PkF.H.027": "Scan {0} to Open",
   "PkF.H.028": "Dock {0}",
-  "PkF.H.029": "Scan {1} or Dock {0}",
+  "PkF.H.029": "Scan {0} {1} or Dock {2}",
   "PkF.H.030": "Undock {0}",
   "PkF.H.032": "Scan {0} Serial",
   "PkF.H.033": "Scan {0} Serial to Open",

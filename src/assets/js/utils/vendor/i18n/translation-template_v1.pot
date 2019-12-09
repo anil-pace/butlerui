@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 08:22+0000\n"
+"POT-Creation-Date: 2019-12-09 10:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4365,6 +4365,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:787
 #: src/assets/js/serverMessages/server_messages_lang.js:779
 #: src/assets/js/serverMessages/server_messages_lang.js:802
+#: src/assets/js/serverMessages/server_messages_lang.js:803
 msgid "Waiting for {0} to be docked"
 msgstr ""
 
@@ -4480,13 +4481,16 @@ msgid "Excess quantity detected, remove '{0}' quantity and confirm again"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:803
+#: src/assets/js/serverMessages/server_messages_lang.js:804
 msgid "Call for Help"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:804
+#: src/assets/js/serverMessages/server_messages_lang.js:805
 msgid "Tote Unscannable"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:805
+#: src/assets/js/serverMessages/server_messages_lang.js:802
 msgid "{0} unexpected. Scanned {1} does not exist."
 msgstr ""

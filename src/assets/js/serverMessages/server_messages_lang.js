@@ -806,4 +806,5 @@ function server_messages_list() {
   _("min")
   _("sec")
   _("Exit LPN")
+  _("Invoice closed successfully")
 }

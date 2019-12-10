@@ -545,13 +545,16 @@ var utils = objectAssign({}, EventEmitter.prototype, {
   frntStringTransform: function(messgCode, stringArg, arg) {
     var message_args = []
     if (stringArg.length < 1 || arg === appConstants.INVOICE_REQUIRED) {
+      //console.log("if case ===>" + stringArg)
       message_args = stringArg ? stringArg : []
     } else {
-      message_args = stringArg ? ["STN", 20] : [] // 20 is max length...fixed from backend
+      //console.log("else case" + stringArg)
+      message_args = stringArg ? [String([stringArg]).toUpperCase(), 20] : [] // 20 is max length...fixed from backend
     }
     message_args.unshift(
       serverMessages[messgCode] ? serverMessages[messgCode] : ""
     )
+    console.log("====> " + message_args)
     return _.apply(null, message_args)
   },
   logError: function(data) {
@@ -569,6 +572,44 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 })
 
 var putSeatData = function(data) {
+  data.state_data = {
+    seat_name: "back_1",
+    notification_list: [
+      {
+        level: "info",
+        code: "PtB.I.021",
+        details: ["Stn"],
+        description: "Invoice closed successfully."
+      }
+    ],
+    exception_allowed: [],
+    roll_cage_flow: false,
+    bin_coordinate_plotting: false,
+    event: "close_invoice",
+    screen_id: "put_back_invoice",
+    logout_allowed: true,
+    seat_type: "back",
+    time_stamp: "2019-12-10T07:11:49Z",
+    api_version: "1",
+    group_info: { "1": "center" },
+    invoice_type: "STN",
+    operator_orientation: "0",
+    error_popup_disabled: false,
+    user_loggedin: "default_user_name",
+    screen_version: "1",
+    docked: [],
+    mode: "put",
+    is_idle: false,
+    uph_count: 0,
+    header_msge_list: [
+      {
+        level: "error",
+        code: "PtB.H.012",
+        details: ["Stn"],
+        description: "Scan Invoice/ Stage PpsBin"
+      }
+    ]
+  }
   console.log(data)
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

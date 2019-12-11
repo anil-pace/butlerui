@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 04:44+0000\n"
+"POT-Creation-Date: 2019-12-09 13:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4501,4 +4501,12 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:808
 msgid "Exit LPN"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:809
+msgid "Call for Help"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:810
+msgid "{0} unexpected. Scanned {1} does not exist."
 msgstr ""

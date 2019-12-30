@@ -19,7 +19,7 @@ var NumericIndicator = React.createClass({
   _updatedQtyUnscannble: 0,
   _updatedQtyMissing: 0,
   _qty: 0,
-  getInitialState: function() {
+  getInitialState: function () {
     if (this.props.damagedQty !== undefined) {
       this._updatedQtyDamaged = this.props.damagedQty
       this._qty =
@@ -38,7 +38,7 @@ var NumericIndicator = React.createClass({
     }
   },
   self: this,
-  generateExcessNotification: function() {
+  generateExcessNotification: function () {
     var data = {}
     data["code"] = resourceConstants.CLIENTCODE_008
     data["level"] = "error"
@@ -46,7 +46,7 @@ var NumericIndicator = React.createClass({
     return
   },
 
-  changeValueIncrement: function(event) {
+  changeValueIncrement: function (event) {
     if (
       this.props.execType === appConstants.GOOD_QUANTITY ||
       this.props.execType === appConstants.GOOD_PACK ||
@@ -94,7 +94,7 @@ var NumericIndicator = React.createClass({
     }
   },
 
-  changeValueDecrement: function(event) {
+  changeValueDecrement: function (event) {
     if (
       this.props.execType === appConstants.GOOD_QUANTITY ||
       this.props.execType === appConstants.GOOD_PACK ||
@@ -142,7 +142,7 @@ var NumericIndicator = React.createClass({
     }
   },
 
-  updateStore: function(event, qty) {
+  updateStore: function (event, qty) {
     var total_entered =
       this._updatedQtyGood +
       this._updatedQtyMissing +
@@ -179,7 +179,7 @@ var NumericIndicator = React.createClass({
       return true
     }
   },
-  incrementValue: function(event) {
+  incrementValue: function (event) {
     var total_entered =
       parseInt(this._updatedQtyGood) +
       parseInt(this._updatedQtyMissing) +
@@ -199,7 +199,7 @@ var NumericIndicator = React.createClass({
     }
   },
 
-  checkKqAllowed: function() {
+  checkKqAllowed: function () {
     if (this.state.value <= 0) {
       this._appendClassDown = "gor-minus-sign disable"
       this._enableDecrement = false
@@ -217,7 +217,7 @@ var NumericIndicator = React.createClass({
     }
   },
 
-  checkKqAllowedForAuditDamagedQuantity: function(isKQEnabled) {
+  checkKqAllowedForAuditDamagedQuantity: function (isKQEnabled) {
     if (isKQEnabled) {
       if (this.state.value >= 1) {
         this._appendClassUp = "gor-plus-sign enable"
@@ -241,7 +241,7 @@ var NumericIndicator = React.createClass({
     }
   },
 
-  decrementValue: function(event) {
+  decrementValue: function (event) {
     var self = this
     if (this._enableDecrement) {
       _keypress = true
@@ -254,7 +254,7 @@ var NumericIndicator = React.createClass({
   },
 
   componentDidMount() {
-    ;(function(self) {
+    ; (function (self) {
       $(".gor_" + self.props.execType).keyboard({
         layout: "custom",
         customLayout: {
@@ -263,7 +263,7 @@ var NumericIndicator = React.createClass({
         reposition: true,
         alwaysOpen: false,
         initialFocus: true,
-        visible: function(e, keypressed, el) {
+        visible: function (e, keypressed, el) {
           $(".ui-keyboard-button.ui-keyboard-46").prop("disabled", true)
           $(".ui-keyboard-button.ui-keyboard-46").css("opacity", "0.6")
           $(".ui-keyboard").css("width", "230px")
@@ -275,7 +275,7 @@ var NumericIndicator = React.createClass({
           $(".ui-keyboard-accept,.ui-keyboard-cancel").css("width", "110px")
           $("input.ui-keyboard-preview:visible").val("")
         },
-        change: function(e, keypressed, el) {
+        change: function (e, keypressed, el) {
           var data = {}
           if (_scanDetails.kq_allowed === false) {
             $(".ui-keyboard-preview").val("")
@@ -291,7 +291,7 @@ var NumericIndicator = React.createClass({
             CommonActions.generateNotification(data)
           }
         },
-        accepted: function(e, keypressed, el) {
+        accepted: function (e, keypressed, el) {
           let txtBoxVal = isNaN(parseInt(e.target.value, 10))
             ? 0
             : Math.abs(parseInt(e.target.value, 10))
@@ -352,7 +352,7 @@ var NumericIndicator = React.createClass({
       })
     })(this)
   },
-  callBackForAuditDamagedException: function() {
+  callBackForAuditDamagedException: function () {
     //update damaged Quantity in store.
     mainstore.setDamagedQuanity(this._updatedQtyDamaged)
   },
@@ -367,11 +367,11 @@ var NumericIndicator = React.createClass({
       )
     }
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     var self = this
     /*Using settimeout to overcome the flux issue of Invariant Violation 
         when there are two simultaneous dispatches*/
-    setTimeout(function() {
+    setTimeout(function () {
       CommonActions.updateKQQuantity(
         parseInt(
           self.props.execType === appConstants.GOOD_QUANTITY
@@ -381,7 +381,7 @@ var NumericIndicator = React.createClass({
       )
     }, 0)
   },
-  render: function(data) {
+  render: function (data) {
     var inputType = this.props.inputType ? this.props.inputType : "text"
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
       return (
@@ -414,6 +414,19 @@ var NumericIndicator = React.createClass({
               onMouseDown={this.incrementValue}
             ></span>
           </div>
+        </div>
+      )
+    }
+    else if (this.props.execType === appConstants.BAD_QUANTITY) {
+      return (
+        <div className={this.props.Formattingclass ? "indicator-wrapper " + this.props.Formattingclass : "indicator-wrapper"} >
+          {this.state.pickedQuantity && this.state.goodQuantity ?
+            <div>
+              <span className={this._appendClassDown + " hideMe"} action={this.props.action} onClick={this.decrementValue} onMouseDown={this.decrementValue} ></span>
+              <input disabled id="keyboard" value={this.state.pickedQuantity - this.state.goodQuantity} type={inputType} name="quantity" className={"gor-quantity-text gor_" + this.props.execType} />
+              <span className={this._appendClassUp + " hideMe"} action={this.props.action} onClick={this.incrementValue} onMouseDown={this.incrementValue} ></span>
+            </div> : ''
+          }
         </div>
       )
     } else {

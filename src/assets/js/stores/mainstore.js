@@ -41,6 +41,7 @@ var _seatData,
   popupVisible = false,
   _showSpinner = true,
   _goodQuantity = 0,
+  _pickQuantity = 0,
   _damagedQuantity = 0,
   _putFrontExceptionScreen = 'good',
   _pickFrontExceptionScreen = 'good',
@@ -254,15 +255,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getPutQuantity: function () {
-    if (_seatData.hasOwnProperty('put_quantity')) return _seatData.put_quantity;
+    if (_seatData.hasOwnProperty("put_quantity")) return _seatData.put_quantity
   },
   getGoodQuantity: function () {
-    if (_seatData.hasOwnProperty('good_quantity')) {
-      _goodQuantity = _seatData.good_quantity;
-      return _goodQuantity;
+    if (_seatData.hasOwnProperty("good_quantity")) {
+      _goodQuantity = _seatData.good_quantity
+      return _goodQuantity
     }
   },
-
+  getPickedQuantity: function () {
+    if (_seatData.hasOwnProperty('pick_quantity')) {
+      _pickQuantity = _seatData.pick_quantity;
+      return _pickQuantity;
+    }
+  },
   getErrorPopupDisabledStatus: function () {
     if (_seatData.hasOwnProperty('error_popup_disabled')) {
       _errorPopupDisabled = _seatData.error_popup_disabled;
@@ -1569,27 +1575,27 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   setLoginScannerAllowed: function (data) {
     _scannerLoginEnabled = data;
   },
-  setUnitConversionAllowed: function(data) {
+  setUnitConversionAllowed: function (data) {
     _unitConversionAllowed = data;
   },
-  setUOMConversionFactor: function(data) {
+  setUOMConversionFactor: function (data) {
     _uomConversionFactor = data;
   },
-  setUOMDisplayUnit: function(data) {
+  setUOMDisplayUnit: function (data) {
     _uomDisplayUnit = data;
   },
   loginScannerAllowed: function () {
     return _scannerLoginEnabled;
   },
-  isUnitConversionAllowed: function() {
+  isUnitConversionAllowed: function () {
     return _unitConversionAllowed;
   },
-  getUOMConversionFactor: function(){
+  getUOMConversionFactor: function () {
     return _uomConversionFactor;
   },
-  getUOMDisplayUnit:function(){
+  getUOMDisplayUnit: function () {
     return _uomDisplayUnit;
-  }, 
+  },
   setBOIConfig: function (data) {
     _boiConfig = data;
   },
@@ -1609,7 +1615,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   isReprintPopUpEnabled: function () {
     return _seatData.reprint_popup_enabled;
   },
-  getHeavyItemsFlag: function() {
+  getHeavyItemsFlag: function () {
     return _seatData.is_heavy ? _seatData.is_heavy : false;
   },
   productDetails: function () {
@@ -3112,46 +3118,125 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             itemActualQty.push(itemList[i].Actual_Qty);
           }
         }
-        d.push(new self.tableCol(value.Sku, "enabled", false, "large", false, true, false, disabledStatus));
-        if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-          d.push(new self.tableCol(itemExpectedQty.toString(), "enabled", false, "large", true, false, false, disabledStatus, true));
-        d.push(new self.tableCol(itemActualQty.toString(), "enabled", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, disabledStatus, true));
-        data["tableRows"].push(d);
-      });
+        d.push(
+          new self.tableCol(
+            value.Sku,
+            "enabled",
+            false,
+            "large",
+            false,
+            true,
+            false,
+            disabledStatus
+          )
+        )
+        if (
+          _seatData["show_expected_qty"] != undefined &&
+          _seatData["show_expected_qty"] == true
+        )
+          d.push(
+            new self.tableCol(
+              itemExpectedQty.toString(),
+              "enabled",
+              false,
+              "large",
+              true,
+              false,
+              false,
+              disabledStatus,
+              true
+            )
+          )
+        d.push(
+          new self.tableCol(
+            itemActualQty.toString(),
+            "enabled",
+            _seatData.Current_box_details.length > 0 &&
+              _seatData.Current_box_details[0]["Box_serial"] == null
+              ? _seatData.Current_box_details[0]["Sku"] == value.Sku
+              : false,
+            "large",
+            true,
+            false,
+            false,
+            disabledStatus,
+            true
+          )
+        )
+        data["tableRows"].push(d)
+      })
     }
     _seatData.extra_loose_sku_item_list.map(function (value, index) {
-      d = [];
-      d.push(new self.tableCol(value.Sku, "extra", false, "large", false, true, false, false));
-      if (_seatData["show_expected_qty"] != undefined && _seatData["show_expected_qty"] == true)
-        d.push(new self.tableCol(value.Expected_qty, "enabled", false, "large", true, false, false, false, true));
-      d.push(new self.tableCol(value.Actual_qty, "actualqty", (_seatData.Current_box_details.length > 0 && _seatData.Current_box_details[0]["Box_serial"] == null) ? _seatData.Current_box_details[0]["Sku"] == value.Sku : false, "large", true, false, false, false, true));
-      data["tableRows"].push(d);
-    });
-
-    return data;
-
+      d = []
+      d.push(
+        new self.tableCol(
+          value.Sku,
+          "extra",
+          false,
+          "large",
+          false,
+          true,
+          false,
+          false
+        )
+      )
+      if (
+        _seatData["show_expected_qty"] != undefined &&
+        _seatData["show_expected_qty"] == true
+      )
+        d.push(
+          new self.tableCol(
+            value.Expected_qty,
+            "enabled",
+            false,
+            "large",
+            true,
+            false,
+            false,
+            false,
+            true
+          )
+        )
+      d.push(
+        new self.tableCol(
+          value.Actual_qty,
+          "actualqty",
+          _seatData.Current_box_details.length > 0 &&
+            _seatData.Current_box_details[0]["Box_serial"] == null
+            ? _seatData.Current_box_details[0]["Sku"] == value.Sku
+            : false,
+          "large",
+          true,
+          false,
+          false,
+          false,
+          true
+        )
+      )
+      data["tableRows"].push(d)
+    })
 
   },
 
   getFinishAuditFlag: function () {
-    return _finishAuditFlag;
+    return _finishAuditFlag
   },
   getKDeepLooseItemsData: function () {
-    return _seatData.Loose_sku_list || null;
+    return _seatData.Loose_sku_list || null
   },
   getSelectedUOM: function () {
-    return _seatData.selected_uom || null;
+    return _seatData.selected_uom || null
   },
 
   getReconcileLooseItemsData: function () {
-    var data = {};
-    data['header'] = [];
-    data['tableRows'] = [];
-    var self = this;
-    var totalLooseItemsMissing = 0;
-    var extraLooseItemsMissing = 0;
-    var c = 0;
-    var looseItemScreenName = _('Loose Items Serial Numbers');
+    var data = {}
+    data["header"] = []
+    data["tableRows"] = []
+    var self = this
+    var totalLooseItemsMissing = 0
+    var extraLooseItemsMissing = 0
+    var c = 0
+    var looseItemScreenName = _("Loose Items Serial Numbers")
 
     _seatData.Loose_sku_list.map(function (value, index) {
       if (
@@ -3166,7 +3251,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       if (_seatData.k_deep_audit) {
         looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
       }
-    });
+    })
     _seatData.extra_loose_sku_item_list.map(function (value, index) {
       if (
         Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 ||
@@ -3174,9 +3259,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData.loose_item_barcode_damage != 0
       )
         c = c + 1;
-        if (_seatData.k_deep_audit) {
-          looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
-        }
+      if (_seatData.k_deep_audit) {
+        looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
+      }
     });
 
     _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(
@@ -3315,17 +3400,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getToteId: function () {
-    if (_seatData.hasOwnProperty('tote_id')) {
-      return _seatData.tote_id;
+    if (_seatData.hasOwnProperty("tote_id")) {
+      return _seatData.tote_id
     } else {
       return null;
     }
   },
 
   getItemDetailsData: function () {
-    var data = {};
-    data['header'] = [];
-    data['header'].push(
+    var data = {}
+    data["header"] = []
+    data["header"].push(
       new this.tableCol(
         _('Product Details'),
         'header',
@@ -3353,7 +3438,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         locale = JSON.parse(language_locale)['data']['locale'];
       }
       _seatData.product_info.map(function (value, index) {
-        var keyValue;
+        var keyValue
 
         for (var key in value[0]) {
           if (key != 'display_data' && key != 'product_local_image_url') {
@@ -3494,7 +3579,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getScanDetails: function () {
-    if (_seatData['scan_details'] == undefined) {
+    if (_seatData["scan_details"] == undefined) {
       var data = {
         scan_details: {
           current_qty: this.getkQQuanity(),
@@ -3509,16 +3594,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getDamagedBoxDetails: function () {
-    if (_seatData['damaged_boxes'] !== undefined) {
-      return _seatData['damaged_boxes'];
+    if (_seatData["damaged_boxes"] !== undefined) {
+      return _seatData["damaged_boxes"]
     }
   },
 
   setCancelButtonStatus: function (status) {
-    _cancelButtonClicked = status;
+    _cancelButtonClicked = status
   },
   getCancelButtonStatus: function () {
-    return _cancelButtonClicked;
+    return _cancelButtonClicked
   },
   /*setAuditModalStatus: function(status){
         _cancelButtonClicked = status;
@@ -3538,14 +3623,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data.scan_details;
   },
   kQstatus: function () {
-    if (_seatData.hasOwnProperty('enable_kq')) {
-      return _seatData.enable_kq;
+    if (_seatData.hasOwnProperty("enable_kq")) {
+      return _seatData.enable_kq
     } else {
       return true;
     }
   },
   getGoodScanDetails: function () {
-    if (_seatData['scan_details'] == undefined) {
+    if (_seatData["scan_details"] == undefined) {
       var data = {
         scan_details: {
           current_qty: _goodQuantity,
@@ -3558,9 +3643,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData['scan_details'];
     }
   },
+  getPickedScanDetails: function () {
+    if (_seatData['scan_details'] == undefined) {
+      var data = {
+        scan_details: {
+          current_qty: _pickQuantity,
+          total_qty: 0,
+          kq_allowed: true
+        }
+      };
+      return data.scan_details;
+    } else {
+      return _seatData['scan_details'];
+    }
+  },
 
   getMissingScanDetails: function () {
-    if (_seatData['scan_details'] == undefined) {
+    if (_seatData["scan_details"] == undefined) {
       var data = {
         scan_details: {
           current_qty: _missingQuantity,
@@ -3575,7 +3674,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getDamagedScanDetails: function () {
-    if (_seatData['scan_details'] == undefined) {
+    if (_seatData["scan_details"] == undefined) {
       var data = {
         scan_details: {
           current_qty: _damagedQuantity,
@@ -3589,14 +3688,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
   getAuditDamagedCount: function () {
-    if (_seatData.hasOwnProperty('damaged_boxes')) {
-      return _seatData.damaged_boxes;
+    if (_seatData.hasOwnProperty("damaged_boxes")) {
+      return _seatData.damaged_boxes
     } else {
       return null;
     }
   },
   getPhysicallyDamagedScanDetails: function () {
-    if (_seatData['scan_details'] == undefined) {
+    if (_seatData["scan_details"] == undefined) {
       var data = {
         scan_details: {
           current_qty: _seatData['unmarked_container']
@@ -3612,7 +3711,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
   hideSpinner: function () {
-    _showSpinner = false;
+    _showSpinner = false
   },
   setCurrentSeat: function (data) {
     //showModal = false;
@@ -3621,6 +3720,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _enableException = false;
     _putFrontExceptionScreen = 'good';
     _goodQuantity = 0;
+    _pickQuantity = 0;
     _damagedQuantity = 0;
     _unscannableQuantity = 0;
     _missingQuantity = 0;
@@ -3676,17 +3776,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     )
       _auditExceptionScreen = 'first_screen';
     if (
-      (_seatData['last_finished_box'] != undefined &&
-        _seatData['last_finished_box'].length > 0 &&
-        _seatData['last_finished_box'][0]['Actual_qty'] >
-        _seatData['last_finished_box'][0]['Expected_qty']) ||
-      (_seatData['Current_box_details'] != undefined &&
-        _seatData['Current_box_details'].length > 0 &&
-        (_seatData['Current_box_details'][0]['Actual_qty'] -
-          _seatData['Current_box_details'][0]['Expected_qty'] >
+      (_seatData["last_finished_box"] != undefined &&
+        _seatData["last_finished_box"].length > 0 &&
+        _seatData["last_finished_box"][0]["Actual_qty"] >
+        _seatData["last_finished_box"][0]["Expected_qty"]) ||
+      (_seatData["Current_box_details"] != undefined &&
+        _seatData["Current_box_details"].length > 0 &&
+        (_seatData["Current_box_details"][0]["Actual_qty"] -
+          _seatData["Current_box_details"][0]["Expected_qty"] >
           0 ||
-          _seatData['Current_box_details'][0]['Box_Actual_Qty'] -
-          _seatData['Current_box_details'][0]['Box_Expected_Qty'] >
+          _seatData["Current_box_details"][0]["Box_Actual_Qty"] -
+          _seatData["Current_box_details"][0]["Box_Expected_Qty"] >
           0))
     )
       showModal = true;
@@ -3696,7 +3796,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         $('.modal-backdrop').remove();*/
   },
   getModalContent: function () {
-    return modalContent.data;
+    return modalContent.data
   },
   getSystemIdleState: function () {
     if (_seatData != undefined && _peripheralScreen == false) {
@@ -3709,16 +3809,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getItemUid: function () {
-    return _itemUid;
+    return _itemUid
   },
   getExceptionType: function () {
-    return _exceptionType;
+    return _exceptionType
   },
   getModalType: function () {
-    return modalContent.type;
+    return modalContent.type
   },
   setModalContent: function (data) {
-    modalContent = data;
+    modalContent = data
   },
 
   getPPTLEvent: function () {
@@ -3741,13 +3841,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _pptlEvent;
   },
   getCurrentSeat: function () {
-    return _currentSeat;
+    return _currentSeat
   },
   setServerMessages: function (data) {
-    _messageJson = serverMessages;
+    _messageJson = serverMessages
   },
   getServerMessages: function () {
-    return _messageJson;
+    return _messageJson
   },
   changeLanguage: function (data) {
     var locale_data = {
@@ -3786,34 +3886,35 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     sessionStorage.setItem('localeData', JSON.stringify(locale_data));
   },
   postDataToInterface: function (data) {
-    showModal = false;
-    utils.postDataToInterface(data, _seatName);
+    showModal = false
+    utils.postDataToInterface(data, _seatName)
   },
-  postDataToTower: function(data) {
+  postDataToTower: function (data) {
     showModal = false;
     utils.postDataToTower(data, _seatName);
   },
   logError: function (data) {
-    utils.logError(data);
+    utils.logError(data)
   },
   getScreenId: function () {
-    return _screenId;
+    return _screenId
   },
   getPpsMode: function () {
-    return _seatMode;
+    return _seatMode
   },
   getUsername: function () {
-      return _username;
+    return _username;
   },
   getSeatType: function () {
-    return _seatType;
+    return _seatType
   },
-  getSeatName: function() {
-    return _seatName;
+  getSeatName: function () {
+    return _seatName
   },
+
   enableException: function (data) {
-    _KQQty = 0;
-    _activeException = null;
+    _KQQty = 0
+    _activeException = null
     if (data == true) {
       _seatData['scan_allowed'] = false;
     } else {
@@ -3823,13 +3924,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _enableException = data;
   },
   enableSearch: function (data) {
-    _enableSearch = data;
+    _enableSearch = data
   },
   getExceptionStatus: function () {
-    return _enableException;
+    return _enableException
   },
   getItemSearchWindow: function () {
-    return _enableSearch;
+    return _enableSearch
   },
 
   setActiveException: function (data) {
@@ -3847,22 +3948,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
   setKQQuanity: function (data) {
-    _KQQty = data;
+    _KQQty = data
   },
   getDamagedQuantity: function () {
-    return _damagedQuantity;
+    return _damagedQuantity
   },
   setGoodQuanity: function (data) {
-    _goodQuantity = data;
+    _goodQuantity = data
+  },
+  setPickedQuantity: function (data) {
+    _pickQuantity = data;
   },
   setMissingQuanity: function (data) {
     _missingQuantity = data;
   },
   setUnscannableQuanity: function (data) {
-    _unscannableQuantity = data;
+    _unscannableQuantity = data
   },
   setDamagedQuanity: function (data) {
-    _damagedQuantity = data;
+    _damagedQuantity = data
   },
   getExeptionQuanity: function () {
     var data =
@@ -3875,7 +3979,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
   getkQQuanity: function () {
-    if (_seatData.hasOwnProperty('Current_box_details')) {
+    if (_seatData.hasOwnProperty("Current_box_details")) {
       if (_seatData.Current_box_details.length > 0) {
         _KQQty = _seatData.Current_box_details[0].Actual_qty;
       }
@@ -3886,16 +3990,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getToteDetails: function () {
-    if (_seatData.hasOwnProperty('tote_details')) {
-      return _seatData.tote_details;
+    if (_seatData.hasOwnProperty("tote_details")) {
+      return _seatData.tote_details
     } else {
       return null;
     }
   },
 
   setPutFrontExceptionScreen: function (data) {
-    _putFrontExceptionScreen = data;
-    _seatData['notification_list'] = [
+    _putFrontExceptionScreen = data
+    _seatData["notification_list"] = [
       {
         details: [],
         code: null,
@@ -3906,9 +4010,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   setPutBackExceptionScreen: function (data) {
-    _seatData.scan_allowed = false;
-    _putBackExceptionScreen = data;
-    _seatData['notification_list'] = [
+    _seatData.scan_allowed = false
+    _putBackExceptionScreen = data
+    _seatData["notification_list"] = [
       {
         details: [],
         code: null,
@@ -3919,15 +4023,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getPutBackExceptionScreen: function (data) {
-    return _putBackExceptionScreen;
+    return _putBackExceptionScreen
   },
   getUnmarkedContainerFlag: function () {
-    return _unmarkedContainer;
+    return _unmarkedContainer
   },
   setAuditExceptionScreen: function (data) {
-    _seatData.scan_allowed = false;
-    _auditExceptionScreen = data;
-    _seatData['notification_list'] = [
+    _seatData.scan_allowed = false
+    _auditExceptionScreen = data
+    _seatData["notification_list"] = [
       {
         details: [],
         code: null,
@@ -3938,17 +4042,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getAuditExceptionScreen: function (data) {
-    return _auditExceptionScreen;
+    return _auditExceptionScreen
   },
   getIRTFlagStatus: function (data) {
-    return _seatData.irt_scan_enabled;
+    return _seatData.irt_scan_enabled
   },
   getSearchExcessQty: function (data) {
-    return _seatData.excess_quantity;
+    return _seatData.excess_quantity
   },
 
   setPickFrontExceptionScreen: function (data) {
-    _seatData['notification_list'] = [
+    _seatData["notification_list"] = [
       {
         details: [],
         code: null,
@@ -4036,42 +4140,42 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getPutFrontExceptionScreen: function () {
-    return _putFrontExceptionScreen;
+    return _putFrontExceptionScreen
   },
 
   getPickFrontExceptionScreen: function () {
-    return _pickFrontExceptionScreen;
+    return _pickFrontExceptionScreen
   },
 
   getSRStatus: function () {
-    return _seatData.k_deep_audit;
+    return _seatData.k_deep_audit
   },
   getCurrentSlot: function () {
-    if (_seatData.hasOwnProperty('rack_details')) {
-      return _seatData.rack_details.slot_barcodes;
+    if (_seatData.hasOwnProperty("rack_details")) {
+      return _seatData.rack_details.slot_barcodes
     } else {
       return null;
     }
   },
   getContainerNames: function () {
-    if (_seatData.hasOwnProperty('rack_details')) {
-      return _seatData.Possible_Container_Names;
+    if (_seatData.hasOwnProperty("rack_details")) {
+      return _seatData.Possible_Container_Names
     } else {
       return null;
     }
   },
   _getBinMapDetails: function () {
-    return _seatData ? _seatData.group_info : null;
+    return _seatData ? _seatData.group_info : null
   },
   _getBinMapOrientation: function () {
-    return _seatData ? _seatData.operator_orientation || 0 : null;
+    return _seatData ? _seatData.operator_orientation || 0 : null
   },
 
   _getMtuDetails: function () {
-    var nSlots, mtuList, currentSlotId, selectedSlotId;
-    nSlots = 0;
-    selectedSlotId = 0;
-    mtuList = [];
+    var nSlots, mtuList, currentSlotId, selectedSlotId
+    nSlots = 0
+    selectedSlotId = 0
+    mtuList = []
     if (_seatData && _seatData.group_info) {
       nSlots = Object.keys(_seatData.group_info).length;
     }
@@ -4084,8 +4188,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return mtuList;
   },
   _getSplitScreenFlag: function () {
-    if (_seatData.hasOwnProperty('group_info')) {
-      var navData = _seatData.group_info || {};
+    if (_seatData.hasOwnProperty("group_info")) {
+      var navData = _seatData.group_info || {}
       for (var key in navData) {
         if (navData[key] != resourceConstants.BIN_GROUP_CENTER) {
           return true;
@@ -4095,7 +4199,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return false;
   },
   _getMobileFlag: function () {
-    var bIsMobile = false;
+    var bIsMobile = false
     if (_seatData) {
       bIsMobile =
         _seatData.roll_cage_flow && _currentSeat == appConstants.PUT_FRONT;
@@ -4104,7 +4208,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   _getDockedGroup: function () {
-    return _seatData && _seatData.docked ? Object.keys(_seatData.docked) : [];
+    return _seatData && _seatData.docked ? Object.keys(_seatData.docked) : []
   },
   _getUndockAwaitedGroup: function () {
     return _seatData && _seatData.undock_awaited
@@ -4114,19 +4218,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   _getWrongUndockGroup: function () {
     return _seatData && _seatData.wrong_undock
       ? Object.keys(_seatData.wrong_undock)
-      : [];
+      : []
   },
   _getOrigBinUse: function () {
-    return _seatData && _seatData.bin_coordinate_plotting ? true : false;
+    return _seatData && _seatData.bin_coordinate_plotting ? true : false
   },
   _getReleaseActiveStatus: function () {
-    return _seatData && _seatData.release_mtu ? true : false;
+    return _seatData && _seatData.release_mtu ? true : false
+  },
+  _getMsuEstimatedArrival: function () {
+    return _seatData && _seatData.msu_eta
   },
   _getDamagedItemsData: function () {
-    var data = {};
-    data['header'] = [];
-    data['footer'] = [];
-    data['header'].push(
+    var data = {}
+    data["header"] = []
+    data["footer"] = []
+    data["header"].push(
       new this.tableCol(
         _('Type'),
         'header',
@@ -4212,7 +4319,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         type,
         serial,
         quantity,
-        total_damaged = 0;
+        total_damaged = 0
       _seatData.physically_damaged_items.map(function (value, index) {
         value.product_info.map(function (product_details, index) {
           if (product_details[0].product_sku) {
@@ -4336,10 +4443,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
   _getExcessItemsData: function () {
-    var data = {};
-    data['header'] = [];
-    data['footer'] = [];
-    data['header'].push(
+    var data = {}
+    data["header"] = []
+    data["footer"] = []
+    data["header"].push(
       new this.tableCol(
         _('Product SKU'),
         'header',
@@ -4385,7 +4492,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       var product_details,
         product_sku,
         quantity,
-        total_excess = 0;
+        total_excess = 0
       _seatData.excess_items.map(function (value, index) {
         value.product_info.map(function (product_details, index) {
           if (product_details[0].product_sku) {
@@ -4483,36 +4590,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data["image_url"] = null;
     var self = this;
     if (_seatData.damaged_boxes && _seatData.damaged_boxes.length > 0) {
-        var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0;
-        _seatData.damaged_boxes.map(function (value, index) {
-            type = value.uom_level;
-            product_sku = value.sku;
-            serial = value.serial === "undefined" ? "--" : value.serial;
-            quantity = value.damaged_qty; //value.qty;
-            isKQEnabled = value.enable_kq_row;
-            total_damaged = mainstore.getDamagedQuantity();
+      var isKQEnabled, product_details, product_sku, type, serial, quantity, total_damaged = 0;
+      _seatData.damaged_boxes.map(function (value, index) {
+        type = value.uom_level;
+        product_sku = value.sku;
+        serial = value.serial === "undefined" ? "--" : value.serial;
+        quantity = value.damaged_qty; //value.qty;
+        isKQEnabled = value.enable_kq_row;
+        total_damaged = mainstore.getDamagedQuantity();
 
-            data["tableRows"].push([
-                new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
-                new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
-                new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
-                new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
-            ]);
-            //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
-        });
-        data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" entities"), "header", false, "small", false, true, true, false));
-    } else {
-        var isKQEnabled = false;
         data["tableRows"].push([
-            new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
-            new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
+          new self.tableCol(type, "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+          new self.tableCol(product_sku, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+          new self.tableCol(serial, "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+          new self.tableCol(quantity, "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
         ]);
-        data["footer"].push(new this.tableCol(_("Total: ")+ _(" 0 entities"), "header", false, "small", false, true, true, false));
+        //text, status, selected, size, border, grow, bold, disabled, centerAlign, type, buttonType, buttonStatus, mode, text_decoration, color, actionButton, borderBottom, textbox, totalWidth, id, management
+      });
+      data["footer"].push(new this.tableCol(_("Total: ") + total_damaged + _(" entities"), "header", false, "small", false, true, true, false));
+    } else {
+      var isKQEnabled = false;
+      data["tableRows"].push([
+        new self.tableCol(_("--"), "enabled", false, "small", false, true, false, false, true, true, "shoshowUOMDropDownwUOM", false, "verticalAlign"),
+        new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+        new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, true, true, "verticalAlign"),
+        new self.tableCol("--", "enabled", false, "small", false, true, false, false, true, true, "showKQRow", isKQEnabled, "verticalAlign")
+      ]);
+      data["footer"].push(new this.tableCol(_("Total: ") + _(" 0 entities"), "header", false, "small", false, true, true, false));
     }
     return data;
-},
+  },
   _getExcessExceptionFlag: function () {
     if (
       _seatData.excess_items != undefined &&
@@ -4523,8 +4630,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return true;
   },
   _getWareHouseExceptionFlag: function () {
-    if (_seatData.exception_type === 'warehousefull_exception') {
-      return false;
+    if (_seatData.exception_type === "warehousefull_exception") {
+      return false
     }
     return true;
   },
@@ -4538,36 +4645,36 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return true;
   },
   _getUnmarkedContainerFlag: function () {
-    return _seatData.unmarked_container;
+    return _seatData.unmarked_container
   },
   _getBinFullStatus: function () {
-    return _seatData && _seatData.bin_full_allowed ? true : false;
+    return _seatData && _seatData.bin_full_allowed ? true : false
   },
   _getSelectedPpsBin: function () {
     var ppsbin_list =
-      _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
-    var bId = null;
+      _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : []
+    var bId = null
     ppsbin_list.forEach(function (bin) {
-      if (bin['selected_state']) {
-        bId = bin['ppsbin_id'];
+      if (bin["selected_state"]) {
+        bId = bin["ppsbin_id"]
       }
     });
     return bId;
   },
   getProductSerial: function () {
-    var serial_data = _seatData.serial;
+    var serial_data = _seatData.serial
     return serial_data.length > 0
       ? utils.get3dotTrailedText(serial_data[0], 4, 4, 10)
       : null;
   },
   getSelectedBinGroup: function () {
     var ppsbin_list =
-      _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
-    var groupId = null;
+      _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : []
+    var groupId = null
     ppsbin_list.forEach(function (el) {
-      if (el['selected_state']) {
-        groupId = el['group_id'];
-        return false;
+      if (el["selected_state"]) {
+        groupId = el["group_id"]
+        return false
       }
     });
     return groupId;
@@ -4608,8 +4715,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           _missingQuantity +
           _damagedQuantity +
           _unscannableQuantity !=
-          _seatData.put_quantity;
-        details = _seatData.put_quantity;
+          _seatData.put_quantity
+        details = _seatData.put_quantity
       }
     } else if (
       _seatData.screen_id == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
@@ -4636,11 +4743,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             : _seatData.screen_id ===
               appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
               ? resourceConstants.CLIENTCODE_018
-              : resourceConstants.CLIENTCODE_010;
-        data['level'] = 'error';
-        data['type'] = appConstants.CLIENT_NOTIFICATION;
-        data['details'] = [details];
-        _seatData.notification_list[0] = data;
+              : resourceConstants.CLIENTCODE_010
+        data["level"] = "error"
+        data["type"] = appConstants.CLIENT_NOTIFICATION
+        data["details"] = [details]
+        _seatData.notification_list[0] = data
       } else {
         _seatData.notification_list[0].code = binFullQty
           ? resourceConstants.CLIENTCODE_012
@@ -4649,10 +4756,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             : _seatData.screen_id ===
               appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
               ? resourceConstants.CLIENTCODE_018
-              : resourceConstants.CLIENTCODE_010;
-        _seatData.notification_list[0].details = [details];
-        _seatData.notification_list[0].level = 'error';
-        _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION;
+              : resourceConstants.CLIENTCODE_010
+        _seatData.notification_list[0].details = [details]
+        _seatData.notification_list[0].level = "error"
+        _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION
         _seatData.notification_list[0].saltParams = {
           module: binFullQty ? appConstants.BIN_FULL : _seatData.screen_id
         };
@@ -4717,7 +4824,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   validateAndSendSpaceUnavailableDataToServer: function () {
-    var _allowedQuantity;
+    var _allowedQuantity
     _allowedQuantity =
       _seatData.put_quantity > 0 ? _seatData.put_quantity - 1 : 0;
     if (_KQQty === _seatData.put_quantity) {
@@ -4727,7 +4834,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       data['type'] = appConstants.CLIENT_NOTIFICATION;
       data['details'] = [_allowedQuantity];
       _seatData.notification_list[0] = data;
-    } else if(_KQQty > _allowedQuantity) {
+    } else if (_KQQty > _allowedQuantity) {
       if (_seatData.notification_list.length == 0) {
         var data = {};
         data['code'] = resourceConstants.SERVERMSGCODE_007;
@@ -4755,8 +4862,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
   validateUnmarkedDamagedData: function () {
-    var _allowedQuantity;
-    _allowedQuantity = _seatData.put_quantity ? _seatData.put_quantity : 0;
+    var _allowedQuantity
+    _allowedQuantity = _seatData.put_quantity ? _seatData.put_quantity : 0
     if (_damagedQuantity > _allowedQuantity) {
       if (_seatData.notification_list.length == 0) {
         var data = {};
@@ -4795,8 +4902,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getToteException: function () {
-    if (_seatData.hasOwnProperty('exception_msg')) {
-      return _seatData.exception_msg[0];
+    if (_seatData.hasOwnProperty("exception_msg")) {
+      return _seatData.exception_msg[0]
     } else {
       return null;
     }
@@ -4807,7 +4914,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
   getSRKQQuantity: function () {
-    if (_seatData['scan_details'] == undefined) {
+    if (_seatData["scan_details"] == undefined) {
       var data = {
         scan_details: {
           current_qty: _seatData.Current_box_details[0]
@@ -4830,24 +4937,24 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
   getPeripheralData: function (data) {
-    _seatData.scan_allowed = false;
-    utils.getPeripheralData(data, _seatData.seat_name);
+    _seatData.scan_allowed = false
+    utils.getPeripheralData(data, _seatData.seat_name)
   },
   getOrphanItemData: function (data) {
-    _seatData.scan_allowed = true;
-    utils.getOrphanItemData(data, _seatData.seat_name);
+    _seatData.scan_allowed = true
+    utils.getOrphanItemData(data, _seatData.seat_name)
   },
   getBOIConfigData: function (data) {
-    utils.getBOIConfig();
+    utils.getBOIConfig()
   },
   getItemData: function () {
-    if (_seatData.utility) return _seatData.utility;
+    if (_seatData.utility) return _seatData.utility
   },
   getLoaderStatus: function () {
-    if (_seatData.loader) return _seatData.loader;
+    if (_seatData.loader) return _seatData.loader
   },
   getDynamicColumnWidth: function () {
-    var rowconfig = [];
+    var rowconfig = []
     if (_seatData.utility.length) {
       var noOfCol = Object.keys(
         _seatData.utility[_seatData.utility.length - 1]
@@ -4880,7 +4987,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return rowconfig;
   },
   updateSeatData: function (data, type, status, method) {
-    var dataNotification = {};
+    var dataNotification = {}
 
     if (type === 'pptl') {
       _seatData['screen_id'] = appConstants.PPTL_MANAGEMENT;
@@ -4894,7 +5001,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT;
       _peripheralScreen = true;
     } else if (type === 'BOI_CONFIG') {
-      if(data.enable_conversion){
+      if (data.enable_conversion) {
         this.setUnitConversionAllowed(data.enable_conversion);
         this.setUOMConversionFactor(data.dims_conversion_factor);
         this.setUOMDisplayUnit(data.dims_display_uom);
@@ -4916,7 +5023,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       this.setOrphanSearchAllowed(data);
     } else if (type === 'LOGIN_SCANNER_CONFIG') {
       this.setLoginScannerAllowed(data);
-    } 
+    }
     else if (type == 'itemSearch') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH;
       _peripheralScreen = true;
@@ -4957,14 +5064,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getUtility: function () {
-    return _utility;
+    return _utility
   },
   convert_textbox: function (action, index) {
-    _action = action;
-    _binId = index;
+    _action = action
+    _binId = index
   },
   update_peripheral: function (data, method, index) {
-    utils.updatePeripherals(data, method, _seatName);
+    utils.updatePeripherals(data, method, _seatName)
   },
   generateNotification: function (data) {
     if (_seatData.notification_list.length > 0) {
@@ -5109,22 +5216,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getDockedList: function () {
-    var dockedGroup = [];
-    if (_seatData['dock_station_list']) {
-      _seatData['dock_station_list'].forEach(function (bin) {
-        if (bin['status'] === 'docked') {
-          dockedGroup.push(bin['dock_station_label']);
+    var dockedGroup = []
+    if (_seatData["dock_station_list"]) {
+      _seatData["dock_station_list"].forEach(function (bin) {
+        if (bin["status"] === "docked") {
+          dockedGroup.push(bin["dock_station_label"])
         }
       });
     }
-    return dockedGroup;
+    return dockedGroup
   },
   getUndockAwaitedList: function () {
-    var undockAwaited = [];
-    if (_seatData['dock_station_list']) {
-      _seatData['dock_station_list'].forEach(function (bin) {
-        if (bin['status'] === 'undock_awaited') {
-          undockAwaited.push(bin['dock_station_label']);
+    var undockAwaited = []
+    if (_seatData["dock_station_list"]) {
+      _seatData["dock_station_list"].forEach(function (bin) {
+        if (bin["status"] === "undock_awaited") {
+          undockAwaited.push(bin["dock_station_label"])
         }
       });
     }
@@ -5132,11 +5239,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getPrintReadyList: function () {
-    var printReady = [];
-    if (_seatData['dock_station_list']) {
-      _seatData['dock_station_list'].forEach(function (bin) {
-        if (bin['status'] === 'print_ready') {
-          printReady.push(bin['dock_station_label']);
+    var printReady = []
+    if (_seatData["dock_station_list"]) {
+      _seatData["dock_station_list"].forEach(function (bin) {
+        if (bin["status"] === "print_ready") {
+          printReady.push(bin["dock_station_label"])
         }
       });
     }
@@ -5144,11 +5251,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getWrongUndockList: function () {
-    var wrongUndockList = [];
-    if (_seatData['dock_station_list']) {
-      _seatData['dock_station_list'].forEach(function (bin) {
-        if (bin['status'] === 'wrong_undock') {
-          wrongUndockList.push(bin['dock_station_label']);
+    var wrongUndockList = []
+    if (_seatData["dock_station_list"]) {
+      _seatData["dock_station_list"].forEach(function (bin) {
+        if (bin["status"] === "wrong_undock") {
+          wrongUndockList.push(bin["dock_station_label"])
         }
       });
     }
@@ -5156,29 +5263,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getMissingItemList: function () {
-    return _seatData['missing_items'] || [];
+    return _seatData["missing_items"] || []
   },
   getPreviousPutDetails: function () {
-    return _seatData.previous_put_details || [];
+    return _seatData.previous_put_details || []
   },
   getPreviousPickDetails: function () {
-    return _seatData.previous_pick_details;
+    return _seatData.previous_pick_details
   },
   getSelectedTotes: function () {
-    var selectedTotes = [];
-    if (_seatData['ppsbin_list']) {
-      _seatData['ppsbin_list'].forEach(function (bin) {
-        if (bin.totes_associated === 'true') {
-          selectedTotes.push(bin['ppsbin_id']);
+    var selectedTotes = []
+    if (_seatData["ppsbin_list"]) {
+      _seatData["ppsbin_list"].forEach(function (bin) {
+        if (bin.totes_associated === "true") {
+          selectedTotes.push(bin["ppsbin_id"])
         }
       });
     }
     return selectedTotes;
   },
   _getSelectedBinID: function () {
-    var selectedBin = [];
-    if (_seatData['ppsbin_list']) {
-      _seatData['ppsbin_list'].forEach(function (bin) {
+    var selectedBin = []
+    if (_seatData["ppsbin_list"]) {
+      _seatData["ppsbin_list"].forEach(function (bin) {
         if (bin.selected_state) {
           selectedBin.push(bin['ppsbin_id']);
         }
@@ -5188,7 +5295,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   _getRollCageStatus: function () {
-    var rollCageStatus = false;
+    var rollCageStatus = false
     if (_seatData) {
       rollCageStatus =
         _seatData.roll_cage_flow && _currentSeat == appConstants.PICK_FRONT;
@@ -5197,7 +5304,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getScreenData: function () {
-    var data = {};
+    var data = {}
 
     //since OrigBinUse Flag is needed in all the screens.
     data['OrigBinUse'] = this._getOrigBinUse();
@@ -5625,10 +5732,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         break;
 
       case appConstants.ARA_PICK_FRONT:
-      data['PickFrontNavData'] = this.getNavData()
-      data['PickFrontServerNavData'] = this.getServerNavData()
-      data['PickFrontScreenId'] = this.getScreenId()
-      break
+        data['PickFrontNavData'] = this.getNavData()
+        data['PickFrontServerNavData'] = this.getServerNavData()
+        data['PickFrontScreenId'] = this.getScreenId()
+        break
 
       case appConstants.PICK_FRONT_LOCATION_CONFIRM:
       case appConstants.PICK_FRONT_LOCATION_SCAN:
@@ -5649,21 +5756,21 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
       case appConstants.PICK_FRONT_SKIP_TOTE:
       case appConstants.PICK_FRONT_DOCK_TOTE:
-        data['PickFrontNavData'] = this.getNavData();
-        data['PickFrontServerNavData'] = this.getServerNavData();
-        data['PickFrontScreenId'] = this.getScreenId();
-        data['PickFrontExceptionData'] = this.getExceptionData();
-        data['PickFrontNotification'] = this.getNotificationData();
-        data['PickFrontExceptionStatus'] = this.getExceptionStatus();
-        (data['udpBinMapDetails'] = this.getUDPMapDetails()),
-          (data['groupOrientation'] = this._getBinMapOrientation()),
-          (data['selectedTotes'] = this.getSelectedTotes());
-        data['PickCurrentBin'] = this._getSelectedBinID();
-        data['PickFrontChecklistData'] = this.getChecklistDockData();
-        data['PickFrontChecklistIndex'] = this.getChecklistDockIdx();
-        data['PickFrontCancelScan'] = this.cancelScanDetails();
-        data['PickFrontSkipDockingBtnEnable'] = this.getButtonStatus();
-        break;
+        data["PickFrontNavData"] = this.getNavData()
+        data["PickFrontServerNavData"] = this.getServerNavData()
+        data["PickFrontScreenId"] = this.getScreenId()
+        data["PickFrontExceptionData"] = this.getExceptionData()
+        data["PickFrontNotification"] = this.getNotificationData()
+        data["PickFrontExceptionStatus"] = this.getExceptionStatus()
+          ; (data["udpBinMapDetails"] = this.getUDPMapDetails()),
+            (data["groupOrientation"] = this._getBinMapOrientation()),
+            (data["selectedTotes"] = this.getSelectedTotes())
+        data["PickCurrentBin"] = this._getSelectedBinID()
+        data["PickFrontChecklistData"] = this.getChecklistDockData()
+        data["PickFrontChecklistIndex"] = this.getChecklistDockIdx()
+        data["PickFrontCancelScan"] = this.cancelScanDetails()
+        data["PickFrontSkipDockingBtnEnable"] = this.getButtonStatus()
+        break
 
       case appConstants.UNIVERSAL_DOCK_UNDOCK:
         data['PickBackNavData'] = this.getNavData();
@@ -5787,6 +5894,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontScreenId'] = this.getScreenId();
         data['PickFrontRackDetails'] = this.getRackDetails();
         data['PickFrontProductDetails'] = this.productDetails();
+        data['PickFrontScanDetails'] = this.getScanDetails();
         data['isDrawer'] = this.getDrawerFlag();
         data['SlotType'] = this.getSlotType();
         data['PickFrontExceptionData'] = this.getExceptionData();
@@ -6038,6 +6146,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontMissingQuantity'] = this.getMissingScanDetails();
         data['PickFrontExceptionScreen'] = this.getPickFrontExceptionScreen();
         data['GetIRTScanStatus'] = this.getIRTScanStatus();
+        data['PickFrontPickedQuantity'] = this.getPickedScanDetails();
 
         break;
       case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
@@ -6433,9 +6542,9 @@ AppDispatcher.register(function (payload) {
       mainstore.emit(CHANGE_EVENT);
       break;
     case appConstants.POST_DATA_TO_TOWER:
-        mainstore.postDataToTower(action.data);
-        mainstore.emit(CHANGE_EVENT);
-        break;
+      mainstore.postDataToTower(action.data);
+      mainstore.emit(CHANGE_EVENT);
+      break;
     case appConstants.POST_DATA_TO_INTERFACE:
       mainstore.showSpinner();
       mainstore.postDataToInterface(action.data);

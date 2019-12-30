@@ -9,7 +9,7 @@ var appConstants = require("../../constants/appConstants")
 var product_info_locale = {}
 var image_url = {}
 var ProductDetails = React.createClass({
-  displayLocale: function(data, uomConversionFactor = 1, uomDisplayUnit = "") {
+  displayLocale: function (data, uomConversionFactor = 1, uomDisplayUnit = "") {
     product_info_locale = {}
     image_url = {}
     var language_locale = sessionStorage.getItem("localeData")
@@ -19,7 +19,7 @@ var ProductDetails = React.createClass({
     } else {
       locale = JSON.parse(language_locale)["data"]["locale"]
     }
-    data.map(function(value, index) {
+    data.map(function (value, index) {
       var keyValue = ""
       var imageKey
       for (var key in value[0]) {
@@ -38,7 +38,7 @@ var ProductDetails = React.createClass({
           }
           uomDisplayUnit !== ""
             ? (keyValue =
-                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
+              keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
             : (keyValue = keyValue)
         } else if (key != "display_data" && key != "product_local_image_url") {
           keyValue = value[0][key] + " "
@@ -46,7 +46,7 @@ var ProductDetails = React.createClass({
           imageKey = value[0][key]
         }
       }
-      value[0].display_data.map(function(data_locale, index1) {
+      value[0].display_data.map(function (data_locale, index1) {
         if (data_locale.locale == locale) {
           if (data_locale.display_name != "product_local_image_url") {
             product_info_locale[data_locale.display_name] = keyValue
@@ -68,7 +68,7 @@ var ProductDetails = React.createClass({
       })
     })
   },
-  displayCode: function(data) {
+  displayCode: function (data) {
     var language_locale = sessionStorage.getItem("localeData")
     var locale
     if (language_locale == "null" || language_locale == null) {
@@ -77,12 +77,12 @@ var ProductDetails = React.createClass({
       locale = JSON.parse(language_locale)["data"]["locale"]
     }
     var code = []
-    data.map(function(value, index) {
+    data.map(function (value, index) {
       var obj = {}
       var arrKeyNames = Object.keys(value[0])
       if (arrKeyNames.indexOf("product_barcodes") > -1) {
-        arrKeyNames.map(function(eachValueName, index) {
-          value[0][eachValueName].map(function(nestedName, index) {
+        arrKeyNames.map(function (eachValueName, index) {
+          value[0][eachValueName].map(function (nestedName, index) {
             if (value[0][eachValueName].constructor !== "Array") {
               obj.displayvalue = nestedName
             }
@@ -96,7 +96,7 @@ var ProductDetails = React.createClass({
     })
     return code
   },
-  render: function() {
+  render: function () {
     var flag = this.props.QLCodeDetails
     var barcodeArr = flag ? this.displayCode(this.props.productInfo) : ""
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
@@ -146,11 +146,11 @@ var ProductDetails = React.createClass({
             </div>
           </div>
         ) : (
-          <div>
-            <div className="productHeader">{_("Details")}</div>
-            <ProductInfo infoDetails={product_info_locale} flag="codeDetails" />
-          </div>
-        )}
+            <div className="productTableInfo table-wrapper">
+              <div className="productHeader">{_("Details")}</div>
+              <ProductInfo infoDetails={product_info_locale} flag="codeDetails" />
+            </div>
+          )}
       </div>
     )
   }

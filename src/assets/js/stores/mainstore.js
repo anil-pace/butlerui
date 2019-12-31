@@ -39,6 +39,7 @@ var _seatData,
   popupVisible = false,
   _showSpinner = true,
   _goodQuantity = 0,
+  _pickQuantity = 0,
   _damagedQuantity = 0,
   _putFrontExceptionScreen = 'good',
   _pickFrontExceptionScreen = 'good',
@@ -68,7 +69,7 @@ var modalContent = {
 /*
  * This function enables the logout due to inactivity feature - Krishna.
  */
-var idleLogout = (function() {
+var idleLogout = (function () {
   var t;
   window.addEventListener('load', resetTimer, false);
   window.addEventListener('mousemove', resetTimer, false);
@@ -98,33 +99,33 @@ function setPopUpVisible(status) {
   mainstore.emit(CHANGE_EVENT);
 }
 var mainstore = objectAssign({}, EventEmitter.prototype, {
-  emitChange: function() {
+  emitChange: function () {
     this.emit(CHANGE_EVENT);
   },
-  addChangeListener: function(cb) {
+  addChangeListener: function (cb) {
     this.on(CHANGE_EVENT, cb);
   },
-  removeChangeListener: function(cb) {
+  removeChangeListener: function (cb) {
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getPopUpVisible: function(data) {
+  getPopUpVisible: function (data) {
     return popupVisible;
   },
-  showSpinner: function() {
+  showSpinner: function () {
     _showSpinner = true;
   },
-  setLogoutState: function() {
+  setLogoutState: function () {
     _logoutStatus = _seatData.logout_allowed;
   },
-  getSpinnerState: function() {
+  getSpinnerState: function () {
     return _showSpinner;
   },
 
-  getLogoutState: function() {
+  getLogoutState: function () {
     if (_seatData && _seatData.hasOwnProperty('logout_allowed'))
       return _seatData.logout_allowed;
   },
-  getScanAllowedStatus: function() {
+  getScanAllowedStatus: function () {
     if (_seatData.hasOwnProperty('scan_allowed')) {
       _scanAllowed = _seatData.scan_allowed;
       return _scanAllowed;
@@ -134,9 +135,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  toggleBinSelection: function(bin_id) {
+  toggleBinSelection: function (bin_id) {
     var flag = false;
-    _seatData['ppsbin_list'].map(function(value, index) {
+    _seatData['ppsbin_list'].map(function (value, index) {
       if (value.ppsbin_id == bin_id) {
         if (value['selected_for_staging'] != undefined) {
           flag = !value['selected_for_staging'];
@@ -179,25 +180,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getEnableButton: function() {
+  getEnableButton: function () {
     return _enableButton;
   },
 
-  setEnableButtonIntialState: function() {
+  setEnableButtonIntialState: function () {
     _enableButton = true;
   },
 
-  enableButton: function() {
+  enableButton: function () {
     var currentState = this.getEnableButton();
     this.setEnableButtonIntialState();
     return currentState;
   },
 
-  getScreenEvent: function() {
+  getScreenEvent: function () {
     return _seatData.event;
   },
 
-  getBoxBarcode: function() {
+  getBoxBarcode: function () {
     let BoxBarcode = {};
     if (
       _seatData.exception_details &&
@@ -215,16 +216,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return BoxBarcode;
   },
 
-  getConfirmState: function() {
+  getConfirmState: function () {
     return _seatData.exception_details
       ? _seatData.exception_details.confirm_enabled
       : false;
   },
 
-  getStageActiveStatus: function() {
+  getStageActiveStatus: function () {
     if (_seatData.hasOwnProperty('ppsbin_list')) {
       var flag = false;
-      _seatData['ppsbin_list'].map(function(value, index) {
+      _seatData['ppsbin_list'].map(function (value, index) {
         if (
           value['selected_for_staging'] != undefined &&
           value['selected_for_staging'] == true
@@ -235,38 +236,43 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getStageAllActiveStatus: function() {
-    if (_seatData.hasOwnProperty('ppsbin_list')) {
-      var flag = false;
-      _seatData['ppsbin_list'].map(function(value, index) {
-        if (value.ppsbin_count > 0 && value.ppsbin_state != 'staged')
-          flag = true;
-      });
-      return flag;
+  getStageAllActiveStatus: function () {
+    if (_seatData.hasOwnProperty("ppsbin_list")) {
+      var flag = false
+      _seatData["ppsbin_list"].map(function (value, index) {
+        if (value.ppsbin_count > 0 && value.ppsbin_state != "staged")
+          flag = true
+      })
+      return flag
     }
   },
 
-  getPutQuantity: function() {
-    if (_seatData.hasOwnProperty('put_quantity')) return _seatData.put_quantity;
+  getPutQuantity: function () {
+    if (_seatData.hasOwnProperty("put_quantity")) return _seatData.put_quantity
   },
-  getGoodQuantity: function() {
-    if (_seatData.hasOwnProperty('good_quantity')) {
-      _goodQuantity = _seatData.good_quantity;
-      return _goodQuantity;
+  getGoodQuantity: function () {
+    if (_seatData.hasOwnProperty("good_quantity")) {
+      _goodQuantity = _seatData.good_quantity
+      return _goodQuantity
     }
   },
-
-  getErrorPopupDisabledStatus: function() {
+  getPickedQuantity: function () {
+    if (_seatData.hasOwnProperty('pick_quantity')) {
+      _pickQuantity = _seatData.pick_quantity;
+      return _pickQuantity;
+    }
+  },
+  getErrorPopupDisabledStatus: function () {
     if (_seatData.hasOwnProperty('error_popup_disabled')) {
       _errorPopupDisabled = _seatData.error_popup_disabled;
     }
     return _errorPopupDisabled;
   },
 
-  setShowModal: function(data) {
+  setShowModal: function (data) {
     showModal = false;
   },
-  getNavData: function() {
+  getNavData: function () {
     /* dynamic header navigation implementation */
     if (_seatData.header_steps) {
       var headerSteps = _seatData.header_steps;
@@ -282,7 +288,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         });
       }
       _NavData = navConfig.header;
-      _NavData.map(function(data, index) {
+      _NavData.map(function (data, index) {
         if (data.screen_id.constructor === Array && data.screen_id.length > 0) {
           if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
             _NavData[index].type = 'active';
@@ -383,9 +389,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _NavData = navConfig.putFront[8];
           else if (
             _seatData.screen_id ===
-              appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK ||
+            appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK ||
             _seatData.screen_id ===
-              appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY
+            appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY
           )
             _NavData = navConfig.putFront[4];
           else if (_seatData.screen_id === appConstants.PPTL_MANAGEMENT) {
@@ -556,7 +562,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         default:
         //return true;
       }
-      _NavData.map(function(data, index) {
+      _NavData.map(function (data, index) {
         if (data.screen_id instanceof Array) {
           if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
             _NavData[index].type = 'active';
@@ -573,7 +579,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getModalStatus: function() {
+  getModalStatus: function () {
     var data = {};
     data['showModal'] = '';
     data['message'] = '';
@@ -583,7 +589,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData['Current_box_details'].length > 0 &&
       _seatData['Current_box_details'][0]['Box_serial'] == null &&
       _seatData['Current_box_details'][0]['Actual_qty'] >
-        _seatData['Current_box_details'][0]['Expected_qty']
+      _seatData['Current_box_details'][0]['Expected_qty']
     ) {
       showModal = false;
       return {
@@ -595,7 +601,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       showModal &&
       _seatData.k_deep_audit &&
       _seatData['Current_box_details'][0]['Box_Actual_Qty'] >
-        _seatData['Current_box_details'][0]['Box_Expected_Qty']
+      _seatData['Current_box_details'][0]['Box_Expected_Qty']
     ) {
       showModal = false;
       return {
@@ -607,12 +613,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       showModal &&
       _seatData['last_finished_box'].length > 0 &&
       _seatData['last_finished_box'][0]['Actual_qty'] >
-        _seatData['last_finished_box'][0]['Expected_qty']
+      _seatData['last_finished_box'][0]['Expected_qty']
     ) {
       showModal = false;
       console.log(
         _seatData.last_finished_box[0]['Actual_qty'] -
-          _seatData.last_finished_box[0]['Expected_qty']
+        _seatData.last_finished_box[0]['Expected_qty']
       );
       return {
         showModal: true,
@@ -623,7 +629,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getBoxSerialData: function() {
+  getBoxSerialData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -687,7 +693,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _finishAuditFlag = true;
       var d = [];
 
-      _seatData.Box_qty_list.map(function(value, index) {
+      _seatData.Box_qty_list.map(function (value, index) {
         d = [];
         if (value.Scan_status != 'close') {
           d.push(
@@ -816,7 +822,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         }
       });
 
-      _seatData.Extra_box_list.map(function(value, index) {
+      _seatData.Extra_box_list.map(function (value, index) {
         d = [];
         d.push(
           new self.tableCol(
@@ -874,7 +880,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   //SR pack-subpack
-  getPackData: function() {
+  getPackData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -923,7 +929,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       )
     );
     var d = [];
-    _seatData.Box_qty_list.map(function(value, index) {
+    _seatData.Box_qty_list.map(function (value, index) {
       d = [];
       if (value.Type === appConstants.OUTER_PACK) {
         d.push(
@@ -961,7 +967,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             'complete',
             _seatData.Current_box_details.length > 0
               ? _seatData.Current_box_details[0]['Box_serial'] ==
-                value.Box_serial
+              value.Box_serial
               : false,
             'large',
             true,
@@ -974,7 +980,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['tableRows'].push(d);
       }
     });
-    _seatData.Extra_box_list.map(function(value, index) {
+    _seatData.Extra_box_list.map(function (value, index) {
       d = [];
       if (value.Type === appConstants.OUTER_PACK) {
         d.push(
@@ -1012,7 +1018,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             'extraqt',
             _seatData.Current_box_details.length > 0
               ? _seatData.Current_box_details[0]['Box_serial'] ==
-                value.Box_serial
+              value.Box_serial
               : false,
             'large',
             true,
@@ -1029,7 +1035,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getSubPackData: function() {
+  getSubPackData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -1080,7 +1086,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     );
 
     var d = [];
-    _seatData.Box_qty_list.map(function(value, index) {
+    _seatData.Box_qty_list.map(function (value, index) {
       d = [];
       if (value.Type === appConstants.INNER_SUBPACK) {
         d.push(
@@ -1118,7 +1124,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             'complete',
             _seatData.Current_box_details.length > 0
               ? _seatData.Current_box_details[0]['Box_serial'] ==
-                value.Box_serial
+              value.Box_serial
               : false,
             'large',
             true,
@@ -1131,7 +1137,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['tableRows'].push(d);
       }
     });
-    _seatData.Extra_box_list.map(function(value, index) {
+    _seatData.Extra_box_list.map(function (value, index) {
       d = [];
       if (value.Type === appConstants.INNER_SUBPACK) {
         d.push(
@@ -1169,7 +1175,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             'extraqt',
             _seatData.Current_box_details.length > 0
               ? _seatData.Current_box_details[0]['Box_serial'] ==
-                value.Box_serial
+              value.Box_serial
               : false,
             'large',
             true,
@@ -1186,22 +1192,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getBoxDetails: function() {
+  getBoxDetails: function () {
     if (_seatData.hasOwnProperty('box_serials')) return _seatData.box_serials;
   },
-  getIRTScanStatus: function() {
+  getIRTScanStatus: function () {
     if (_seatData.hasOwnProperty('irt_scan_enabled'))
       return _seatData.irt_scan_enabled;
   },
-  getExceptionType: function() {
+  getExceptionType: function () {
     if (_seatData.hasOwnProperty('exception_type'))
       return _seatData.exception_type;
   },
-  getToteDeatils: function() {
+  getToteDeatils: function () {
     if (_seatData.hasOwnProperty('tote_details'))
       return _seatData.tote_details.tote_barcode;
   },
-  getOrderDetails: function() {
+  getOrderDetails: function () {
     var orderDetailsinOrder = {};
     var orderDetails = _seatData['order_details'];
     /*Performing this action to reorder the object*/
@@ -1221,14 +1227,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return orderDetailsinOrder;
   },
-  getOrderID: function() {
+  getOrderID: function () {
     if (_seatData.hasOwnProperty('order_details'))
       return {
         order_id: _seatData.order_details.order_id || ''
       };
   },
 
-  getChecklistDetails: function() {
+  getChecklistDetails: function () {
     if (_seatData.hasOwnProperty('checklist_details')) {
       if (_seatData.checklist_details.pick_checklist.length > 0) {
         return _seatData.checklist_details.pick_checklist;
@@ -1240,13 +1246,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getChecklistCompleteDetails: function() {
+  getChecklistCompleteDetails: function () {
     if (_seatData.hasOwnProperty('checklist_details')) {
       return _seatData.checklist_details;
     }
   },
 
-  getChecklistIndex: function() {
+  getChecklistIndex: function () {
     if (_seatData.hasOwnProperty('checklist_details')) {
       if (_seatData.checklist_details.checklist_index != null) {
         return _seatData.checklist_details.checklist_index;
@@ -1258,7 +1264,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getChecklistOverlayStatus: function() {
+  getChecklistOverlayStatus: function () {
     if (_seatData.hasOwnProperty('checklist_details')) {
       return _seatData.checklist_details.display_checklist_overlay;
     } else {
@@ -1266,7 +1272,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getServerNavData: function() {
+  getServerNavData: function () {
     if (_seatData.header_msge_list.length > 0) {
       _serverNavData = _seatData.header_msge_list[0];
       return _serverNavData;
@@ -1275,7 +1281,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getChecklistData: function() {
+  getChecklistData: function () {
     if (
       Array.isArray(_seatData.checklist_data) &&
       _seatData.hasOwnProperty('checklist_data')
@@ -1287,23 +1293,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getChecklistIdx: function() {
+  getChecklistIdx: function () {
     if (_seatData.hasOwnProperty('checklist_index')) {
       return _seatData.checklist_index;
     }
   },
 
-  getPackingBoxType: function() {
+  getPackingBoxType: function () {
     return _seatData.packing_box_type || null;
   },
-  getChecklistDockData: function() {
+  getChecklistDockData: function () {
     if (_seatData.hasOwnProperty('dock_actions')) {
       var dockActionsArray = [];
       Array.isArray(_seatData.dock_actions) &&
-        _seatData.dock_actions.map(function(value, key) {
+        _seatData.dock_actions.map(function (value, key) {
           var dataToReplace = value.details;
           var data = serverMessages[value.code];
-          data = data.replace(/{\w+}/g, function(everyPlaceholder) {
+          data = data.replace(/{\w+}/g, function (everyPlaceholder) {
             var placeHolder = everyPlaceholder.match(/\d+/g);
             return dataToReplace[placeHolder];
           });
@@ -1315,13 +1321,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getChecklistDockIdx: function() {
+  getChecklistDockIdx: function () {
     if (_seatData.hasOwnProperty('dock_index')) {
       return _seatData.dock_index;
     }
   },
 
-  getNotificationData: function() {
+  getNotificationData: function () {
     if (
       _clearNotification == true &&
       _seatData.hasOwnProperty('notification_list')
@@ -1339,11 +1345,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return _seatData.notification_list[0];
   },
-  getLocationButtonStatus: function() {
+  getLocationButtonStatus: function () {
     return _seatData.button_press_allowed;
   },
 
-  getButtonStatus: function() {
+  getButtonStatus: function () {
     if (
       _seatData.button_press_id === 'dock_tote' ||
       _seatData.button_press_id === 'skip_bin'
@@ -1354,29 +1360,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  clearNotifications: function() {
+  clearNotifications: function () {
     _clearNotification = true;
   },
-  getBinData: function() {
+  getBinData: function () {
     var binData = {};
     binData['structure'] = _seatData.structure;
     binData['ppsbin_list'] = _seatData.ppsbin_list;
     return binData;
   },
-  getPickFrontButtonType: function() {
+  getPickFrontButtonType: function () {
     return _seatData.button_press_id || null;
   },
-  getPickFrontButtonStatus: function() {
+  getPickFrontButtonStatus: function () {
     return _seatData.button_press_allowed;
   },
-  getPickFrontPackingCancelStatus: function() {
+  getPickFrontPackingCancelStatus: function () {
     return _seatData.cancel_scan_allowed;
   },
 
-  stageOneBin: function() {
+  stageOneBin: function () {
     if (_seatData.hasOwnProperty('ppsbin_list')) {
       var data = {};
-      _seatData.ppsbin_list.map(function(value, index) {
+      _seatData.ppsbin_list.map(function (value, index) {
         if (
           value['selected_for_staging'] != undefined &&
           value['selected_for_staging'] == true
@@ -1392,10 +1398,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getSelectedBin: function() {
+  getSelectedBin: function () {
     if (_seatData.hasOwnProperty('ppsbin_list')) {
       var data = null;
-      _seatData.ppsbin_list.map(function(value, index) {
+      _seatData.ppsbin_list.map(function (value, index) {
         if (
           value['selected_for_staging'] != undefined &&
           value['selected_for_staging'] == true
@@ -1408,16 +1414,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     } else return null;
   },
 
-  getDataToDisAssociateTote: function() {
+  getDataToDisAssociateTote: function () {
     if (_seatData.hasOwnProperty('tote_disassociation_data')) {
       return _seatData['tote_disassociation_data'];
     } else return null;
   },
 
-  getCurrentState: function() {
+  getCurrentState: function () {
     if (_seatData.hasOwnProperty('ppsbin_list')) {
       var data = null;
-      _seatData.ppsbin_list.map(function(value, index) {
+      _seatData.ppsbin_list.map(function (value, index) {
         if (
           value['selected_for_staging'] != undefined &&
           value['selected_for_staging'] == true
@@ -1430,7 +1436,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     } else return null;
   },
 
-  stageAllBin: function() {
+  stageAllBin: function () {
     var data = {};
     data['event_name'] = 'stage_all';
     data['event_data'] = '';
@@ -1438,14 +1444,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     utils.postDataToInterface(data, _seatData.seat_name);
   },
 
-  getExceptionData: function() {
+  getExceptionData: function () {
     var data = {};
     data['activeException'] = this.getActiveException();
     data['list'] = [];
     data['header'] = 'Exceptions';
     var bSelected = false;
     var bDisabled = false;
-    _seatData.exception_allowed.map(function(value, index) {
+    _seatData.exception_allowed.map(function (value, index) {
       //all exception items should be enabled and unselected first hence putting disabled = false
       bDisabled = false;
       bSelected = false;
@@ -1472,39 +1478,39 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     });
     return data;
   },
-  getExceptionAllowed: function() {
+  getExceptionAllowed: function () {
     return _seatData.exception_allowed;
   },
-  setOrphanSearchAllowed: function(data) {
+  setOrphanSearchAllowed: function (data) {
     _itemSearchEnabled = data;
   },
-  setLoginScannerAllowed: function(data) {
+  setLoginScannerAllowed: function (data) {
     _scannerLoginEnabled = data;
   },
   setLoginScannerAllowed: function (data) {
     _scannerLoginEnabled = data;
   },
-  setUnitConversionAllowed: function(data) {
+  setUnitConversionAllowed: function (data) {
     _unitConversionAllowed = data;
   },
-  setUOMConversionFactor: function(data) {
+  setUOMConversionFactor: function (data) {
     _uomConversionFactor = data;
   },
-  setUOMDisplayUnit: function(data) {
+  setUOMDisplayUnit: function (data) {
     _uomDisplayUnit = data;
   },
   loginScannerAllowed: function () {
     return _scannerLoginEnabled;
   },
-  isUnitConversionAllowed: function() {
+  isUnitConversionAllowed: function () {
     return _unitConversionAllowed;
   },
-  getUOMConversionFactor: function(){
+  getUOMConversionFactor: function () {
     return _uomConversionFactor;
   },
-  getUOMDisplayUnit:function(){
+  getUOMDisplayUnit: function () {
     return _uomDisplayUnit;
-  }, 
+  },
   setBOIConfig: function (data) {
     _boiConfig = data;
   },
@@ -1515,51 +1521,51 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _scanDetails = _seatData.scan_details;
     return _scanDetails;
   },
-  cancelScanDetails: function() {
+  cancelScanDetails: function () {
     return _seatData.cancel_scan_enabled;
   },
 
-  productDetails: function() {
+  productDetails: function () {
     _prodDetails = _seatData.product_info;
     return _prodDetails;
   },
 
-  getItemUid: function() {
+  getItemUid: function () {
     return _seatData.item_uid;
   },
 
-  getRackDetails: function() {
+  getRackDetails: function () {
     if (_seatData.hasOwnProperty('rack_details')) {
       return _seatData.rack_details;
     }
   },
-  getRackType: function() {
+  getRackType: function () {
     if (_seatData.hasOwnProperty('rack_details')) {
       if (_seatData.rack_details.rack_type === 'mpsu') {
         return true;
       }
     }
   },
-  getDirectionDetails: function() {
+  getDirectionDetails: function () {
     return _seatData.special_handling;
   },
 
-  getCurrentSelectedBin: function() {
+  getCurrentSelectedBin: function () {
     var binData = {};
     binData['structure'] = [1, 1];
     binData['ppsbin_list'] = [];
     if (_seatData.ppsbin_list) {
-      _seatData.ppsbin_list.map(function(value, index) {
+      _seatData.ppsbin_list.map(function (value, index) {
         if (value.selected_state == true) binData['ppsbin_list'].push(value);
       });
     }
     return binData;
   },
-  getPutFrontCurrentBinCount: function() {
+  getPutFrontCurrentBinCount: function () {
     var itemCount = null;
     var currBin = null;
     if (_seatData.ppsbin_list) {
-      _seatData.ppsbin_list.map(function(value, index) {
+      _seatData.ppsbin_list.map(function (value, index) {
         if (value.selected_state == true) {
           itemCount = parseInt(value.ppsbin_count || 0);
           currBin = value.ppsbin_id || '--';
@@ -1572,7 +1578,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       currBin: currBin
     };
   },
-  tableCol: function(
+  tableCol: function (
     text,
     status,
     selected,
@@ -1617,7 +1623,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       (this.management = management),
       (this.totalWidth = totalWidth);
   },
-  getPptlData: function() {
+  getPptlData: function () {
     if (_seatData.hasOwnProperty('utility')) {
       var data = {};
       data['header'] = [];
@@ -1692,7 +1698,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         );
         data['tableRows'] = [];
         var self = this;
-        _seatData.utility.map(function(value, index) {
+        _seatData.utility.map(function (value, index) {
           var barcode = '';
           var peripheralId = '';
           if (value.hasOwnProperty('barcode')) {
@@ -1850,7 +1856,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         );
         data['tableRows'] = [];
         var self = this;
-        _seatData.utility.map(function(value, index) {
+        _seatData.utility.map(function (value, index) {
           data['tableRows'].push([
             new self.tableCol(
               value.peripheral_id,
@@ -1904,7 +1910,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return data;
     }
   },
-  getReconcileData: function() {
+  getReconcileData: function () {
     if (_seatData.hasOwnProperty('reconciliation')) {
       var data = {};
       data['header'] = [];
@@ -1956,7 +1962,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           true
         )
       ]);
-      _seatData.reconciliation.map(function(value, index) {
+      _seatData.reconciliation.map(function (value, index) {
         data['tableRows'].push([
           new self.tableCol(
             value.product_sku,
@@ -1996,29 +2002,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getCurrentBoxSerialData: function() {
+  getCurrentBoxSerialData: function () {
     return _seatData.Current_box_details;
   },
 
-  getCancelScanStatus: function() {
+  getCancelScanStatus: function () {
     return _seatData.Cancel_scan;
   },
-  getInfoButtonData: function() {
+  getInfoButtonData: function () {
     return _seatData.info_button_data || null;
   },
-  getCustomContainerNames: function() {
+  getCustomContainerNames: function () {
     return _seatData.Possible_Container_Names || null;
   },
-  isAddlInfoPresent: function() {
+  isAddlInfoPresent: function () {
     return _seatData.info_button_data &&
       Object.keys(_seatData.info_button_data).length
       ? true
       : false;
   },
-  isChangeUOMApplicable: function() {
+  isChangeUOMApplicable: function () {
     return _seatData.change_uom_applicable;
   },
-  getReconcileBoxSerialData: function() {
+  getReconcileBoxSerialData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -2028,7 +2034,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var extraBoxSerials = '';
     var countMissingDamagedBoxSerials = 0;
     if (!_seatData.k_deep_audit) {
-      _seatData.Box_qty_list.map(function(value, index) {
+      _seatData.Box_qty_list.map(function (value, index) {
         if (value.Scan_status == 'no_scan') {
           missingDamagedBoxSerials =
             missingDamagedBoxSerials + value.Box_serial + ' , ';
@@ -2044,7 +2050,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         /,([^,]*)$/,
         '$1'
       );
-      _seatData.Extra_box_list.map(function(value, index) {
+      _seatData.Extra_box_list.map(function (value, index) {
         extraBoxSerials = extraBoxSerials + value.Box_serial + ' ';
       });
       if (
@@ -2156,7 +2162,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       else if (
         _seatData['box_barcode_damage'] != undefined &&
         _seatData['box_barcode_damage'] >
-          0 /*&& _seatData.Box_qty_list.length == 0*/
+        0 /*&& _seatData.Box_qty_list.length == 0*/
       ) {
         data['tableRows'].push([
           new self.tableCol(
@@ -2254,7 +2260,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getDamageReconcileData: function() {
+  getDamageReconcileData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -2264,7 +2270,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var eachBarcodeDamagedQty = 0;
     var tableRows = [];
     if (_seatData.k_deep_audit) {
-      _seatData.box_barcode_damage.map(function(val, ind) {
+      _seatData.box_barcode_damage.map(function (val, ind) {
         if (val.type === appConstants.OUTER_PACK)
           packBarcodeDamagedQty += val.damage_count;
         else {
@@ -2406,7 +2412,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getFinalDamageReconcileData: function() {
+  getFinalDamageReconcileData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -2416,7 +2422,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var eachBarcodeDamagedQty = 0;
     var tableRows = [];
     if (_seatData.k_deep_audit) {
-      _seatData.final_damaged_boxes.map(function(val, ind) {
+      _seatData.final_damaged_boxes.map(function (val, ind) {
         if (val.uom_level === appConstants.OUTER_PACK)
           packBarcodeDamagedQty += val.damaged_qty;
         else if (val.uom_level === appConstants.INNER_SUBPACK) {
@@ -2554,7 +2560,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getPackReconcileData: function() {
+  getPackReconcileData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -2564,19 +2570,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var self = this;
 
     if (_seatData.k_deep_audit) {
-      _seatData.Extra_box_list.map(function(value, index) {
+      _seatData.Extra_box_list.map(function (value, index) {
         if (value.Type === appConstants.OUTER_PACK) {
           extraPackSerials = extraPackSerials + value.Box_serial + ' ';
           extraPackCounts = value.Box_Actual_Qty + extraPackCounts;
         }
       });
 
-      _seatData.Box_qty_list.map(function(value, index) {
+      _seatData.Box_qty_list.map(function (value, index) {
         if (
           Math.max(
             value.Box_Expected_Qty -
-              value.Box_Actual_Qty -
-              value.Box_Damaged_Qty,
+            value.Box_Actual_Qty -
+            value.Box_Damaged_Qty,
             0
           ) != 0 ||
           Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0
@@ -2596,11 +2602,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
               new self.tableCol(
                 value.Type === appConstants.OUTER_PACK
                   ? Math.max(
-                      value.Box_Expected_Qty -
-                        value.Box_Actual_Qty -
-                        value.Box_Damaged_Qty,
-                      0
-                    )
+                    value.Box_Expected_Qty -
+                    value.Box_Actual_Qty -
+                    value.Box_Damaged_Qty,
+                    0
+                  )
                   : 0,
                 'enabled',
                 false,
@@ -2710,7 +2716,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getSubPackReconcileData: function() {
+  getSubPackReconcileData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -2720,19 +2726,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var self = this;
 
     if (_seatData.k_deep_audit) {
-      _seatData.Extra_box_list.map(function(value, index) {
+      _seatData.Extra_box_list.map(function (value, index) {
         if (value.Type === appConstants.INNER_SUBPACK) {
           extraSubPackSerials = extraSubPackSerials + value.Box_serial + ' ';
           extraSubPackCounts = value.Box_Actual_Qty + extraSubPackCounts;
         }
       });
 
-      _seatData.Box_qty_list.map(function(value, index) {
+      _seatData.Box_qty_list.map(function (value, index) {
         if (
           Math.max(
             value.Box_Expected_Qty -
-              value.Box_Actual_Qty -
-              value.Box_Damaged_Qty,
+            value.Box_Actual_Qty -
+            value.Box_Damaged_Qty,
             0
           ) != 0 ||
           Math.max(value.Box_Actual_Qty - value.Box_Expected_Qty, 0) != 0
@@ -2754,11 +2760,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
               new self.tableCol(
                 value.Type === appConstants.INNER_SUBPACK
                   ? Math.max(
-                      value.Box_Expected_Qty -
-                        value.Box_Actual_Qty -
-                        value.Box_Damaged_Qty,
-                      0
-                    )
+                    value.Box_Expected_Qty -
+                    value.Box_Actual_Qty -
+                    value.Box_Damaged_Qty,
+                    0
+                  )
                   : 0,
                 'enabled',
                 false,
@@ -2867,16 +2873,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return data;
   },
-  getItemInBoxReconcileData: function() {
+  getItemInBoxReconcileData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
     var self = this;
     if (!_seatData.k_deep_audit) {
-      _seatData.Box_qty_list.map(function(value, index) {
+      _seatData.Box_qty_list.map(function (value, index) {
         if (value.Scan_status == 'close') {
           var barcodeDamagedQty = 0;
-          _seatData.item_in_box_barcode_damage.map(function(val, ind) {
+          _seatData.item_in_box_barcode_damage.map(function (val, ind) {
             if (value.Box_serial == val.Box_serial)
               barcodeDamagedQty = val.Damage_qty;
           });
@@ -2992,7 +2998,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getLooseItemsData: function() {
+  getLooseItemsData: function () {
     var data = {};
     var disabledStatus;
     var containerNames = this.getContainerNames();
@@ -3048,7 +3054,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var self = this;
     var d = [];
     if (_seatData.Sku_Item_List) {
-      _seatData.Sku_Item_List.map(function(value, index) {
+      _seatData.Sku_Item_List.map(function (value, index) {
         d = [];
         var itemQtyList = [];
         var itemList = value.Item_Qty_List;
@@ -3091,7 +3097,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             itemQtyList.toString(),
             'enabled',
             _seatData.Current_box_details.length > 0 &&
-            _seatData.Current_box_details[0]['Box_serial'] == null
+              _seatData.Current_box_details[0]['Box_serial'] == null
               ? _seatData.Current_box_details[0]['Sku'] == value.Sku
               : false,
             'large',
@@ -3105,7 +3111,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['tableRows'].push(d);
       });
     }
-    _seatData.extra_loose_sku_item_list.map(function(value, index) {
+    _seatData.extra_loose_sku_item_list.map(function (value, index) {
       d = [];
       d.push(
         new self.tableCol(
@@ -3141,7 +3147,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           value.Actual_qty,
           'actualqty',
           _seatData.Current_box_details.length > 0 &&
-          _seatData.Current_box_details[0]['Box_serial'] == null
+            _seatData.Current_box_details[0]['Box_serial'] == null
             ? _seatData.Current_box_details[0]['Sku'] == value.Sku
             : false,
           'large',
@@ -3158,17 +3164,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getFinishAuditFlag: function() {
+  getFinishAuditFlag: function () {
     return _finishAuditFlag;
   },
-  getKDeepLooseItemsData: function() {
+  getKDeepLooseItemsData: function () {
     return _seatData.Loose_sku_list || null;
   },
-  getSelectedUOM: function() {
+  getSelectedUOM: function () {
     return _seatData.selected_uom || null;
   },
 
-  getReconcileLooseItemsData: function() {
+  getReconcileLooseItemsData: function () {
     var data = {};
     data['header'] = [];
     data['tableRows'] = [];
@@ -3178,7 +3184,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var c = 0;
     var looseItemScreenName = _('Loose Items Serial Numbers');
 
-    _seatData.Loose_sku_list.map(function(value, index) {
+    _seatData.Loose_sku_list.map(function (value, index) {
       if (
         Math.max(
           value.Expected_qty - value.Actual_qty - value.Damaged_qty,
@@ -3192,7 +3198,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         looseItemScreenName = _seatData.Possible_Container_Names[value.Type];
       }
     });
-    _seatData.extra_loose_sku_item_list.map(function(value, index) {
+    _seatData.extra_loose_sku_item_list.map(function (value, index) {
       if (
         Math.max(value.Expected_qty - value.Actual_qty, 0) != 0 ||
         Math.max(value.Actual_qty - value.Expected_qty, 0) != 0 ||
@@ -3202,7 +3208,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     });
 
     _seatData.Loose_sku_list.concat(_seatData.extra_loose_sku_item_list).map(
-      function(value, index) {
+      function (value, index) {
         if (
           Math.max(
             value.Expected_qty - value.Actual_qty - value.Damaged_qty,
@@ -3336,7 +3342,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getToteId: function() {
+  getToteId: function () {
     if (_seatData.hasOwnProperty('tote_id')) {
       return _seatData.tote_id;
     } else {
@@ -3344,7 +3350,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getItemDetailsData: function() {
+  getItemDetailsData: function () {
     var data = {};
     data['header'] = [];
     data['header'].push(
@@ -3374,7 +3380,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       } else {
         locale = JSON.parse(language_locale)['data']['locale'];
       }
-      _seatData.product_info.map(function(value, index) {
+      _seatData.product_info.map(function (value, index) {
         var keyValue;
 
         for (var key in value[0]) {
@@ -3387,7 +3393,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             data['image_url'] = value[0][key];
           }
         }
-        value[0].display_data.map(function(data_locale, index1) {
+        value[0].display_data.map(function (data_locale, index1) {
           if (data_locale.locale == locale) {
             if (data_locale.display_name != 'product_local_image_url') {
               product_info_locale[data_locale.display_name] = keyValue;
@@ -3515,7 +3521,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data;
   },
 
-  getScanDetails: function() {
+  getScanDetails: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -3530,16 +3536,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getDamagedBoxDetails: function() {
+  getDamagedBoxDetails: function () {
     if (_seatData['damaged_boxes'] !== undefined) {
       return _seatData['damaged_boxes'];
     }
   },
 
-  setCancelButtonStatus: function(status) {
+  setCancelButtonStatus: function (status) {
     _cancelButtonClicked = status;
   },
-  getCancelButtonStatus: function() {
+  getCancelButtonStatus: function () {
     return _cancelButtonClicked;
   },
   /*setAuditModalStatus: function(status){
@@ -3549,7 +3555,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _auditModalStatus = status;
     },*/
 
-  getQuantityDetails: function() {
+  getQuantityDetails: function () {
     var data = {
       scan_details: {
         current_qty: _seatData.per_item_print.print_done,
@@ -3559,14 +3565,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     };
     return data.scan_details;
   },
-  kQstatus: function() {
+  kQstatus: function () {
     if (_seatData.hasOwnProperty('enable_kq')) {
       return _seatData.enable_kq;
     } else {
       return true;
     }
   },
-  getGoodScanDetails: function() {
+  getGoodScanDetails: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -3580,8 +3586,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData['scan_details'];
     }
   },
+  getPickedScanDetails: function () {
+    if (_seatData['scan_details'] == undefined) {
+      var data = {
+        scan_details: {
+          current_qty: _pickQuantity,
+          total_qty: 0,
+          kq_allowed: true
+        }
+      };
+      return data.scan_details;
+    } else {
+      return _seatData['scan_details'];
+    }
+  },
 
-  getMissingScanDetails: function() {
+  getMissingScanDetails: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -3596,7 +3616,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getDamagedScanDetails: function() {
+  getDamagedScanDetails: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -3610,14 +3630,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData['scan_details'];
     }
   },
-  getAuditDamagedCount: function() {
+  getAuditDamagedCount: function () {
     if (_seatData.hasOwnProperty('damaged_boxes')) {
       return _seatData.damaged_boxes;
     } else {
       return null;
     }
   },
-  getPhysicallyDamagedScanDetails: function() {
+  getPhysicallyDamagedScanDetails: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -3633,16 +3653,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData['scan_details'];
     }
   },
-  hideSpinner: function() {
+  hideSpinner: function () {
     _showSpinner = false;
   },
-  setCurrentSeat: function(data) {
+  setCurrentSeat: function (data) {
     //showModal = false;
     _action = undefined;
     _binId = undefined;
     _enableException = false;
     _putFrontExceptionScreen = 'good';
     _goodQuantity = 0;
+    _pickQuantity = 0;
     _damagedQuantity = 0;
     _unscannableQuantity = 0;
     _missingQuantity = 0;
@@ -3700,15 +3721,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       (_seatData['last_finished_box'] != undefined &&
         _seatData['last_finished_box'].length > 0 &&
         _seatData['last_finished_box'][0]['Actual_qty'] >
-          _seatData['last_finished_box'][0]['Expected_qty']) ||
+        _seatData['last_finished_box'][0]['Expected_qty']) ||
       (_seatData['Current_box_details'] != undefined &&
         _seatData['Current_box_details'].length > 0 &&
         (_seatData['Current_box_details'][0]['Actual_qty'] -
           _seatData['Current_box_details'][0]['Expected_qty'] >
           0 ||
           _seatData['Current_box_details'][0]['Box_Actual_Qty'] -
-            _seatData['Current_box_details'][0]['Box_Expected_Qty'] >
-            0))
+          _seatData['Current_box_details'][0]['Box_Expected_Qty'] >
+          0))
     )
       showModal = true;
     else showModal = false;
@@ -3716,10 +3737,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     /* $('.modal').hide();
         $('.modal-backdrop').remove();*/
   },
-  getModalContent: function() {
+  getModalContent: function () {
     return modalContent.data;
   },
-  getSystemIdleState: function() {
+  getSystemIdleState: function () {
     if (_seatData != undefined && _peripheralScreen == false) {
       return _seatData.is_idle;
     } else if (_seatData != undefined && _peripheralScreen == true) {
@@ -3729,20 +3750,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getItemUid: function() {
+  getItemUid: function () {
     return _itemUid;
   },
-  getExceptionType: function() {
+  getExceptionType: function () {
     return _exceptionType;
   },
-  getModalType: function() {
+  getModalType: function () {
     return modalContent.type;
   },
-  setModalContent: function(data) {
+  setModalContent: function (data) {
     modalContent = data;
   },
 
-  getPPTLEvent: function() {
+  getPPTLEvent: function () {
     switch (_currentSeat) {
       case appConstants.PUT_BACK:
         _pptlEvent = 'secondary_button_press';
@@ -3761,16 +3782,16 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return _pptlEvent;
   },
-  getCurrentSeat: function() {
+  getCurrentSeat: function () {
     return _currentSeat;
   },
-  setServerMessages: function(data) {
+  setServerMessages: function (data) {
     _messageJson = serverMessages;
   },
-  getServerMessages: function() {
+  getServerMessages: function () {
     return _messageJson;
   },
-  changeLanguage: function(data) {
+  changeLanguage: function (data) {
     var locale_data = {
       data: {
         locale: data
@@ -3803,30 +3824,30 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     sessionStorage.setItem('localeData', JSON.stringify(locale_data));
   },
-  postDataToInterface: function(data) {
+  postDataToInterface: function (data) {
     showModal = false;
     utils.postDataToInterface(data, _seatName);
   },
-  postDataToTower: function(data) {
+  postDataToTower: function (data) {
     showModal = false;
     utils.postDataToTower(data, _seatName);
   },
-  logError: function(data) {
+  logError: function (data) {
     utils.logError(data);
   },
-  getScreenId: function() {
+  getScreenId: function () {
     return _screenId;
   },
-  getPpsMode: function() {
+  getPpsMode: function () {
     return _seatMode;
   },
-  getSeatType: function() {
+  getSeatType: function () {
     return _seatType;
   },
-  getSeatName: function() {
+  getSeatName: function () {
     return _seatName;
   },
-  enableException: function(data) {
+  enableException: function (data) {
     _KQQty = 0;
     _activeException = null;
     if (data == true) {
@@ -3837,59 +3858,62 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
     _enableException = data;
   },
-  enableSearch: function(data) {
+  enableSearch: function (data) {
     _enableSearch = data;
   },
-  getExceptionStatus: function() {
+  getExceptionStatus: function () {
     return _enableException;
   },
-  getItemSearchWindow: function() {
+  getItemSearchWindow: function () {
     return _enableSearch;
   },
 
-  setActiveException: function(data) {
+  setActiveException: function (data) {
     if (!data) {
       _activeException = null;
     } else {
       _activeException = data;
     }
   },
-  getActiveException: function() {
+  getActiveException: function () {
     if (!_activeException) {
       return null;
     } else {
       return _activeException;
     }
   },
-  setKQQuanity: function(data) {
-    _KQQty = data;
+  setKQQuanity: function (data) {
+    _KQQty = data
   },
-  getDamagedQuantity: function() {
-    return _damagedQuantity;
+  getDamagedQuantity: function () {
+    return _damagedQuantity
   },
-  setGoodQuanity: function(data) {
-    _goodQuantity = data;
+  setGoodQuanity: function (data) {
+    _goodQuantity = data
   },
-  setMissingQuanity: function(data) {
+  setPickedQuantity: function (data) {
+    _pickQuantity = data;
+  },
+  setMissingQuanity: function (data) {
     _missingQuantity = data;
   },
-  setUnscannableQuanity: function(data) {
-    _unscannableQuantity = data;
+  setUnscannableQuanity: function (data) {
+    _unscannableQuantity = data
   },
-  setDamagedQuanity: function(data) {
-    _damagedQuantity = data;
+  setDamagedQuanity: function (data) {
+    _damagedQuantity = data
   },
-  getExeptionQuanity: function() {
+  getExeptionQuanity: function () {
     var data =
       _goodQuantity !== 0 ||
-      _missingQuantity !== 0 ||
-      _damagedQuantity !== 0 ||
-      _unscannableQuantity !== 0
+        _missingQuantity !== 0 ||
+        _damagedQuantity !== 0 ||
+        _unscannableQuantity !== 0
         ? false
         : true;
     return data;
   },
-  getkQQuanity: function() {
+  getkQQuanity: function () {
     if (_seatData.hasOwnProperty('Current_box_details')) {
       if (_seatData.Current_box_details.length > 0) {
         _KQQty = _seatData.Current_box_details[0].Actual_qty;
@@ -3900,7 +3924,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getToteDetails: function() {
+  getToteDetails: function () {
     if (_seatData.hasOwnProperty('tote_details')) {
       return _seatData.tote_details;
     } else {
@@ -3908,7 +3932,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  setPutFrontExceptionScreen: function(data) {
+  setPutFrontExceptionScreen: function (data) {
     _putFrontExceptionScreen = data;
     _seatData['notification_list'] = [
       {
@@ -3920,7 +3944,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     ];
   },
 
-  setPutBackExceptionScreen: function(data) {
+  setPutBackExceptionScreen: function (data) {
     _seatData.scan_allowed = false;
     _putBackExceptionScreen = data;
     _seatData['notification_list'] = [
@@ -3933,13 +3957,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     ];
   },
 
-  getPutBackExceptionScreen: function(data) {
+  getPutBackExceptionScreen: function (data) {
     return _putBackExceptionScreen;
   },
-  getUnmarkedContainerFlag: function() {
+  getUnmarkedContainerFlag: function () {
     return _unmarkedContainer;
   },
-  setAuditExceptionScreen: function(data) {
+  setAuditExceptionScreen: function (data) {
     _seatData.scan_allowed = false;
     _auditExceptionScreen = data;
     _seatData['notification_list'] = [
@@ -3952,17 +3976,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     ];
   },
 
-  getAuditExceptionScreen: function(data) {
+  getAuditExceptionScreen: function (data) {
     return _auditExceptionScreen;
   },
-  getIRTFlagStatus: function(data) {
+  getIRTFlagStatus: function (data) {
     return _seatData.irt_scan_enabled;
   },
-  getSearchExcessQty: function(data) {
+  getSearchExcessQty: function (data) {
     return _seatData.excess_quantity;
   },
 
-  setPickFrontExceptionScreen: function(data) {
+  setPickFrontExceptionScreen: function (data) {
     _seatData['notification_list'] = [
       {
         details: [],
@@ -4050,39 +4074,39 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getPutFrontExceptionScreen: function() {
+  getPutFrontExceptionScreen: function () {
     return _putFrontExceptionScreen;
   },
 
-  getPickFrontExceptionScreen: function() {
+  getPickFrontExceptionScreen: function () {
     return _pickFrontExceptionScreen;
   },
 
-  getSRStatus: function() {
+  getSRStatus: function () {
     return _seatData.k_deep_audit;
   },
-  getCurrentSlot: function() {
+  getCurrentSlot: function () {
     if (_seatData.hasOwnProperty('rack_details')) {
       return _seatData.rack_details.slot_barcodes;
     } else {
       return null;
     }
   },
-  getContainerNames: function() {
+  getContainerNames: function () {
     if (_seatData.hasOwnProperty('rack_details')) {
       return _seatData.Possible_Container_Names;
     } else {
       return null;
     }
   },
-  _getBinMapDetails: function() {
+  _getBinMapDetails: function () {
     return _seatData ? _seatData.group_info : null;
   },
-  _getBinMapOrientation: function() {
+  _getBinMapOrientation: function () {
     return _seatData ? _seatData.operator_orientation || 0 : null;
   },
 
-  _getMtuDetails: function() {
+  _getMtuDetails: function () {
     var nSlots, mtuList, currentSlotId, selectedSlotId;
     nSlots = 0;
     selectedSlotId = 0;
@@ -4098,7 +4122,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return mtuList;
   },
-  _getSplitScreenFlag: function() {
+  _getSplitScreenFlag: function () {
     if (_seatData.hasOwnProperty('group_info')) {
       var navData = _seatData.group_info || {};
       for (var key in navData) {
@@ -4109,7 +4133,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return false;
   },
-  _getMobileFlag: function() {
+  _getMobileFlag: function () {
     var bIsMobile = false;
     if (_seatData) {
       bIsMobile =
@@ -4118,26 +4142,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return bIsMobile;
   },
 
-  _getDockedGroup: function() {
+  _getDockedGroup: function () {
     return _seatData && _seatData.docked ? Object.keys(_seatData.docked) : [];
   },
-  _getUndockAwaitedGroup: function() {
+  _getUndockAwaitedGroup: function () {
     return _seatData && _seatData.undock_awaited
       ? Object.keys(_seatData.undock_awaited)
       : [];
   },
-  _getWrongUndockGroup: function() {
+  _getWrongUndockGroup: function () {
     return _seatData && _seatData.wrong_undock
       ? Object.keys(_seatData.wrong_undock)
       : [];
   },
-  _getOrigBinUse: function() {
+  _getOrigBinUse: function () {
     return _seatData && _seatData.bin_coordinate_plotting ? true : false;
   },
-  _getReleaseActiveStatus: function() {
+  _getReleaseActiveStatus: function () {
     return _seatData && _seatData.release_mtu ? true : false;
   },
-  _getDamagedItemsData: function() {
+  _getDamagedItemsData: function () {
     var data = {};
     data['header'] = [];
     data['footer'] = [];
@@ -4228,8 +4252,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         serial,
         quantity,
         total_damaged = 0;
-      _seatData.physically_damaged_items.map(function(value, index) {
-        value.product_info.map(function(product_details, index) {
+      _seatData.physically_damaged_items.map(function (value, index) {
+        value.product_info.map(function (product_details, index) {
           if (product_details[0].product_sku) {
             product_sku = product_details[0].product_sku;
             quantity = value.qty;
@@ -4350,7 +4374,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return data;
   },
-  _getExcessItemsData: function() {
+  _getExcessItemsData: function () {
     var data = {};
     data['header'] = [];
     data['footer'] = [];
@@ -4401,8 +4425,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         product_sku,
         quantity,
         total_excess = 0;
-      _seatData.excess_items.map(function(value, index) {
-        value.product_info.map(function(product_details, index) {
+      _seatData.excess_items.map(function (value, index) {
+        value.product_info.map(function (product_details, index) {
           if (product_details[0].product_sku) {
             product_sku = product_details[0].product_sku;
             quantity = value.qty;
@@ -4482,7 +4506,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return data;
   },
-  _getDamagedItemsDataForAudit: function() {
+  _getDamagedItemsDataForAudit: function () {
     var _damagedQuantity = 0;
     var data = {};
     data['header'] = [];
@@ -4586,7 +4610,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         serial,
         quantity,
         total_damaged = 0;
-      _seatData.damaged_boxes.map(function(value, index) {
+      _seatData.damaged_boxes.map(function (value, index) {
         type = value.uom_level;
         product_sku = value.sku;
         serial = value.serial === 'undefined' ? '--' : value.serial;
@@ -4749,7 +4773,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return data;
   },
-  _getExcessExceptionFlag: function() {
+  _getExcessExceptionFlag: function () {
     if (
       _seatData.excess_items != undefined &&
       Object.keys(_seatData.excess_items).length > 0
@@ -4758,13 +4782,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return true;
   },
-  _getWareHouseExceptionFlag: function() {
+  _getWareHouseExceptionFlag: function () {
     if (_seatData.exception_type === 'warehousefull_exception') {
       return false;
     }
     return true;
   },
-  _getDamagedExceptionFlag: function() {
+  _getDamagedExceptionFlag: function () {
     if (
       _seatData.physically_damaged_items != undefined &&
       _seatData.physically_damaged_items.length !== 0
@@ -4773,34 +4797,34 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return true;
   },
-  _getUnmarkedContainerFlag: function() {
+  _getUnmarkedContainerFlag: function () {
     return _seatData.unmarked_container;
   },
-  _getBinFullStatus: function() {
+  _getBinFullStatus: function () {
     return _seatData && _seatData.bin_full_allowed ? true : false;
   },
-  _getSelectedPpsBin: function() {
+  _getSelectedPpsBin: function () {
     var ppsbin_list =
       _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
     var bId = null;
-    ppsbin_list.forEach(function(bin) {
+    ppsbin_list.forEach(function (bin) {
       if (bin['selected_state']) {
         bId = bin['ppsbin_id'];
       }
     });
     return bId;
   },
-  getProductSerial: function() {
+  getProductSerial: function () {
     var serial_data = _seatData.serial;
     return serial_data.length > 0
       ? utils.get3dotTrailedText(serial_data[0], 4, 4, 10)
       : null;
   },
-  getSelectedBinGroup: function() {
+  getSelectedBinGroup: function () {
     var ppsbin_list =
       _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];
     var groupId = null;
-    ppsbin_list.forEach(function(el) {
+    ppsbin_list.forEach(function (el) {
       if (el['selected_state']) {
         groupId = el['group_id'];
         return false;
@@ -4808,18 +4832,18 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     });
     return groupId;
   },
-  validateAndSendDataToServer: function() {
+  validateAndSendDataToServer: function () {
     var flag = false,
       type = false,
       binFullQty = false;
     var details;
     if (
       _seatData.screen_id ==
-        appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
+      appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
       _seatData.screen_id ==
-        appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK ||
+      appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK ||
       _seatData.screen_id ==
-        appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
+      appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
     ) {
       if (
         _goodQuantity === _seatData.pick_quantity &&
@@ -4841,9 +4865,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       } else {
         flag =
           _goodQuantity +
-            _missingQuantity +
-            _damagedQuantity +
-            _unscannableQuantity !=
+          _missingQuantity +
+          _damagedQuantity +
+          _unscannableQuantity !=
           _seatData.put_quantity;
         details = _seatData.put_quantity;
       }
@@ -4868,11 +4892,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['code'] = binFullQty
           ? resourceConstants.CLIENTCODE_012
           : type
-          ? resourceConstants.CLIENTCODE_017
-          : _seatData.screen_id ===
-            appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
-          ? resourceConstants.CLIENTCODE_018
-          : resourceConstants.CLIENTCODE_010;
+            ? resourceConstants.CLIENTCODE_017
+            : _seatData.screen_id ===
+              appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
+              ? resourceConstants.CLIENTCODE_018
+              : resourceConstants.CLIENTCODE_010;
         data['level'] = 'error';
         data['type'] = appConstants.CLIENT_NOTIFICATION;
         data['details'] = [details];
@@ -4881,11 +4905,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         _seatData.notification_list[0].code = binFullQty
           ? resourceConstants.CLIENTCODE_012
           : type
-          ? resourceConstants.CLIENTCODE_017
-          : _seatData.screen_id ===
-            appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
-          ? resourceConstants.CLIENTCODE_018
-          : resourceConstants.CLIENTCODE_010;
+            ? resourceConstants.CLIENTCODE_017
+            : _seatData.screen_id ===
+              appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
+              ? resourceConstants.CLIENTCODE_018
+              : resourceConstants.CLIENTCODE_010;
         _seatData.notification_list[0].details = [details];
         _seatData.notification_list[0].level = 'error';
         _seatData.notification_list[0].type = appConstants.CLIENT_NOTIFICATION;
@@ -4895,13 +4919,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       }
       if (
         _seatData.screen_id !=
-          appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY &&
+        appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY &&
         _seatData.screen_id !=
-          appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY &&
+        appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY &&
         _seatData.screen_id !=
-          appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK &&
+        appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK &&
         _seatData.screen_id !=
-          appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
+        appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
       ) {
         _putFrontExceptionScreen = 'good';
         _damagedQuantity = 0;
@@ -4911,20 +4935,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       var data = {};
       if (
         _seatData.screen_id ==
-          appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
+        appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
         _seatData.screen_id ==
-          appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
+        appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
         _seatData.screen_id ==
-          appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK ||
+        appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK ||
         _seatData.screen_id ==
-          appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
+        appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
       ) {
         data['event_name'] =
           _seatData.screen_id ===
             appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
-          _seatData.screen_id ===
+            _seatData.screen_id ===
             appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK ||
-          _seatData.screen_id ===
+            _seatData.screen_id ===
             appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
             ? 'pick_front_exception'
             : 'put_front_exception';
@@ -4952,7 +4976,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  validateAndSendSpaceUnavailableDataToServer: function() {
+  validateAndSendSpaceUnavailableDataToServer: function () {
     var _allowedQuantity;
     _allowedQuantity =
       _seatData.put_quantity > 0 ? _seatData.put_quantity - 1 : 0;
@@ -4983,7 +5007,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       utils.postDataToInterface(data, _seatData.seat_name);
     }
   },
-  validateUnmarkedDamagedData: function() {
+  validateUnmarkedDamagedData: function () {
     var _allowedQuantity;
     _allowedQuantity = _seatData.put_quantity ? _seatData.put_quantity : 0;
     if (_damagedQuantity > _allowedQuantity) {
@@ -5023,19 +5047,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getToteException: function() {
+  getToteException: function () {
     if (_seatData.hasOwnProperty('exception_msg')) {
       return _seatData.exception_msg[0];
     } else {
       return null;
     }
   },
-  getDrawerFlag: function() {
+  getDrawerFlag: function () {
     if (_seatData.rack_details) {
       return _seatData.rack_details.slot_type === 'drawer' ? true : false;
     }
   },
-  getSRKQQuantity: function() {
+  getSRKQQuantity: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -5051,31 +5075,31 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData['scan_details'];
     }
   },
-  getSlotType: function() {
+  getSlotType: function () {
     if (_seatData.rack_details) {
       return _seatData.rack_details.slot_type
         ? _seatData.rack_details.slot_type
         : 'none';
     }
   },
-  getPeripheralData: function(data) {
+  getPeripheralData: function (data) {
     _seatData.scan_allowed = false;
     utils.getPeripheralData(data, _seatData.seat_name);
   },
-  getOrphanItemData: function(data) {
+  getOrphanItemData: function (data) {
     _seatData.scan_allowed = true;
     utils.getOrphanItemData(data, _seatData.seat_name);
   },
-  getBOIConfigData: function(data) {
+  getBOIConfigData: function (data) {
     utils.getBOIConfig();
   },
-  getItemData: function() {
+  getItemData: function () {
     if (_seatData.utility) return _seatData.utility;
   },
-  getLoaderStatus: function() {
+  getLoaderStatus: function () {
     if (_seatData.loader) return _seatData.loader;
   },
-  getDynamicColumnWidth: function() {
+  getDynamicColumnWidth: function () {
     var rowconfig = [];
     if (_seatData.utility.length) {
       var noOfCol = Object.keys(
@@ -5108,7 +5132,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return rowconfig;
   },
-  updateSeatData: function(data, type, status, method) {
+  updateSeatData: function (data, type, status, method) {
     var dataNotification = {};
 
     if (type === 'pptl') {
@@ -5121,7 +5145,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH_RESULT;
       _peripheralScreen = true;
     } else if (type === 'BOI_CONFIG') {
-      if(data.enable_conversion){
+      if (data.enable_conversion) {
         this.setUnitConversionAllowed(data.enable_conversion);
         this.setUOMConversionFactor(data.dims_conversion_factor);
         this.setUOMDisplayUnit(data.dims_display_uom);
@@ -5143,7 +5167,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       this.setOrphanSearchAllowed(data);
     } else if (type === 'LOGIN_SCANNER_CONFIG') {
       this.setLoginScannerAllowed(data);
-    } 
+    }
     else if (type == 'itemSearch') {
       _seatData['screen_id'] = appConstants.ITEM_SEARCH;
       _peripheralScreen = true;
@@ -5183,17 +5207,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     console.log(_seatData);
   },
 
-  getUtility: function() {
+  getUtility: function () {
     return _utility;
   },
-  convert_textbox: function(action, index) {
+  convert_textbox: function (action, index) {
     _action = action;
     _binId = index;
   },
-  update_peripheral: function(data, method, index) {
+  update_peripheral: function (data, method, index) {
     utils.updatePeripherals(data, method, _seatName);
   },
-  generateNotification: function(data) {
+  generateNotification: function (data) {
     if (_seatData.notification_list.length > 0) {
       _seatData.notification_list[0]['code'] = data.code;
       _seatData.notification_list[0].level = data.level;
@@ -5209,13 +5233,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData.notification_list[0] = notification_list;
     }
   },
-  getHeaderMessg: function(data) {
+  getHeaderMessg: function (data) {
     if (_seatData && _seatData.header_msge_list) {
       return _seatData.header_msge_list[0];
     }
   },
 
-  getInvoiceStatus: function(data) {
+  getInvoiceStatus: function (data) {
     if (_seatData.invoice_required) {
       var invoiceData = { invoiceFlag: true, invoiceId: _seatData.invoice_id };
       return invoiceData;
@@ -5224,13 +5248,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
   },
 
-  getInvoiceType: function(data) {
+  getInvoiceType: function (data) {
     if (_seatData.invoice_type) {
       return _seatData.invoice_type;
     }
   },
 
-  getKQQuantity: function() {
+  getKQQuantity: function () {
     if (_seatData['scan_details'] == undefined) {
       var data = {
         scan_details: {
@@ -5246,20 +5270,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData['scan_details'];
     }
   },
-  getBinCoordinatePlotting: function() {
+  getBinCoordinatePlotting: function () {
     if (_seatData.hasOwnProperty('bin_coordinate_plotting'))
       return _seatData.bin_coordinate_plotting;
   },
-  getStageButtonHideStatus: function() {
+  getStageButtonHideStatus: function () {
     if (_seatData.hasOwnProperty('auto_stage')) return _seatData.auto_stage;
   },
-  getUDPMapDetails: function() {
+  getUDPMapDetails: function () {
     var groupInfo = {};
     var leftBins = [];
     var rightBins = [];
     var centerBins = [];
     if (_seatData['ppsbin_list']) {
-      _seatData['ppsbin_list'].forEach(function(bin) {
+      _seatData['ppsbin_list'].forEach(function (bin) {
         if (bin['direction'] === 'left') {
           leftBins.push(bin);
         } else if (bin['direction'] === 'right') {
@@ -5268,19 +5292,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           centerBins.push(bin);
         }
       });
-      leftBins.sort(function(a, b) {
+      leftBins.sort(function (a, b) {
         return (
           (a['orig_coordinate'] || a['coordinate'])[1] -
           (b['orig_coordinate'] || b['coordinate'])[1]
         );
       });
-      rightBins.sort(function(a, b) {
+      rightBins.sort(function (a, b) {
         return (
           (a['orig_coordinate'] || a['coordinate'])[1] -
           (b['orig_coordinate'] || b['coordinate'])[1]
         );
       });
-      centerBins.sort(function(a, b) {
+      centerBins.sort(function (a, b) {
         return (
           (a['orig_coordinate'] || a['coordinate'])[1] -
           (b['orig_coordinate'] || b['coordinate'])[1]
@@ -5288,25 +5312,25 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       });
 
       leftBins = leftBins.concat(rightBins, centerBins);
-      leftBins.forEach(function(bin) {
+      leftBins.forEach(function (bin) {
         groupInfo[bin['ppsbin_id']] = bin['direction'];
       });
     }
     return groupInfo;
   },
-  getMissingItemList: function() {
+  getMissingItemList: function () {
     return _seatData['missing_items'] || [];
   },
-  getPreviousPutDetails: function() {
+  getPreviousPutDetails: function () {
     return _seatData.previous_put_details || [];
   },
-  getPreviousPickDetails: function() {
+  getPreviousPickDetails: function () {
     return _seatData.previous_pick_details;
   },
-  getSelectedTotes: function() {
+  getSelectedTotes: function () {
     var selectedTotes = [];
     if (_seatData['ppsbin_list']) {
-      _seatData['ppsbin_list'].forEach(function(bin) {
+      _seatData['ppsbin_list'].forEach(function (bin) {
         if (bin.totes_associated === 'true') {
           selectedTotes.push(bin['ppsbin_id']);
         }
@@ -5314,10 +5338,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return selectedTotes;
   },
-  _getSelectedBinID: function() {
+  _getSelectedBinID: function () {
     var selectedBin = [];
     if (_seatData['ppsbin_list']) {
-      _seatData['ppsbin_list'].forEach(function(bin) {
+      _seatData['ppsbin_list'].forEach(function (bin) {
         if (bin.selected_state) {
           selectedBin.push(bin['ppsbin_id']);
         }
@@ -5326,7 +5350,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return selectedBin;
   },
 
-  _getRollCageStatus: function() {
+  _getRollCageStatus: function () {
     var rollCageStatus = false;
     if (_seatData) {
       rollCageStatus =
@@ -5335,7 +5359,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return rollCageStatus;
   },
 
-  getScreenData: function() {
+  getScreenData: function () {
     var data = {};
 
     //since OrigBinUse Flag is needed in all the screens.
@@ -5869,6 +5893,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontScreenId'] = this.getScreenId();
         data['PickFrontRackDetails'] = this.getRackDetails();
         data['PickFrontProductDetails'] = this.productDetails();
+        data['PickFrontScanDetails'] = this.getScanDetails();
         data['isDrawer'] = this.getDrawerFlag();
         data['SlotType'] = this.getSlotType();
         data['PickFrontExceptionData'] = this.getExceptionData();
@@ -6112,6 +6137,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data['PickFrontMissingQuantity'] = this.getMissingScanDetails();
         data['PickFrontExceptionScreen'] = this.getPickFrontExceptionScreen();
         data['GetIRTScanStatus'] = this.getIRTScanStatus();
+        data['PickFrontPickedQuantity'] = this.getPickedScanDetails();
 
         break;
       case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
@@ -6467,7 +6493,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   }
 });
 
-AppDispatcher.register(function(payload) {
+AppDispatcher.register(function (payload) {
   var action = payload.action;
   switch (action.actionType) {
     case appConstants.OPEN_AUDIT_MODAL:

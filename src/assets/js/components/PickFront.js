@@ -166,7 +166,6 @@ var PickFront = React.createClass({
 
   getScreenComponent: function (screen_id) {
     switch (screen_id) {
-
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         var previousPickDetails = "";
         var loader = <Spinner />;
@@ -257,9 +256,7 @@ var PickFront = React.createClass({
                 {rackType}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
               </div>
-              <div className='actions'>
-                {cancelButton}
-              </div>
+              <div className='actions'>{cancelButton}</div>
             </div>
           );
         } else {
@@ -294,12 +291,17 @@ var PickFront = React.createClass({
               <div className='main-container'>
                 {checklistData}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
+                <div className='rightWrapper'>
+                  <div className=''>
+                    <KQ
+                      scanDetails={this.state.PickFrontScanDetails}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className='actions'>
-                {cancelButton}
-              </div>
-            </div>
-          );
+              <div className='actions'>{cancelButton}</div>
+            </div >
+          )
         } else {
           this._component = this.getExceptionComponent();
         }
@@ -858,10 +860,21 @@ var PickFront = React.createClass({
         var selected_screen;
         if (!this.state.GetIRTScanStatus) {
           selected_screen = (
-            <div className="gor-exception-align">
-              <div className="gor-exceptionConfirm-text">{_("Please put exception entities in exception area")}</div>
-              <div className="finish-damaged-barcode align-button">
-                <Button1 disabled={false} text={_("Confirm")} color={"orange"} module={appConstants.PICK_FRONT} action={appConstants.PICK_FINISH_EXCEPTION_ENTITY} />
+            <div className='gor-exception-align'>
+              <div className='gor-exceptionConfirm-text'>
+                {_('Please put exception entities in exception area')}
+              </div>
+              <div className='gor-bad-quantity-padding'>
+                <NumericIndicator execType={appConstants.BAD_QUANTITY} />
+              </div>
+              <div className='finish-damaged-barcode align-button'>
+                <Button1
+                  disabled={false}
+                  text={_('Confirm')}
+                  color={'orange'}
+                  module={appConstants.PICK_FRONT}
+                  action={appConstants.PICK_FINISH_EXCEPTION_ENTITY}
+                />
               </div>
             </div>
           );

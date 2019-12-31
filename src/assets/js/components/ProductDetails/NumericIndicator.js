@@ -34,6 +34,7 @@ var NumericIndicator = React.createClass({
     }
     return {
       goodQuantity: mainstore.getGoodQuantity(),
+      pickedQuantity: mainstore.getPickedQuantity(),
       value: this._qty
     }
   },

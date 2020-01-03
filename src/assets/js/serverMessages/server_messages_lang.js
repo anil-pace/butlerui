@@ -806,4 +806,6 @@ function server_messages_list() {
   _("min")
   _("sec")
   _("Exit LPN")
+  _("Call for Help")
+  _("{0} unexpected. Scanned {1} does not exist.")
 }

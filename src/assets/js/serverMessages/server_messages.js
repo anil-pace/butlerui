@@ -495,6 +495,16 @@ var serverMessages = {
     textToDisplay: "Place Box",
     screen_id: "pick_front_packing_box"
   },
+  //ud -staging
+  "UdpF.S.001": {
+    textToDisplay: "Put Entity",
+    screen_id: ""
+  },
+  //ud-Non-staging
+  "UdpF.S.002": {
+    textToDisplay: "Scan Entity",
+    screen_id: ""
+  },
   //item_scan
   "PkF.S.003": {
     textToDisplay: "Scan",
@@ -503,7 +513,9 @@ var serverMessages = {
       "pick_front_working_table",
       "pick_front_more_item_scan",
       "pick_front_container_break",
-      "dock_carrying_unit"
+      "dock_carrying_unit",
+      "ud_put_front_entity_scan",
+      "ud_put_front_place_items_in_rack"
     ]
   },
   //checklist

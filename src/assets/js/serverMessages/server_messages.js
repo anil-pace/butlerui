@@ -505,6 +505,10 @@ var serverMessages = {
     textToDisplay: "Scan Entity",
     screen_id: ""
   },
+  "UdpF.S.003": {
+    textToDisplay: "Scan Tote",
+    screen_id: ""
+  },
   "UdpF.S.004": {
     textToDisplay: "Scan",
     screen_id: ["ud_put_front_entity_scan", "ud_put_front_place_items_in_rack"]

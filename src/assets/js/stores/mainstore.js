@@ -144,7 +144,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _scanAllowed
     }
   },
-
+  getKQEnabled: function () {
+    return _seatData.enable_kq
+  },
   toggleBinSelection: function (bin_id) {
     var flag = false
     _seatData["ppsbin_list"].map(function (value, index) {
@@ -5645,6 +5647,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontExceptionStatus"] = this.getExceptionStatus()
         data["PutFrontItemUid"] = this.getItemUid()
         data["PutFrontPutDirection"] = this.getDirectionDetails()
+        data["isKQEnabled"] = this.getKQEnabled()
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         break
       case appConstants.PUT_FRONT_WAITING_UNDOCK:

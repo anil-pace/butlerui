@@ -495,6 +495,20 @@ var serverMessages = {
     textToDisplay: "Place Box",
     screen_id: "pick_front_packing_box"
   },
+  //ud -staging
+  "UdpF.S.001": {
+    textToDisplay: "Put Entity",
+    screen_id: ""
+  },
+  //ud-Non-staging
+  "UdpF.S.002": {
+    textToDisplay: "Scan Entity",
+    screen_id: ""
+  },
+  "UdpF.S.004": {
+    textToDisplay: "Scan",
+    screen_id: ["ud_put_front_entity_scan", "ud_put_front_place_items_in_rack"]
+  },
   //item_scan
   "PkF.S.003": {
     textToDisplay: "Scan",

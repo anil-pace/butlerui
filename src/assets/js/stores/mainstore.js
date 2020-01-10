@@ -4543,6 +4543,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   _getBinFullStatus: function () {
     return _seatData && _seatData.bin_full_allowed ? true : false;
   },
+  _getCurrentBinWidget: function () {
+    return _seatData && _seatData.current_bin_widget;
+  },
+  getDirection: function(){
+    console.log(_seatData)
+  },
   _getSelectedPpsBin: function () {
     var ppsbin_list =
       _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : [];

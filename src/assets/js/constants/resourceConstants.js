@@ -18,6 +18,8 @@ var resourceConstants = {
 	BIN_GROUP_RIGHT: "right",
 	BIN_GROUP_CENTER: "center",
 	BIN_GROUP_CENTER_TOP: "center-top",
+	BIN_CENTER_LEFT: "center-left",
+	BIN_CENTER_RIGHT: "center-right",
 	order_id: "Order ID",
 	rem_qty: "Quantity",
 	volume: "Volume",

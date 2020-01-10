@@ -36,16 +36,20 @@ var SplitPPS = require('./SplitPPS')
 var PreviousDetails = require('./PreviousDetails')
 var TextEditor = require('./ProductDetails/textEditor')
 var ItemTable = require('./itemTable')
-
+var CurrentBin = require('./CurrentBin')
 var checkListOpen = false
 
 function getStateData() {
   var screenData = mainstore.getScreenData()
   var splitPPSData = {
     groupInfo: mainstore._getBinMapDetails(),
-    groupOrientation: mainstore._getBinMapOrientation()
+    groupOrientation: mainstore._getBinMapOrientation(),
+    PutFrontCurrentBinCount: mainstore.getPutFrontCurrentBinCount(),
+    udpBinMapDetails: mainstore.getUDPMapDetails(),
+    selectedPPSBin: mainstore._getSelectedPpsBin(),
+    currentBinWidget: mainstore._getCurrentBinWidget(),
+    bindata:mainstore.getBinData()
   }
-
   return Object.assign({}, screenData, splitPPSData)
 }
 
@@ -623,17 +627,19 @@ var PickFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal cancelClicked={cancelClicked} />
-
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-
-              {this.state.SplitScreenFlag && (
-                <BinMap
+               <BinMap
                   orientation={this.state.groupOrientation}
                   mapDetails={this.state.BinMapDetails}
                   selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontFlow'
+                  bindata = {this.state.bindata.ppsbin_list}
                 />
-              )}
+              <div className="single-bin udp-flow">
+               {this.state.currentBinWidget  && 
+                <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
+               }
+              </div>
               {printer_visible && (
                 <div className='reprintIcon' style={reprintIconStyle}>
                   <img

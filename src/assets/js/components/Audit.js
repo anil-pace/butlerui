@@ -580,7 +580,10 @@ var Audit = React.createClass({
           } else {
             this._looseItemData = ""
           }
-          if (this.state.AuditLooseItemsData["tableRows"].length > 0) {
+          if (
+            this.state.AuditLooseItemsData &&
+            this.state.AuditLooseItemsData["tableRows"].length > 0
+          ) {
             this._looseItems = (
               <div className="audit-wrapper">
                 {isAddlInfoPresent &&

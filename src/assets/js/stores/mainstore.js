@@ -4708,7 +4708,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.unmarked_container
   },
   _getBinFullStatus: function () {
-    return _seatData && _seatData.bin_full_allowed ? true : false
+    return _seatData && _seatData.bin_full_allowed ? true : false;
+  },
+  _getCurrentBinWidget: function () {
+    return _seatData && _seatData.current_bin_widget;
   },
   _getSelectedPpsBin: function () {
     var ppsbin_list =

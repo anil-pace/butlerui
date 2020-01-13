@@ -37,6 +37,7 @@ var PreviousDetails = require('./PreviousDetails')
 var TextEditor = require('./ProductDetails/textEditor')
 var ItemTable = require('./itemTable')
 var CurrentBin = require('./CurrentBin')
+var CurrentActiveBin= require('./CurrentActiveBin');
 var checkListOpen = false
 
 function getStateData() {
@@ -641,7 +642,7 @@ var PickFront = React.createClass({
                 />
               <div className="single-bin udp-flow">
                {this.state.currentBinWidget  && 
-                <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
+                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
                }
               </div>
               {printer_visible && (

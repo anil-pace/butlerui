@@ -5,14 +5,15 @@ var BinMap = React.createClass({
 
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var bindata = this.props.bindata
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
 		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		
 		for(var  key in data){
-			if(data[key] === allresourceConstants.BIN_GROUP_LEFT){
+			if(data[key] === allresourceConstants.BIN_GROUP_LEFT ){
 				maxLeftCount++;
 			}
-			else if(data[key] === allresourceConstants.BIN_GROUP_RIGHT){
+			else if(data[key] === allresourceConstants.BIN_GROUP_RIGHT ){
 				maxRightCount++;
 			}
 		}
@@ -23,17 +24,17 @@ var BinMap = React.createClass({
 			height:maxBlockHeight+"%",
 			width: maxWidth <= 38 ? maxWidth : 38
 		}
-
+		for(let i=0; i<bindata.length; i++){
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
 				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
+				if(data[k] === allresourceConstants.BIN_GROUP_LEFT || bindata[i].direction === 'center_left'){
 					leftCol.push(<li key={k} style={style} className={isSelected}></li>);
 				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
+				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT || bindata[i].direction === 'center_right'){
 					rightCol.push(<li key={k} style={style} className={isSelected}></li>);
 				}
-
+			}
 			}
 		}
 		switch(leftCol.length){

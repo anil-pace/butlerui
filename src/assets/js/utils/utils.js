@@ -547,7 +547,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     if (stringArg.length < 1 || arg === appConstants.INVOICE_REQUIRED) {
       message_args = stringArg ? stringArg : []
     } else {
-      message_args = stringArg ? ["STN", 20] : [] // 20 is max length...fixed from backend
+      message_args = stringArg ? [String([stringArg]).toUpperCase(), 20] : [] // 20 is max length...fixed from backend
     }
     message_args.unshift(
       serverMessages[messgCode] ? serverMessages[messgCode] : ""

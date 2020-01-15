@@ -80,7 +80,7 @@ var Bins = React.createClass({
                 // if the seat type is front then we have to modify the x co-ordinate as per the formula:
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
 
-                ileft = (( seatType === 'back' && aBins[i].back_drawing_start === 'LEFT') || (seatType === 'front' && aBins[i].front_drawing_start === 'LEFT'))? (aBins[i].orig_coordinate[0] * horFactor +'%'):
+                ileft = (( seatType === 'back' && aBins[i].back_drawing_start === 'left') || (seatType === 'front' && aBins[i].front_drawing_start === 'left'))? (aBins[i].orig_coordinate[0] * horFactor +'%'):
                     (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
                 itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
 

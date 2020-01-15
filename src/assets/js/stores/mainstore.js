@@ -6163,7 +6163,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontReprintPopUp"] = this.isReprintPopUpEnabled()
         data["printerInfo"] = this.getPrinterInfo()
         data["isPrinterVisible"] = this.getPrinterVisibility()
-        break
+        data["bindata"] = this.getBinData()
+        data["pickFrontSelectedbin"] = this.getCurrentSelectedBin()
+    break
       case appConstants.ITEM_SEARCH:
         data["PickFrontScreenId"] = this.getScreenId()
         data["PutBackScreenId"] = this.getScreenId()

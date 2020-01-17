@@ -6059,6 +6059,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontCancelScan"] = this.cancelScanDetails()
         data["PickFrontReprintEnabled"] = this.isReprintEnabled()
         data["PickFrontReprintPopUp"] = this.isReprintPopUpEnabled()
+        data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
+        data["bindata"] = this.getBinData()
         break
 
       case appConstants.PICK_FRONT_PACKING_BOX:
@@ -6164,7 +6166,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["printerInfo"] = this.getPrinterInfo()
         data["isPrinterVisible"] = this.getPrinterVisibility()
         data["bindata"] = this.getBinData()
-        data["pickFrontSelectedbin"] = this.getCurrentSelectedBin()
+        data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
     break
       case appConstants.ITEM_SEARCH:
         data["PickFrontScreenId"] = this.getScreenId()

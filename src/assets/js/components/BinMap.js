@@ -28,10 +28,10 @@ var BinMap = React.createClass({
 		}
 		if(Object.entries(bindata).length > 0 ){
 		for(let i=0; i<bindata.length; i++){
-				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === 'center_left' && bindata[i].ppsbin_id === pickFrontSelectedBin)){
+				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
 					leftCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
-				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === 'center_right' && bindata[i].ppsbin_id === pickFrontSelectedBin)){
+				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
 					rightCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
 		}

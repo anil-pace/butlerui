@@ -481,6 +481,7 @@ var serverMessages = {
   "UdpF.H.005": "Wait for MSU",
   "UdpF.H.006": "Scan item",
   "UdpF.H.007": "Scan same entity or slot to confirm",
+  "UdpF.H.008": "Scan Tote",
   "Search.H.001": "Scan entity in slot and confirm",
   "Search.H.002": "Move {0} excess item to IRT bin and confirm",
   "Search.H.003": "Move {0} excess item to IRT bin and scan IRT bin",

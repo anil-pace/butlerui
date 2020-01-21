@@ -48,7 +48,7 @@ function getStateData() {
     PutFrontCurrentBinCount: mainstore.getPutFrontCurrentBinCount(),
     udpBinMapDetails: mainstore.getUDPMapDetails(),
     selectedPPSBin: mainstore._getSelectedPpsBin(),
-    currentBinWidget: mainstore._getCurrentBinWidget(),
+    currentBinWidget: mainstore._getCurrentBinWidget()
   }
   return Object.assign({}, screenData, splitPPSData)
 }
@@ -638,7 +638,7 @@ var PickFront = React.createClass({
                   selectedGroup={this.state.BinMapGroupDetails}
                   screenClass='frontFlow'
                   bindata = {this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedbin}
+                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
                 />
               <div className="single-bin udp-flow">
                {this.state.currentBinWidget  && 
@@ -938,7 +938,7 @@ var PickFront = React.createClass({
                   selectedGroup={this.state.BinMapGroupDetails}
                   screenClass="frontFlow"
                   bindata ={this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedbin}
+                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
                 />
               )}
               {printer_visible && (

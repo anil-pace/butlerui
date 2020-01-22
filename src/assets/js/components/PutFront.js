@@ -866,7 +866,7 @@ var PutFront = React.createClass({
           else {
             this._subComponent = (
               <div className="single-bin udp-flow">
-                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
+                <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' /> 
                 <CurrentBin selected={true} details={this.state.PutFrontCurrentBinCount} />
                 <PreviousDetails previousDetails={this.state.PreviousDetails} />
               </div>
@@ -884,7 +884,7 @@ var PutFront = React.createClass({
                 <div className="msu-send-container">
                 <span style ={{marginBottom: "12px", marginLeft:"12%",  marginRight:"10%"}} > 
                  <div className='rightWrapper'>
-                  <KQ scanDetails={this.state.PutFrontScanDetails} itemUid ={this.state.itemUid}/>
+                   {this.state.PutFrontScanDetails ? <KQ scanDetails={this.state.PutFrontScanDetails} itemUid ={this.state.itemUid}/> : ""}
                   </div>
                   </span>
                   <div className="msu-send-button" style={{"marginLeft": "10%"}}>

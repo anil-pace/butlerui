@@ -487,6 +487,7 @@ function server_messages_list() {
   _("Wrong Scan. Unrecognized barcode.")
   _("PPS is closed")
   _("NEST MAX")
+  _("HEAVY")
   _("STACK MAX")
   _("DO NOT STACK")
   _("FRAGILE")

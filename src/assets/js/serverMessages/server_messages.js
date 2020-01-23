@@ -445,7 +445,7 @@ var serverMessages = {
   "PkC.H.001": "Scan the {0} for its packlist",
   PpB001: "Excess quantity",
   "PtB.H.012": "Scan or Enter {0} number",
-  "PtB.I.019": "STN scan successful", // not generic from backend
+  "PtB.I.019": "{0} scan successful", // not generic from backend
   //codes for front end
   "FRNT.PBI.01": "Please scan or enter {0} number",
   "FRNT.PBI.02": "Exit {0}",

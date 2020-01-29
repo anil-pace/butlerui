@@ -191,19 +191,19 @@ var PickFront = React.createClass({
   getScreenComponent: function (screen_id) {
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
-      this._navigation = (
-        <Navigation
-          navData={this.state.PickFrontNavData}
-          serverNavData={this.state.PickFrontServerNavData}
-          navMessagesJson={this.props.navMessagesJson}
-        />
-      )
-      var loader = <Spinner />
-      this._component = (
-        <div className='grid-container'>
-          <div className='main-container ara-pick-loader'>{loader}</div>
-        </div>
-      )
+        this._navigation = (
+          <Navigation
+            navData={this.state.PickFrontNavData}
+            serverNavData={this.state.PickFrontServerNavData}
+            navMessagesJson={this.props.navMessagesJson}
+          />
+        )
+        var loader = <Spinner />
+        this._component = (
+          <div className='grid-container'>
+            <div className='main-container ara-pick-loader'>{loader}</div>
+          </div>
+        )
         break
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         var previousPickDetails = ''
@@ -246,7 +246,7 @@ var PickFront = React.createClass({
           this._component = this.getExceptionComponent()
         }
         break
-      
+
       case appConstants.PICK_FRONT_LOCATION_CONFIRM:
       case appConstants.PICK_FRONT_LOCATION_SCAN:
         var locationBtnEnable = this.state.PickFrontLocationButtonEnable
@@ -338,7 +338,6 @@ var PickFront = React.createClass({
                 {rackType}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
               </div>
-              
               <div className='actions'>{cancelButton}</div>
             </div>
           )
@@ -388,9 +387,16 @@ var PickFront = React.createClass({
               <div className='main-container'>
                 {checklistData}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
+                <div className='rightWrapper'>
+                  <div className=''>
+                    <KQ
+                      scanDetails={this.state.PickFrontScanDetails}
+                    />
+                  </div>
+                </div>
               </div>
               <div className='actions'>{cancelButton}</div>
-            </div>
+            </div >
           )
         } else {
           this._component = this.getExceptionComponent()
@@ -1272,6 +1278,9 @@ var PickFront = React.createClass({
             <div className='gor-exception-align'>
               <div className='gor-exceptionConfirm-text'>
                 {_('Please put exception entities in exception area')}
+              </div>
+              <div className='gor-bad-quantity-padding'>
+                <NumericIndicator execType={appConstants.BAD_QUANTITY} />
               </div>
               <div className='finish-damaged-barcode align-button'>
                 <Button1

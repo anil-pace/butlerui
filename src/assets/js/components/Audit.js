@@ -722,7 +722,6 @@ var Audit = React.createClass({
                   <TabularData data={this.state.AuditItemDetailsData} />
                 </div>
                 <div className="audit-scan-right">
-                  {console.log("Sudivya", this.state.AuditSRKQQuantity)}
                   <KQ scanDetailsGood={this.state.AuditSRKQQuantity} />
 
                   <div className="finish-scan">

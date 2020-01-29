@@ -212,7 +212,8 @@ var Header = React.createClass({
       disableScanClass = "disableScanClass"
     }
     var isFrontScreen = this.state.frontScreen === appConstants.FRONT
-    const { uphThreshold, uphCount } = this.state
+    const { uphThreshold, uphCount, ppsMode } = this.state
+    const isAuditMode = ppsMode.toUpperCase() === "AUDIT" ? true : false
 
     return (
       <div>
@@ -224,7 +225,7 @@ var Header = React.createClass({
             {" "}
             PPS Mode : {this.state.ppsMode.toUpperCase()}{" "}
           </div>
-          {this.state.isUPHActive && isFrontScreen ? (
+          {this.state.isUPHActive && isFrontScreen && !isAuditMode ? (
             <UPHIndicator
               uphCount={uphCount}
               lowerThreshold={uphThreshold && uphThreshold.lower_threshold}

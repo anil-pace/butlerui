@@ -132,6 +132,7 @@ var appConstants = {
   SET_PICK_FRONT_DATA: "SET_PICK_FRONT_DATA",
   PUT_FRONT_EXCEPTION_WAREHOUSE_FULL: "put_front_exception_warehouse_full",
   GOOD_QUANTITY: "good_quantity",
+  BAD_QUANTITY: "bad_quantity",
   MISSING_QUANTITY: "Missing_quntity",
   UNSCANNABLE_QUANTITY: "Unscannable_quntity",
   UNSCANNABLE: "UNSCANNABLE",
@@ -386,7 +387,9 @@ var appConstants = {
   IN: "in ",
   QL_CODE: "QL Code",
   SLOT_ID: "Slot ID",
-  PREV_LOCATION: "Location"
+  PREV_LOCATION: "Location",
+  CONFIRM_CLOSE_INVOICE: "confirm_close_invoice",
+  INVOICE_REQUIRED: "INVOICE_REQUIRED"
 }
 
 module.exports = appConstants

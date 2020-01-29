@@ -1,6 +1,7 @@
 var React = require('react');
 var Bin = require('./BinsFlex.react');
 var PutBackStore = require('../../stores/PutBackStore');
+var allresourceConstants = require('../../constants/resourceConstants');
 
 var Bins = React.createClass({
 
@@ -80,7 +81,7 @@ var Bins = React.createClass({
                 // if the seat type is front then we have to modify the x co-ordinate as per the formula:
                 // the new x coordinate of a ppsbin is (Total length of pps - xcoordinate - length of bin)
 
-                ileft = (seatType ==='back')? (aBins[i].orig_coordinate[0] * horFactor +'%'):
+                ileft = (( seatType === 'back' && aBins[i].back_drawing_start === allresourceConstants.BIN_GROUP_LEFT) || (seatType === 'front' && aBins[i].front_drawing_start === allresourceConstants.BIN_GROUP_LEFT))? (aBins[i].orig_coordinate[0] * horFactor +'%'):
                     (totalPpsWidth - aBins[i].orig_coordinate[0] - aBins[i].length) * horFactor +'%';
                 itop = aBins[i].orig_coordinate[1] * vertFactor+'%';
 

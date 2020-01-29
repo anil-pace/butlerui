@@ -580,7 +580,10 @@ var Audit = React.createClass({
           } else {
             this._looseItemData = ""
           }
-          if (this.state.AuditLooseItemsData["tableRows"].length > 0) {
+          if (
+            this.state.AuditLooseItemsData &&
+            this.state.AuditLooseItemsData["tableRows"].length > 0
+          ) {
             this._looseItems = (
               <div className="audit-wrapper">
                 {isAddlInfoPresent &&
@@ -899,6 +902,9 @@ var Audit = React.createClass({
           i < this.state.AuditDamagedItems.tableRows.length;
           i++
         ) {
+          mainstore.setDamagedQuanity(
+            this.state.AuditDamagedItems.tableRows[i][3].text
+          )
           var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
             .buttonStatus
           if (staticCountFlag === true) {

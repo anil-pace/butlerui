@@ -490,6 +490,7 @@ function server_messages_list() {
   _("STACK MAX")
   _("DO NOT STACK")
   _("FRAGILE")
+  _("HEAVY")
   _("Length of {0} should not be greater than {1}")
   _("Scan {0} packs")
   _("Scan {0} sub packs")

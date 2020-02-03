@@ -3682,7 +3682,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     var data = {
       scan_details: {
         current_qty: _seatData.per_item_print.print_done,
-        kq_allowed: _seatData.enable_kq === "true" ? true : false,
+        kq_allowed: _seatData.enable_kq === true ? true : false,
         total_qty: _seatData.per_item_print.print_required
       }
     }
@@ -3701,7 +3701,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         scan_details: {
           current_qty: _goodQuantity,
           total_qty: 0,
-          kq_allowed: _seatData.enable_kq === "true" ? true : false
+          kq_allowed: _seatData.enable_kq === true ? true : false
         }
       }
       return data.scan_details
@@ -3730,7 +3730,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         scan_details: {
           current_qty: _missingQuantity,
           total_qty: 0,
-          kq_allowed: _seatData.enable_kq === "true" ? true : false
+          kq_allowed: _seatData.enable_kq === true ? true : false
         }
       }
       return data.scan_details
@@ -3745,7 +3745,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         scan_details: {
           current_qty: _damagedQuantity,
           total_qty: 0,
-          kq_allowed: _seatData.enable_kq === "true" ? true : false
+          kq_allowed: _seatData.enable_kq === true ? true : false
         }
       }
       return data.scan_details
@@ -3768,7 +3768,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ? _damagedQuantity
             : _seatData["physically_damaged_items"].length,
           total_qty: 0,
-          kq_allowed: _seatData.enable_kq === "true" ? true : false
+          kq_allowed: _seatData.enable_kq === true ? true : false
         }
       }
       return data.scan_details
@@ -4982,8 +4982,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ? _seatData.Current_box_details[0].Box_Actual_Qty
             : 0,
           total_qty: 0,
-          kq_allowed:
-            _seatData.enable_kq === "true" ? true : false /* BSS-10640 */
+          kq_allowed: _seatData.enable_kq === true ? true : false /* BSS-10640 */
         }
       }
       return data.scan_details
@@ -5200,7 +5199,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             ? _seatData.Current_box_details[0].Actual_qty
             : 0,
           total_qty: 0,
-          kq_allowed: _seatData.enable_kq === "true" ? true : false
+          kq_allowed: _seatData.enable_kq === true ? true : false
         }
       }
       return data.scan_details

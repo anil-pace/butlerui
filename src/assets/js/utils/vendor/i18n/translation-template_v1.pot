@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 12:48+0000\n"
+"POT-Creation-Date: 2020-01-27 13:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -623,6 +623,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:778
 #: src/assets/js/serverMessages/server_messages_lang.js:110
 #: src/assets/js/serverMessages/server_messages_lang.js:793
+#: src/assets/js/serverMessages/server_messages_lang.js:794
 msgid "Item scan successful"
 msgstr ""
 
@@ -1136,6 +1137,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:200
 #: src/assets/js/serverMessages/server_messages_lang.js:201
 #: src/assets/js/serverMessages/server_messages_lang.js:753
+#: src/assets/js/serverMessages/server_messages_lang.js:754
 msgid "Slot scan successful"
 msgstr ""
 
@@ -1287,6 +1289,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:227
 #: src/assets/js/serverMessages/server_messages_lang.js:326
 #: src/assets/js/serverMessages/server_messages_lang.js:551
+#: src/assets/js/serverMessages/server_messages_lang.js:552
 msgid "Reprint"
 msgstr ""
 
@@ -1561,6 +1564,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:766
 #: src/assets/js/serverMessages/server_messages_lang.js:273
 #: src/assets/js/serverMessages/server_messages_lang.js:781
+#: src/assets/js/serverMessages/server_messages_lang.js:782
 msgid "System is Idle"
 msgstr ""
 
@@ -2031,6 +2035,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:351
 #: src/assets/js/serverMessages/server_messages_lang.js:356
 #: src/assets/js/serverMessages/server_messages_lang.js:365
+#: src/assets/js/serverMessages/server_messages_lang.js:812
 msgid "Scan Tote"
 msgstr ""
 
@@ -2373,6 +2378,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:431
 #: src/assets/js/serverMessages/server_messages_lang.js:606
 #: src/assets/js/serverMessages/server_messages_lang.js:711
+#: src/assets/js/serverMessages/server_messages_lang.js:607
+#: src/assets/js/serverMessages/server_messages_lang.js:712
 msgid "Scan excess item"
 msgstr ""
 
@@ -2466,6 +2473,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:621
 #: src/assets/js/serverMessages/server_messages_lang.js:448
 #: src/assets/js/serverMessages/server_messages_lang.js:636
+#: src/assets/js/serverMessages/server_messages_lang.js:637
 msgid "Place {0} boxes from bin {2}"
 msgstr ""
 
@@ -2488,6 +2496,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:504
 #: src/assets/js/serverMessages/server_messages_lang.js:451
 #: src/assets/js/serverMessages/server_messages_lang.js:515
+#: src/assets/js/serverMessages/server_messages_lang.js:516
 msgid "Press PPTL to confirm no Items Remaining in Bin {0}"
 msgstr ""
 
@@ -2552,6 +2561,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:476
 #: src/assets/js/serverMessages/server_messages_lang.js:504
 #: src/assets/js/serverMessages/server_messages_lang.js:778
+#: src/assets/js/serverMessages/server_messages_lang.js:505
+#: src/assets/js/serverMessages/server_messages_lang.js:779
 msgid "Entity Damaged"
 msgstr ""
 
@@ -2725,6 +2736,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:481
 #: src/assets/js/serverMessages/server_messages_lang.js:482
 #: src/assets/js/serverMessages/server_messages_lang.js:493
+#: src/assets/js/serverMessages/server_messages_lang.js:494
 msgid "Length of {0} should not be greater than {1}"
 msgstr ""
 
@@ -2732,6 +2744,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:482
 #: src/assets/js/serverMessages/server_messages_lang.js:483
 #: src/assets/js/serverMessages/server_messages_lang.js:494
+#: src/assets/js/serverMessages/server_messages_lang.js:495
 msgid "Scan {0} packs"
 msgstr ""
 
@@ -2739,6 +2752,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:483
 #: src/assets/js/serverMessages/server_messages_lang.js:484
 #: src/assets/js/serverMessages/server_messages_lang.js:495
+#: src/assets/js/serverMessages/server_messages_lang.js:496
 msgid "Scan {0} sub packs"
 msgstr ""
 
@@ -2746,6 +2760,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:484
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 #: src/assets/js/serverMessages/server_messages_lang.js:496
+#: src/assets/js/serverMessages/server_messages_lang.js:497
 msgid "Press PPTL"
 msgstr ""
 
@@ -2753,6 +2768,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:485
 #: src/assets/js/serverMessages/server_messages_lang.js:486
 #: src/assets/js/serverMessages/server_messages_lang.js:497
+#: src/assets/js/serverMessages/server_messages_lang.js:498
 msgid "Pack Scan Successful"
 msgstr ""
 
@@ -2760,6 +2776,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:486
 #: src/assets/js/serverMessages/server_messages_lang.js:487
 #: src/assets/js/serverMessages/server_messages_lang.js:498
+#: src/assets/js/serverMessages/server_messages_lang.js:499
 msgid "Scan {0} more packs and place in bin {1}"
 msgstr ""
 
@@ -2767,6 +2784,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:487
 #: src/assets/js/serverMessages/server_messages_lang.js:488
 #: src/assets/js/serverMessages/server_messages_lang.js:499
+#: src/assets/js/serverMessages/server_messages_lang.js:500
 msgid "Scan {0} more sub packs and place in bin {1}"
 msgstr ""
 
@@ -2774,6 +2792,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:488
 #: src/assets/js/serverMessages/server_messages_lang.js:489
 #: src/assets/js/serverMessages/server_messages_lang.js:500
+#: src/assets/js/serverMessages/server_messages_lang.js:501
 msgid "Put pack list in trolley and press PPTL to confirm"
 msgstr ""
 
@@ -2781,6 +2800,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:489
 #: src/assets/js/serverMessages/server_messages_lang.js:490
 #: src/assets/js/serverMessages/server_messages_lang.js:501
+#: src/assets/js/serverMessages/server_messages_lang.js:502
 msgid "Scan damaged entity"
 msgstr ""
 
@@ -2788,6 +2808,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:491
 #: src/assets/js/serverMessages/server_messages_lang.js:492
 #: src/assets/js/serverMessages/server_messages_lang.js:503
+#: src/assets/js/serverMessages/server_messages_lang.js:504
 msgid "Damaged Quantity"
 msgstr ""
 
@@ -2795,6 +2816,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:493
 #: src/assets/js/serverMessages/server_messages_lang.js:494
 #: src/assets/js/serverMessages/server_messages_lang.js:505
+#: src/assets/js/serverMessages/server_messages_lang.js:506
 msgid "Wrong Scan. Entity not present in Database"
 msgstr ""
 
@@ -2802,6 +2824,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:494
 #: src/assets/js/serverMessages/server_messages_lang.js:495
 #: src/assets/js/serverMessages/server_messages_lang.js:506
+#: src/assets/js/serverMessages/server_messages_lang.js:507
 msgid "Sum of good, missing and damaged should be equal to {0}"
 msgstr ""
 
@@ -2809,6 +2832,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:495
 #: src/assets/js/serverMessages/server_messages_lang.js:496
 #: src/assets/js/serverMessages/server_messages_lang.js:507
+#: src/assets/js/serverMessages/server_messages_lang.js:508
 msgid "Last item scan will be cancelled. Do you want to continue?"
 msgstr ""
 
@@ -2816,6 +2840,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:496
 #: src/assets/js/serverMessages/server_messages_lang.js:497
 #: src/assets/js/serverMessages/server_messages_lang.js:508
+#: src/assets/js/serverMessages/server_messages_lang.js:509
 msgid "Continue"
 msgstr ""
 
@@ -2823,6 +2848,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:497
 #: src/assets/js/serverMessages/server_messages_lang.js:498
 #: src/assets/js/serverMessages/server_messages_lang.js:509
+#: src/assets/js/serverMessages/server_messages_lang.js:510
 msgid "Bin full"
 msgstr ""
 
@@ -2830,6 +2856,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:498
 #: src/assets/js/serverMessages/server_messages_lang.js:500
 #: src/assets/js/serverMessages/server_messages_lang.js:511
+#: src/assets/js/serverMessages/server_messages_lang.js:512
 msgid "Please put entities which have issues in exception area"
 msgstr ""
 
@@ -2837,6 +2864,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:499
 #: src/assets/js/serverMessages/server_messages_lang.js:501
 #: src/assets/js/serverMessages/server_messages_lang.js:512
+#: src/assets/js/serverMessages/server_messages_lang.js:513
 msgid "Unscannable"
 msgstr ""
 
@@ -2844,6 +2872,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:500
 #: src/assets/js/serverMessages/server_messages_lang.js:502
 #: src/assets/js/serverMessages/server_messages_lang.js:513
+#: src/assets/js/serverMessages/server_messages_lang.js:514
 msgid "Invalid Event.Expecting PPTL button press"
 msgstr ""
 
@@ -2851,6 +2880,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:501
 #: src/assets/js/serverMessages/server_messages_lang.js:503
 #: src/assets/js/serverMessages/server_messages_lang.js:514
+#: src/assets/js/serverMessages/server_messages_lang.js:515
 msgid "Remove Tote from bin & Press PPTL to confirm no Items Remaining"
 msgstr ""
 
@@ -2858,6 +2888,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:503
 #: src/assets/js/serverMessages/server_messages_lang.js:505
 #: src/assets/js/serverMessages/server_messages_lang.js:516
+#: src/assets/js/serverMessages/server_messages_lang.js:517
 msgid "Wrong entity scan.Please scan the correct entity"
 msgstr ""
 
@@ -2865,6 +2896,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:504
 #: src/assets/js/serverMessages/server_messages_lang.js:506
 #: src/assets/js/serverMessages/server_messages_lang.js:517
+#: src/assets/js/serverMessages/server_messages_lang.js:518
 msgid "Physically Damaged entity reported."
 msgstr ""
 
@@ -2872,6 +2904,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:505
 #: src/assets/js/serverMessages/server_messages_lang.js:507
 #: src/assets/js/serverMessages/server_messages_lang.js:518
+#: src/assets/js/serverMessages/server_messages_lang.js:519
 msgid "Entity entry successful"
 msgstr ""
 
@@ -2879,6 +2912,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:506
 #: src/assets/js/serverMessages/server_messages_lang.js:508
 #: src/assets/js/serverMessages/server_messages_lang.js:519
+#: src/assets/js/serverMessages/server_messages_lang.js:520
 msgid "Bin scan successful"
 msgstr ""
 
@@ -2886,6 +2920,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:507
 #: src/assets/js/serverMessages/server_messages_lang.js:509
 #: src/assets/js/serverMessages/server_messages_lang.js:520
+#: src/assets/js/serverMessages/server_messages_lang.js:521
 msgid "Physically Damaged Reported should equal Scanned Quantity"
 msgstr ""
 
@@ -2893,6 +2928,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:508
 #: src/assets/js/serverMessages/server_messages_lang.js:510
 #: src/assets/js/serverMessages/server_messages_lang.js:521
+#: src/assets/js/serverMessages/server_messages_lang.js:522
 msgid "SKU not present in Database."
 msgstr ""
 
@@ -2900,6 +2936,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:509
 #: src/assets/js/serverMessages/server_messages_lang.js:511
 #: src/assets/js/serverMessages/server_messages_lang.js:522
+#: src/assets/js/serverMessages/server_messages_lang.js:523
 msgid "Extra entity scan found."
 msgstr ""
 
@@ -2907,6 +2944,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:510
 #: src/assets/js/serverMessages/server_messages_lang.js:512
 #: src/assets/js/serverMessages/server_messages_lang.js:523
+#: src/assets/js/serverMessages/server_messages_lang.js:524
 msgid "Container Already Scanned."
 msgstr ""
 
@@ -2914,6 +2952,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:511
 #: src/assets/js/serverMessages/server_messages_lang.js:513
 #: src/assets/js/serverMessages/server_messages_lang.js:524
+#: src/assets/js/serverMessages/server_messages_lang.js:525
 msgid "Invalid Entity Scanned."
 msgstr ""
 
@@ -2921,6 +2960,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:512
 #: src/assets/js/serverMessages/server_messages_lang.js:514
 #: src/assets/js/serverMessages/server_messages_lang.js:525
+#: src/assets/js/serverMessages/server_messages_lang.js:526
 msgid "Quantity of Physically damaged entities scanned is less."
 msgstr ""
 
@@ -2928,6 +2968,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:513
 #: src/assets/js/serverMessages/server_messages_lang.js:515
 #: src/assets/js/serverMessages/server_messages_lang.js:526
+#: src/assets/js/serverMessages/server_messages_lang.js:527
 msgid "Error"
 msgstr ""
 
@@ -2935,6 +2976,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:514
 #: src/assets/js/serverMessages/server_messages_lang.js:516
 #: src/assets/js/serverMessages/server_messages_lang.js:527
+#: src/assets/js/serverMessages/server_messages_lang.js:528
 msgid "Waiting for Bins to be Cleared at Pick Front"
 msgstr ""
 
@@ -2942,6 +2984,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:515
 #: src/assets/js/serverMessages/server_messages_lang.js:517
 #: src/assets/js/serverMessages/server_messages_lang.js:528
+#: src/assets/js/serverMessages/server_messages_lang.js:529
 msgid "Processing Next Pick from Rack "
 msgstr ""
 
@@ -2949,6 +2992,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:516
 #: src/assets/js/serverMessages/server_messages_lang.js:518
 #: src/assets/js/serverMessages/server_messages_lang.js:529
+#: src/assets/js/serverMessages/server_messages_lang.js:530
 msgid "Scan Damaged Entity"
 msgstr ""
 
@@ -2956,6 +3000,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:518
 #: src/assets/js/serverMessages/server_messages_lang.js:520
 #: src/assets/js/serverMessages/server_messages_lang.js:531
+#: src/assets/js/serverMessages/server_messages_lang.js:532
 msgid "Warehouse Full"
 msgstr ""
 
@@ -2963,6 +3008,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:519
 #: src/assets/js/serverMessages/server_messages_lang.js:521
 #: src/assets/js/serverMessages/server_messages_lang.js:532
+#: src/assets/js/serverMessages/server_messages_lang.js:533
 msgid "Scan a packing box and keep in bin {0}"
 msgstr ""
 
@@ -2970,6 +3016,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:520
 #: src/assets/js/serverMessages/server_messages_lang.js:522
 #: src/assets/js/serverMessages/server_messages_lang.js:533
+#: src/assets/js/serverMessages/server_messages_lang.js:534
 msgid "Pick box from MSU and press PPTL on Bin {0}"
 msgstr ""
 
@@ -2977,6 +3024,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:521
 #: src/assets/js/serverMessages/server_messages_lang.js:523
 #: src/assets/js/serverMessages/server_messages_lang.js:534
+#: src/assets/js/serverMessages/server_messages_lang.js:535
 msgid "Extra details entered are incorrect.Please enter correct details"
 msgstr ""
 
@@ -2984,6 +3032,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:522
 #: src/assets/js/serverMessages/server_messages_lang.js:524
 #: src/assets/js/serverMessages/server_messages_lang.js:535
+#: src/assets/js/serverMessages/server_messages_lang.js:536
 msgid "Packing box scan failed"
 msgstr ""
 
@@ -2991,6 +3040,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:523
 #: src/assets/js/serverMessages/server_messages_lang.js:525
 #: src/assets/js/serverMessages/server_messages_lang.js:536
+#: src/assets/js/serverMessages/server_messages_lang.js:537
 msgid "Wrong entity Scanned. Bin Scan Expected."
 msgstr ""
 
@@ -2998,6 +3048,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:524
 #: src/assets/js/serverMessages/server_messages_lang.js:526
 #: src/assets/js/serverMessages/server_messages_lang.js:537
+#: src/assets/js/serverMessages/server_messages_lang.js:538
 msgid "Bin Already Scanned"
 msgstr ""
 
@@ -3005,6 +3056,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:525
 #: src/assets/js/serverMessages/server_messages_lang.js:527
 #: src/assets/js/serverMessages/server_messages_lang.js:538
+#: src/assets/js/serverMessages/server_messages_lang.js:539
 msgid "Issue with Pack"
 msgstr ""
 
@@ -3012,6 +3064,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:526
 #: src/assets/js/serverMessages/server_messages_lang.js:528
 #: src/assets/js/serverMessages/server_messages_lang.js:539
+#: src/assets/js/serverMessages/server_messages_lang.js:540
 msgid "Issue with Sub pack"
 msgstr ""
 
@@ -3019,6 +3072,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:527
 #: src/assets/js/serverMessages/server_messages_lang.js:529
 #: src/assets/js/serverMessages/server_messages_lang.js:540
+#: src/assets/js/serverMessages/server_messages_lang.js:541
 msgid "Issue with MPU"
 msgstr ""
 
@@ -3026,6 +3080,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:528
 #: src/assets/js/serverMessages/server_messages_lang.js:530
 #: src/assets/js/serverMessages/server_messages_lang.js:541
+#: src/assets/js/serverMessages/server_messages_lang.js:542
 msgid "Space not available"
 msgstr ""
 
@@ -3033,6 +3088,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:529
 #: src/assets/js/serverMessages/server_messages_lang.js:531
 #: src/assets/js/serverMessages/server_messages_lang.js:542
+#: src/assets/js/serverMessages/server_messages_lang.js:543
 msgid "Bad barcode on pack"
 msgstr ""
 
@@ -3040,6 +3096,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:530
 #: src/assets/js/serverMessages/server_messages_lang.js:532
 #: src/assets/js/serverMessages/server_messages_lang.js:543
+#: src/assets/js/serverMessages/server_messages_lang.js:544
 msgid "Bad barcode on sub pack"
 msgstr ""
 
@@ -3047,6 +3104,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:531
 #: src/assets/js/serverMessages/server_messages_lang.js:533
 #: src/assets/js/serverMessages/server_messages_lang.js:544
+#: src/assets/js/serverMessages/server_messages_lang.js:545
 msgid "Unexpected pack"
 msgstr ""
 
@@ -3054,6 +3112,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:532
 #: src/assets/js/serverMessages/server_messages_lang.js:534
 #: src/assets/js/serverMessages/server_messages_lang.js:545
+#: src/assets/js/serverMessages/server_messages_lang.js:546
 msgid "Pack missing"
 msgstr ""
 
@@ -3061,6 +3120,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:533
 #: src/assets/js/serverMessages/server_messages_lang.js:535
 #: src/assets/js/serverMessages/server_messages_lang.js:546
+#: src/assets/js/serverMessages/server_messages_lang.js:547
 msgid "Sub pack missing"
 msgstr ""
 
@@ -3068,6 +3128,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:534
 #: src/assets/js/serverMessages/server_messages_lang.js:536
 #: src/assets/js/serverMessages/server_messages_lang.js:547
+#: src/assets/js/serverMessages/server_messages_lang.js:548
 msgid "Damaged sub pack"
 msgstr ""
 
@@ -3075,6 +3136,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:535
 #: src/assets/js/serverMessages/server_messages_lang.js:537
 #: src/assets/js/serverMessages/server_messages_lang.js:548
+#: src/assets/js/serverMessages/server_messages_lang.js:549
 msgid "Good pack"
 msgstr ""
 
@@ -3082,6 +3144,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:536
 #: src/assets/js/serverMessages/server_messages_lang.js:538
 #: src/assets/js/serverMessages/server_messages_lang.js:549
+#: src/assets/js/serverMessages/server_messages_lang.js:550
 msgid "Good sub pack"
 msgstr ""
 
@@ -3089,6 +3152,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:537
 #: src/assets/js/serverMessages/server_messages_lang.js:539
 #: src/assets/js/serverMessages/server_messages_lang.js:550
+#: src/assets/js/serverMessages/server_messages_lang.js:551
 msgid "Scan not Allowed. PPS close/force close or profile change requested."
 msgstr ""
 
@@ -3106,6 +3170,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:541
 #: src/assets/js/serverMessages/server_messages_lang.js:543
 #: src/assets/js/serverMessages/server_messages_lang.js:554
+#: src/assets/js/serverMessages/server_messages_lang.js:555
 msgid "Scan MPU"
 msgstr ""
 
@@ -3113,6 +3178,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:542
 #: src/assets/js/serverMessages/server_messages_lang.js:544
 #: src/assets/js/serverMessages/server_messages_lang.js:555
+#: src/assets/js/serverMessages/server_messages_lang.js:556
 msgid "Scan {0} or {1}"
 msgstr ""
 
@@ -3120,6 +3186,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:543
 #: src/assets/js/serverMessages/server_messages_lang.js:545
 #: src/assets/js/serverMessages/server_messages_lang.js:556
+#: src/assets/js/serverMessages/server_messages_lang.js:557
 msgid "Continue scanning {0} and {1}"
 msgstr ""
 
@@ -3131,6 +3198,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:547
 #: src/assets/js/serverMessages/server_messages_lang.js:557
 #: src/assets/js/serverMessages/server_messages_lang.js:558
+#: src/assets/js/serverMessages/server_messages_lang.js:559
 msgid "Enter Quantity of Unscannable {0}"
 msgstr ""
 
@@ -3138,6 +3206,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:546
 #: src/assets/js/serverMessages/server_messages_lang.js:548
 #: src/assets/js/serverMessages/server_messages_lang.js:559
+#: src/assets/js/serverMessages/server_messages_lang.js:560
 msgid "Wait for MPU"
 msgstr ""
 
@@ -3145,6 +3214,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:547
 #: src/assets/js/serverMessages/server_messages_lang.js:549
 #: src/assets/js/serverMessages/server_messages_lang.js:560
+#: src/assets/js/serverMessages/server_messages_lang.js:561
 msgid "No Sub-Packs to reconcile"
 msgstr ""
 
@@ -3152,6 +3222,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:548
 #: src/assets/js/serverMessages/server_messages_lang.js:550
 #: src/assets/js/serverMessages/server_messages_lang.js:561
+#: src/assets/js/serverMessages/server_messages_lang.js:562
 msgid "Pack Unscannable"
 msgstr ""
 
@@ -3159,6 +3230,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:549
 #: src/assets/js/serverMessages/server_messages_lang.js:551
 #: src/assets/js/serverMessages/server_messages_lang.js:562
+#: src/assets/js/serverMessages/server_messages_lang.js:563
 msgid "Sub-Pack Unscannable"
 msgstr ""
 
@@ -3166,6 +3238,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:550
 #: src/assets/js/serverMessages/server_messages_lang.js:552
 #: src/assets/js/serverMessages/server_messages_lang.js:563
+#: src/assets/js/serverMessages/server_messages_lang.js:564
 msgid "Damage Barcode"
 msgstr ""
 
@@ -3173,6 +3246,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:551
 #: src/assets/js/serverMessages/server_messages_lang.js:553
 #: src/assets/js/serverMessages/server_messages_lang.js:564
+#: src/assets/js/serverMessages/server_messages_lang.js:565
 msgid "Packs"
 msgstr ""
 
@@ -3180,6 +3254,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:552
 #: src/assets/js/serverMessages/server_messages_lang.js:554
 #: src/assets/js/serverMessages/server_messages_lang.js:565
+#: src/assets/js/serverMessages/server_messages_lang.js:566
 msgid "Sub-Packs"
 msgstr ""
 
@@ -3187,6 +3262,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:553
 #: src/assets/js/serverMessages/server_messages_lang.js:555
 #: src/assets/js/serverMessages/server_messages_lang.js:566
+#: src/assets/js/serverMessages/server_messages_lang.js:567
 msgid "Scan Small Box"
 msgstr ""
 
@@ -3194,6 +3270,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:554
 #: src/assets/js/serverMessages/server_messages_lang.js:556
 #: src/assets/js/serverMessages/server_messages_lang.js:567
+#: src/assets/js/serverMessages/server_messages_lang.js:568
 msgid "Scan {0} Box and Place in Bin {1}"
 msgstr ""
 
@@ -3201,6 +3278,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:555
 #: src/assets/js/serverMessages/server_messages_lang.js:557
 #: src/assets/js/serverMessages/server_messages_lang.js:568
+#: src/assets/js/serverMessages/server_messages_lang.js:569
 msgid "Scan {0} Small Box and Place in Bin {1}"
 msgstr ""
 
@@ -3208,6 +3286,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:556
 #: src/assets/js/serverMessages/server_messages_lang.js:558
 #: src/assets/js/serverMessages/server_messages_lang.js:569
+#: src/assets/js/serverMessages/server_messages_lang.js:570
 msgid "Put Pack list in trolley and press PPTL to confirm"
 msgstr ""
 
@@ -3215,6 +3294,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:557
 #: src/assets/js/serverMessages/server_messages_lang.js:559
 #: src/assets/js/serverMessages/server_messages_lang.js:570
+#: src/assets/js/serverMessages/server_messages_lang.js:571
 msgid "Done"
 msgstr ""
 
@@ -3238,6 +3318,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:748
 #: src/assets/js/serverMessages/server_messages_lang.js:10
 #: src/assets/js/serverMessages/server_messages_lang.js:763
+#: src/assets/js/serverMessages/server_messages_lang.js:764
 msgid "Quantity"
 msgstr ""
 
@@ -3257,18 +3338,22 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:519
 #: src/assets/js/serverMessages/server_messages_lang.js:502
 #: src/assets/js/serverMessages/server_messages_lang.js:530
+#: src/assets/js/serverMessages/server_messages_lang.js:503
+#: src/assets/js/serverMessages/server_messages_lang.js:531
 msgid "Scan {0} damaged entities"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:558
 #: src/assets/js/serverMessages/server_messages_lang.js:560
 #: src/assets/js/serverMessages/server_messages_lang.js:571
+#: src/assets/js/serverMessages/server_messages_lang.js:572
 msgid "Scan {0} {1}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:559
 #: src/assets/js/serverMessages/server_messages_lang.js:561
 #: src/assets/js/serverMessages/server_messages_lang.js:572
+#: src/assets/js/serverMessages/server_messages_lang.js:573
 msgid "Scan {0} {1} and place in Bin {2}"
 msgstr ""
 
@@ -3279,6 +3364,7 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:499
 #: src/assets/js/serverMessages/server_messages_lang.js:510
+#: src/assets/js/serverMessages/server_messages_lang.js:511
 msgid "Enter items that can fit in the bin"
 msgstr ""
 
@@ -3286,22 +3372,26 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:542
 #: src/assets/js/serverMessages/server_messages_lang.js:552
 #: src/assets/js/serverMessages/server_messages_lang.js:553
+#: src/assets/js/serverMessages/server_messages_lang.js:554
 msgid "{0} scan successfully"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:562
 #: src/assets/js/serverMessages/server_messages_lang.js:573
+#: src/assets/js/serverMessages/server_messages_lang.js:574
 msgid "Place Tote in Bin {0} and Press PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:563
 #: src/assets/js/serverMessages/server_messages_lang.js:574
+#: src/assets/js/serverMessages/server_messages_lang.js:575
 msgid "Tote in use at front seat"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:564
 #: src/assets/js/serverMessages/server_messages_lang.js:565
 #: src/assets/js/serverMessages/server_messages_lang.js:576
+#: src/assets/js/serverMessages/server_messages_lang.js:577
 msgid "Waiting for Tote to be associated from back"
 msgstr ""
 
@@ -3310,6 +3400,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:709
 #: src/assets/js/serverMessages/server_messages_lang.js:147
 #: src/assets/js/serverMessages/server_messages_lang.js:724
+#: src/assets/js/serverMessages/server_messages_lang.js:725
 msgid "{0} scan successful"
 msgstr ""
 
@@ -3321,22 +3412,27 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:605
 #: src/assets/js/serverMessages/server_messages_lang.js:588
 #: src/assets/js/serverMessages/server_messages_lang.js:616
+#: src/assets/js/serverMessages/server_messages_lang.js:589
+#: src/assets/js/serverMessages/server_messages_lang.js:617
 msgid "Waiting for put_away to complete from front"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:564
 #: src/assets/js/serverMessages/server_messages_lang.js:575
+#: src/assets/js/serverMessages/server_messages_lang.js:576
 msgid "Tote cannot be associated with bin of another seat"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:566
 #: src/assets/js/serverMessages/server_messages_lang.js:577
+#: src/assets/js/serverMessages/server_messages_lang.js:578
 msgid "Waiting for put away to complete from front"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:567
 #: src/assets/js/serverMessages/server_messages_lang.js:571
 #: src/assets/js/serverMessages/server_messages_lang.js:582
+#: src/assets/js/serverMessages/server_messages_lang.js:583
 msgid "Scan checklist items to proceed"
 msgstr ""
 
@@ -3346,6 +3442,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:602
 #: src/assets/js/serverMessages/server_messages_lang.js:584
 #: src/assets/js/serverMessages/server_messages_lang.js:613
+#: src/assets/js/serverMessages/server_messages_lang.js:585
+#: src/assets/js/serverMessages/server_messages_lang.js:614
 msgid "Unexpected Entity In {0}"
 msgstr ""
 
@@ -3355,12 +3453,15 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:624
 #: src/assets/js/serverMessages/server_messages_lang.js:585
 #: src/assets/js/serverMessages/server_messages_lang.js:639
+#: src/assets/js/serverMessages/server_messages_lang.js:586
+#: src/assets/js/serverMessages/server_messages_lang.js:640
 msgid "Scan a {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:571
 #: src/assets/js/serverMessages/server_messages_lang.js:575
 #: src/assets/js/serverMessages/server_messages_lang.js:586
+#: src/assets/js/serverMessages/server_messages_lang.js:587
 msgid "Scan a {0} or Press PPTL"
 msgstr ""
 
@@ -3370,6 +3471,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:604
 #: src/assets/js/serverMessages/server_messages_lang.js:587
 #: src/assets/js/serverMessages/server_messages_lang.js:615
+#: src/assets/js/serverMessages/server_messages_lang.js:588
+#: src/assets/js/serverMessages/server_messages_lang.js:616
 msgid "Press PPTL to clear the Bin"
 msgstr ""
 
@@ -3379,6 +3482,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:628
 #: src/assets/js/serverMessages/server_messages_lang.js:589
 #: src/assets/js/serverMessages/server_messages_lang.js:643
+#: src/assets/js/serverMessages/server_messages_lang.js:590
+#: src/assets/js/serverMessages/server_messages_lang.js:644
 msgid "Place {0} in Bin and scan the Bin barcode"
 msgstr ""
 
@@ -3388,6 +3493,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:629
 #: src/assets/js/serverMessages/server_messages_lang.js:590
 #: src/assets/js/serverMessages/server_messages_lang.js:644
+#: src/assets/js/serverMessages/server_messages_lang.js:591
+#: src/assets/js/serverMessages/server_messages_lang.js:645
 msgid "Waiting for order to be completed from front"
 msgstr ""
 
@@ -3400,6 +3507,9 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:591
 #: src/assets/js/serverMessages/server_messages_lang.js:638
 #: src/assets/js/serverMessages/server_messages_lang.js:645
+#: src/assets/js/serverMessages/server_messages_lang.js:592
+#: src/assets/js/serverMessages/server_messages_lang.js:639
+#: src/assets/js/serverMessages/server_messages_lang.js:646
 msgid "Waiting for {0} to be associated from back"
 msgstr ""
 
@@ -3414,6 +3524,10 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:592
 #: src/assets/js/serverMessages/server_messages_lang.js:646
 #: src/assets/js/serverMessages/server_messages_lang.js:713
+#: src/assets/js/serverMessages/server_messages_lang.js:593
+#: src/assets/js/serverMessages/server_messages_lang.js:647
+#: src/assets/js/serverMessages/server_messages_lang.js:695
+#: src/assets/js/serverMessages/server_messages_lang.js:714
 msgid "{0} scan successful."
 msgstr ""
 
@@ -3423,6 +3537,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:635
 #: src/assets/js/serverMessages/server_messages_lang.js:593
 #: src/assets/js/serverMessages/server_messages_lang.js:650
+#: src/assets/js/serverMessages/server_messages_lang.js:594
+#: src/assets/js/serverMessages/server_messages_lang.js:651
 msgid "Excess Entity in {0} recorded."
 msgstr ""
 
@@ -3432,6 +3548,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:659
 #: src/assets/js/serverMessages/server_messages_lang.js:594
 #: src/assets/js/serverMessages/server_messages_lang.js:674
+#: src/assets/js/serverMessages/server_messages_lang.js:595
+#: src/assets/js/serverMessages/server_messages_lang.js:675
 msgid "{0} unexpected. {0} in use in another location"
 msgstr ""
 
@@ -3448,6 +3566,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:661
 #: src/assets/js/serverMessages/server_messages_lang.js:596
 #: src/assets/js/serverMessages/server_messages_lang.js:676
+#: src/assets/js/serverMessages/server_messages_lang.js:597
+#: src/assets/js/serverMessages/server_messages_lang.js:677
 msgid "Invalid resource."
 msgstr ""
 
@@ -3457,6 +3577,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:662
 #: src/assets/js/serverMessages/server_messages_lang.js:597
 #: src/assets/js/serverMessages/server_messages_lang.js:677
+#: src/assets/js/serverMessages/server_messages_lang.js:598
+#: src/assets/js/serverMessages/server_messages_lang.js:678
 msgid "{0} unexpected. Service request not in correct state."
 msgstr ""
 
@@ -3466,6 +3588,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:663
 #: src/assets/js/serverMessages/server_messages_lang.js:598
 #: src/assets/js/serverMessages/server_messages_lang.js:678
+#: src/assets/js/serverMessages/server_messages_lang.js:599
+#: src/assets/js/serverMessages/server_messages_lang.js:679
 msgid "{0} unexpected. Empty {0} scanned."
 msgstr ""
 
@@ -3475,6 +3599,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:664
 #: src/assets/js/serverMessages/server_messages_lang.js:599
 #: src/assets/js/serverMessages/server_messages_lang.js:679
+#: src/assets/js/serverMessages/server_messages_lang.js:600
+#: src/assets/js/serverMessages/server_messages_lang.js:680
 msgid "{0} unexpected. Scanned {0} does not exist."
 msgstr ""
 
@@ -3484,6 +3610,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:665
 #: src/assets/js/serverMessages/server_messages_lang.js:600
 #: src/assets/js/serverMessages/server_messages_lang.js:680
+#: src/assets/js/serverMessages/server_messages_lang.js:601
+#: src/assets/js/serverMessages/server_messages_lang.js:681
 msgid "{0} unexpected. Service Request does not exist."
 msgstr ""
 
@@ -3493,6 +3621,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:666
 #: src/assets/js/serverMessages/server_messages_lang.js:601
 #: src/assets/js/serverMessages/server_messages_lang.js:681
+#: src/assets/js/serverMessages/server_messages_lang.js:602
+#: src/assets/js/serverMessages/server_messages_lang.js:682
 msgid "Wrong scan. Please Scan item or {0}"
 msgstr ""
 
@@ -3502,6 +3632,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:667
 #: src/assets/js/serverMessages/server_messages_lang.js:602
 #: src/assets/js/serverMessages/server_messages_lang.js:682
+#: src/assets/js/serverMessages/server_messages_lang.js:603
+#: src/assets/js/serverMessages/server_messages_lang.js:683
 msgid "{0} unexpected. {0} is not empty."
 msgstr ""
 
@@ -3511,6 +3643,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:668
 #: src/assets/js/serverMessages/server_messages_lang.js:603
 #: src/assets/js/serverMessages/server_messages_lang.js:683
+#: src/assets/js/serverMessages/server_messages_lang.js:604
+#: src/assets/js/serverMessages/server_messages_lang.js:684
 msgid "Bin barcode of other PPS scanned"
 msgstr ""
 
@@ -3524,6 +3658,9 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:604
 #: src/assets/js/serverMessages/server_messages_lang.js:708
 #: src/assets/js/serverMessages/server_messages_lang.js:742
+#: src/assets/js/serverMessages/server_messages_lang.js:605
+#: src/assets/js/serverMessages/server_messages_lang.js:709
+#: src/assets/js/serverMessages/server_messages_lang.js:743
 msgid "Scan {0}"
 msgstr ""
 
@@ -3539,6 +3676,10 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:632
 #: src/assets/js/serverMessages/server_messages_lang.js:634
 #: src/assets/js/serverMessages/server_messages_lang.js:710
+#: src/assets/js/serverMessages/server_messages_lang.js:606
+#: src/assets/js/serverMessages/server_messages_lang.js:633
+#: src/assets/js/serverMessages/server_messages_lang.js:635
+#: src/assets/js/serverMessages/server_messages_lang.js:711
 msgid "Scan {0} which has excess item"
 msgstr ""
 
@@ -3554,6 +3695,9 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:702
 #: src/assets/js/serverMessages/server_messages_lang.js:720
 #: src/assets/js/serverMessages/server_messages_lang.js:722
+#: src/assets/js/serverMessages/server_messages_lang.js:608
+#: src/assets/js/serverMessages/server_messages_lang.js:721
+#: src/assets/js/serverMessages/server_messages_lang.js:723
 msgid "Scan {0} first and then scan item"
 msgstr ""
 
@@ -3566,6 +3710,9 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:608
 #: src/assets/js/serverMessages/server_messages_lang.js:704
 #: src/assets/js/serverMessages/server_messages_lang.js:721
+#: src/assets/js/serverMessages/server_messages_lang.js:609
+#: src/assets/js/serverMessages/server_messages_lang.js:705
+#: src/assets/js/serverMessages/server_messages_lang.js:722
 msgid "Invalid {0} scanned"
 msgstr ""
 
@@ -3575,6 +3722,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:710
 #: src/assets/js/serverMessages/server_messages_lang.js:609
 #: src/assets/js/serverMessages/server_messages_lang.js:725
+#: src/assets/js/serverMessages/server_messages_lang.js:610
+#: src/assets/js/serverMessages/server_messages_lang.js:726
 msgid "{0} Close Cancelled"
 msgstr ""
 
@@ -3587,42 +3736,51 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:610
 #: src/assets/js/serverMessages/server_messages_lang.js:726
 #: src/assets/js/serverMessages/server_messages_lang.js:754
+#: src/assets/js/serverMessages/server_messages_lang.js:611
+#: src/assets/js/serverMessages/server_messages_lang.js:727
+#: src/assets/js/serverMessages/server_messages_lang.js:755
 msgid "{0} docked successfully"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:596
 #: src/assets/js/serverMessages/server_messages_lang.js:600
 #: src/assets/js/serverMessages/server_messages_lang.js:611
+#: src/assets/js/serverMessages/server_messages_lang.js:612
 msgid "Are You Sure You Want to Close {0}?"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:597
 #: src/assets/js/serverMessages/server_messages_lang.js:601
 #: src/assets/js/serverMessages/server_messages_lang.js:612
+#: src/assets/js/serverMessages/server_messages_lang.js:613
 msgid "Scan {0} or Stage PPS Bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:599
 #: src/assets/js/serverMessages/server_messages_lang.js:603
 #: src/assets/js/serverMessages/server_messages_lang.js:614
+#: src/assets/js/serverMessages/server_messages_lang.js:615
 msgid "Enter Unscannable {0} Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:602
 #: src/assets/js/serverMessages/server_messages_lang.js:606
 #: src/assets/js/serverMessages/server_messages_lang.js:617
+#: src/assets/js/serverMessages/server_messages_lang.js:618
 msgid "Place {0} in Bin {1} and Press PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:603
 #: src/assets/js/serverMessages/server_messages_lang.js:607
 #: src/assets/js/serverMessages/server_messages_lang.js:618
+#: src/assets/js/serverMessages/server_messages_lang.js:619
 msgid "{0} already opened. Scan some other {1}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:604
 #: src/assets/js/serverMessages/server_messages_lang.js:608
 #: src/assets/js/serverMessages/server_messages_lang.js:619
+#: src/assets/js/serverMessages/server_messages_lang.js:620
 msgid "{0} already closed. Scan some other {1}"
 msgstr ""
 
@@ -3633,6 +3791,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:715
 #: src/assets/js/serverMessages/server_messages_lang.js:620
 #: src/assets/js/serverMessages/server_messages_lang.js:730
+#: src/assets/js/serverMessages/server_messages_lang.js:621
+#: src/assets/js/serverMessages/server_messages_lang.js:731
 msgid "Close current {0} first"
 msgstr ""
 
@@ -3643,12 +3803,15 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:716
 #: src/assets/js/serverMessages/server_messages_lang.js:621
 #: src/assets/js/serverMessages/server_messages_lang.js:731
+#: src/assets/js/serverMessages/server_messages_lang.js:622
+#: src/assets/js/serverMessages/server_messages_lang.js:732
 msgid "Wrong entity scanned. Please scan {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:607
 #: src/assets/js/serverMessages/server_messages_lang.js:611
 #: src/assets/js/serverMessages/server_messages_lang.js:623
+#: src/assets/js/serverMessages/server_messages_lang.js:624
 msgid ""
 "{0} excess entities found in {0}. Please put entities in exception area and "
 "confirm"
@@ -3657,6 +3820,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:608
 #: src/assets/js/serverMessages/server_messages_lang.js:612
 #: src/assets/js/serverMessages/server_messages_lang.js:626
+#: src/assets/js/serverMessages/server_messages_lang.js:627
 msgid ""
 "Entity not expected in {0}. Please put entity in exception area and confirm"
 msgstr ""
@@ -3664,24 +3828,28 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:609
 #: src/assets/js/serverMessages/server_messages_lang.js:613
 #: src/assets/js/serverMessages/server_messages_lang.js:628
+#: src/assets/js/serverMessages/server_messages_lang.js:629
 msgid "Expecting {0} closure."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:610
 #: src/assets/js/serverMessages/server_messages_lang.js:614
 #: src/assets/js/serverMessages/server_messages_lang.js:629
+#: src/assets/js/serverMessages/server_messages_lang.js:630
 msgid "{0} not present in database."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:611
 #: src/assets/js/serverMessages/server_messages_lang.js:615
 #: src/assets/js/serverMessages/server_messages_lang.js:630
+#: src/assets/js/serverMessages/server_messages_lang.js:631
 msgid "{0} matched ."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:612
 #: src/assets/js/serverMessages/server_messages_lang.js:616
 #: src/assets/js/serverMessages/server_messages_lang.js:631
+#: src/assets/js/serverMessages/server_messages_lang.js:632
 msgid "Place the {0} back in bin {1} and press PPTL"
 msgstr ""
 
@@ -3691,126 +3859,148 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:620
 #: src/assets/js/serverMessages/server_messages_lang.js:633
 #: src/assets/js/serverMessages/server_messages_lang.js:635
+#: src/assets/js/serverMessages/server_messages_lang.js:634
+#: src/assets/js/serverMessages/server_messages_lang.js:636
 msgid "Take out the {0} from bin {1} and scan entity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:618
 #: src/assets/js/serverMessages/server_messages_lang.js:622
 #: src/assets/js/serverMessages/server_messages_lang.js:637
+#: src/assets/js/serverMessages/server_messages_lang.js:638
 msgid "Remove {0} from bin {1} & Press PPTL to confirm no Items Remaining"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:621
 #: src/assets/js/serverMessages/server_messages_lang.js:625
 #: src/assets/js/serverMessages/server_messages_lang.js:640
+#: src/assets/js/serverMessages/server_messages_lang.js:641
 msgid "Press PPTL or Scan a {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:622
 #: src/assets/js/serverMessages/server_messages_lang.js:626
 #: src/assets/js/serverMessages/server_messages_lang.js:641
+#: src/assets/js/serverMessages/server_messages_lang.js:642
 msgid "Select Bin which does not require {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:623
 #: src/assets/js/serverMessages/server_messages_lang.js:627
 #: src/assets/js/serverMessages/server_messages_lang.js:642
+#: src/assets/js/serverMessages/server_messages_lang.js:643
 msgid "Select Bin to disassociate {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:628
 #: src/assets/js/serverMessages/server_messages_lang.js:632
 #: src/assets/js/serverMessages/server_messages_lang.js:647
+#: src/assets/js/serverMessages/server_messages_lang.js:648
 msgid "{0} close successful."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:629
 #: src/assets/js/serverMessages/server_messages_lang.js:633
 #: src/assets/js/serverMessages/server_messages_lang.js:648
+#: src/assets/js/serverMessages/server_messages_lang.js:649
 msgid "{0} not closed."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:630
 #: src/assets/js/serverMessages/server_messages_lang.js:634
 #: src/assets/js/serverMessages/server_messages_lang.js:649
+#: src/assets/js/serverMessages/server_messages_lang.js:650
 msgid "Excess item in {0} recorded. Now press PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:632
 #: src/assets/js/serverMessages/server_messages_lang.js:636
 #: src/assets/js/serverMessages/server_messages_lang.js:651
+#: src/assets/js/serverMessages/server_messages_lang.js:652
 msgid "Cancelled excess entity in {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:633
 #: src/assets/js/serverMessages/server_messages_lang.js:637
 #: src/assets/js/serverMessages/server_messages_lang.js:652
+#: src/assets/js/serverMessages/server_messages_lang.js:653
 msgid "Cancelled invalid entity in {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:634
 #: src/assets/js/serverMessages/server_messages_lang.js:638
 #: src/assets/js/serverMessages/server_messages_lang.js:653
+#: src/assets/js/serverMessages/server_messages_lang.js:654
 msgid "Invalid entity in {0} recorded"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:635
 #: src/assets/js/serverMessages/server_messages_lang.js:639
 #: src/assets/js/serverMessages/server_messages_lang.js:654
+#: src/assets/js/serverMessages/server_messages_lang.js:655
 msgid "Scan {0} to associate with Bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:636
 #: src/assets/js/serverMessages/server_messages_lang.js:640
 #: src/assets/js/serverMessages/server_messages_lang.js:655
+#: src/assets/js/serverMessages/server_messages_lang.js:656
 msgid "Press PpsBin Button Or Scan a {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:637
 #: src/assets/js/serverMessages/server_messages_lang.js:641
 #: src/assets/js/serverMessages/server_messages_lang.js:656
+#: src/assets/js/serverMessages/server_messages_lang.js:657
 msgid "{0} is already scanned.Expecting pptl scan."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:638
 #: src/assets/js/serverMessages/server_messages_lang.js:642
 #: src/assets/js/serverMessages/server_messages_lang.js:657
+#: src/assets/js/serverMessages/server_messages_lang.js:658
 msgid "{0} are not required.Please don't scan {1} barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:639
 #: src/assets/js/serverMessages/server_messages_lang.js:643
 #: src/assets/js/serverMessages/server_messages_lang.js:658
+#: src/assets/js/serverMessages/server_messages_lang.js:659
 msgid "Please scan the {0} first and then scan pptl barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:640
 #: src/assets/js/serverMessages/server_messages_lang.js:644
 #: src/assets/js/serverMessages/server_messages_lang.js:659
+#: src/assets/js/serverMessages/server_messages_lang.js:660
 msgid "{0} scanned.Expecting pptl scan."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:641
 #: src/assets/js/serverMessages/server_messages_lang.js:645
 #: src/assets/js/serverMessages/server_messages_lang.js:660
+#: src/assets/js/serverMessages/server_messages_lang.js:661
 msgid "Pptl scan not allowed. {0} are not required"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:642
 #: src/assets/js/serverMessages/server_messages_lang.js:646
 #: src/assets/js/serverMessages/server_messages_lang.js:661
+#: src/assets/js/serverMessages/server_messages_lang.js:662
 msgid "{0} didn't get associated"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:643
 #: src/assets/js/serverMessages/server_messages_lang.js:647
 #: src/assets/js/serverMessages/server_messages_lang.js:662
+#: src/assets/js/serverMessages/server_messages_lang.js:663
 msgid "After scannning {0} barcode, please scan pptl barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:644
 #: src/assets/js/serverMessages/server_messages_lang.js:648
 #: src/assets/js/serverMessages/server_messages_lang.js:663
+#: src/assets/js/serverMessages/server_messages_lang.js:664
 msgid "No {0} associated. Pease keep {0} in the Bin and then scan"
 msgstr ""
 
@@ -3820,90 +4010,106 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:682
 #: src/assets/js/serverMessages/server_messages_lang.js:664
 #: src/assets/js/serverMessages/server_messages_lang.js:697
+#: src/assets/js/serverMessages/server_messages_lang.js:665
+#: src/assets/js/serverMessages/server_messages_lang.js:698
 msgid "No {0} scanned"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:646
 #: src/assets/js/serverMessages/server_messages_lang.js:650
 #: src/assets/js/serverMessages/server_messages_lang.js:665
+#: src/assets/js/serverMessages/server_messages_lang.js:666
 msgid "{0} cancelled"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:647
 #: src/assets/js/serverMessages/server_messages_lang.js:651
 #: src/assets/js/serverMessages/server_messages_lang.js:666
+#: src/assets/js/serverMessages/server_messages_lang.js:667
 msgid "{0} already associated with ppsbin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:648
 #: src/assets/js/serverMessages/server_messages_lang.js:652
 #: src/assets/js/serverMessages/server_messages_lang.js:667
+#: src/assets/js/serverMessages/server_messages_lang.js:668
 msgid "Please press ppsbin button which does not have any {0} associated"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:649
 #: src/assets/js/serverMessages/server_messages_lang.js:653
 #: src/assets/js/serverMessages/server_messages_lang.js:668
+#: src/assets/js/serverMessages/server_messages_lang.js:669
 msgid "{0} assigned successfully to ppsbin {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:650
 #: src/assets/js/serverMessages/server_messages_lang.js:654
 #: src/assets/js/serverMessages/server_messages_lang.js:669
+#: src/assets/js/serverMessages/server_messages_lang.js:670
 msgid "{0} are not required"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:651
 #: src/assets/js/serverMessages/server_messages_lang.js:655
 #: src/assets/js/serverMessages/server_messages_lang.js:670
+#: src/assets/js/serverMessages/server_messages_lang.js:671
 msgid "{0} could not be reserved as already reserved"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:652
 #: src/assets/js/serverMessages/server_messages_lang.js:656
 #: src/assets/js/serverMessages/server_messages_lang.js:671
+#: src/assets/js/serverMessages/server_messages_lang.js:672
 msgid "Exception invalid as {0} are not required with this PPS"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:653
 #: src/assets/js/serverMessages/server_messages_lang.js:657
 #: src/assets/js/serverMessages/server_messages_lang.js:672
+#: src/assets/js/serverMessages/server_messages_lang.js:673
 msgid "Override {0} not possible"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:654
 #: src/assets/js/serverMessages/server_messages_lang.js:658
 #: src/assets/js/serverMessages/server_messages_lang.js:673
+#: src/assets/js/serverMessages/server_messages_lang.js:674
 msgid "Barcode didn't match with current {0} barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:665
 #: src/assets/js/serverMessages/server_messages_lang.js:669
 #: src/assets/js/serverMessages/server_messages_lang.js:684
+#: src/assets/js/serverMessages/server_messages_lang.js:685
 msgid "Incorrect {0} barcode scanned. Please try again"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:666
 #: src/assets/js/serverMessages/server_messages_lang.js:670
 #: src/assets/js/serverMessages/server_messages_lang.js:685
+#: src/assets/js/serverMessages/server_messages_lang.js:686
 msgid "System not configured for {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:667
 #: src/assets/js/serverMessages/server_messages_lang.js:671
 #: src/assets/js/serverMessages/server_messages_lang.js:686
+#: src/assets/js/serverMessages/server_messages_lang.js:687
 msgid "{0} association required"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:668
 #: src/assets/js/serverMessages/server_messages_lang.js:672
 #: src/assets/js/serverMessages/server_messages_lang.js:687
+#: src/assets/js/serverMessages/server_messages_lang.js:688
 msgid "{0} association failed. Repeat scan operation"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:669
 #: src/assets/js/serverMessages/server_messages_lang.js:673
 #: src/assets/js/serverMessages/server_messages_lang.js:688
+#: src/assets/js/serverMessages/server_messages_lang.js:689
 msgid "{0} are anyway not required.Please proceed further"
 msgstr ""
 
@@ -3915,54 +4121,63 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:671
 #: src/assets/js/serverMessages/server_messages_lang.js:675
 #: src/assets/js/serverMessages/server_messages_lang.js:690
+#: src/assets/js/serverMessages/server_messages_lang.js:691
 msgid "{0} in use at front seat"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:672
 #: src/assets/js/serverMessages/server_messages_lang.js:676
 #: src/assets/js/serverMessages/server_messages_lang.js:691
+#: src/assets/js/serverMessages/server_messages_lang.js:692
 msgid "{0} cannot be associated with bin of another seat"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:673
 #: src/assets/js/serverMessages/server_messages_lang.js:677
 #: src/assets/js/serverMessages/server_messages_lang.js:692
+#: src/assets/js/serverMessages/server_messages_lang.js:693
 msgid "{0} assigned successfully to bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:674
 #: src/assets/js/serverMessages/server_messages_lang.js:678
 #: src/assets/js/serverMessages/server_messages_lang.js:693
+#: src/assets/js/serverMessages/server_messages_lang.js:694
 msgid "{0} disassociated from Bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:676
 #: src/assets/js/serverMessages/server_messages_lang.js:680
 #: src/assets/js/serverMessages/server_messages_lang.js:695
+#: src/assets/js/serverMessages/server_messages_lang.js:696
 msgid "{0} associated with another bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:677
 #: src/assets/js/serverMessages/server_messages_lang.js:681
 #: src/assets/js/serverMessages/server_messages_lang.js:696
+#: src/assets/js/serverMessages/server_messages_lang.js:697
 msgid "Please scan the {0} first and then scan PPTL barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:679
 #: src/assets/js/serverMessages/server_messages_lang.js:683
 #: src/assets/js/serverMessages/server_messages_lang.js:698
+#: src/assets/js/serverMessages/server_messages_lang.js:699
 msgid "Override {0} Exception cannot be raised for bins with {1} associated"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:680
 #: src/assets/js/serverMessages/server_messages_lang.js:684
 #: src/assets/js/serverMessages/server_messages_lang.js:699
+#: src/assets/js/serverMessages/server_messages_lang.js:700
 msgid "PPTL scan not allowed. System not configured for {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:681
 #: src/assets/js/serverMessages/server_messages_lang.js:685
 #: src/assets/js/serverMessages/server_messages_lang.js:700
+#: src/assets/js/serverMessages/server_messages_lang.js:701
 msgid "Scan pptl barcode after scannning {0} barcode"
 msgstr ""
 
@@ -3972,6 +4187,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:702
 #: src/assets/js/serverMessages/server_messages_lang.js:701
 #: src/assets/js/serverMessages/server_messages_lang.js:717
+#: src/assets/js/serverMessages/server_messages_lang.js:718
 msgid "{0} scanned is not opened"
 msgstr ""
 
@@ -3981,66 +4197,78 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:700
 #: src/assets/js/serverMessages/server_messages_lang.js:703
 #: src/assets/js/serverMessages/server_messages_lang.js:715
+#: src/assets/js/serverMessages/server_messages_lang.js:704
+#: src/assets/js/serverMessages/server_messages_lang.js:716
 msgid "{0} already scanned"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:686
 #: src/assets/js/serverMessages/server_messages_lang.js:690
 #: src/assets/js/serverMessages/server_messages_lang.js:705
+#: src/assets/js/serverMessages/server_messages_lang.js:706
 msgid "Wrong entity Scanned. {0} Scan Expected."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:687
 #: src/assets/js/serverMessages/server_messages_lang.js:691
 #: src/assets/js/serverMessages/server_messages_lang.js:706
+#: src/assets/js/serverMessages/server_messages_lang.js:707
 msgid "Disassociate {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:688
 #: src/assets/js/serverMessages/server_messages_lang.js:692
 #: src/assets/js/serverMessages/server_messages_lang.js:707
+#: src/assets/js/serverMessages/server_messages_lang.js:708
 msgid "Override {0} Required"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:690
 #: src/assets/js/serverMessages/server_messages_lang.js:694
 #: src/assets/js/serverMessages/server_messages_lang.js:709
+#: src/assets/js/serverMessages/server_messages_lang.js:710
 msgid "Scan slot"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:693
 #: src/assets/js/serverMessages/server_messages_lang.js:697
 #: src/assets/js/serverMessages/server_messages_lang.js:712
+#: src/assets/js/serverMessages/server_messages_lang.js:713
 msgid "Scan or Enter the {0} barcode to reprint"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:695
 #: src/assets/js/serverMessages/server_messages_lang.js:699
 #: src/assets/js/serverMessages/server_messages_lang.js:714
+#: src/assets/js/serverMessages/server_messages_lang.js:715
 msgid "{0} scan cancelled."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:697
 #: src/assets/js/serverMessages/server_messages_lang.js:701
 #: src/assets/js/serverMessages/server_messages_lang.js:716
+#: src/assets/js/serverMessages/server_messages_lang.js:717
 msgid "{0} scanned is not idle"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:699
 #: src/assets/js/serverMessages/server_messages_lang.js:703
 #: src/assets/js/serverMessages/server_messages_lang.js:718
+#: src/assets/js/serverMessages/server_messages_lang.js:719
 msgid "Scan {0} first and then scan rack"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:700
 #: src/assets/js/serverMessages/server_messages_lang.js:704
 #: src/assets/js/serverMessages/server_messages_lang.js:719
+#: src/assets/js/serverMessages/server_messages_lang.js:720
 msgid "{0} already associated with slot.Scan empty slot"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:704
 #: src/assets/js/serverMessages/server_messages_lang.js:708
 #: src/assets/js/serverMessages/server_messages_lang.js:723
+#: src/assets/js/serverMessages/server_messages_lang.js:724
 msgid "Invalid {0} scan"
 msgstr ""
 
@@ -4048,6 +4276,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:712
 #: src/assets/js/serverMessages/server_messages_lang.js:714
 #: src/assets/js/serverMessages/server_messages_lang.js:729
+#: src/assets/js/serverMessages/server_messages_lang.js:730
 msgid "{0} close successful"
 msgstr ""
 
@@ -4062,41 +4291,49 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:718
 #: src/assets/js/serverMessages/server_messages_lang.js:717
 #: src/assets/js/serverMessages/server_messages_lang.js:732
+#: src/assets/js/serverMessages/server_messages_lang.js:733
 msgid "Scan item or {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:567
 #: src/assets/js/serverMessages/server_messages_lang.js:578
+#: src/assets/js/serverMessages/server_messages_lang.js:579
 msgid "Additional Information"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:568
 #: src/assets/js/serverMessages/server_messages_lang.js:579
+#: src/assets/js/serverMessages/server_messages_lang.js:580
 msgid "Selected UOM: "
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:569
 #: src/assets/js/serverMessages/server_messages_lang.js:580
+#: src/assets/js/serverMessages/server_messages_lang.js:581
 msgid "Close"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:570
 #: src/assets/js/serverMessages/server_messages_lang.js:581
+#: src/assets/js/serverMessages/server_messages_lang.js:582
 msgid "Select Value"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:674
 #: src/assets/js/serverMessages/server_messages_lang.js:689
+#: src/assets/js/serverMessages/server_messages_lang.js:690
 msgid "{0} already associated with bin"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:712
 #: src/assets/js/serverMessages/server_messages_lang.js:727
+#: src/assets/js/serverMessages/server_messages_lang.js:728
 msgid "Previous Pick Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:713
 #: src/assets/js/serverMessages/server_messages_lang.js:728
+#: src/assets/js/serverMessages/server_messages_lang.js:729
 msgid "Previous Put Details"
 msgstr ""
 
@@ -4104,6 +4341,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:724
 #: src/assets/js/serverMessages/server_messages_lang.js:723
 #: src/assets/js/serverMessages/server_messages_lang.js:738
+#: src/assets/js/serverMessages/server_messages_lang.js:739
 msgid "Dock {0}"
 msgstr ""
 
@@ -4111,6 +4349,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:725
 #: src/assets/js/serverMessages/server_messages_lang.js:724
 #: src/assets/js/serverMessages/server_messages_lang.js:739
+#: src/assets/js/serverMessages/server_messages_lang.js:740
 msgid "Scan {1} or Dock {0}"
 msgstr ""
 
@@ -4118,6 +4357,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:726
 #: src/assets/js/serverMessages/server_messages_lang.js:725
 #: src/assets/js/serverMessages/server_messages_lang.js:740
+#: src/assets/js/serverMessages/server_messages_lang.js:741
 msgid "Undock {0}"
 msgstr ""
 
@@ -4125,6 +4365,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:727
 #: src/assets/js/serverMessages/server_messages_lang.js:726
 #: src/assets/js/serverMessages/server_messages_lang.js:741
+#: src/assets/js/serverMessages/server_messages_lang.js:742
 msgid "Scan a Tote"
 msgstr ""
 
@@ -4132,6 +4373,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:729
 #: src/assets/js/serverMessages/server_messages_lang.js:728
 #: src/assets/js/serverMessages/server_messages_lang.js:743
+#: src/assets/js/serverMessages/server_messages_lang.js:744
 msgid "Scan {0} location"
 msgstr ""
 
@@ -4139,6 +4381,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:730
 #: src/assets/js/serverMessages/server_messages_lang.js:729
 #: src/assets/js/serverMessages/server_messages_lang.js:744
+#: src/assets/js/serverMessages/server_messages_lang.js:745
 msgid "Pick complete. Waiting for next pick."
 msgstr ""
 
@@ -4146,6 +4389,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:731
 #: src/assets/js/serverMessages/server_messages_lang.js:730
 #: src/assets/js/serverMessages/server_messages_lang.js:745
+#: src/assets/js/serverMessages/server_messages_lang.js:746
 msgid "Missing barcode scanned. Waiting for confirmation."
 msgstr ""
 
@@ -4153,6 +4397,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:732
 #: src/assets/js/serverMessages/server_messages_lang.js:731
 #: src/assets/js/serverMessages/server_messages_lang.js:746
+#: src/assets/js/serverMessages/server_messages_lang.js:747
 msgid "{0} cannot be associated with inactive bin"
 msgstr ""
 
@@ -4160,6 +4405,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:733
 #: src/assets/js/serverMessages/server_messages_lang.js:732
 #: src/assets/js/serverMessages/server_messages_lang.js:747
+#: src/assets/js/serverMessages/server_messages_lang.js:748
 msgid "{0} cleared"
 msgstr ""
 
@@ -4167,54 +4413,63 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:734
 #: src/assets/js/serverMessages/server_messages_lang.js:733
 #: src/assets/js/serverMessages/server_messages_lang.js:748
+#: src/assets/js/serverMessages/server_messages_lang.js:749
 msgid "Scan load unit and gently push it away"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:719
 #: src/assets/js/serverMessages/server_messages_lang.js:718
 #: src/assets/js/serverMessages/server_messages_lang.js:733
+#: src/assets/js/serverMessages/server_messages_lang.js:734
 msgid "Box Type"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:720
 #: src/assets/js/serverMessages/server_messages_lang.js:719
 #: src/assets/js/serverMessages/server_messages_lang.js:734
+#: src/assets/js/serverMessages/server_messages_lang.js:735
 msgid "Location"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:721
 #: src/assets/js/serverMessages/server_messages_lang.js:720
 #: src/assets/js/serverMessages/server_messages_lang.js:735
+#: src/assets/js/serverMessages/server_messages_lang.js:736
 msgid "Place Box"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:722
 #: src/assets/js/serverMessages/server_messages_lang.js:721
 #: src/assets/js/serverMessages/server_messages_lang.js:736
+#: src/assets/js/serverMessages/server_messages_lang.js:737
 msgid "Scan"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:723
 #: src/assets/js/serverMessages/server_messages_lang.js:722
 #: src/assets/js/serverMessages/server_messages_lang.js:737
+#: src/assets/js/serverMessages/server_messages_lang.js:738
 msgid "Checklist"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:735
 #: src/assets/js/serverMessages/server_messages_lang.js:736
 #: src/assets/js/serverMessages/server_messages_lang.js:750
+#: src/assets/js/serverMessages/server_messages_lang.js:751
 msgid "Scan {0} Serial"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:736
 #: src/assets/js/serverMessages/server_messages_lang.js:737
 #: src/assets/js/serverMessages/server_messages_lang.js:751
+#: src/assets/js/serverMessages/server_messages_lang.js:752
 msgid "Scan {0} Serial to Open"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:735
 #: src/assets/js/serverMessages/server_messages_lang.js:734
 #: src/assets/js/serverMessages/server_messages_lang.js:749
+#: src/assets/js/serverMessages/server_messages_lang.js:750
 msgid "Scan carrying unit and gently push it away"
 msgstr ""
 
@@ -4225,12 +4480,14 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:741
 #: src/assets/js/serverMessages/server_messages_lang.js:740
 #: src/assets/js/serverMessages/server_messages_lang.js:755
+#: src/assets/js/serverMessages/server_messages_lang.js:756
 msgid "{0} undocked successfully"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:738
 #: src/assets/js/serverMessages/server_messages_lang.js:737
 #: src/assets/js/serverMessages/server_messages_lang.js:752
+#: src/assets/js/serverMessages/server_messages_lang.js:753
 msgid "Pick all items from slot and scan slot"
 msgstr ""
 
@@ -4238,66 +4495,77 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:744
 #: src/assets/js/serverMessages/server_messages_lang.js:743
 #: src/assets/js/serverMessages/server_messages_lang.js:758
+#: src/assets/js/serverMessages/server_messages_lang.js:759
 msgid "NO ITEM FOUND"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:742
 #: src/assets/js/serverMessages/server_messages_lang.js:741
 #: src/assets/js/serverMessages/server_messages_lang.js:756
+#: src/assets/js/serverMessages/server_messages_lang.js:757
 msgid "Item details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:743
 #: src/assets/js/serverMessages/server_messages_lang.js:742
 #: src/assets/js/serverMessages/server_messages_lang.js:757
+#: src/assets/js/serverMessages/server_messages_lang.js:758
 msgid "Item Search"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:745
 #: src/assets/js/serverMessages/server_messages_lang.js:744
 #: src/assets/js/serverMessages/server_messages_lang.js:759
+#: src/assets/js/serverMessages/server_messages_lang.js:760
 msgid "Event"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:746
 #: src/assets/js/serverMessages/server_messages_lang.js:745
 #: src/assets/js/serverMessages/server_messages_lang.js:760
+#: src/assets/js/serverMessages/server_messages_lang.js:761
 msgid "Expectation Id"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:747
 #: src/assets/js/serverMessages/server_messages_lang.js:746
 #: src/assets/js/serverMessages/server_messages_lang.js:761
+#: src/assets/js/serverMessages/server_messages_lang.js:762
 msgid "Item Location"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:748
 #: src/assets/js/serverMessages/server_messages_lang.js:747
 #: src/assets/js/serverMessages/server_messages_lang.js:762
+#: src/assets/js/serverMessages/server_messages_lang.js:763
 msgid "UOM Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:750
 #: src/assets/js/serverMessages/server_messages_lang.js:751
 #: src/assets/js/serverMessages/server_messages_lang.js:765
+#: src/assets/js/serverMessages/server_messages_lang.js:766
 msgid "Excess Quantity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:751
 #: src/assets/js/serverMessages/server_messages_lang.js:752
 #: src/assets/js/serverMessages/server_messages_lang.js:766
+#: src/assets/js/serverMessages/server_messages_lang.js:767
 msgid "Total: "
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:752
 #: src/assets/js/serverMessages/server_messages_lang.js:753
 #: src/assets/js/serverMessages/server_messages_lang.js:767
+#: src/assets/js/serverMessages/server_messages_lang.js:768
 msgid "Scan excess entities"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:753
 #: src/assets/js/serverMessages/server_messages_lang.js:754
 #: src/assets/js/serverMessages/server_messages_lang.js:768
+#: src/assets/js/serverMessages/server_messages_lang.js:769
 msgid "Dis-associate"
 msgstr ""
 
@@ -4309,21 +4577,25 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:750
 #: src/assets/js/serverMessages/server_messages_lang.js:749
 #: src/assets/js/serverMessages/server_messages_lang.js:764
+#: src/assets/js/serverMessages/server_messages_lang.js:765
 msgid "No entities to reconcile"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:754
 #: src/assets/js/serverMessages/server_messages_lang.js:769
+#: src/assets/js/serverMessages/server_messages_lang.js:770
 msgid "LOGIN"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:755
 #: src/assets/js/serverMessages/server_messages_lang.js:770
+#: src/assets/js/serverMessages/server_messages_lang.js:771
 msgid "Language"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:756
 #: src/assets/js/serverMessages/server_messages_lang.js:771
+#: src/assets/js/serverMessages/server_messages_lang.js:772
 msgid "Username"
 msgstr ""
 
@@ -4333,31 +4605,37 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:757
 #: src/assets/js/serverMessages/server_messages_lang.js:772
+#: src/assets/js/serverMessages/server_messages_lang.js:773
 msgid "Login to"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:758
 #: src/assets/js/serverMessages/server_messages_lang.js:773
+#: src/assets/js/serverMessages/server_messages_lang.js:774
 msgid "Enter username"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:759
 #: src/assets/js/serverMessages/server_messages_lang.js:774
+#: src/assets/js/serverMessages/server_messages_lang.js:775
 msgid "Enter password"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:760
 #: src/assets/js/serverMessages/server_messages_lang.js:775
+#: src/assets/js/serverMessages/server_messages_lang.js:776
 msgid "Scan ID card to login."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:761
 #: src/assets/js/serverMessages/server_messages_lang.js:776
+#: src/assets/js/serverMessages/server_messages_lang.js:777
 msgid "{0} Unscannable"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:762
 #: src/assets/js/serverMessages/server_messages_lang.js:777
+#: src/assets/js/serverMessages/server_messages_lang.js:778
 msgid "Scan entities"
 msgstr ""
 
@@ -4365,36 +4643,44 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:787
 #: src/assets/js/serverMessages/server_messages_lang.js:779
 #: src/assets/js/serverMessages/server_messages_lang.js:802
+#: src/assets/js/serverMessages/server_messages_lang.js:780
+#: src/assets/js/serverMessages/server_messages_lang.js:803
 msgid "Waiting for {0} to be docked"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:765
 #: src/assets/js/serverMessages/server_messages_lang.js:780
+#: src/assets/js/serverMessages/server_messages_lang.js:781
 msgid "Put Pack list in {0} and press PPTL to confirm"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:767
 #: src/assets/js/serverMessages/server_messages_lang.js:782
+#: src/assets/js/serverMessages/server_messages_lang.js:783
 msgid "Please scan PPTL which has excess item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:768
 #: src/assets/js/serverMessages/server_messages_lang.js:783
+#: src/assets/js/serverMessages/server_messages_lang.js:784
 msgid "Please put unscannable tote in exception area"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:769
 #: src/assets/js/serverMessages/server_messages_lang.js:784
+#: src/assets/js/serverMessages/server_messages_lang.js:785
 msgid "Sum of good and exception quantity should be equal to {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:770
 #: src/assets/js/serverMessages/server_messages_lang.js:785
+#: src/assets/js/serverMessages/server_messages_lang.js:786
 msgid "{0} Unscannable entities recorded. WMS notified"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:771
 #: src/assets/js/serverMessages/server_messages_lang.js:786
+#: src/assets/js/serverMessages/server_messages_lang.js:787
 msgid "Scan item or enter barcode details"
 msgstr ""
 
@@ -4402,51 +4688,62 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:660
 #: src/assets/js/serverMessages/server_messages_lang.js:595
 #: src/assets/js/serverMessages/server_messages_lang.js:675
+#: src/assets/js/serverMessages/server_messages_lang.js:596
+#: src/assets/js/serverMessages/server_messages_lang.js:676
 msgid "{0} unexpected. Service request not present in {1}."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:772
 #: src/assets/js/serverMessages/server_messages_lang.js:787
+#: src/assets/js/serverMessages/server_messages_lang.js:788
 msgid "MSU Sent"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:773
 #: src/assets/js/serverMessages/server_messages_lang.js:788
+#: src/assets/js/serverMessages/server_messages_lang.js:789
 msgid "This put request is not supported in current flow"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:774
 #: src/assets/js/serverMessages/server_messages_lang.js:789
+#: src/assets/js/serverMessages/server_messages_lang.js:790
 msgid "Service request not in correct state"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:775
 #: src/assets/js/serverMessages/server_messages_lang.js:790
+#: src/assets/js/serverMessages/server_messages_lang.js:791
 msgid "Multiple Service request found"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:776
 #: src/assets/js/serverMessages/server_messages_lang.js:791
+#: src/assets/js/serverMessages/server_messages_lang.js:792
 msgid "Unknown error"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:777
 #: src/assets/js/serverMessages/server_messages_lang.js:792
+#: src/assets/js/serverMessages/server_messages_lang.js:793
 msgid "Scan item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:779
 #: src/assets/js/serverMessages/server_messages_lang.js:794
+#: src/assets/js/serverMessages/server_messages_lang.js:795
 msgid "Item unexpected. No service request found for this item"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:780
 #: src/assets/js/serverMessages/server_messages_lang.js:795
+#: src/assets/js/serverMessages/server_messages_lang.js:796
 msgid "Scan entity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:781
 #: src/assets/js/serverMessages/server_messages_lang.js:796
+#: src/assets/js/serverMessages/server_messages_lang.js:797
 msgid "Put entity in slot and scan slot to confirm"
 msgstr ""
 
@@ -4456,57 +4753,74 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:783
 #: src/assets/js/serverMessages/server_messages_lang.js:798
+#: src/assets/js/serverMessages/server_messages_lang.js:799
 msgid "Invalid {0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:784
 #: src/assets/js/serverMessages/server_messages_lang.js:799
+#: src/assets/js/serverMessages/server_messages_lang.js:800
 msgid "{0} closed"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:785
 #: src/assets/js/serverMessages/server_messages_lang.js:800
+#: src/assets/js/serverMessages/server_messages_lang.js:801
 msgid "Unknown barcode"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:786
 #: src/assets/js/serverMessages/server_messages_lang.js:801
+#: src/assets/js/serverMessages/server_messages_lang.js:802
 msgid "Unexpected entity"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:782
 #: src/assets/js/serverMessages/server_messages_lang.js:797
+#: src/assets/js/serverMessages/server_messages_lang.js:798
 msgid "Excess quantity detected, remove '{0}' quantity and confirm again"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:803
+#: src/assets/js/serverMessages/server_messages_lang.js:804
 msgid "Estimated time for MSU arrival is"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:804
+#: src/assets/js/serverMessages/server_messages_lang.js:805
 msgid "MSU busy at PPS"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:805
+#: src/assets/js/serverMessages/server_messages_lang.js:806
 msgid "hr"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:806
+#: src/assets/js/serverMessages/server_messages_lang.js:807
 msgid "min"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:807
+#: src/assets/js/serverMessages/server_messages_lang.js:808
 msgid "sec"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:808
+#: src/assets/js/serverMessages/server_messages_lang.js:809
 msgid "Exit LPN"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:809
+#: src/assets/js/serverMessages/server_messages_lang.js:810
 msgid "Call for Help"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:810
+#: src/assets/js/serverMessages/server_messages_lang.js:811
 msgid "{0} unexpected. Scanned {1} does not exist."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:493
+msgid "HEAVY"
 msgstr ""

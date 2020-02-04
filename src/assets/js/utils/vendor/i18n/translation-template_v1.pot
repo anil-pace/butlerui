@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-27 12:57+0000\n"
+"POT-Creation-Date: 2020-02-04 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4797,4 +4797,40 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:493
 msgid "HEAVY"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:807
+msgid "Scan tote"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:808
+msgid "Items In Bin"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:809
+msgid "Scan tote location"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:810
+msgid "Send MSU"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:811
+msgid "Put and confirm"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:812
+msgid "Close Cart"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:813
+msgid "Dock Cart"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:814
+msgid "Are you sure that all the items in the cart were scanned?"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:815
+msgid "The following {0} items were found missing"
 msgstr ""

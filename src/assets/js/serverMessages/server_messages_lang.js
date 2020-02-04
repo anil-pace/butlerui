@@ -804,4 +804,13 @@ function server_messages_list() {
   _("Call for Help")
   _("Tote Unscannable")
   _("{0} unexpected. Scanned {1} does not exist.")
+  _("Scan tote")
+  _("Items In Bin")
+  _("Scan tote location")
+  _("Send MSU")
+  _("Put and confirm")
+  _("Close Cart")
+  _("Dock Cart")
+  _("Are you sure that all the items in the cart were scanned?")
+  _("The following {0} items were found missing")
 }

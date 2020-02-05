@@ -95,7 +95,7 @@ var PutBack = React.createClass({
         invoiceStringArgExitBtn[0] = this.state.InvoiceType;
         invoiceStringArg[0] = this.state.InvoiceType;
         if (!this.state.StageButtonHideFlag) {
-          stageButtonobj = <div className='staging-action' >
+          stageButtonobj = <div style={{"justifyContent": "space-around"}} className='staging-action' >
             <Button1 disabled={!this.state.StageActive} text={_("Stage")} module={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"} />
             <Button1 disabled={!this.state.StageAllActive} text={_("Stage All")} module={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />
           </div>
@@ -325,7 +325,7 @@ var PutBack = React.createClass({
           var stageButtonobj = "";
           var binComponent = "";
           if (!this.state.StageButtonHideFlag) {
-            stageButtonobj = <div className='staging-action' >
+            stageButtonobj = <div style={{"justifyContent": "space-around"}} className='staging-action' >
               <Button1 disabled={!this.state.StageActive} text={_("Stage")} module={appConstants.PUT_BACK} action={appConstants.STAGE_ONE_BIN} color={"orange"} />
               <Button1 disabled={!this.state.StageAllActive} text={_("Stage All")} module={appConstants.PUT_BACK} action={appConstants.STAGE_ALL} color={"black"} />
             </div>

@@ -290,7 +290,7 @@ function loadComponent(modalType, modalData, ths) {
         <div className="col-md-12 value">{modalData["message"]} </div>
       )
       component.push(
-        <div className="extraEntity">
+        <div className="extraEntity modal-footer removeBorder">
           <Button1
             disabled={false}
             text={_("Confirm")}

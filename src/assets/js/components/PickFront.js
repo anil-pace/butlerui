@@ -1,43 +1,43 @@
-var React = require('react')
-var PickFrontStore = require('../stores/PickFrontStore')
-var mainstore = require('../stores/mainstore')
-var Header = require('./Header')
-var KQ = require('./ProductDetails/KQ')
-var ExceptionHeader = require('./ExceptionHeader')
-var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing')
-var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged')
-var NumericIndicator = require('./ProductDetails/NumericIndicator')
-var allresourceConstants = require('../constants/resourceConstants')
-var Navigation = require('./Navigation/Navigation.react')
-var Spinner = require('./Spinner/LoaderButler')
-var Notification = require('./Notification/Notification')
-var Bins = require('./Bins/Bins.react')
-var BinsFlex = require('./Bins/BinsFlexArrange.react')
-var Button1 = require('./Button/Button')
-var Wrapper = require('./ProductDetails/Wrapper')
-var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll')
-var appConstants = require('../constants/appConstants')
-var Rack = require('./Rack/MsuRack.js')
-var BoxSerial = require('./BoxSerial.js')
-var Modal = require('./Modal/Modal')
-var Modal1 = require('./Modal/Modal1')
-var CurrentSlot = require('./CurrentSlot')
-var BinMap = require('./BinMap')
-var PrdtDetails = require('./PrdtDetails/ProductDetails.js')
-var CommonActions = require('../actions/CommonActions')
-var Exception = require('./Exception/Exception')
-var TabularData = require('./TabularData')
-var OrderDetails = require('./OrderDetails/OrderDetails.js')
-var Pallet = require('./Pallet/pallet')
-var CheckList = require('./CheckList.js')
-var utils = require('../utils/utils.js')
-var PackingDetails = require('./PrdtDetails/PackingDetails.js')
-var SplitPPS = require('./SplitPPS')
-var PreviousDetails = require('./PreviousDetails')
-var TextEditor = require('./ProductDetails/textEditor')
-var ItemTable = require('./itemTable')
-var CurrentBin = require('./CurrentBin')
-var CurrentActiveBin= require('./CurrentActiveBin');
+var React = require("react")
+var PickFrontStore = require("../stores/PickFrontStore")
+var mainstore = require("../stores/mainstore")
+var Header = require("./Header")
+var KQ = require("./ProductDetails/KQ")
+var ExceptionHeader = require("./ExceptionHeader")
+var KQExceptionMissing = require("./ProductDetails/KQExceptionMissing")
+var KQExceptionDamaged = require("./ProductDetails/KQExceptionDamaged")
+var NumericIndicator = require("./ProductDetails/NumericIndicator")
+var allresourceConstants = require("../constants/resourceConstants")
+var Navigation = require("./Navigation/Navigation.react")
+var Spinner = require("./Spinner/LoaderButler")
+var Notification = require("./Notification/Notification")
+var Bins = require("./Bins/Bins.react")
+var BinsFlex = require("./Bins/BinsFlexArrange.react")
+var Button1 = require("./Button/Button")
+var Wrapper = require("./ProductDetails/Wrapper")
+var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll")
+var appConstants = require("../constants/appConstants")
+var Rack = require("./Rack/MsuRack.js")
+var BoxSerial = require("./BoxSerial.js")
+var Modal = require("./Modal/Modal")
+var Modal1 = require("./Modal/Modal1")
+var CurrentSlot = require("./CurrentSlot")
+var BinMap = require("./BinMap")
+var PrdtDetails = require("./PrdtDetails/ProductDetails.js")
+var CommonActions = require("../actions/CommonActions")
+var Exception = require("./Exception/Exception")
+var TabularData = require("./TabularData")
+var OrderDetails = require("./OrderDetails/OrderDetails.js")
+var Pallet = require("./Pallet/pallet")
+var CheckList = require("./CheckList.js")
+var utils = require("../utils/utils.js")
+var PackingDetails = require("./PrdtDetails/PackingDetails.js")
+var SplitPPS = require("./SplitPPS")
+var PreviousDetails = require("./PreviousDetails")
+var TextEditor = require("./ProductDetails/textEditor")
+var ItemTable = require("./itemTable")
+var CurrentBin = require("./CurrentBin")
+var CurrentActiveBin = require("./CurrentActiveBin")
 var checkListOpen = false
 
 function getStateData() {
@@ -632,18 +632,21 @@ var PickFront = React.createClass({
             <div className="grid-container">
               <Modal cancelClicked={cancelClicked} />
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-               <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass='frontFlow'
-                  bindata = {this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
-                />
+              <BinMap
+                orientation={this.state.groupOrientation}
+                mapDetails={this.state.BinMapDetails}
+                selectedGroup={this.state.BinMapGroupDetails}
+                screenClass="frontFlow"
+                bindata={this.state.bindata}
+                pickFrontSelectedBin={this.state.pickFrontSelectedBin}
+              />
               <div className="single-bin udp-flow">
-               {this.state.currentBinWidget  && 
-                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-               }
+                {this.state.currentBinWidget && (
+                  <CurrentActiveBin
+                    selected={true}
+                    details={this.state.PutFrontCurrentBinCount}
+                  />
+                )}
               </div>
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
@@ -931,16 +934,22 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
 
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-              {this.state.SplitScreenFlag && (
-                <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass="frontFlow"
-                  bindata ={this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
-                />
-              )}
+              <BinMap
+                orientation={this.state.groupOrientation}
+                mapDetails={this.state.BinMapDetails}
+                selectedGroup={this.state.BinMapGroupDetails}
+                screenClass="frontFlow"
+                bindata={this.state.bindata}
+                pickFrontSelectedBin={this.state.pickFrontSelectedBin}
+              />
+              <div className="single-bin udp-flow">
+                {this.state.currentBinWidget && (
+                  <CurrentActiveBin
+                    selected={true}
+                    details={this.state.PutFrontCurrentBinCount}
+                  />
+                )}
+              </div>
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
                   <img

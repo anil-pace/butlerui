@@ -813,4 +813,7 @@ function server_messages_list() {
   _("Dock Cart")
   _("Are you sure that all the items in the cart were scanned?")
   _("The following {0} items were found missing")
+  _("OUTER")
+  _("INNER")
+  _("Wrong scan. Please Scan tote")
 }

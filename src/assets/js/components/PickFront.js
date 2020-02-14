@@ -632,6 +632,7 @@ var PickFront = React.createClass({
             <div className="grid-container">
               <Modal cancelClicked={cancelClicked} />
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+              {this.state.SplitScreenFlag && (
                <BinMap
                   orientation={this.state.groupOrientation}
                   mapDetails={this.state.BinMapDetails}
@@ -640,6 +641,7 @@ var PickFront = React.createClass({
                   bindata = {this.state.bindata}
                   pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
                 />
+              )}
               <div className="single-bin udp-flow">
                {this.state.currentBinWidget  && 
                 <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />

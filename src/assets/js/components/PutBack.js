@@ -3,6 +3,7 @@ var React = require('react');
 var PutBackStore = require('../stores/PutBackStore');
 var mainstore = require('../stores/mainstore');
 var Header = require('./Header');
+var Footer = require('./Footer');
 var Navigation = require("./Navigation/Navigation.react");
 var Notification = require("./Notification/Notification");
 var Bins = require("./Bins/Bins.react");
@@ -759,6 +760,7 @@ var PutBack = React.createClass({
   render: function (data) {
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutBackScreenId);
+    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
     return (
       <div className="main">
         <Header />
@@ -766,6 +768,7 @@ var PutBack = React.createClass({
         {this._component}
         {this._modalContent}
         {this._notification}
+        {footer}
       </div>
 
     )

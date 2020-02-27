@@ -38,6 +38,7 @@ var TextEditor = require('./ProductDetails/textEditor')
 var ItemTable = require('./itemTable')
 var CurrentBin = require('./CurrentBin')
 var CurrentActiveBin= require('./CurrentActiveBin');
+var Footer = require('./Footer');
 var checkListOpen = false
 
 function getStateData() {
@@ -2098,13 +2099,14 @@ var PickFront = React.createClass({
   render: function(data) {
     this.getNotificationComponent()
     this.getScreenComponent(this.state.PickFrontScreenId)
-
+    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
     return (
       <div className="main">
         <Header />
         {this._navigation}
         {this._component}
         {this._notification}
+        {footer}
       </div>
     )
   }

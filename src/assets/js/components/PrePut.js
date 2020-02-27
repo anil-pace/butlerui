@@ -14,6 +14,7 @@ var ExceptionHeader = require('./ExceptionHeader');
 var Reconcile = require("./Reconcile");
 var MtuNavigation = require("./mtuNavigation")
 var TabularData = require('./TabularData');
+var Footer = require('./Footer');
 
 function getStateData(){
     return mainstore.getScreenData();
@@ -282,12 +283,14 @@ var PrePut = React.createClass({
   render: function(data){ 
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PrePutScreenId);
+    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
       return (
         <div ref="prePut" className="main">
           <Header />
           {this._navigation}
           {this._component}
           {this._notification}
+          {footer}
         </div> 
        
       )

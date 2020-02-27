@@ -1281,9 +1281,6 @@ var PickFront = React.createClass({
               <div className="gor-exceptionConfirm-text">
                 {_("Please put exception entities in exception area")}
               </div>
-              <div className="gor-bad-quantity-padding">
-                <NumericIndicator execType={appConstants.BAD_QUANTITY} />
-              </div>
               <div className="finish-damaged-barcode align-button">
                 <Button1
                   disabled={false}

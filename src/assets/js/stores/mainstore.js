@@ -60,7 +60,7 @@ _auditModalStatus = false
 _boiConfig = null
 _itemSearchEnabled = false
 _scannerLoginEnabled = false
-_unitConversionAllowed = false
+_unitConversionAllowed = false,
 _uomConversionFactor = 1
   ; (_uomDisplayUnit = ""),
     (_uphActive = false),
@@ -1605,6 +1605,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   isUPHActive: function () {
     return _uphActive
+  },
+  getGamificationUrl: function () {
+    if (_seatData.hasOwnProperty("grafana_footer_url")) {
+      return _seatData.grafana_footer_url
+    }
+    else 
+      return null;
+  },
+  getGamificationExpand: function () {
+    if (_seatData.hasOwnProperty("grafana_main_url")) {
+      return _seatData.grafana_main_url
+    }
+    else 
+      return null;
   },
   setPutUPHThreshold: function (data) {
     const putThresholdArr = data.filter(elem => elem.mode === "put")

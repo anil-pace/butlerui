@@ -389,7 +389,7 @@ var appConstants = {
   SLOT_ID: "Slot ID",
   PREV_LOCATION: "Location",
   CONFIRM_CLOSE_INVOICE: "confirm_close_invoice",
-  INVOICE_REQUIRED: "INVOICE_REQUIRED"
+  INVOICE_REQUIRED: "INVOICE_REQUIRED",
 }
 
 module.exports = appConstants

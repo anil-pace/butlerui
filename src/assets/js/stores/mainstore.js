@@ -1607,11 +1607,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _uphActive
   },
   getGamificationUrl: function () {
-    if (_seatData.hasOwnProperty("grafana_footer_url")) {
-      return _seatData.grafana_footer_url
-    }
-    else 
-      return null;
+    return 'http://192.168.9.248:3002/d/Pc1vem_Wz/boi-footer-sample?tab=visualization&openVizPicker&orgId=1&from=1582618338671&to=1582704738672&var-UserName=admin&theme=light'
+    // if (_seatData.hasOwnProperty("grafana_footer_url")) {
+    //   return _seatData.grafana_footer_url
+    // }
+    // else 
+    //   return null;
   },
   getGamificationExpand: function () {
     if (_seatData.hasOwnProperty("grafana_main_url")) {

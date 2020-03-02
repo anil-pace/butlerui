@@ -162,7 +162,9 @@ var PutBack = React.createClass({
             <div className='grid-container'>
               {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) ? (<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03", invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>) : ""}
               <Modal />
+              <div style={{"zoom": "0.7"}}>
               {binComponent}
+              </div>
               {stageButtonobj}
               {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && (!(screen_id === appConstants.PUT_BACK_STAGE && this.state.ToteId)) ?
                 <div className='cancel-scan'>

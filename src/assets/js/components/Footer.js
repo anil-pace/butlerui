@@ -15,6 +15,15 @@ function getState() {
 var Footer = React.createClass({
   componentDidMount: function() {
     document.getElementById("footer_close").src =  mainstore.getGamificationUrl();
+    setTimeout(function(){
+      var iframe = document.getElementById("footer_close");
+      console.log("=======>" + iframe);
+var elmnt = iframe.contentWindow.document.getElementsByClassName("panel-header grid-drag-handle");
+console.log("=======>" + elmnt);
+elmnt.style.background = "red";
+    
+    }, 10000)
+    
   },
   componentWillMount: function() {
     mainstore.addChangeListener(this.onChange)

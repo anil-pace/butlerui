@@ -1607,7 +1607,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _uphActive
   },
   getGamificationUrl: function () {
-    return 'http://192.168.9.248:3002/d/Pc1vem_Wz/boi-footer-sample?tab=visualization&openVizPicker&orgId=1&from=1582618338671&to=1582704738672&var-UserName=admin&theme=light'
+    return 'http://192.168.9.248:3002/d/Pc1vem_Wz/boi-footer-sample?tab=visualization&openVizPicker&orgId=1&from=1582618131464&to=1582704531464&var-UserName=admin&theme=light&kiosk'
     // if (_seatData.hasOwnProperty("grafana_footer_url")) {
     //   return _seatData.grafana_footer_url
     // }

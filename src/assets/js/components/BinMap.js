@@ -5,17 +5,20 @@ var BinMap = React.createClass({
 
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
+		var bindata = this.props.bindata ? this.props.bindata.ppsbin_list : {};
+		var pickFrontSelectedBin = this.props.pickFrontSelectedBin ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : '';
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
 		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		
-		for(var  key in data){
-			if(data[key] === allresourceConstants.BIN_GROUP_LEFT){
+		if(Object.entries(bindata).length > 0 ){
+			for(var  k in bindata){
+			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT || bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT){
 				maxLeftCount++;
 			}
-			else if(data[key] === allresourceConstants.BIN_GROUP_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT || bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
 				maxRightCount++;
-			}
-		}
+			}}}
+
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
 		maxBlockHeight = 40/maxBlockCount;
 		maxWidth = ((maxBlockHeight/100)*150);
@@ -23,19 +26,16 @@ var BinMap = React.createClass({
 			height:maxBlockHeight+"%",
 			width: maxWidth <= 38 ? maxWidth : 38
 		}
-
-		for(var  k in data){
-			if(data.hasOwnProperty(k)){
-				isSelected = selectedGroup === k ? "sel" : "";
-				if(data[k] === allresourceConstants.BIN_GROUP_LEFT){
-					leftCol.push(<li key={k} style={style} className={isSelected}></li>);
+		if(Object.entries(bindata).length > 0 ){
+		for(let i=0; i<bindata.length; i++){
+				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
+					leftCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
-				else if(data[k] === allresourceConstants.BIN_GROUP_RIGHT){
-					rightCol.push(<li key={k} style={style} className={isSelected}></li>);
+				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
+					rightCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
-
-			}
 		}
+	}
 		switch(leftCol.length){
 			case 1:
 			leftColCount = "one";

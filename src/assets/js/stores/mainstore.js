@@ -4710,6 +4710,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   _getBinFullStatus: function () {
     return _seatData && _seatData.bin_full_allowed ? true : false
   },
+  _getCurrentBinWidget: function () {
+    return _seatData && _seatData.current_bin_widget;
+  },
   _getSelectedPpsBin: function () {
     var ppsbin_list =
       _seatData && _seatData.ppsbin_list ? _seatData.ppsbin_list : []
@@ -6056,6 +6059,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontCancelScan"] = this.cancelScanDetails()
         data["PickFrontReprintEnabled"] = this.isReprintEnabled()
         data["PickFrontReprintPopUp"] = this.isReprintPopUpEnabled()
+        data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
+        data["bindata"] = this.getBinData()
         break
 
       case appConstants.PICK_FRONT_PACKING_BOX:
@@ -6160,7 +6165,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontReprintPopUp"] = this.isReprintPopUpEnabled()
         data["printerInfo"] = this.getPrinterInfo()
         data["isPrinterVisible"] = this.getPrinterVisibility()
-        break
+        data["bindata"] = this.getBinData()
+        data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
+    break
       case appConstants.ITEM_SEARCH:
         data["PickFrontScreenId"] = this.getScreenId()
         data["PutBackScreenId"] = this.getScreenId()

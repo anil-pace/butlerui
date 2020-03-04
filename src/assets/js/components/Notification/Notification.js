@@ -49,16 +49,32 @@ var Notification = React.createClass({
                     }
                 )();
 
-        var notificationMessage = (
-            <div className={appendClass} role="alert">
-                <div className={appendClass1}>
-                    <div className="border-glyp">
-                        <span className={"glyphicon "+appendClass2}></span>
+        if(this.props.extraStyle !== ""){
+            var notificationMessage = (
+                <div style={{"bottom": "6%"}} className={appendClass} role="alert">
+                    <div className={appendClass1}>
+                        <div className="border-glyp">
+                            <span className={"glyphicon "+appendClass2}></span>
+                        </div>
                     </div>
+                    {message}
                 </div>
-                {message}
-            </div>
-        );
+            );
+        }
+        else{
+            var notificationMessage = (
+                <div className={appendClass} role="alert">
+                    <div className={appendClass1}>
+                        <div className="border-glyp">
+                            <span className={"glyphicon "+appendClass2}></span>
+                        </div>
+                    </div>
+                    {message}
+                </div>
+            );
+        }
+
+        
 
         if(this.props.notification.level!=undefined && this.props.notification.level == "error" && errorCode){
             if(this.state.errorPopupDisabled === true || this.state.errorPopupDisabled === undefined || this.state.errorPopupDisabled === null){

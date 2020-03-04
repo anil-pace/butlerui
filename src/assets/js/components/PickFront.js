@@ -91,14 +91,26 @@ var PickFront = React.createClass({
     }
   },
 
-  getNotificationComponent: function() {
+  getNotificationComponent: function(footer) {
     if (this.state.PickFrontNotification != undefined) {
-      this._notification = (
-        <Notification
-          notification={this.state.PickFrontNotification}
-          navMessagesJson={this.props.navMessagesJson}
-        />
-      )
+      if(footer !== ""){
+        this._notification = (
+          <Notification
+            notification={this.state.PickFrontNotification}
+            navMessagesJson={this.props.navMessagesJson}
+          />
+        )
+      }
+      else{
+        this._notification = (
+          <Notification
+            notification={this.state.PickFrontNotification}
+            navMessagesJson={this.props.navMessagesJson}
+            extraStyle={footer}
+          />
+        )
+      }
+      
     } else {
       if ($(".modal.notification-error").is(":visible")) {
         setTimeout(function() {
@@ -177,7 +189,7 @@ var PickFront = React.createClass({
         <Modal />
         <Exception data={this.state.PickFrontExceptionData} action={true} />
         <div className="exception-right" />
-        <div className="cancel-scan">
+        <div className={cancelBtnClass}>
           <Button1
             disabled={false}
             text={_("Cancel Exception")}
@@ -193,7 +205,13 @@ var PickFront = React.createClass({
     CommonActions.getOrphanItemData(data)
   },
 
-  getScreenComponent: function(screen_id) {
+  getScreenComponent: function(screen_id, footer) {
+    var cancelBtnClass = "cancel-scan";
+    var actionBtnClass = "actions";
+    if(footer !== ""){
+      cancelBtnClass = "cancel-scan withFooter"
+      actionBtnClass = "actions withFooter"
+    }
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
         this._navigation = (
@@ -343,7 +361,7 @@ var PickFront = React.createClass({
                 {rackType}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
               </div>
-              <div className="actions">{cancelButton}</div>
+              <div className={actionBtnClass}>{cancelButton}</div>
             </div>
           )
         } else {
@@ -398,7 +416,7 @@ var PickFront = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className="actions">{cancelButton}</div>
+              <div className={actionBtnClass}>{cancelButton}</div>
             </div>
           )
         } else {
@@ -488,7 +506,7 @@ var PickFront = React.createClass({
                 action={appConstants.PRINT_CONFIRM}
                 color={"orange"}
               />
-              <div className="actions">
+              <div className={actionBtnClass}>
                 <Button1
                   disabled={cancelScanDisabled}
                   text={_("Cancel Scan")}
@@ -658,7 +676,7 @@ var PickFront = React.createClass({
                 </div>
               )}
               {binComponent}
-              <div className="actions">
+              <div className={actionBtnClass}>
                 <Button1
                   disabled={cancelScanDisabled}
                   text={_("Cancel Scan")}
@@ -957,7 +975,7 @@ var PickFront = React.createClass({
                 </div>
               )}
               {binComponent}
-              <div className="actions">
+              <div className={cancelBtnClass}>
                 {cancelButton}
                 {reprintButton}
                 {this.state.PickFrontButtonStatus == true &&
@@ -1080,7 +1098,7 @@ var PickFront = React.createClass({
                 </div>
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1147,7 +1165,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1207,7 +1225,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1274,7 +1292,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1324,7 +1342,7 @@ var PickFront = React.createClass({
             <Modal />
             <Exception data={this.state.PickFrontExceptionData} />
             <div className="exception-right">{selected_screen}</div>
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1362,7 +1380,7 @@ var PickFront = React.createClass({
             <Modal />
             <Exception data={this.state.PickFrontExceptionData} />
             <div className="exception-right">{selected_screen}</div>
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1407,7 +1425,7 @@ var PickFront = React.createClass({
                   />
                 </div>
               </div>
-              <div className="cancel-scan">
+              <div className={cancelBtnClass}>
                 <Button1
                   disabled={false}
                   text={_("Cancel Exception")}
@@ -1441,7 +1459,7 @@ var PickFront = React.createClass({
                   />
                 </div>
               </div>
-              <div className="cancel-scan">
+              <div className={cancelBtnClass}>
                 <Button1
                   disabled={false}
                   text={_("Cancel Exception")}
@@ -1689,7 +1707,7 @@ var PickFront = React.createClass({
                 />
               )}
               {binComponent}
-              <div className="actions">
+              <div className={actionBtnClass}>
                 {cancelButton}
                 {actionBtn}
                 {editButton}
@@ -1733,7 +1751,7 @@ var PickFront = React.createClass({
           }
           if (!cancelScanDisabled) {
             cancelButton = (
-              <div className="cancel-scan">
+              <div className={cancelBtnClass}>
                 <Button1
                   disabled={false}
                   text={_("Cancel Scan")}
@@ -1745,7 +1763,7 @@ var PickFront = React.createClass({
               </div>
             )
           } else {
-            cancelButton = <div className="cancel-scan" />
+            cancelButton = <div className={cancelBtnClass} />
           }
           var binComponent = ""
           if (this.state.OrigBinUse) {
@@ -1884,7 +1902,7 @@ var PickFront = React.createClass({
         var cancelButton
         if (cancelScanDisabled) {
           cancelButton = (
-            <div className="cancel-scan">
+            <div className={cancelBtnClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Scan")}
@@ -1931,7 +1949,7 @@ var PickFront = React.createClass({
                   selectedbin={this.state.PickCurrentBin}
                 />
               </div>
-              <div className="actions">{cancelButton}</div>
+              <div className={actionBtnClass}>{cancelButton}</div>
             </div>
           )
         } else {
@@ -1971,7 +1989,7 @@ var PickFront = React.createClass({
                   rackData={this.state.PickFrontRackDetails}
                 />
               </div>
-              <div className="actions">{carryingUnitButton}</div>
+              <div className={actionBtnClass}>{carryingUnitButton}</div>
             </div>
           )
         } else {
@@ -2099,9 +2117,9 @@ var PickFront = React.createClass({
   },
 
   render: function(data) {
-    this.getNotificationComponent()
-    this.getScreenComponent(this.state.PickFrontScreenId)
     var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
+    this.getNotificationComponent(footer)
+    this.getScreenComponent(this.state.PickFrontScreenId, footer);
     return (
       <div className="main">
         <Header />

@@ -22,6 +22,7 @@ var _seatData,
   _peripheralScreen = false,
   _seatMode,
   _seatProfile,
+  _ppsRequestedStatus,
   _username,
   _seatType,
   _seatName,
@@ -3821,6 +3822,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _seatName = data.seat_name
     _seatMode = data.mode
     _seatProfile = data.pps_profile
+    _ppsRequestedStatus = data.pps_requested_status
     _username = data.user_loggedin ? data.user_loggedin : ""
     _seatType = data.seat_type
     _currentSeat = data.mode + "_" + data.seat_type
@@ -3988,6 +3990,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getPpsProfile: function () {
     return _seatProfile
+  },
+  getPpsRequestedStatus: function(){
+    if (_seatData.hasOwnProperty("pps_requested_status")) {
+      return _ppsRequestedStatus
+    }
   },
   getUsername: function () {
     return _username;
@@ -5421,6 +5428,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data["SeatType"] = this.getSeatType()
     data["ppsMode"] = this.getPpsMode()
     data["ppsProfile"] = this.getPpsProfile()
+    data["ppsRequestedStatus"] = this.getPpsRequestedStatus()
     data["username"] = this.getUsername()
     data["isUPHActive"] = this.isUPHActive()
 

@@ -16,6 +16,7 @@ function getState() {
     scanAllowed: mainstore.getScanAllowedStatus(),
     ppsMode: mainstore.getPpsMode(),
     ppsProfile: mainstore.getPpsProfile(),
+    ppsRequestedStatus: mainstore.getPpsRequestedStatus(),
     ppsId: mainstore.getSeatName(),
     uphCount: mainstore.getUPHCount(),
     isUPHActive: mainstore.isUPHActive(),
@@ -187,6 +188,7 @@ var Header = React.createClass({
     CommonActions.postDataToTower(data)
   },
   render: function() {
+    var ppsRequestedStatus=""
     var logoutClass
     var cssClass
     var disableScanClass
@@ -215,7 +217,12 @@ var Header = React.createClass({
     var isFrontScreen = this.state.frontScreen === appConstants.FRONT
     const { uphThreshold, uphCount, ppsMode } = this.state
     const isAuditMode = ppsMode.toUpperCase() === "AUDIT" ? true : false
-
+    if(this.state.ppsRequestedStatus !== "undefined"){
+      ppsRequestedStatus = (<div className="ppsMode">
+      PPS Requested Status : {this.state.ppsRequestedStatus}
+    </div>)
+      
+    }
     return (
       <div>
         <div className="head">
@@ -229,6 +236,8 @@ var Header = React.createClass({
           <div className="ppsMode">
             PPS Profile : {this.state.ppsProfile}
           </div>
+          
+          {ppsRequestedStatus}
           {this.state.isUPHActive && isFrontScreen && !isAuditMode ? (
             <UPHIndicator
               uphCount={uphCount}

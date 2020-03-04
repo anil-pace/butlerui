@@ -884,7 +884,11 @@ var PutFront = React.createClass({
                 <div className="msu-send-container">
                 <span style ={{marginBottom: "12px", marginLeft:"12%",  marginRight:"10%"}} > 
                  <div className='rightWrapper'>
-                   {this.state.PutFrontScanDetails ? <KQ scanDetails={this.state.PutFrontScanDetails} itemUid ={this.state.itemUid}/> : ""}
+                  { 
+                    this.state.isKQEnabled?
+                      <KQ scanDetails={this.state.PutFrontScanDetails} itemUid ={this.state.itemUid}/>
+                      : ''  
+                  }
                   </div>
                   </span>
                   <div className="msu-send-button" style={{"marginLeft": "10%"}}>

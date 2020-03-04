@@ -481,6 +481,7 @@ var serverMessages = {
   "UdpF.H.005": "Wait for MSU",
   "UdpF.H.006": "Scan item",
   "UdpF.H.007": "Put entity in slot and scan slot",
+  "UdpF.H.008": "Scan Tote",
   "Search.H.001": "Scan entity in slot and confirm",
   "Search.H.002": "Move {0} excess item to IRT bin and confirm",
   "Search.H.003": "Move {0} excess item to IRT bin and scan IRT bin",
@@ -503,6 +504,10 @@ var serverMessages = {
   //ud-Non-staging
   "UdpF.S.002": {
     textToDisplay: "Scan Entity",
+    screen_id: ""
+  },
+  "UdpF.S.003": {
+    textToDisplay: "Scan Tote",
     screen_id: ""
   },
   "UdpF.S.004": {

@@ -20,6 +20,7 @@ var Bins = React.createClass({
         return i;
     },
     render: function() {
+        var binsClass = this.props.extraStyle;
         if(this.props.binsData["structure"]){
         this._calculateAndSetBinDimensions(this.props.binsData["structure"]);
     }
@@ -28,7 +29,7 @@ var Bins = React.createClass({
         var scrnId = this.props.screenId;
         var self = this;
         return (
-                 <div className="bins">
+                 <div className={binsClass}>
                     {
                         (function(){
                             var l =[]; 

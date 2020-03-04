@@ -208,9 +208,13 @@ var PickFront = React.createClass({
   getScreenComponent: function(screen_id, footer) {
     var cancelBtnClass = "cancel-scan";
     var actionBtnClass = "actions";
+    var binsFlexClass = "bins-flex";
+    var binsClass = "bins";
     if(footer !== ""){
       cancelBtnClass = "cancel-scan withFooter"
       actionBtnClass = "actions withFooter"
+      binsFlexClass = "bins-flex activeFooter"
+      binsClass = "bins activeFooter"
     }
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
@@ -495,6 +499,7 @@ var PickFront = React.createClass({
                 <Bins
                   binsData={this.state.PickCurrentBin}
                   screenId={this.state.PickFrontScreenId}
+                  extraStyle = {binsClass}
                 />
                 <div className="text">{_("CURRENT BIN")}</div>
               </div>
@@ -610,6 +615,7 @@ var PickFront = React.createClass({
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
                     seatType={this.state.SeatType}
+                    extraStyle = {binsFlexClass}
                   />
                   <WrapperSplitRoll
                     scanDetails={this.state.PickFrontScanDetails}
@@ -624,6 +630,7 @@ var PickFront = React.createClass({
                   <Bins
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
+                    extraStyle = {binsClass}
                   />
                   <Wrapper
                     scanDetails={this.state.PickFrontScanDetails}
@@ -747,6 +754,7 @@ var PickFront = React.createClass({
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
                     seatType={this.state.SeatType}
+                    extraStyle = {binsFlexClass}
                   />
                   <PackingDetails
                     boxTypeInfo={this.state.PickFrontPackingBoxType}
@@ -759,6 +767,7 @@ var PickFront = React.createClass({
                   <Bins
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
+                    extraStyle = {binsClass}
                   />
                   <PackingDetails
                     boxTypeInfo={this.state.PickFrontPackingBoxType}
@@ -935,6 +944,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
+                extraStyle = {binsFlexClass}
               />
             )
           } else {
@@ -943,6 +953,7 @@ var PickFront = React.createClass({
                 <Bins
                   binsData={this.state.PickFrontBinData}
                   screenId={appConstants.PICK_FRONT_PPTL_PRESS}
+                  extraStyle = {binsClass}
                 />
               </div>
             )
@@ -1632,6 +1643,7 @@ var PickFront = React.createClass({
                   binsData={this.state.PickFrontBinData}
                   screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN}
                   seatType={this.state.SeatType}
+                  extraStyle = {binsFlexClass}
                 />
                 <WrapperSplitRoll
                   scanDetails={this.state.PickFrontScanDetails}
@@ -1646,6 +1658,7 @@ var PickFront = React.createClass({
                 <Bins
                   binsData={this.state.PickFrontBinData}
                   screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN}
+                  extraStyle = {binsClass}
                 />
                 <Wrapper
                   scanDetails={this.state.PickFrontScanDetails}
@@ -1772,6 +1785,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
+                extraStyle = {binsFlexClass}
               />
             )
           } else {
@@ -1780,6 +1794,7 @@ var PickFront = React.createClass({
                 <Bins
                   binsData={this.state.PickFrontBinData}
                   screenId={appConstants.PICK_FRONT_PPTL_PRESS}
+                  extraStyle = {binsClass}
                 />
               </div>
             )
@@ -1841,6 +1856,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={screen_id}
                 seatType={this.state.SeatType}
+                extraStyle = {binsFlexClass}
               />
             )
           } else {
@@ -1849,6 +1865,7 @@ var PickFront = React.createClass({
                 <Bins
                   binsData={this.state.PickFrontBinData}
                   screenId={screen_id}
+                  extraStyle = {binsClass}
                 />
               </div>
             )

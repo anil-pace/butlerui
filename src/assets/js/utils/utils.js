@@ -736,7 +736,7 @@ var putSeatData = function(data) {
     "logout_allowed": false,
     "seat_type": "front",
     "time_stamp": "2020-01-20T06:43:20Z",
-    //  "grafana_footer_url": "http://192.168.9.248:3002/d/Pc1vem_Wz2/boi-footer-sample-put?orgId=1&theme=light&refresh=10s&var-UserName=default_user_name&var-StartTime=1583280000000000000&kiosk",
+    
     "ppsbin_list": [{
       "breadth": "200",
       "direction": "center",
@@ -945,7 +945,8 @@ var putSeatData = function(data) {
     "api_version": "1",
     "is_idle": false,
     "uph_count": 0,
-    // "grafana_main_url": "http://192.168.9.248:3002/d/MIfSqjwZz2/boi-sample-put?orgId=1&theme=light&refresh=10s&var-UserName=default_user_name&var-StartTime=1583280000000000000&kiosk",
+    "grafana_footer_url": "http://192.168.9.248:3002/d/Pc1vem_Wz2/boi-footer-sample-put?orgId=1&theme=light&refresh=10s&var-UserName=default_user_name&var-StartTime=1583280000000000000&kiosk",
+    "grafana_main_url": "http://192.168.9.248:3002/d/MIfSqjwZz2/boi-sample-put?orgId=1&theme=light&refresh=10s&var-UserName=default_user_name&var-StartTime=1583280000000000000&kiosk",
     "header_msge_list": [{
       "level": "info",
       "code": "PkF.H.007",

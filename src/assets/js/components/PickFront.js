@@ -181,9 +181,13 @@ var PickFront = React.createClass({
       checkListOpen = false
     }
   },
-  getExceptionComponent: function() {
+  getExceptionComponent: function(footer) {
     var _rightComponent = ""
     this._navigation = ""
+    var cancelBtnClass = "cancel-scan";
+    if(footer !== ""){
+      cancelBtnClass = "cancel-scan withFooter"
+    }
     return (
       <div className="grid-container exception">
         <Modal />
@@ -272,7 +276,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -312,7 +316,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
       case appConstants.PICK_FRONT_CONTAINER_BREAK:
@@ -371,7 +375,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -426,7 +430,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -452,7 +456,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -525,7 +529,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
 
         break
@@ -708,7 +712,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -796,7 +800,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -1002,7 +1006,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -1053,7 +1057,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -1602,7 +1606,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
       case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
@@ -1735,7 +1739,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
       case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
@@ -1849,7 +1853,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
       case appConstants.PICK_FRONT_BIN_PRINTOUT:
@@ -1913,7 +1917,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -1976,7 +1980,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -2016,7 +2020,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -2061,7 +2065,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -2095,7 +2099,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 
@@ -2130,7 +2134,7 @@ var PickFront = React.createClass({
             </div>
           )
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent(footer)
         }
         break
 

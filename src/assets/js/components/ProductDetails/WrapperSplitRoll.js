@@ -19,8 +19,9 @@ var Wrapper = React.createClass({
   onChange: function(){ 
   },
   render: function(data){
+    var kqClass = this.props.extraStyle;
       return (
-        <div className='wrapper-flexible'>
+        <div className={kqClass}>
             {this.props.productDetails && this.props.productDetails.length?(<ProductInfo productDetails={this.props.productDetails}/>):(<div className='product-details-empty'></div>)}
             <KQ scanDetails={this.props.scanDetails} itemUid={this.props.itemUid} />
         </div>    

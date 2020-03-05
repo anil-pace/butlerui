@@ -210,11 +210,13 @@ var PickFront = React.createClass({
     var actionBtnClass = "actions";
     var binsFlexClass = "bins-flex";
     var binsClass = "bins";
+    var kqClass = "wrapper-flexible";
     if(footer !== ""){
       cancelBtnClass = "cancel-scan withFooter"
       actionBtnClass = "actions withFooter"
       binsFlexClass = "bins-flex activeFooter"
       binsClass = "bins activeFooter"
+      var kqClass = "wrapper-flexible kqWithFooter";
     }
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
@@ -592,6 +594,7 @@ var PickFront = React.createClass({
                     scanDetails={this.state.PickFrontScanDetails}
                     productDetails={this.state.PickFrontProductDetails}
                     itemUid={this.state.PickFrontItemUid}
+                    extraStyle={kqClass}
                   />
                 </div>
               )
@@ -621,6 +624,7 @@ var PickFront = React.createClass({
                     scanDetails={this.state.PickFrontScanDetails}
                     productDetails={this.state.PickFrontProductDetails}
                     itemUid={this.state.PickFrontItemUid}
+                    extraStyle={kqClass}
                   />
                 </div>
               )
@@ -728,6 +732,7 @@ var PickFront = React.createClass({
                     scanDetails={this.state.PickFrontScanDetails}
                     productDetails={this.state.PickFrontProductDetails}
                     itemUid={this.state.PickFrontItemUid}
+                    extraStyle={kqClass}
                   />
                 </div>
               )
@@ -1649,6 +1654,7 @@ var PickFront = React.createClass({
                   scanDetails={this.state.PickFrontScanDetails}
                   productDetails={this.state.PickFrontProductDetails}
                   itemUid={this.state.PickFrontItemUid}
+                  extraStyle={kqClass}
                 />
               </div>
             )

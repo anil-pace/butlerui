@@ -160,11 +160,11 @@ var PutBack = React.createClass({
           }
           this._component = (
             <div className='grid-container'>
-              {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) ? (<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03", invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.InvoiceRequired.invoiceId}</span></div>) : ""}
+              {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) ? (<div className="gor-invoice-put-back">{utils.frntStringTransform("FRNT.PBI.03", invoiceStringArg)} <span className="gor-invoice-put-back-h2">{this.state.ToteId}</span></div>) : ""}
               <Modal />
               {binComponent}
               {stageButtonobj}
-              {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && ((screen_id === appConstants.PUT_BACK_STAGE && this.state.ToteId)) ?
+              {(this.state.InvoiceRequired && this.state.InvoiceRequired.invoiceFlag) && ((screen_id === appConstants.PUT_BACK_STAGE)) ?
                 <div className='cancel-scan'>
                   <Button1 disabled={false} text={utils.frntStringTransform("FRNT.PBI.02", invoiceStringArgExitBtn)} module={appConstants.PUT_BACK} action={appConstants.EXIT_INVOICE} color={"black"} />
                 </div> : ""}

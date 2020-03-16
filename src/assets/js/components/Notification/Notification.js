@@ -22,17 +22,26 @@ var Notification = React.createClass({
             var appendClass = 'notify-error';
             var appendClass1 = 'error-icon';
             var appendClass2 = 'glyphicon-remove';
+            if(this.props.withFooter === true){
+                var appendClass = 'notify-error withFooter';
+            }
         }
          
         else if(this.props.notification.level==="warning"){
              var appendClass = 'notify-warning';
              var appendClass1 = 'warning-icon';
              var appendClass2 = 'glyphicon-alert';
+             if(this.props.withFooter === true){
+                var appendClass = 'notify-warning withFooter';
+            }
          }
         else{
             var appendClass = 'notify';
             var appendClass1 = 'success-icon';
             var appendClass2 = 'glyphicon-ok';
+            if(this.props.withFooter === true){
+                var appendClass = 'notify withFooter';
+            }
         }
 
         let message=(function(){

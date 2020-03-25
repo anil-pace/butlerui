@@ -396,9 +396,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     $.ajax({
       type: "GET",
       url:
-        configConstants.INTERFACE_IP +
+        configConstants.CORE_IP +
+        appConstants.PF + 
         appConstants.API +
-        appConstants.PPS_SEATS +
+        appConstants.PPS +
+        "/" +
         seat_name +
         "/" +
         appConstants.PERIPHERALS +
@@ -465,13 +467,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     var method = method
     if (method == "POST") {
       url =
-        configConstants.INTERFACE_IP +
+        configConstants.CORE_IP +
+        appConstants.PF +
         appConstants.API +
-        appConstants.PPS_SEATS +
-        seat_name +
+        appConstants.PPS + 
         "/" +
-        appConstants.PERIPHERALS +
-        appConstants.ADD
+        data.pps_bin_id +
+        "/" +
+        seat_name +
+        appConstants.ADD_PPTLS +
+        "?update=" +
+        true
     } else {
       url =
         configConstants.INTERFACE_IP +

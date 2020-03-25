@@ -1614,6 +1614,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     else 
       return null;
   },
+  getSystemEmergency: function () {
+    if (_seatData.hasOwnProperty("ops_paused")) {
+      return _seatData.ops_paused
+    }
+    else 
+      return null;
+  },
   getGamificationExpand: function () {
     if (_seatData.hasOwnProperty("grafana_main_url")) {
       return _seatData.grafana_main_url

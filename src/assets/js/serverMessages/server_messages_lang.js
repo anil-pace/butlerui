@@ -810,4 +810,7 @@ function server_messages_list() {
   _("Call for Help")
   _("{0} unexpected. Scanned {1} does not exist.")
   _("Scan Tote")
+  _("Operation paused")
+  _("Butler operations have been halted.")
+  _("Please wait for the operation to resume or contact your supervisor for further steps.")
 }

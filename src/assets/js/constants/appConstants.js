@@ -134,6 +134,7 @@ var appConstants = {
   PPTL_PRESS: "PPTL_PRESS",
   SET_PICK_FRONT_DATA: "SET_PICK_FRONT_DATA",
   PUT_FRONT_EXCEPTION_WAREHOUSE_FULL: "put_front_exception_warehouse_full",
+  EXPECTED_QUANTITY: "expected_quantity",
   GOOD_QUANTITY: "good_quantity",
   BAD_QUANTITY: "bad_quantity",
   MISSING_QUANTITY: "Missing_quntity",

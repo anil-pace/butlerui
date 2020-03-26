@@ -435,7 +435,7 @@ var PutFront = React.createClass({
         var UnscannableNI;
         if (!this.state.UnmarkedContainer) {
           UnscannableNI = (<div className="gor-NI-wrapper">
-            <hr />
+            <hr style={{"margin":"10px 0 10px 0"}}/>
             <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
             <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
           </div>);
@@ -453,14 +453,20 @@ var PutFront = React.createClass({
 
               <div className="main-container exception1 displayBlocked">
 
+              <div className="gor-NI-wrapper">
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <div className="exception-qty-title">{_("Expected Quantity")}</div>
+                  <NumericIndicator execType={appConstants.EXPECTED_QUANTITY} />
+                </div>
+
                 <div className="gor-NI-wrapper">
-                  <hr />
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
                   <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr />
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
                   <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType={appConstants.MISSING_QUANTITY} />
                 </div>
@@ -468,10 +474,10 @@ var PutFront = React.createClass({
                 {UnscannableNI}
 
                 <div className="gor-NI-wrapper">
-                  <hr />
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
                   <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType={appConstants.DAMAGED_QUANTITY} />
-                  <hr />
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
                 </div>
 
               </div>

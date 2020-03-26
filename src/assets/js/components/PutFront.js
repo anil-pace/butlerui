@@ -784,17 +784,14 @@ var PutFront = React.createClass({
         var buttonActivateFlag = mainstore.getExeptionQuanity();
         var UnscannableNI;
         if (!this.state.UnmarkedContainer) {
-          UnscannableNI = (
-            <div className="gor-NI-wrapper">
-              <hr />
-              <div className="exception-qty-title">
-                {_("Unscannable Quantity")}
-              </div>
-              <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
-            </div>
-          );
-        } else {
-          UnscannableNI = <div></div>;
+          UnscannableNI = (<div className="gor-NI-wrapper">
+            <hr style={{"margin":"10px 0 10px 0"}}/>
+            <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
+            <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
+          </div>);
+        }
+        else {
+          UnscannableNI = (<div></div>);
         }
         this._navigation = "";
         this._component = (
@@ -805,31 +802,32 @@ var PutFront = React.createClass({
               <ExceptionHeader data={this.state.PutFrontServerNavData} />
 
               <div className="main-container exception1 displayBlocked">
+
+              <div className="gor-NI-wrapper">
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <div className="exception-qty-title">{_("Expected Quantity")}</div>
+                  <NumericIndicator execType={appConstants.EXPECTED_QUANTITY} />
+                </div>
+
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Good Quantity")}
-                  </div>
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Missing Quantity")}
-                  </div>
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType={appConstants.MISSING_QUANTITY} />
                 </div>
 
                 {UnscannableNI}
 
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Damaged Quantity")}
-                  </div>
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType={appConstants.DAMAGED_QUANTITY} />
-                  <hr />
+                  <hr style={{"margin":"10px 0 10px 0"}}/>
                 </div>
               </div>
               <div className="finish-damaged-barcode padding">

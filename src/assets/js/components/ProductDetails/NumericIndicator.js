@@ -386,6 +386,7 @@ var NumericIndicator = React.createClass({
   render: function (data) {
     var inputType = this.props.inputType ? this.props.inputType : "text"
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
+      this.checkKqAllowed();
       return (
         <div
           className={
@@ -396,7 +397,8 @@ var NumericIndicator = React.createClass({
         >
           <div>
             <span
-              className={this._appendClassDown + " hideMe"}
+              //className={this._appendClassDown + " hideMe"}
+              className={this._appendClassDown}
               action={this.props.action}
               onClick={this.decrementValue}
               onMouseDown={this.decrementValue}
@@ -404,13 +406,15 @@ var NumericIndicator = React.createClass({
             <input
               disabled
               id="keyboard"
-              value={this.state.goodQuantity}
+              value={this.state.value}
+              //value={this.state.goodQuantity}
               type={inputType}
               name="quantity"
               className={"gor-quantity-text gor_" + this.props.execType}
             />
             <span
-              className={this._appendClassUp + " hideMe"}
+              //className={this._appendClassUp + " hideMe"}
+              className={this._appendClassUp}
               action={this.props.action}
               onClick={this.incrementValue}
               onMouseDown={this.incrementValue}

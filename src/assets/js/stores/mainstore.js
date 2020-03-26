@@ -3840,20 +3840,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   setCurrentSeat: function (data) {
     //showModal = false;
-    _action = undefined
-    _binId = undefined
-    _enableException = false
-    _putFrontExceptionScreen = "good"
-    _goodQuantity = 0
-    _pickQuantity = 0
-    _putQuantity = 0
-    _damagedQuantity = 0
-    _unscannableQuantity = 0
-    _missingQuantity = 0
-    _activeException = null
-    _showSpinner = false
-    _enableException = false
-    _seatData = data
+    _action = undefined;
+    _binId = undefined;
+    _enableException = false;
+    _putFrontExceptionScreen = 'good';
+    _goodQuantity = 0;
+    _pickQuantity = 0;
+    _putQuantity = 0;
+    _damagedQuantity = 0;
+    _unscannableQuantity = 0;
+    _missingQuantity = 0;
+    _activeException = null;
+    _showSpinner = false;
+    _enableException = false;
+    _seatData = data;
     if (
       _seatData.screen_id !== appConstants.PICK_FRONT_MORE_ITEM_SCAN &&
       _seatData.screen_id !== appConstants.PICK_FRONT_PPTL_PRESS &&

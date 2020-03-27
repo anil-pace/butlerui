@@ -33,6 +33,7 @@ var CheckList = require('./CheckList.js')
 var utils = require('../utils/utils.js')
 var PackingDetails = require('./PrdtDetails/PackingDetails.js')
 var SplitPPS = require('./SplitPPS')
+var SplitPPS1 = require('./SplitPPS1')
 var PreviousDetails = require('./PreviousDetails')
 var TextEditor = require('./ProductDetails/textEditor')
 var ItemTable = require('./itemTable')
@@ -222,9 +223,9 @@ var PickFront = React.createClass({
             />
           )
         }
-        if (this.state.BinMapDetails && this.state.rollCageStatus && (this.state.UndockAwaited.length > 0 && this.state.DockedGroup.length > 0)) {
+        if (this.state.BinMapDetails && this.state.rollCageStatus) {
           loader = (
-            <SplitPPS
+            <SplitPPS1
               orientation={this.state.groupOrientation}
               groupInfo={this.state.BinMapDetails}
               undockAwaited={this.state.UndockAwaited}

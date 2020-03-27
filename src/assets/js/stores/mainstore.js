@@ -275,6 +275,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _goodQuantity
     }
   },
+  getExpectedQuantity: function () {
+    if (_seatData.hasOwnProperty("put_quantity")) {
+      _putQuantity = _seatData.put_quantity
+      return _putQuantity
+    }
+  },
   getPickedQuantity: function () {
     if (_seatData.hasOwnProperty('pick_quantity')) {
       _pickQuantity = _seatData.pick_quantity;
@@ -3805,6 +3811,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     _putFrontExceptionScreen = 'good';
     _goodQuantity = 0;
     _pickQuantity = 0;
+    _putQuantity = 0;
     _damagedQuantity = 0;
     _unscannableQuantity = 0;
     _missingQuantity = 0;

@@ -35,6 +35,7 @@ var NumericIndicator = React.createClass({
     return {
       goodQuantity: mainstore.getGoodQuantity(),
       pickedQuantity: mainstore.getPickedQuantity(),
+      putQuantity: mainstore.getExpectedQuantity(),
       value: this._qty
     }
   },
@@ -404,6 +405,40 @@ var NumericIndicator = React.createClass({
               disabled
               id="keyboard"
               value={this.state.goodQuantity}
+              type={inputType}
+              name="quantity"
+              className={"gor-quantity-text gor_" + this.props.execType}
+            />
+            <span
+              className={this._appendClassUp + " hideMe"}
+              action={this.props.action}
+              onClick={this.incrementValue}
+              onMouseDown={this.incrementValue}
+            ></span>
+          </div>
+        </div>
+      )
+    }
+    else if (this.props.execType === appConstants.EXPECTED_QUANTITY) {
+      return (
+        <div
+          className={
+            this.props.Formattingclass
+              ? "indicator-wrapper " + this.props.Formattingclass
+              : "indicator-wrapper"
+          }
+        >
+          <div>
+            <span
+              className={this._appendClassDown + " hideMe"}
+              action={this.props.action}
+              onClick={this.decrementValue}
+              onMouseDown={this.decrementValue}
+            ></span>
+            <input
+              disabled
+              id="keyboard"
+              value={this.state.putQuantity}
               type={inputType}
               name="quantity"
               className={"gor-quantity-text gor_" + this.props.execType}

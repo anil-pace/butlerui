@@ -23,6 +23,7 @@ var PackingDetails = require('./PrdtDetails/PackingDetails.js');
 var utils = require("../utils/utils");
 var CheckList = require("./CheckList.js");
 var SplitPPS = require('./SplitPPS.js');
+var SplitPPS1 = require('./SplitPPS1.js');
 var Footer = require('./Footer');
 
 function getStateData() {
@@ -212,7 +213,7 @@ var PickBack = React.createClass({
                 />
               </div>
 
-              <SplitPPS
+              <SplitPPS1
                 displayBinId={true}
                 groupInfo={this.state.udpBinMapDetails}
                 docked={this.state.DockedGroup}

@@ -1002,7 +1002,7 @@ var PickFront = React.createClass({
               <Modal />
               <div className="main-container">
                 {this.state.BinMapDetails && this.state.rollCageStatus ? (
-                  <SplitPPS
+                  <SplitPPS1
                     orientation={this.state.groupOrientation}
                     groupInfo={this.state.BinMapDetails}
                     undockAwaited={this.state.UndockAwaited}

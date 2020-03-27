@@ -222,7 +222,7 @@ var PickFront = React.createClass({
             />
           )
         }
-        if (this.state.BinMapDetails && this.state.rollCageStatus) {
+        if (this.state.BinMapDetails && this.state.rollCageStatus && (this.state.UndockAwaited.length > 0 && this.state.DockedGroup.length > 0)) {
           loader = (
             <SplitPPS
               orientation={this.state.groupOrientation}

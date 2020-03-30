@@ -810,4 +810,8 @@ function server_messages_list() {
   _("Call for Help")
   _("{0} unexpected. Scanned {1} does not exist.")
   _("Scan Tote")
+  _("No space currently available for this SKU")
+  _("No space currently available for this SKU, Remove all entities from bin number and press PPTL")
+  _("No space currently available for this SKU, Remove all entities from bin & press PPTL")
+  _("Warehouse Full! Remove all entities from bin number and press PPTL.")
 }

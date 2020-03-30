@@ -32,7 +32,7 @@ var serverMessages = {
   "PtB.E.009": "Bin selected for put. Cannot be staged",
   "PtB.E.010": "SKU not present in database. Put into IRT bin.",
   "PtB.E.011":
-    "Entities cannot be accommodated! Remove all entities from bin {0} and press PPTL",
+    "Warehouse Full! Remove all entities from bin number and press PPTL.",
   "PtB.E.012": "No free bins. Please scan later",
   "PtB.E.013": "Wrong PPTL pressed. Please try another",
   "PtB.E.014":
@@ -53,6 +53,7 @@ var serverMessages = {
   "PtB.E.028":
     "Excess quantity detected, remove '{0}' quantity and confirm again",
   "PtB.E.029": "Invalid Scan. Invoice open on another PPS",
+  "PtB.E.030": "No space currently available for this SKU, Remove all entities from bin number and press PPTL",
   "PtF.H.001": "Place Entity in Slot and Scan More",
   "PtF.H.002": "Scan Slot to Confirm",
   "PtF.H.003": "Wait for MSU",
@@ -74,6 +75,8 @@ var serverMessages = {
   "PtF.H.020": "Warehouse Full Remove all entities from bin & press PPTL",
   "PtF.H.021": "Scan IRT Bin",
   "PtF.H.022": "Scan {0} damaged entities",
+  "PtF.H.023": "No space currently available for this SKU",
+  "PtF.H.024": "No space currently available for this SKU, Remove all entities from bin & press PPTL",
   "PkF.H.001": "Wait for MSU",
   "PkF.H.002": "Confirm MSU Release",
   "PkF.H.003": "Scan Slot",

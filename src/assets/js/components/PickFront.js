@@ -92,14 +92,15 @@ var PickFront = React.createClass({
     }
   },
 
-  getNotificationComponent: function() {
+  getNotificationComponent: function(footer) {
     if (this.state.PickFrontNotification != undefined) {
-      this._notification = (
-        <Notification
-          notification={this.state.PickFrontNotification}
-          navMessagesJson={this.props.navMessagesJson}
-        />
-      )
+        this._notification = (
+          <Notification
+            notification={this.state.PickFrontNotification}
+            navMessagesJson={this.props.navMessagesJson}
+            withFooter = {footer !== "" ? true :false}
+          />
+        )
     } else {
       if ($(".modal.notification-error").is(":visible")) {
         setTimeout(function() {
@@ -178,7 +179,7 @@ var PickFront = React.createClass({
         <Modal />
         <Exception data={this.state.PickFrontExceptionData} action={true} />
         <div className="exception-right" />
-        <div className="cancel-scan">
+        <div className={exceptionCancelScanClass}>
           <Button1
             disabled={false}
             text={_("Cancel Exception")}
@@ -194,7 +195,17 @@ var PickFront = React.createClass({
     CommonActions.getOrphanItemData(data)
   },
 
-  getScreenComponent: function(screen_id) {
+  getScreenComponent: function(screen_id, footer) {
+    var actionClass = "actions";
+    var binsFlexClass = "binsFlexWrapperContainer";
+    var mainContainerClass = "main-container";
+    var exceptionCancelScanClass = "cancel-scan";
+    if(footer !== ""){
+      binsFlexClass = "binsFlexWrapperContainer-with-footer";
+      actionClass = "actions actions-with-footer";
+      mainContainerClass = "main-container main-container-with-footer";
+      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer"
+    }
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
         this._navigation = (
@@ -340,11 +351,11 @@ var PickFront = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal />
-              <div className="main-container">
+              <div className={mainContainerClass}>
                 {rackType}
                 <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
               </div>
-              <div className="actions">{cancelButton}</div>
+              <div className={actionClass}>{cancelButton}</div>
             </div>
           )
         } else {
@@ -399,7 +410,7 @@ var PickFront = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className="actions">{cancelButton}</div>
+              <div className={actionClass}>{cancelButton}</div>
             </div>
           )
         } else {
@@ -489,7 +500,7 @@ var PickFront = React.createClass({
                 action={appConstants.PRINT_CONFIRM}
                 color={"orange"}
               />
-              <div className="actions">
+              <div className={actionClass}>
                 <Button1
                   disabled={cancelScanDisabled}
                   text={_("Cancel Scan")}
@@ -564,7 +575,7 @@ var PickFront = React.createClass({
           if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
             if (this.state.OrigBinUse) {
               binComponent = (
-                <div className="binsFlexWrapperContainer">
+                <div className={binsFlexClass}>
                   <div className="workingTableFlex" />
                   <WrapperSplitRoll
                     scanDetails={this.state.PickFrontScanDetails}
@@ -575,7 +586,7 @@ var PickFront = React.createClass({
               )
             } else {
               binComponent = (
-                <div className="main-container">
+                <div className={mainContainerClass}>
                   <div className="workingTable" />
                   <Wrapper
                     scanDetails={this.state.PickFrontScanDetails}
@@ -588,11 +599,12 @@ var PickFront = React.createClass({
           } else {
             if (this.state.OrigBinUse) {
               binComponent = (
-                <div className="binsFlexWrapperContainer">
+                <div className={binsFlexClass}>
                   <BinsFlex
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
                     seatType={this.state.SeatType}
+                    withFooter = {footer !== "" ? true :false}
                   />
                   <WrapperSplitRoll
                     scanDetails={this.state.PickFrontScanDetails}
@@ -603,7 +615,7 @@ var PickFront = React.createClass({
               )
             } else {
               binComponent = (
-                <div className="main-container">
+                <div className={mainContainerClass}>
                   <Bins
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
@@ -659,7 +671,7 @@ var PickFront = React.createClass({
                 </div>
               )}
               {binComponent}
-              <div className="actions">
+              <div className={actionClass}>
                 <Button1
                   disabled={cancelScanDisabled}
                   text={_("Cancel Scan")}
@@ -698,7 +710,7 @@ var PickFront = React.createClass({
           if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
             if (this.state.OrigBinUse) {
               binComponent = (
-                <div className="binsFlexWrapperContainer">
+                <div className={binsFlexClass}>
                   <div className="workingTableFlex" />
                   <WrapperSplitRoll
                     scanDetails={this.state.PickFrontScanDetails}
@@ -723,8 +735,7 @@ var PickFront = React.createClass({
             if (this.state.OrigBinUse) {
               binComponent = (
                 <div
-                  className="binsFlexWrapperContainer"
-                  style={{ display: "flex" }}
+                  className={binsFlexClass}
                 >
                   <BinsFlex
                     binsData={this.state.PickFrontBinData}
@@ -918,6 +929,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
+                withFooter = {footer !== "" ? true :false}
               />
             )
           } else {
@@ -957,7 +969,7 @@ var PickFront = React.createClass({
                 </div>
               )}
               {binComponent}
-              <div className="actions">
+              <div className={actionClass}>
                 {cancelButton}
                 {reprintButton}
                 {this.state.PickFrontButtonStatus == true &&
@@ -1080,7 +1092,7 @@ var PickFront = React.createClass({
                 </div>
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1147,7 +1159,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1207,7 +1219,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1274,7 +1286,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1324,7 +1336,7 @@ var PickFront = React.createClass({
             <Modal />
             <Exception data={this.state.PickFrontExceptionData} />
             <div className="exception-right">{selected_screen}</div>
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1362,7 +1374,7 @@ var PickFront = React.createClass({
             <Modal />
             <Exception data={this.state.PickFrontExceptionData} />
             <div className="exception-right">{selected_screen}</div>
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Exception")}
@@ -1407,7 +1419,7 @@ var PickFront = React.createClass({
                   />
                 </div>
               </div>
-              <div className="cancel-scan">
+              <div className={exceptionCancelScanClass}>
                 <Button1
                   disabled={false}
                   text={_("Cancel Exception")}
@@ -1441,7 +1453,7 @@ var PickFront = React.createClass({
                   />
                 </div>
               </div>
-              <div className="cancel-scan">
+              <div className={exceptionCancelScanClass}>
                 <Button1
                   disabled={false}
                   text={_("Cancel Exception")}
@@ -1609,7 +1621,7 @@ var PickFront = React.createClass({
           var binComponent = ""
           if (this.state.OrigBinUse) {
             binComponent = (
-              <div className="binsFlexWrapperContainer">
+              <div className={binsFlexClass}>
                 <BinsFlex
                   binsData={this.state.PickFrontBinData}
                   screenId={appConstants.PICK_FRONT_MORE_ITEM_SCAN}
@@ -1689,7 +1701,7 @@ var PickFront = React.createClass({
                 />
               )}
               {binComponent}
-              <div className="actions">
+              <div className={actionClass}>
                 {cancelButton}
                 {actionBtn}
                 {editButton}
@@ -1733,7 +1745,7 @@ var PickFront = React.createClass({
           }
           if (!cancelScanDisabled) {
             cancelButton = (
-              <div className="cancel-scan">
+              <div className={exceptionCancelScanClass}>
                 <Button1
                   disabled={false}
                   text={_("Cancel Scan")}
@@ -1754,6 +1766,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
+                withFooter = {footer !== "" ? true :false}
               />
             )
           } else {
@@ -1823,6 +1836,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={screen_id}
                 seatType={this.state.SeatType}
+                withFooter = {footer !== "" ? true :false}
               />
             )
           } else {
@@ -1884,7 +1898,7 @@ var PickFront = React.createClass({
         var cancelButton
         if (cancelScanDisabled) {
           cancelButton = (
-            <div className="cancel-scan">
+            <div className={exceptionCancelScanClass}>
               <Button1
                 disabled={false}
                 text={_("Cancel Scan")}
@@ -1931,7 +1945,7 @@ var PickFront = React.createClass({
                   selectedbin={this.state.PickCurrentBin}
                 />
               </div>
-              <div className="actions">{cancelButton}</div>
+              <div className={actionClass}>{cancelButton}</div>
             </div>
           )
         } else {
@@ -1971,7 +1985,7 @@ var PickFront = React.createClass({
                   rackData={this.state.PickFrontRackDetails}
                 />
               </div>
-              <div className="actions">{carryingUnitButton}</div>
+              <div className={actionClass}>{carryingUnitButton}</div>
             </div>
           )
         } else {
@@ -2099,9 +2113,9 @@ var PickFront = React.createClass({
   },
 
   render: function(data) {
-    this.getNotificationComponent()
-    this.getScreenComponent(this.state.PickFrontScreenId)
     var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
+    this.getNotificationComponent(footer)
+    this.getScreenComponent(this.state.PickFrontScreenId, footer)
     return (
       <div className="main">
         <Header />

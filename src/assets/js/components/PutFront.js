@@ -34,7 +34,6 @@ var CurrentBin = require('./CurrentBin');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable')
 var CheckList = require("./CheckList")
-var Footer = require('./Footer');
 
 
 
@@ -940,7 +939,6 @@ var PutFront = React.createClass({
 
     this.getNotificationComponent();
     this.getScreenComponent(this.state.PutFrontScreenId);
-    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
     return (
       <div className="main">
         <Header />
@@ -948,7 +946,6 @@ var PutFront = React.createClass({
         {this._component}
         {this._modalContent}
         {this._notification}
-        {footer}
       </div>
 
     );

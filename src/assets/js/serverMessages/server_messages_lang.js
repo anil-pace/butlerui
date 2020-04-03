@@ -814,4 +814,7 @@ function server_messages_list() {
   _("No space currently available for this SKU, Remove all entities from bin number and press PPTL")
   _("No space currently available for this SKU, Remove all entities from bin & press PPTL")
   _("Warehouse Full! Remove all entities from bin number and press PPTL.")
+  _("Operation paused")
+  _("Butler operations have been halted.")
+  _("Please wait for the operation to resume or contact your supervisor for further steps.")
 }

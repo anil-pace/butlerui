@@ -7,6 +7,7 @@ var jqueryPosition = require("jquery-ui/position")
 var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
+var EmergencyModal = require('./Modal/EmergencyModal')
 
 function getState() {
   return {
@@ -223,6 +224,7 @@ var Header = React.createClass({
     </div>)
       
     }
+    
     return (
       <div>
         <div className="head">
@@ -247,6 +249,7 @@ var Header = React.createClass({
           ) : (
             ""
           )}
+          {mainstore.getSystemEmergency() && <EmergencyModal title="Operation paused"/>}
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}

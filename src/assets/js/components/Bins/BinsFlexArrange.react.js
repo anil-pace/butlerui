@@ -116,7 +116,10 @@ var Bins = React.createClass({
     },
 
     render: function() {
-        
+        var binsFlexClass="bins-flex";
+        if(this.props.withFooter === true){
+            binsFlexClass="bins-flex withFooter"
+        }
         var aHTMLBins = this._createBinLayouts(this.state.aBins,
                                                this.state.lastHBin,
                                                this.state.lastVBin,
@@ -127,7 +130,7 @@ var Bins = React.createClass({
                                                this.props.binCoordinatePlotting,this.props.dataToDisassociateTote);
         var self = this;
         return (
-                 <div className="bins-flex" style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>
+                 <div className={binsFlexClass} style={{width:document.body.clientWidth/1.7, height:document.body.clientHeight/2}}>
                         {aHTMLBins}
                  </div>
         );

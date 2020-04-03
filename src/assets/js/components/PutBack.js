@@ -116,7 +116,7 @@ var PutBack = React.createClass({
               <div>
                 <div className="row" style={{fontSize: "1.5em", color:"#4D5055"}}>
                   <div className="col-md-12" >
-                    <p>{(_("Are you sure you want to exit from {0} LPN and stage all bin(s)?")).replace("{0}",this.state.PutBackInvoiceId)}</p>
+                    <p>{(_("Are you sure you want to exit from {0} LPN and stage all bin(s)?")).replace("{0}",this.state.ToteId)}</p>
                     <p>{(_("The following {0} items were found missing:")).replace("{0}", this.state.PutBackMissingItems.length)}</p>
                     <div className="missing-list">
                       <section className="list-head">

@@ -739,6 +739,7 @@ var PickFront = React.createClass({
               binComponent = (
                 <div
                   className={binsFlexClass}
+                  style={{ display: 'flex' }}
                 >
                   <BinsFlex
                     binsData={this.state.PickFrontBinData}

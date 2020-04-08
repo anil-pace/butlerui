@@ -34,7 +34,7 @@ var CurrentBin = require('./CurrentBin');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable')
 var CheckList = require("./CheckList")
-
+var CurrentActiveBin= require('./CurrentActiveBin');
 
 
 
@@ -204,18 +204,18 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           //need to check this case, if we need flexible bins here?
         let isHeavyItem = this.state.PutFrontHeavyItemsFlag;
-
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
+              {this.state.SplitScreenFlag && 
+              <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' /></div>}
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
-                <Bins binsData={this.state.PutFrontCurrentBin} screenId={this.state.PutFrontScreenId} />
-                <div className="text">{_("CURRENT BIN")}</div>
+                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
               </div>
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>
-                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+               <div style={{width: "50%" }}> <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} /></div>
               </div>
               <div className='cancel-scan'>
                 <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"} />

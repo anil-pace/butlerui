@@ -1676,6 +1676,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   productDetails: function () {
     _prodDetails = _seatData.product_info
+    QlCodeDigits =  _seatData.item_uid.substr(_seatData.item_uid.length-4)
+   if(!_prodDetails.includes(QlCodeDigits))
+    _prodDetails.push(QlCodeDigits)
     return _prodDetails
   },
 

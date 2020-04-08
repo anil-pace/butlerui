@@ -29,6 +29,7 @@ var PutWrapper = React.createClass({
     data.map(function(value, index) {
       var keyValue = ""
       var imageKey
+if(Array.isArray(value)){
       for (var key in value[0]) {
         if (key === "product_dimensions") {
           var dimension = value[0][key]
@@ -73,6 +74,10 @@ var PutWrapper = React.createClass({
           } else image_url[data_locale.display_name] = imageKey
         }
       })
+    }
+    else{
+      product_info_locale['QlcodeDigits'] = data[data.length-1]
+    }
     })
   },
   render: function(data) {

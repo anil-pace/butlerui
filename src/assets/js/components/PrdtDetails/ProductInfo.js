@@ -7,8 +7,8 @@ var ProductInfo = React.createClass({
         $.each(infoDetails, function(key, value) {
             return arr1.push(
                 <tr>
-	  				<td className="key"> {key} </td>
-	  				<td className="value">{value} </td>
+	  				<td className="key"> {key !== 'QlcodeDigits' ? key : ''} </td>
+	  				<td className="value" ><span style={key === 'QlcodeDigits' ? {fontWeight: 400, fontSize: '90px', color: "#4D5055", width: "385px" } : {}}>{value}</span> </td>
   				</tr>
 
             );

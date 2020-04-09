@@ -98,17 +98,10 @@ if(Array.isArray(value)){
     return (
       <div className="rightContainer">
         <div className="productDetailsContainer">
-          <div style={{ width: "auto" }} className="productTableInfo">
-            <ProductImage srcURL={image_url.product_local_image_url} />
-            <div>
-              <div className="productHeader">{_("Details")}</div>
               <ProductInfo
                 infoDetails={product_info_locale}
                 flag="codeDetails"
               />
-            </div>
-          </div>
-        </div>
         {this.props.scanDetails ? (
           <div className="kqContainer">
             <KQ
@@ -117,6 +110,7 @@ if(Array.isArray(value)){
             />
           </div>
         ) : null}
+      </div>
       </div>
     )
   }

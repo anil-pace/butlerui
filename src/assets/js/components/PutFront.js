@@ -35,6 +35,7 @@ var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable')
 var CheckList = require("./CheckList")
 var CurrentActiveBin= require('./CurrentActiveBin');
+var PackingDetails = require('./PrdtDetails/PackingDetails');
 
 
 
@@ -215,7 +216,7 @@ var PutFront = React.createClass({
               </div>
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>
-               <div style={{width: "50%" }}> <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} /></div>
+               <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
               </div>
               <div className='cancel-scan'>
                 <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"} />

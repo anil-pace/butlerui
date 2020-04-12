@@ -101,6 +101,7 @@ if(Array.isArray(value)){
               <ProductInfo
                 infoDetails={product_info_locale}
                 flag="codeDetails"
+                imageurl ={image_url.product_local_image_url}
               />
         {this.props.scanDetails ? (
           <div className="kqContainer">

@@ -210,11 +210,12 @@ var PutFront = React.createClass({
               <Modal />
               {this.state.SplitScreenFlag && 
               <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
-              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' /></div>}
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' /></div>
+              }
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
                 <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
               </div>
-              <div className='main-container'>
+              <div className='main-container adjust-main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>
                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
               </div>

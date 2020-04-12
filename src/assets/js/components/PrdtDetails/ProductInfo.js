@@ -1,17 +1,17 @@
 var React = require('react');
+var ProductImage = require("../PrdtDetails/ProductImage")
 
 var ProductInfo = React.createClass({
     render: function() {
         var infoDetails = this.props.infoDetails;
+        var imageurl = this.props.imageurl;
         var arr1 = [];
         $.each(infoDetails, function(key, value) {
             if(key === "QlcodeDigits"){
                 arr1.push(
                     <div className="detailsOuterWrapper">
-                    <div className="detailsInnerWrapper">
                      <span className="detailsDispValShort">{value}</span> 
                      </div>
-                    </div>
                      );
             }
             else if(key !== 'QlcodeDigits'){
@@ -24,14 +24,16 @@ var ProductInfo = React.createClass({
                     </div>
     
                 );
-            }
+            }   
             return  arr1
         });
 
         return (
-            <div className="packingBoxTableInfo">
+            <div className="packingBoxTableInfo" style={{width: "480px",
+                height: "549px",
+                marginLeft: "18%", display:"block"}}>
             <div className="packingBoxImage">
-               <img className="img-responsive" src={"./assets/images/packing_box.png"} />
+            <ProductImage srcURL={imageurl} />
             </div>
             {arr1}
         </div>

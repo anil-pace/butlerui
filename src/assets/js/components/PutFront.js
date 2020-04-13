@@ -34,7 +34,7 @@ var CurrentBin = require('./CurrentBin');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable')
 var CheckList = require("./CheckList")
-
+var CurrentActiveBin= require('./CurrentBin');
 
 
 
@@ -166,13 +166,18 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_SCAN:
         if (this.state.PutFrontExceptionStatus == false) {
           if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting) {
-            binComponent = (<div style={{ width: "100%", marginLeft: "0" }} className="binsFlexWrapperContainer">
-              <BinsFlex binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} seatType={this.state.SeatType} binCoordinatePlotting={true} />
-              <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+            binComponent = (<div style={{ width: "100%", marginLeft: "0", top:"-10%" }} className="binsFlexWrapperContainer">
+              <div className='grid-container'>
+              <Modal />
+              <div className='main-container adjust-main-container'>
+                {this.state.MobileFlag ? <SplitPPS orientation={this.state.groupOrientation} groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} docked={this.state.DockedGroup} /> : <Spinner />}
+                <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+              </div>
+            </div>
             </div>)
           }
           else {
-            binComponent = (<div className='main-container'>
+            binComponent = (<div className='main-container adjust-main-container'>
               <Bins binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} />
               <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
@@ -181,7 +186,6 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
               {binComponent}
             </div>
           );
@@ -209,10 +213,13 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
+              {this.state.SplitScreenFlag &&
+              <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />
+              </div>
+              }
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
-                <Bins binsData={this.state.PutFrontCurrentBin} screenId={this.state.PutFrontScreenId} />
-                <div className="text">{_("CURRENT BIN")}</div>
+              <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
               </div>
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>

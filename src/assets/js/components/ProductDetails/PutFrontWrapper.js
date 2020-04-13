@@ -29,6 +29,7 @@ var PutWrapper = React.createClass({
     data.map(function(value, index) {
       var keyValue = ""
       var imageKey
+      if(Array.isArray(value)){
       for (var key in value[0]) {
         if (key === "product_dimensions") {
           var dimension = value[0][key]
@@ -73,6 +74,10 @@ var PutWrapper = React.createClass({
           } else image_url[data_locale.display_name] = imageKey
         }
       })
+    }
+        else{
+          product_info_locale['QlcodeDigits'] = data[data.length-1]
+        }
     })
   },
   render: function(data) {
@@ -91,18 +96,15 @@ var PutWrapper = React.createClass({
     }
 
     return (
-      <div className="rightContainer">
-        <div className="productDetailsContainer">
-          <div style={{ width: "auto" }} className="productTableInfo">
-            <ProductImage srcURL={image_url.product_local_image_url} />
+      <div className="rightContainer" style={{marginLeft: "18%"}}>
+        <div className="productDetailsContainer" style={{ marginLeft: "-55%"}}>
             <div>
-              <div className="productHeader">{_("Details")}</div>
               <ProductInfo
                 infoDetails={product_info_locale}
                 flag="codeDetails"
+                imageurl ={image_url.product_local_image_url}
               />
             </div>
-          </div>
         </div>
         {this.props.scanDetails ? (
           <div className="kqContainer">

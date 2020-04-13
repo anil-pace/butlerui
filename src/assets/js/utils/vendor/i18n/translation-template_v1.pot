@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-05 09:02+0000\n"
+"POT-Creation-Date: 2020-04-13 05:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4823,4 +4823,38 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:493
 msgid "HEAVY"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:813
+msgid "No space currently available for this SKU"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:814
+msgid ""
+"No space currently available for this SKU, Remove all entities from bin "
+"number and press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:815
+msgid ""
+"No space currently available for this SKU, Remove all entities from bin & "
+"press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:816
+msgid "Warehouse Full! Remove all entities from bin number and press PPTL."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:817
+msgid "Operation paused"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:818
+msgid "Butler operations have been halted."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:819
+msgid ""
+"Please wait for the operation to resume or contact your supervisor for "
+"further steps."
 msgstr ""

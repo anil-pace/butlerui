@@ -96,8 +96,8 @@ var PutWrapper = React.createClass({
     }
 
     return (
-      <div className="rightContainer" style={{marginLeft: "18%"}}>
-        <div className="productDetailsContainer" style={{ marginLeft: "-55%"}}>
+      <div className="rightContainer">
+        <div className="productDetailsContainer">
             <div>
               <ProductInfo
                 infoDetails={product_info_locale}

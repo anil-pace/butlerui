@@ -5616,8 +5616,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.previous_pick_details
   },
   getPreviousPickBackDetails: function () {
-    if (_seatData.previous_pick_back_details) {
-      return _seatData.previous_pick_back_details
+    if (_seatData.info_view) {
+      return _seatData.info_view
     } else {
       return null
     }
@@ -6575,6 +6575,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickBackExceptionStatus"] = this.getExceptionStatus()
         data["PickBackExceptionData"] = this.getExceptionData()
         data["pickBackCancelButtonData"] = this.cancelScanDetails()
+        data["PreviousPickBackDetails"] = this.getPreviousPickBackDetails()
         break
       case appConstants.PICK_BACK_EXCEPTION_REPRINT:
       case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:

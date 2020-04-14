@@ -828,14 +828,12 @@ var PickBack = React.createClass({
   render: function (data) {
     this.getNotificationComponent()
     this.getScreenComponent(this.state.PickBackScreenId)
-    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
     return (
       <div className="main">
         <Header />
         {this._navigation}
         {this._component}
         {this._notification}
-        {footer}
       </div>
     )
   },

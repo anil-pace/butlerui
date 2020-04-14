@@ -1,35 +1,35 @@
-var React = require("react")
-var PutBackStore = require("../stores/PutBackStore")
-var mainstore = require("../stores/mainstore")
-var Header = require("./Header")
-var Footer = require("./Footer")
-var Navigation = require("./Navigation/Navigation.react")
-var Notification = require("./Notification/Notification")
-var Bins = require("./Bins/Bins.react")
-var BinsFlex = require("./Bins/BinsFlexArrange.react")
-var Button1 = require("./Button/Button")
-var Wrapper = require("./ProductDetails/Wrapper")
-var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll")
-var appConstants = require("../constants/appConstants")
-var Modal = require("./Modal/Modal")
-var SystemIdle = require("./SystemIdle")
-var TabularData = require("./TabularData")
-var Exception = require("./Exception/Exception")
-var ExceptionHeader = require("./ExceptionHeader")
-var KQ = require("./ProductDetails/KQ")
-var Img = require("./PrdtDetails/ProductImage.js")
-var Reconcile = require("./Reconcile")
-var MtuNavigation = require("./mtuNavigation")
-var allSvgConstants = require("../constants/svgConstants")
-var CommonActions = require("../actions/CommonActions")
-var serverMessages = require("../serverMessages/server_messages")
-var utils = require("../utils/utils.js")
-var NumericIndicator = require("./ProductDetails/NumericIndicator")
-var TextEditor = require("./ProductDetails/textEditor")
-var ItemTable = require("./itemTable")
-var Spinner = require("./Spinner/LoaderButler")
-var STNInput = require("./stnInput")
-var ReactModal = require("./Modal/ReactModal")
+
+var React = require('react');
+var PutBackStore = require('../stores/PutBackStore');
+var mainstore = require('../stores/mainstore');
+var Header = require('./Header');
+var Navigation = require("./Navigation/Navigation.react");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require('./ProductDetails/Wrapper');
+var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll');
+var appConstants = require('../constants/appConstants');
+var Modal = require('./Modal/Modal');
+var SystemIdle = require('./SystemIdle');
+var TabularData = require('./TabularData');
+var Exception = require('./Exception/Exception');
+var ExceptionHeader = require('./ExceptionHeader');
+var KQ = require('./ProductDetails/KQ');
+var Img = require('./PrdtDetails/ProductImage.js');
+var Reconcile = require("./Reconcile");
+var MtuNavigation = require("./mtuNavigation");
+var allSvgConstants = require('../constants/svgConstants');
+var CommonActions = require('../actions/CommonActions');
+var serverMessages = require('../serverMessages/server_messages');
+var utils = require('../utils/utils.js');
+var NumericIndicator = require('./ProductDetails/NumericIndicator');
+var TextEditor = require('./ProductDetails/textEditor');
+var ItemTable = require('./itemTable');
+var Spinner = require("./Spinner/LoaderButler");
+var STNInput = require("./stnInput");
+var ReactModal = require('./Modal/ReactModal');
 
 function getStateData() {
   return mainstore.getScreenData()
@@ -1290,10 +1290,9 @@ var PutBack = React.createClass({
       this._notification = ""
     }
   },
-  render: function(data) {
-    this.getNotificationComponent()
-    this.getScreenComponent(this.state.PutBackScreenId)
-    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
+  render: function (data) {
+    this.getNotificationComponent();
+    this.getScreenComponent(this.state.PutBackScreenId);
     return (
       <div className="main">
         <Header />
@@ -1301,7 +1300,6 @@ var PutBack = React.createClass({
         {this._component}
         {this._modalContent}
         {this._notification}
-        {footer}
       </div>
     )
   }

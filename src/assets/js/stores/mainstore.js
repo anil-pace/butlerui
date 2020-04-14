@@ -1675,13 +1675,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.is_heavy ? _seatData.is_heavy : false;
   },
   productDetails: function () {
-    _prodDetails = _seatData.product_info
-    QlCodeDigits =  _seatData.item_uid.substr(_seatData.item_uid.length-4)
-   if(!_prodDetails.includes(QlCodeDigits))
+    _prodDetails = _seatData.product_info ?  _seatData.product_info : []
+    QlCodeDigits =  _seatData.item_uid ? _seatData.item_uid.substr(_seatData.item_uid.length-4) : ''
+   if(!_prodDetails.includes(QlCodeDigits) && QlCodeDigits !== '')
     _prodDetails.push(QlCodeDigits)
     return _prodDetails
   },
-
   getItemUid: function () {
     return _seatData.item_uid
   },

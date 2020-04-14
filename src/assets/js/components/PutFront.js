@@ -56,7 +56,6 @@ var PutFront = React.createClass({
       BinMapDetails: mainstore._getBinMapDetails(),
       groupOrientation: mainstore._getBinMapOrientation(),
       udpBinMapDetails: mainstore.getUDPMapDetails(),
-
       PutFrontScreenId: mainstore.getScreenId(),
       PutFrontExceptionStatus: mainstore.getExceptionStatus(),
       PutFrontNavData: mainstore.getNavData(),
@@ -177,12 +176,17 @@ var PutFront = React.createClass({
               <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
           }
-          if(this.state.binPlotting === false){
+          if(this.state.BinPlotting === false){
             binComponent = (<div style={{ width: "100%", marginLeft: "0", top:"-10%" }} className="binsFlexWrapperContainer">
-              <div className='grid-container'>
+              
               <Modal />
               <div className='main-container adjust-main-container'>
-                {this.state.MobileFlag ? <SplitPPS orientation={this.state.groupOrientation} groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} docked={this.state.DockedGroup} /> : <Spinner />}
+              <SplitPPS orientation={this.state.groupOrientation} 
+                  groupInfo={this.state.BinMapDetails} undockAwaited={null} 
+                  docked={this.state.DockedGroup} 
+                 />
+
+                <div style={{marginRight:"24%"}}>
                 <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
               </div>
             </div>
@@ -192,7 +196,9 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
+              {
+              this.state.binPlotting === true ? (
+              this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />) : ''}
               {binComponent}
             </div>
           );

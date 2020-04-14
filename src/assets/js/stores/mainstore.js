@@ -5259,6 +5259,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.hasOwnProperty("bin_coordinate_plotting"))
       return _seatData.bin_coordinate_plotting
   },
+  getBinPlottingFlag: function () {
+    if (_seatData.hasOwnProperty("bin_plotting"))
+      return _seatData.bin_plotting
+  },
   getStageButtonHideStatus: function () {
     if (_seatData.hasOwnProperty("auto_stage")) return _seatData.auto_stage
   },
@@ -5670,6 +5674,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontExceptionStatus"] = this.getExceptionStatus()
         data["PutFrontItemUid"] = this.getItemUid()
         data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting()
+        data["BinPlotting"] = this.getBinPlottingFlag()
+        data["DockedGroup"] = this._getDockedGroup()
+        data["UndockAwaited"] = this._getUndockAwaitedGroup()
         break
       case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
       case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:

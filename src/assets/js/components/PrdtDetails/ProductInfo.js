@@ -29,7 +29,7 @@ var ProductInfo = React.createClass({
         });
 
         return (
-            <div className="packingBoxTableInfo" style={{width: "480px",
+            <div className="packingBoxTableInfo" style={{width: "370px",
                 height: "370px",
                 marginLeft: "18%", display:"block"}}>
             <div className="packingBoxImage">

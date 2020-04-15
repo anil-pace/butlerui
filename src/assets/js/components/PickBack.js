@@ -230,6 +230,7 @@ var PickBack = React.createClass({
               </div>
             )
           }
+
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -238,7 +239,7 @@ var PickBack = React.createClass({
                 this.state.PreviousPickBackDetails.length > 0 && (
                   <PreviousDetails
                     previousDetails={this.state.PreviousPickBackDetails}
-                    customizeClass={"customize_pick_back_packing_box"}
+                    customizeClass={"customize_WaitingForMsu"}
                     typeToShow={_("Curent Pick Details")}
                     type="pick"
                   />
@@ -423,7 +424,9 @@ var PickBack = React.createClass({
               </div>
             )
           }
-
+          const customizedPositionClass = this.state.groupOrientation
+            ? "customize_PickBackPackingBox"
+            : "customize_WaitingForMsu"
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -431,7 +434,7 @@ var PickBack = React.createClass({
                 this.state.PreviousPickBackDetails.length > 0 && (
                   <PreviousDetails
                     previousDetails={this.state.PreviousPickBackDetails}
-                    customizeClass={"customize_pick_back_packing_box"}
+                    customizeClass={customizedPositionClass}
                     typeToShow={_("Curent Pick Details")}
                     type="pick"
                   />

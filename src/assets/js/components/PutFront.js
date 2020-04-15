@@ -182,12 +182,12 @@ var PutFront = React.createClass({
               <Modal />
               <div className='main-container adjust-main-container'>
               {this.state.MobileFlag ? <SplitPPS orientation={this.state.groupOrientation} 
-                  groupInfo={this.state.BinMapDetails} undockAwaited={null} 
+                  groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} 
                   docked={this.state.DockedGroup} 
                  /> : <Spinner/>}
-                <div style={{marginRight:"24%"}}>
-                <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
-              </div>
+               <div style={{marginRight:"4%"}}>
+                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+                </div>
             </div>
             </div>)
           }

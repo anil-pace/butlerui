@@ -184,7 +184,7 @@ var PutFront = React.createClass({
               {this.state.MobileFlag ? <SplitPPS orientation={this.state.groupOrientation} 
                   groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} 
                   docked={this.state.DockedGroup} 
-                 /> : <Spinner/>}
+                 /> : ''}
                <div style={{marginRight:"4%"}}>
                 <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
                 </div>

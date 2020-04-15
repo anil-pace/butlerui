@@ -148,14 +148,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     data,
     serial,
     uomConversionFactor = 1,
-    uomDisplayUnit = ""
+    uomDisplayUnit = ''
   ) {
-    product_info_locale = {}
-    image_url = {}
-    var language_locale = sessionStorage.getItem("localeData")
-    var locale
-    if (language_locale == "null" || language_locale == null) {
-      locale = "en-US"
+    product_info_locale = {};
+    image_url = {};
+    var language_locale = sessionStorage.getItem('localeData');
+    var locale;
+    if (language_locale == 'null' || language_locale == null) {
+      locale = 'en-US';
     } else {
       locale = JSON.parse(language_locale)["data"]["locale"]
     }
@@ -167,23 +167,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           var dimension = value[0][key]
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
-              keyValue =
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
+              keyValue = Math.round(dimension[i] * uomConversionFactor) + '';
             } else {
               keyValue =
                 keyValue +
-                " X " +
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10
+                ' X ' +
+                Math.round(dimension[i] * uomConversionFactor);
             }
           }
-          uomDisplayUnit !== ""
+          uomDisplayUnit !== ''
             ? (keyValue =
-                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
-            : (keyValue = keyValue)
-        } else if (key != "display_data" && key != "product_local_image_url") {
-          keyValue = value[0][key] + " "
-        } else if (key != "display_data" && key == "product_local_image_url") {
-          imageKey = value[0][key]
+                keyValue + ' (' + appConstants.IN + uomDisplayUnit + ')')
+            : (keyValue = keyValue);
+        } else if (key != 'display_data' && key != 'product_local_image_url') {
+          keyValue = value[0][key] + ' ';
+        } else if (key != 'display_data' && key == 'product_local_image_url') {
+          imageKey = value[0][key];
         }
       }
       value[0].display_data.map(function(data_locale, index1) {
@@ -569,7 +568,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 })
 
 var putSeatData = function(data) {
-  
   console.log(data)
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

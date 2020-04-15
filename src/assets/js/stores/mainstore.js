@@ -52,19 +52,20 @@ var _seatData,
   _clearNotification = false,
   _enableButton = true,
   _putBackExceptionScreen,
-  _finishAuditFlag = true
-_errorPopupDisabled = false
-_cancelButtonClicked = false
-_auditModalStatus = false
-_boiConfig = null
-_itemSearchEnabled = false
-_scannerLoginEnabled = false
-_unitConversionAllowed = false,
-_uomConversionFactor = 1
-  ; (_uomDisplayUnit = ""),
-    (_uphActive = false),
-    (pickThreshold = {}),
-    (putThreshold = {})
+  _uomDisplayUnit = "",
+  _uphActive = false,
+  pickThreshold = {},
+  putThreshold = {},
+  _finishAuditFlag = true;
+_errorPopupDisabled = false;
+_cancelButtonClicked = false;
+_auditModalStatus = false;
+_boiConfig = null;
+_itemSearchEnabled = false;
+_scannerLoginEnabled = false;
+_unitConversionAllowed = false;
+_uomConversionFactor = 1;
+_uomDisplayUnit = "";
 
 var modalContent = {
   data: "",
@@ -6184,7 +6185,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["isPrinterVisible"] = this.getPrinterVisibility()
         data["bindata"] = this.getBinData()
         data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
-    break
+        data['PickCurrentBin'] = this.getPutFrontCurrentBinCount();
+
+        break;
       case appConstants.ITEM_SEARCH:
         data["PickFrontScreenId"] = this.getScreenId()
         data["PutBackScreenId"] = this.getScreenId()

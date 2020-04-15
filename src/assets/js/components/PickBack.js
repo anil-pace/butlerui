@@ -234,12 +234,15 @@ var PickBack = React.createClass({
             <div className="grid-container">
               <Modal />
               {binComponent}
-              <PreviousDetails
-                previousDetails={this.state.PreviousPickBackDetails}
-                customizeClass={"customize_pick_back_packing_box"}
-                typeToShow={_("Curent Pick Details")}
-                type="pick"
-              />
+              {this.state.PreviousPickBackDetails &&
+                this.state.PreviousPickBackDetails.length > 0 && (
+                  <PreviousDetails
+                    previousDetails={this.state.PreviousPickBackDetails}
+                    customizeClass={"customize_pick_back_packing_box"}
+                    typeToShow={_("Curent Pick Details")}
+                    type="pick"
+                  />
+                )}
             </div>
           )
         } else {
@@ -424,12 +427,15 @@ var PickBack = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal />
-              <PreviousDetails
-                previousDetails={this.state.PreviousPickBackDetails}
-                customizeClass={"customize_pick_back_packing_box"}
-                typeToShow={_("Curent Pick Details")}
-                type="pick"
-              />
+              {this.state.PreviousPickBackDetails &&
+                this.state.PreviousPickBackDetails.length > 0 && (
+                  <PreviousDetails
+                    previousDetails={this.state.PreviousPickBackDetails}
+                    customizeClass={"customize_pick_back_packing_box"}
+                    typeToShow={_("Curent Pick Details")}
+                    type="pick"
+                  />
+                )}
               <BinMap
                 orientation={this.state.groupOrientation}
                 mapDetails={this.state.BinMapDetails}

@@ -5619,7 +5619,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.info_view) {
       return _seatData.info_view
     } else {
-      return null
+      return []
     }
   },
   getSelectedTotes: function () {

@@ -104,7 +104,8 @@ if(Array.isArray(value)){
                 imageurl ={image_url.product_local_image_url}
               />
         {this.props.scanDetails ? (
-          <div className="kqContainer">
+          <div className="kqContainer" style = {{width: "243px",
+            height: "272px"}}>
             <KQ
               scanDetails={this.props.scanDetails}
               itemUid={this.props.itemUid}

@@ -29,8 +29,8 @@ var ProductInfo = React.createClass({
         });
 
         return (
-            <div className="packingBoxTableInfo" style={{width: "370px",
-                height: "370px",
+            <div className="packingBoxTableInfo" style={{width: "480px",
+                height: "549px",
                 marginLeft: "18%", display:"block"}}>
             <div className="packingBoxImage">
             <ProductImage srcURL={imageurl} />

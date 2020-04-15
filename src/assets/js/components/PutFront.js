@@ -177,7 +177,7 @@ var PutFront = React.createClass({
             </div>)
           }
           if(this.state.BinPlotting === false){
-            binComponent = (<div style={{ width: "100%", marginLeft: "0", top:"-10%" }} className="binsFlexWrapperContainer">
+            binComponent = (<div style={{ width: "100%", marginLeft: "0" }} className="binsFlexWrapperContainer">
               
               <Modal />
               <div className='main-container adjust-main-container'>
@@ -185,13 +185,15 @@ var PutFront = React.createClass({
                   groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} 
                   docked={this.state.DockedGroup} 
                  /> : ''}
-               <div style={{marginRight:"4%"}}>
+               <div style={{marginLeft:"-13%",marginRight:"1%"}}>
                 <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
                 </div>
             </div>
             </div>)
           }
-          this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);
+          this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} 
+            showSpinner={this.state.MobileFlag}
+            navMessagesJson={this.props.navMessagesJson} />);
           this._component = (
             <div className='grid-container'>
               <Modal />

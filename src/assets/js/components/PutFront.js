@@ -185,7 +185,7 @@ var PutFront = React.createClass({
                   groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} 
                   docked={this.state.DockedGroup} 
                  /> : ''}
-               <div style={{marginLeft:"-13%",marginRight:"1%"}}>
+               <div style={this.state.MobileFlag ? {marginLeft:"-14%"}: {marginLeft:"30%"}}>
                 <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
                 </div>
             </div>

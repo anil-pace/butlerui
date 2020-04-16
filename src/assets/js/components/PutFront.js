@@ -181,13 +181,13 @@ var PutFront = React.createClass({
               
               <Modal />
               <div className='main-container udp-flow'>
-              {/* {this.state.MobileFlag ? */}
+              {this.state.MobileFlag ?
                <SplitPPS orientation={this.state.groupOrientation} 
                   groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} 
                   docked={this.state.DockedGroup}  customizeClassSplitPPS={adjustStyleOnSplitPPS}
                  /> 
-                {/* //  : ''} */}
-               <div style={{marginLeft:"-17%"}}>
+                  : ''}
+               <div style={this.state.MobileFlag ? {marginLeft:"-14%"}: {marginLeft:"30%"}}>
                 <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
                 </div>
             </div>

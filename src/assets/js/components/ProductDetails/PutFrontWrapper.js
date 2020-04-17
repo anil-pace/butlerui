@@ -78,13 +78,11 @@ if(Array.isArray(value)){
         }
       })
     }
-    else{
-      product_info_locale['QlcodeDigits'] = data[data.length-1]
-    }
     })
   },
   render: function(data) {
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
+    var putContainerFlag = mainstore.getPutContainerFlag()
     var uomConversionFactor, uomDisplayUnit
     if (isUnitConversionAllowed) {
       uomConversionFactor = mainstore.getUOMConversionFactor()
@@ -105,6 +103,7 @@ if(Array.isArray(value)){
                 infoDetails={product_info_locale}
                 flag="codeDetails"
                 imageurl ={image_url.product_local_image_url}
+                putContainerFlag = {putContainerFlag}
               />
         {this.props.scanDetails ? (
           <div className="kqContainer" style = {{width: "243px", marginRight: "1%",

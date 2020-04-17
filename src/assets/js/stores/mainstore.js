@@ -5472,6 +5472,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.hasOwnProperty("bin_plotting"))
     return _seatData.bin_plotting
   },
+  getPutContainerFlag: function () {
+    if (_seatData.hasOwnProperty("put_container"))
+    return _seatData.put_container
+  },
   getStageButtonHideStatus: function () {
     if (_seatData.hasOwnProperty("auto_stage")) return _seatData.auto_stage
   },
@@ -5891,6 +5895,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontItemUid"] = this.getItemUid()
         data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting()
         data["BinPlotting"] = this.getBinPlottingFlag()
+        data["PutContainer"] = this.getPutContainerFlag()
         data["DockedGroup"] = this._getDockedGroup()
         data["UndockAwaited"] = this._getUndockAwaitedGroup()
         break

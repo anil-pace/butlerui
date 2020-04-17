@@ -1668,10 +1668,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData.is_heavy ? _seatData.is_heavy : false
   },
   productDetails: function () {
-    _prodDetails = _seatData.product_info
+    _prodDetails = _seatData.product_info ?  _seatData.product_info : []
     return _prodDetails
   },
-
   getItemUid: function () {
     return _seatData.item_uid
   },
@@ -5469,6 +5468,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.hasOwnProperty("bin_coordinate_plotting"))
       return _seatData.bin_coordinate_plotting
   },
+  getBinPlottingFlag: function () {
+    if (_seatData.hasOwnProperty("bin_plotting"))
+    return _seatData.bin_plotting
+  },
+  getPutContainerFlag: function () {
+    if (_seatData.hasOwnProperty("put_container"))
+    return _seatData.put_container
+  },
   getStageButtonHideStatus: function () {
     if (_seatData.hasOwnProperty("auto_stage")) return _seatData.auto_stage
   },
@@ -5887,6 +5894,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontExceptionStatus"] = this.getExceptionStatus()
         data["PutFrontItemUid"] = this.getItemUid()
         data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting()
+        data["BinPlotting"] = this.getBinPlottingFlag()
+        data["PutContainer"] = this.getPutContainerFlag()
+        data["DockedGroup"] = this._getDockedGroup()
+        data["UndockAwaited"] = this._getUndockAwaitedGroup()
         break
       case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
       case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:

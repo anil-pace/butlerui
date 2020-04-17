@@ -1,27 +1,43 @@
 var React = require('react');
+var ProductImage = require("../PrdtDetails/ProductImage")
 
 var ProductInfo = React.createClass({
     render: function() {
         var infoDetails = this.props.infoDetails;
+        var imageurl = this.props.imageurl;
+        var PutContainerFlag = this.props.putContainerFlag;
         var arr1 = [];
         $.each(infoDetails, function(key, value) {
-            return arr1.push(
-                <tr>
-	  				<td className="key"> {key} </td>
-	  				<td className="value">{value} </td>
-  				</tr>
-
-            );
+            if(key === "QlcodeDigits" && value !== '' && PutContainerFlag === true){
+                arr1.push(
+                    <div className="detailsOuterWrapper">
+                     <span className="detailsDispValShort">{value}</span> 
+                     </div>
+                     );
+            }
+            else if(key !== 'QlcodeDigits'){
+                arr1.push(
+                    <div className="detailsOuterWrapper">
+                    <div className="detailsInnerWrapper">
+                     <span className="detailsDispName"> {key + ':'} </span>
+                      <span className="detailsDispVal">{value}</span>
+                    </div>
+                    </div>
+    
+                );
+            }   
+            return  arr1
         });
 
         return (
-            <div className="table-wrapper">
-				<table className="table">									
-					<tbody>
-						{arr1}
-					</tbody>
-				</table>
-			</div>
+            <div className="packingBoxTableInfo" style={{width: "480px",
+                height: "549px",
+                marginLeft: "18%", display:"block"}}>
+            <div className="packingBoxImage">
+            <ProductImage srcURL={imageurl} />
+            </div>
+            {arr1}
+        </div>
         );
     }
 });

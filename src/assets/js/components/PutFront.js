@@ -34,7 +34,8 @@ var CurrentBin = require('./CurrentBin');
 var TextEditor = require('./ProductDetails/textEditor');
 var ItemTable = require('./itemTable')
 var CheckList = require("./CheckList")
-
+var CurrentActiveBin= require('./CurrentActiveBin');
+var PackingDetails = require('./PrdtDetails/PackingDetails');
 
 
 
@@ -55,7 +56,6 @@ var PutFront = React.createClass({
       BinMapDetails: mainstore._getBinMapDetails(),
       groupOrientation: mainstore._getBinMapOrientation(),
       udpBinMapDetails: mainstore.getUDPMapDetails(),
-
       PutFrontScreenId: mainstore.getScreenId(),
       PutFrontExceptionStatus: mainstore.getExceptionStatus(),
       PutFrontNavData: mainstore.getNavData(),
@@ -176,11 +176,32 @@ var PutFront = React.createClass({
               <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
           }
-          this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);
+          if(this.state.BinPlotting !== undefined && this.state.BinPlotting === false){
+            binComponent = (<div style={{ width: "100%", marginLeft: "0" }} className="binsFlexWrapperContainer">
+              
+              <Modal />
+              <div className='main-container udp-flow'>
+              {this.state.MobileFlag ?
+               <SplitPPS orientation={this.state.groupOrientation} 
+                  groupInfo={this.state.BinMapDetails} undockAwaited={this.state.UndockAwaited} 
+                  docked={this.state.DockedGroup}  customizeClassSplitPPS={adjustStyleOnSplitPPS}
+                 /> 
+                  : ''}
+               <div style={this.state.MobileFlag ? {marginLeft:"-14%"}: {marginLeft:"30%"}}>
+                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+                </div>
+            </div>
+            </div>)
+          }
+          this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} 
+            showSpinner={this.state.MobileFlag}
+            navMessagesJson={this.props.navMessagesJson} />);
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
+              {
+              this.state.binPlotting === true ? (
+              this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />) : ''}
               {binComponent}
             </div>
           );
@@ -204,18 +225,20 @@ var PutFront = React.createClass({
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);
           //need to check this case, if we need flexible bins here?
         let isHeavyItem = this.state.PutFrontHeavyItemsFlag;
-
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
-              <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
-                <Bins binsData={this.state.PutFrontCurrentBin} screenId={this.state.PutFrontScreenId} />
-                <div className="text">{_("CURRENT BIN")}</div>
+              {this.state.SplitScreenFlag && 
+              <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />
               </div>
-              <div className='main-container'>
+              }
+              <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
+                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
+              </div>
+              <div className='main-container adjust-main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>
-                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+               <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
               </div>
               <div className='cancel-scan'>
                 <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"} />

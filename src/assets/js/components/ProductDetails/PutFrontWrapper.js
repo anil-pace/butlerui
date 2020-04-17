@@ -29,6 +29,7 @@ var PutWrapper = React.createClass({
     data.map(function(value, index) {
       var keyValue = ""
       var imageKey
+if(Array.isArray(value)){
       for (var key in value[0]) {
         if (key === "product_dimensions") {
           var dimension = value[0][key]
@@ -59,6 +60,9 @@ var PutWrapper = React.createClass({
             product_info_locale[data_locale.display_name] = keyValue
           }
         }
+        if(data_locale.display_name  === "QL Code" ){
+          product_info_locale['QlcodeDigits'] = (value[0]['carrier_id'] && value[0]['carrier_id'].length >0) ? value[0]['carrier_id'].substr(value[0]['carrier_id'].length-4) : ''
+        }
         if (data_locale.display_name == "product_local_image_url") {
           if (
             imageKey === "outer_each" ||
@@ -73,10 +77,12 @@ var PutWrapper = React.createClass({
           } else image_url[data_locale.display_name] = imageKey
         }
       })
+    }
     })
   },
   render: function(data) {
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
+    var putContainerFlag = mainstore.getPutContainerFlag()
     var uomConversionFactor, uomDisplayUnit
     if (isUnitConversionAllowed) {
       uomConversionFactor = mainstore.getUOMConversionFactor()
@@ -93,25 +99,22 @@ var PutWrapper = React.createClass({
     return (
       <div className="rightContainer">
         <div className="productDetailsContainer">
-          <div style={{ width: "auto" }} className="productTableInfo">
-            <ProductImage srcURL={image_url.product_local_image_url} />
-            <div>
-              <div className="productHeader">{_("Details")}</div>
               <ProductInfo
                 infoDetails={product_info_locale}
                 flag="codeDetails"
+                imageurl ={image_url.product_local_image_url}
+                putContainerFlag = {putContainerFlag}
               />
-            </div>
-          </div>
-        </div>
         {this.props.scanDetails ? (
-          <div className="kqContainer">
+          <div className="kqContainer" style = {{width: "243px", marginRight: "1%",
+            height: "272px"}}>
             <KQ
               scanDetails={this.props.scanDetails}
               itemUid={this.props.itemUid}
             />
           </div>
         ) : null}
+      </div>
       </div>
     )
   }

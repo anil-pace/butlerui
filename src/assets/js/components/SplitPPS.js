@@ -129,6 +129,7 @@ var SplitPPS = React.createClass({
     var showBinIcon
     for (var k in data) {
       if (data.hasOwnProperty(k)) {
+if(Object.keys(binInfo).length >0){
         if (
           binInfo[k].length > 0 &&
           data[k] === allresourceConstants.BIN_GROUP_LEFT
@@ -148,7 +149,9 @@ var SplitPPS = React.createClass({
               />
             </div>
           )
-        } else if (
+		} 
+	
+		else if (
           binInfo[k].length > 0 &&
           data[k] === allresourceConstants.BIN_GROUP_RIGHT
         ) {
@@ -187,7 +190,7 @@ var SplitPPS = React.createClass({
               />
             </div>
           )
-        } else {
+        }} else {
           showBinIcon = ""
         }
         if (data[k] === allresourceConstants.BIN_GROUP_LEFT) {

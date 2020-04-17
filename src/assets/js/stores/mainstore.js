@@ -1676,9 +1676,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   productDetails: function () {
     _prodDetails = _seatData.product_info ?  _seatData.product_info : []
-    QlCodeDigits =  _seatData.item_uid ? _seatData.item_uid.substr(_seatData.item_uid.length-4) : ''
-   if(!_prodDetails.includes(QlCodeDigits) && QlCodeDigits !== '')
-    _prodDetails.push(QlCodeDigits)
     return _prodDetails
   },
   getItemUid: function () {
@@ -5260,7 +5257,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getBinPlottingFlag: function () {
     if (_seatData.hasOwnProperty("bin_plotting"))
-      return _seatData.bin_plotting
+    return _seatData.bin_plotting
   },
   getStageButtonHideStatus: function () {
     if (_seatData.hasOwnProperty("auto_stage")) return _seatData.auto_stage

@@ -176,7 +176,7 @@ var PutFront = React.createClass({
               <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
           }
-          if(this.state.BinPlotting === false){
+          if(this.state.BinPlotting !== undefined && this.state.BinPlotting === false){
             binComponent = (<div style={{ width: "100%", marginLeft: "0" }} className="binsFlexWrapperContainer">
               
               <Modal />

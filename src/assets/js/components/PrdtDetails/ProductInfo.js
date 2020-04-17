@@ -7,7 +7,7 @@ var ProductInfo = React.createClass({
         var imageurl = this.props.imageurl;
         var arr1 = [];
         $.each(infoDetails, function(key, value) {
-            if(key === "QlcodeDigits"){
+            if(key === "QlcodeDigits" && value !== ''){
                 arr1.push(
                     <div className="detailsOuterWrapper">
                      <span className="detailsDispValShort">{value}</span> 

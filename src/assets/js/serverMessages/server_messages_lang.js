@@ -726,6 +726,7 @@ function server_messages_list() {
   _("{0} Close Cancelled")
   _("{0} docked successfully")
   _("Previous Pick Details")
+  _("Current Pick Details")
   _("Previous Put Details")
   _("{0} close successful")
   _("Close current {0} first")
@@ -811,10 +812,16 @@ function server_messages_list() {
   _("{0} unexpected. Scanned {1} does not exist.")
   _("Scan Tote")
   _("No space currently available for this SKU")
-  _("No space currently available for this SKU, Remove all entities from bin number and press PPTL")
-  _("No space currently available for this SKU, Remove all entities from bin & press PPTL")
+  _(
+    "No space currently available for this SKU, Remove all entities from bin number and press PPTL"
+  )
+  _(
+    "No space currently available for this SKU, Remove all entities from bin & press PPTL"
+  )
   _("Warehouse Full! Remove all entities from bin number and press PPTL.")
   _("Operation paused")
   _("Butler operations have been halted.")
-  _("Please wait for the operation to resume or contact your supervisor for further steps.")
+  _(
+    "Please wait for the operation to resume or contact your supervisor for further steps."
+  )
 }

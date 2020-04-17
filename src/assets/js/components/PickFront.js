@@ -39,6 +39,7 @@ var ItemTable = require('./itemTable')
 var CurrentBin = require('./CurrentBin')
 var CurrentActiveBin= require('./CurrentActiveBin');
 var Footer = require('./Footer');
+var BinSideIndicator = require('./BinSideIndicator');
 var checkListOpen = false
 
 function getStateData() {
@@ -951,6 +952,15 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
 
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+              <div style={{"position": "absolute", "top": "-35px", "left": "0px"}}>
+              <CurrentActiveBin  details={this.state.PickCurrentBin} />
+              </div>
+
+              <div style={{"position": "absolute","left": "0px", "border": "1px solid grey"}}>
+              <BinSideIndicator binsData={this.state.PickFrontBinData}/>
+              </div>
+
+              {this.state.SplitScreenFlag &&
                 <BinMap
                   orientation={this.state.groupOrientation}
                   mapDetails={this.state.BinMapDetails}
@@ -959,11 +969,8 @@ var PickFront = React.createClass({
                   bindata ={this.state.bindata}
                   pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
                 />
-                <div className="single-bin udp-flow">
-               {this.state.currentBinWidget  && 
-                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-               }
-              </div>
+              }
+                
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
                   <img

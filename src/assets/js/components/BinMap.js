@@ -22,10 +22,24 @@ var BinMap = React.createClass({
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
 		maxBlockHeight = 40/maxBlockCount;
 		maxWidth = ((maxBlockHeight/100)*150);
-		style = {
-			height:maxBlockHeight+"%",
-			width: maxWidth <= 38 ? maxWidth : 38
+
+		if(Object.values(data).includes('center_left') ||
+		Object.values(data).includes('center_right')
+		){
+			style = {
+				height:maxBlockHeight <64  ? 64 +"%" : maxBlockHeight + "%",
+				width: maxWidth <= 38 ? 38 : maxWidth
+			}
 		}
+
+		else if(Object.values(data).includes('left') ||
+		Object.values(data).includes('right')){
+			style = {
+				height:maxBlockHeight+"%",
+				width: maxWidth <= 38 ? maxWidth : 38
+			}
+		}
+
 		if(Object.entries(bindata).length > 0 ){
 		for(let i=0; i<bindata.length; i++){
 				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && bindata[i].ppsbin_id === pickFrontSelectedBin)){

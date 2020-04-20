@@ -24,9 +24,9 @@ var BinMap = React.createClass({
 		maxWidth = ((maxBlockHeight/100)*150);
 
 		style = {
-			height:maxBlockHeight<= 105 ? 105 +"px" : height,
-			width: maxWidth <= 38 ? maxWidth : 38
-		}
+				height:maxBlockHeight<= 105 ? 105 +"px" : height,
+				width: maxWidth <= 38 ? maxWidth : 38
+				}
 
 		if(Object.entries(bindata).length > 0 ){
 		for(let i=0; i<bindata.length; i++){

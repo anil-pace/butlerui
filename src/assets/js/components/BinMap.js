@@ -23,21 +23,9 @@ var BinMap = React.createClass({
 		maxBlockHeight = 40/maxBlockCount;
 		maxWidth = ((maxBlockHeight/100)*150);
 
-		if(Object.values(data).includes('center_left') ||
-		Object.values(data).includes('center_right')
-		){
-			style = {
-				height:maxBlockHeight <64  ? 64 +"%" : maxBlockHeight + "%",
-				width: maxWidth <= 38 ? 38 : maxWidth
-			}
-		}
-
-		else if(Object.values(data).includes('left') ||
-		Object.values(data).includes('right')){
-			style = {
-				height:maxBlockHeight+"%",
-				width: maxWidth <= 38 ? maxWidth : 38
-			}
+		style = {
+			height:maxBlockHeight<= 105 ? 105 +"px" : height,
+			width: maxWidth <= 38 ? maxWidth : 38
 		}
 
 		if(Object.entries(bindata).length > 0 ){
@@ -48,6 +36,13 @@ var BinMap = React.createClass({
 				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
 					rightCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
+		}
+
+		if(leftCol.length === 0){
+			leftCol.push(<li  style={{height: "105px"}} className ={'col1Zero'}></li>);
+		}
+		else if(rightCol.length === 0){
+			rightCol.push(<li style={{height: "105px"}} className={'col3Zero'} ></li>);
 		}
 	}
 		switch(leftCol.length){

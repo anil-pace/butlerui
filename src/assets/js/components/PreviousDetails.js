@@ -57,6 +57,12 @@ var PreviousDetails = React.createClass({
     var customizeClass = this.props.customizeClass
     var previousDetails = this.displayLocale(this.props.previousDetails)
     var showPrevLocation = false
+    let compSpecificPreviousLocation =
+      this.props.previousLocationFlag &&
+      this.props.previousLocationFlag === "PickBackScreen"
+        ? true
+        : false
+
     return (
       <div
         className={
@@ -105,12 +111,21 @@ var PreviousDetails = React.createClass({
                   </p>
                 </section>
               )
+            } else if (idx === 2 && compSpecificPreviousLocation) {
+              return (
+                <section key={key + idx} className="p-put-row">
+                  <p className="p-put-key">{_(key) + " :"}</p>
+                  <p className="p-put-value">
+                    {previousDetails[key].trim() || "--"}
+                  </p>
+                </section>
+              )
             } else if (idx === 2) {
               showPrevLocation = true
             }
           })}
         </div>
-        {showPrevLocation === true ? (
+        {!compSpecificPreviousLocation && showPrevLocation === true ? (
           <div>
             <div className="p-put-head">
               {_("PREVIOUS LOCATION").toUpperCase()}

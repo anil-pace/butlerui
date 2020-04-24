@@ -298,8 +298,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getNavData: function () {
     /* dynamic header navigation implementation */
+    let active_header_index = this.getActiveHeaderIndex()
+    let activeCode
     if (_seatData.header_steps) {
       var headerSteps = _seatData.header_steps
+      if(active_header_index !== undefined){
+        activeCode = headerSteps[active_header_index] === undefined ? '' : headerSteps[active_header_index]
+      }
+      else if(active_header_index === undefined){
+        activeCode = ''
+      }
+      
       navConfig.header = []
       for (var i = 0; i < headerSteps.length; i++) {
         navConfig.header.push({
@@ -316,12 +325,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         if (data.screen_id.constructor === Array && data.screen_id.length > 0) {
           if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
             _NavData[index].type = "active"
-          } else {
+          }
+          else if(activeCode !== ''){
+            if(data.message === serverMessages[activeCode].textToDisplay)
+            _NavData[index].type = "active"
+          }
+          else {
             _NavData[index].type = "passive"
           }
         } else if (_seatData.screen_id == data.screen_id) {
           _NavData[index].type = "active"
-        } else {
+        }
+        else if(activeCode !== ''){
+          if(data.message === serverMessages[activeCode].textToDisplay)
+          _NavData[index].type = "active"
+        }
+        else {
           _NavData[index].type = "passive"
         }
         /* condition to NOT show indexing when there is one active item in header_steps */

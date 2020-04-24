@@ -305,6 +305,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       if(active_header_index !== undefined){
         activeCode = headerSteps[active_header_index] === undefined ? '' : headerSteps[active_header_index]
       }
+      else if(active_header_index === undefined){
+        activeCode = ''
+      }
+      
       navConfig.header = []
       for (var i = 0; i < headerSteps.length; i++) {
         navConfig.header.push({
@@ -332,7 +336,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else if (_seatData.screen_id == data.screen_id) {
           _NavData[index].type = "active"
         }
-        else if(activeCode !== '' ){
+        else if(activeCode !== ''){
           if(data.message === serverMessages[activeCode].textToDisplay)
           _NavData[index].type = "active"
         }

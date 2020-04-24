@@ -303,7 +303,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     if (_seatData.header_steps) {
       var headerSteps = _seatData.header_steps
       if(active_header_index !== undefined){
-        activeCode = headerSteps[active_header_index]
+        activeCode = headerSteps[active_header_index] === undefined ? '' : headerSteps[active_header_index]
       }
       navConfig.header = []
       for (var i = 0; i < headerSteps.length; i++) {
@@ -322,7 +322,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
             _NavData[index].type = "active"
           }
-          else if(data.message === serverMessages[activeCode].textToDisplay){
+          else if(activeCode !== ''){
+            if(data.message === serverMessages[activeCode].textToDisplay)
             _NavData[index].type = "active"
           }
           else {
@@ -331,7 +332,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         } else if (_seatData.screen_id == data.screen_id) {
           _NavData[index].type = "active"
         }
-        else if(data.message === serverMessages[activeCode].textToDisplay){
+        else if(activeCode !== '' ){
+          if(data.message === serverMessages[activeCode].textToDisplay)
           _NavData[index].type = "active"
         }
         else {

@@ -790,10 +790,10 @@ var PutFront = React.createClass({
         else {
           this._subComponent = (
             <div className="single-bin udp-flow">
-              <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={"customize_WaitingForMsu"} type="put"/>
               <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.udpBinMapDetails} selectedGroup={this.state.selectedPPSBin} screenClass='putFrontFlow' />
               <CurrentBin details={this.state.PutFrontCurrentBinCount} />
-            </div>
+              <PreviousDetails previousDetails={this.state.PreviousDetails} customizeClass={'customize_WaitingForMsu_UdpFlow'} type="put"/>
+              </div>
           )
         }
         if (this.state.PutFrontExceptionStatus == false) {

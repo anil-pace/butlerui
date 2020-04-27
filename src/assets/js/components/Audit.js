@@ -901,9 +901,6 @@ var Audit = React.createClass({
           i < this.state.AuditDamagedItems.tableRows.length;
           i++
         ) {
-          mainstore.setDamagedQuanity(
-            this.state.AuditDamagedItems.tableRows[i][3].text
-          )
           var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
             .buttonStatus
           if (staticCountFlag === true) {

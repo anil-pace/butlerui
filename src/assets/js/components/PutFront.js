@@ -165,7 +165,7 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_SCAN:
         if (this.state.PutFrontExceptionStatus == false) {
           if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting) {
-            binComponent = (<div style={{ width: "100%", marginLeft: "0" }} className="binsFlexWrapperContainer">
+            binComponent = (<div style={{ width: "100%", marginLeft: "18%" }} className="binsFlexWrapperContainer">
               <BinsFlex binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} seatType={this.state.SeatType} binCoordinatePlotting={true} />
               <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
             </div>)
@@ -180,7 +180,13 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
+              {this.state.SplitScreenFlag && 
+              <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} 
+              bindata = {this.state.bindata}
+              pickFrontSelectedBin ={this.state.pickFrontSelectedBin} screenClass='PutFrontFlowScan' /> 
+              </div>
+              } 
               {binComponent}
             </div>
           );
@@ -208,14 +214,17 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />}
+              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='PutFrontFlowScan' bindata = {this.state.bindata}
+              pickFrontSelectedBin ={this.state.pickFrontSelectedBin} />}
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
                 <Bins binsData={this.state.PutFrontCurrentBin} screenId={this.state.PutFrontScreenId} />
                 <div className="text">{_("CURRENT BIN")}</div>
               </div>
               <div className='main-container'>
-                <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem}/>
-                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+                <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem} classStyle="put_front_place_item_in_rack"/>
+                <div style={{ width:"340px"}}>
+                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} classStyle="put_front_place_item_in_rack"/>
+                </div>
               </div>
               <div className='cancel-scan'>
                 <Button1 disabled={false} text={_("Cancel Scan")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"} />

@@ -5640,6 +5640,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontExceptionStatus"] = this.getExceptionStatus()
         data["PutFrontItemUid"] = this.getItemUid()
         data["PutFrontBinCoordinatePlotting"] = this.getBinCoordinatePlotting()
+        data["bindata"] = this.getBinData()
+        data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
         break
       case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
       case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
@@ -5664,6 +5666,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontPutDirection"] = this.getDirectionDetails()
         data["isKQEnabled"] = this.getKQEnabled()
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
+        data["bindata"] = this.getBinData()
+        data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
         break
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data["PutFrontNavData"] = this.getNavData()

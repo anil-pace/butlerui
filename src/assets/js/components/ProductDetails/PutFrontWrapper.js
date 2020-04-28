@@ -91,20 +91,23 @@ var PutWrapper = React.createClass({
 
     return (
       <div className='rightContainer'>
-        <div className='productDetailsContainer'>
-          <div style={{ width: 'auto' }} className='productTableInfo'>
+        <div className='productDetailsContainer'   >
+          <div style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {width:"340px", marginLeft:"5%"} : {width: 'auto'}} className='productTableInfo'>
             <ProductImage srcURL={image_url.product_local_image_url} />
             <div>
+            <div style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {width:"340px"} : {}}>
               <div className='productHeader'>{_('Details')}</div>
               <ProductInfo
                 infoDetails={product_info_locale}
                 flag='codeDetails'
               />
             </div>
+            </div>
           </div>
         </div>
         {this.props.scanDetails ? (
-          <div className='kqContainer'>
+          <div className='kqContainer' 
+          style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {marginLeft:"1%"} : {marginLeft:"-3%"}}>
             <KQ
               scanDetails={this.props.scanDetails}
               itemUid={this.props.itemUid}

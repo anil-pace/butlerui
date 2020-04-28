@@ -6,8 +6,9 @@ var MsuRackFlex = require('./MsuRackFlex');
 var MsuRack = React.createClass({
 
     render: function(){
+		let classStyle = this.props.classStyle !== undefined ? this.props.classStyle : ''
 		return (
-				<div className="drawRackWrapper" style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {marginLeft:"-1em"} : {}}>
+				<div className="drawRackWrapper" style ={classStyle === "put_front_place_item_in_rack" ? {marginLeft:"-1em"} : {}}>
                     <MsuRackFlex hideSlotDetails={this.props.hideSlotDetails} 
                     			 rackDetails={this.props.rackData.rack_type_rec} 
                     			 slotBarcodes={this.props.rackData.slot_barcodes} 

@@ -77,6 +77,7 @@ var PutWrapper = React.createClass({
   render: function(data) {
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed();
     var uomConversionFactor, uomDisplayUnit;
+    let classStyle = this.props.classStyle !== undefined ? this.props.classStyle : ''
     if (isUnitConversionAllowed) {
       uomConversionFactor = mainstore.getUOMConversionFactor();
       uomDisplayUnit = mainstore.getUOMDisplayUnit();
@@ -92,10 +93,10 @@ var PutWrapper = React.createClass({
     return (
       <div className='rightContainer'>
         <div className='productDetailsContainer'   >
-          <div style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {width:"340px", marginLeft:"5%"} : {width: 'auto'}} className='productTableInfo'>
+          <div style ={classStyle === "put_front_place_item_in_rack" ? {width:"340px", marginLeft:"5%"} : {width: 'auto'}} className='productTableInfo'>
             <ProductImage srcURL={image_url.product_local_image_url} />
             <div>
-            <div style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {width:"340px"} : {}}>
+            <div style ={classStyle === "put_front_place_item_in_rack" ? {width:"340px"} : {}}>
               <div className='productHeader'>{_('Details')}</div>
               <ProductInfo
                 infoDetails={product_info_locale}
@@ -107,7 +108,7 @@ var PutWrapper = React.createClass({
         </div>
         {this.props.scanDetails ? (
           <div className='kqContainer' 
-          style ={this.props.classStyle=== "put_front_place_item_in_rack" ? {marginLeft:"1%"} : {marginLeft:"-3%"}}>
+          style ={classStyle === "put_front_place_item_in_rack" ? {marginLeft:"1%"} : {marginLeft:"-3%"}}>
             <KQ
               scanDetails={this.props.scanDetails}
               itemUid={this.props.itemUid}

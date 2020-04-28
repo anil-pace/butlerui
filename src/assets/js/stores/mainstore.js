@@ -21,7 +21,6 @@ var _seatData,
   _currentSeat,
   _peripheralScreen = false,
   _seatMode,
-  _seatProfile,
   _ppsRequestedStatus,
   _username,
   _seatType,
@@ -3777,7 +3776,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     _seatName = data.seat_name
     _seatMode = data.mode
-    _seatProfile = data.pps_profile
     _ppsRequestedStatus = data.pps_requested_status
     _username = data.user_loggedin ? data.user_loggedin : ""
     _seatType = data.seat_type
@@ -3943,9 +3941,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getPpsMode: function () {
     return _seatMode
-  },
-  getPpsProfile: function () {
-    return _seatProfile
   },
   getPpsRequestedStatus: function () {
     if (_seatData.hasOwnProperty("pps_requested_status")) {
@@ -5578,10 +5573,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data["OrigBinUse"] = this._getOrigBinUse()
     data["SeatType"] = this.getSeatType()
     data["ppsMode"] = this.getPpsMode()
-    data["ppsProfile"] = this.getPpsProfile()
     data["ppsRequestedStatus"] = this.getPpsRequestedStatus()
     data["username"] = this.getUsername()
-    data["isUPHActive"] = this.isUPHActive()
 
     switch (_screenId) {
       case appConstants.PUT_BACK_STAGE:

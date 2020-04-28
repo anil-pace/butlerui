@@ -14,13 +14,8 @@ function getState() {
     logoutState: mainstore.getLogoutState(),
     scanAllowed: mainstore.getScanAllowedStatus(),
     ppsMode: mainstore.getPpsMode(),
-    ppsProfile: mainstore.getPpsProfile(),
-    ppsRequestedStatus: mainstore.getPpsRequestedStatus(),
     ppsId: mainstore.getSeatName(),
-    uphCount: mainstore.getUPHCount(),
-    isUPHActive: mainstore.isUPHActive(),
-    frontScreen: mainstore.getSeatType(),
-    uphThreshold: mainstore.getUPHThreshold(),
+    ppsRequestedStatus: mainstore.getPpsRequestedStatus(),
   }
 }
 var Header = React.createClass({
@@ -211,9 +206,6 @@ var Header = React.createClass({
     } else {
       disableScanClass = "disableScanClass"
     }
-    var isFrontScreen = this.state.frontScreen === appConstants.FRONT
-    const { uphThreshold, uphCount, ppsMode } = this.state
-    const isAuditMode = ppsMode.toUpperCase() === "AUDIT" ? true : false
     if (this.state.ppsRequestedStatus !== "undefined") {
       ppsRequestedStatus = (
         <div className="ppsMode">
@@ -231,18 +223,8 @@ var Header = React.createClass({
             {" "}
             PPS Mode : {this.state.ppsMode.toUpperCase()}{" "}
           </div>
-          <div className="ppsMode">PPS Profile : {this.state.ppsProfile}</div>
 
           {ppsRequestedStatus}
-          {this.state.isUPHActive && isFrontScreen && !isAuditMode ? (
-            <UPHIndicator
-              uphCount={uphCount}
-              lowerThreshold={uphThreshold && uphThreshold.lower_threshold}
-              upperThreshold={uphThreshold && uphThreshold.upper_threshold}
-            />
-          ) : (
-            ""
-          )}
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}

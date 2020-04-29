@@ -60,7 +60,7 @@ if(Array.isArray(value)){
             product_info_locale[data_locale.display_name] = keyValue
           }
         }
-        if(data_locale.display_name  === "QL Code" ){
+        if(data_locale.display_name  === "SSCC Code" ){
           product_info_locale['QlcodeDigits'] = (value[0]['carrier_id'] && value[0]['carrier_id'].length >0) ? value[0]['carrier_id'].substr(value[0]['carrier_id'].length-4) : ''
         }
         if (data_locale.display_name == "product_local_image_url") {

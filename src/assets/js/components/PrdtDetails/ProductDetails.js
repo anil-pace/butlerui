@@ -98,6 +98,7 @@ var ProductDetails = React.createClass({
   },
   render: function () {
     var flag = this.props.QLCodeDetails
+    let flowIndicator = this.props.flowIndicator ? this.props.flowIndicator : ""
     var barcodeArr = flag ? this.displayCode(this.props.productInfo) : ""
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
     var uomConversionFactor, uomDisplayUnit
@@ -148,7 +149,7 @@ var ProductDetails = React.createClass({
         ) : (
             <div className="productTableInfo table-wrapper">
               <div className="productHeader">{_("Details")}</div>
-              <ProductInfo infoDetails={product_info_locale} flag="codeDetails" />
+              <ProductInfo flowIndicator = {flowIndicator} infoDetails={product_info_locale} flag="codeDetails" />
             </div>
           )}
       </div>

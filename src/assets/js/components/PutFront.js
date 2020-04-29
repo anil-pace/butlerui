@@ -205,7 +205,7 @@ var PutFront = React.createClass({
               <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
               <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} 
               bindata = {this.state.bindata}
-              pickFrontSelectedBin ={this.state.pickFrontSelectedBin} screenClass='PutFrontFlowScan' /> 
+               screenClass='PutFrontFlowScan' /> 
               </div> ) : ''}
               } 
               {binComponent}
@@ -234,11 +234,8 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && 
-              <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
-              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='PutFrontFlowScan' bindata = {this.state.bindata}
-              pickFrontSelectedBin ={this.state.pickFrontSelectedBin} />
-              </div>}
+              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='PutFrontFlowScan' bindata = {this.state.bindata}
+               />}
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
                 <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
               </div>

@@ -95,11 +95,12 @@ var ProductDetails = React.createClass({
     });
     return code;
   },
-  render: function() {
-    var flag = this.props.QLCodeDetails;
-    var barcodeArr = flag ? this.displayCode(this.props.productInfo) : '';
-    var isUnitConversionAllowed = mainstore.isUnitConversionAllowed();
-    var uomConversionFactor, uomDisplayUnit;
+  render: function () {
+    var flag = this.props.QLCodeDetails
+    let flowIndicator = this.props.flowIndicator ? this.props.flowIndicator : ""
+    var barcodeArr = flag ? this.displayCode(this.props.productInfo) : ""
+    var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
+    var uomConversionFactor, uomDisplayUnit
     var trailedDisplayText = flag
       ? utils.get3dotTrailedText(barcodeArr[0].displayvalue, 5, 5, 10)
       : '';
@@ -145,11 +146,11 @@ var ProductDetails = React.createClass({
             </div>
           </div>
         ) : (
-          <div>
-            <div className='productHeader'>{_('Details')}</div>
-            <ProductInfo infoDetails={product_info_locale} flag='codeDetails' />
-          </div>
-        )}
+            <div className="productTableInfo table-wrapper">
+              <div className="productHeader">{_("Details")}</div>
+              <ProductInfo flowIndicator = {flowIndicator} infoDetails={product_info_locale} flag="codeDetails" />
+            </div>
+          )}
       </div>
     );
   }

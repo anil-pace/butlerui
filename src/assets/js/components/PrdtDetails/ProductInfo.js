@@ -3,9 +3,23 @@ var React = require('react');
 var ProductInfo = React.createClass({
     render: function() {
         var infoDetails = this.props.infoDetails;
+        let flowIndicator = this.props.flowIndicator;
         var imageurl = this.props.hasOwnProperty('imageurl') ? this.props.imageurl : '-';
         var PutContainerFlag = this.props.putContainerFlag;
         var arr1 = [];
+
+        flowIndicator === "Pick" ?
+
+$.each(infoDetails, function(key, value) {
+            return arr1.push(
+                                <tr>
+                	  				<td className="key"> {key} </td>
+                	  				<td className="value">{value} </td>
+                  				</tr>                         
+            );   
+            return  arr1
+        }) :
+
         $.each(infoDetails, function(key, value) {
             return arr1.push(
                 <tr>
@@ -17,7 +31,15 @@ var ProductInfo = React.createClass({
         });
 
         return (
-            <div className="packingBoxTableInfo" style={{width: "480px",
+            flowIndicator === "Pick" ? 
+            <div className="table-wrapper">
+				<table className="table">									
+					<tbody>
+						{arr1}
+					</tbody>
+				</table>
+			</div> : 
+            <div className="packingBoxTableInfo" style={{width: "520px",
                 height: "549px",
                 marginLeft: "18%", display:"block"}}>
                     {imageurl !== '-' ? 

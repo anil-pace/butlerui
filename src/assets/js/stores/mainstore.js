@@ -293,6 +293,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getNavData: function () {
     /* dynamic header navigation implementation */
+    let active_header_index = _seatData.active_header_index;
+    let activeCode
     if (_seatData.header_steps) {
       var headerSteps = _seatData.header_steps
       navConfig.header = []

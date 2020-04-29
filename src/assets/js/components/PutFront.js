@@ -201,7 +201,7 @@ var PutFront = React.createClass({
               <Modal />
               {
               this.state.binPlotting === true ? (
-              this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />) : ''}
+              this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails}  bindata = {this.state.bindata} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />) : ''}
               {binComponent}
             </div>
           );
@@ -230,7 +230,7 @@ var PutFront = React.createClass({
               <Modal />
               {this.state.SplitScreenFlag && 
               <div style={{"position": "absolute", "top":"0px", "left": "0px" }}>
-              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='putFrontFlow' />
+              <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} bindata = {this.state.bindata} screenClass='putFrontFlow' />
               </div>
               }
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>

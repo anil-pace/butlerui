@@ -358,7 +358,7 @@ var PickFront = React.createClass({
               <Modal />
               <div className={mainContainerClass}>
                 {rackType}
-                <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
+                <PrdtDetails productInfo={this.state.PickFrontProductDetails} flowIndicator ="Pick"/>
               </div>
               <div className={actionClass}>{cancelButton}</div>
             </div>
@@ -408,7 +408,7 @@ var PickFront = React.createClass({
               <Modal />
               <div className="main-container">
                 {checklistData}
-                <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
+                <PrdtDetails flowIndicator ="Pick" productInfo={this.state.PickFrontProductDetails} />
                 <div className="rightWrapper">
                   <div className="">
                     <KQ scanDetails={this.state.PickFrontScanDetails} />
@@ -2104,7 +2104,7 @@ var PickFront = React.createClass({
               <Modal />
               <div className="main-container">
                 {rackType}
-                <PrdtDetails productInfo={this.state.PickFrontProductDetails} />
+                <PrdtDetails productInfo={this.state.PickFrontProductDetails} flowIndicator ="Pick" />
               </div>
             </div>
           )

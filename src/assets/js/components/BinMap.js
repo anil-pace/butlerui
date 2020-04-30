@@ -20,7 +20,7 @@ var BinMap = React.createClass({
 			}}}
 
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
-		maxBlockHeight = 40/maxBlockCount;
+		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
 		style = {
 			height:maxBlockHeight<= 105 ? 105 +"px" : height,
@@ -37,13 +37,12 @@ var BinMap = React.createClass({
 		}
 	}
 
-		if(leftCol.length === 0){
-			leftCol.push(<li  style={{height: "105px"}} className ={'col1Zero'}></li>);
-		}
-		else if(rightCol.length === 0){
-			rightCol.push(<li style={{height: "105px"}} className={'col3Zero'} ></li>);
-		}
-
+	if(leftCol.length === 0){
+		leftCol.push(<li  style={{height: "105px"}} className ={'col1Zero'}></li>);
+	}
+	if(rightCol.length === 0){
+		rightCol.push(<li style={{height: "105px"}} className={'col3Zero'} ></li>);
+	}
 		switch(leftCol.length){
 			case 1:
 			leftColCount = "one";

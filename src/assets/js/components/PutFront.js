@@ -220,6 +220,7 @@ var PutFront = React.createClass({
           );
         }
         break;
+        
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);

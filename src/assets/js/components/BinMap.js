@@ -20,22 +20,30 @@ var BinMap = React.createClass({
 			}}}
 
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
-		maxBlockHeight = 40/maxBlockCount;
+		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
 		style = {
 			height:maxBlockHeight+"%",
-			width: maxWidth <= 38 ? maxWidth : 38
+			width: maxWidth <= 38 ? 38 : maxWidth
 		}
 		if(Object.entries(bindata).length > 0 ){
 		for(let i=0; i<bindata.length; i++){
-				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
+				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){
 					leftCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
-				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && bindata[i].ppsbin_id === pickFrontSelectedBin)){
+				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){
 					rightCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
 		}
 	}
+
+	if(leftCol.length === 0){
+		leftCol.push(<li  style={{height: "105px"}} className ={'col1Zero'}></li>);
+	}
+	if(rightCol.length === 0){
+		rightCol.push(<li style={{height: "105px"}} className={'col3Zero'} ></li>);
+	}
+
 		switch(leftCol.length){
 			case 1:
 			leftColCount = "one";

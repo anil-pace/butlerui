@@ -322,12 +322,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       }
       _NavData = navConfig.header
       _NavData.map(function (data, index) {
-        if (data.screen_id.constructor === Array && data.screen_id.length > 0) {
+        if (data.screen_id.constructor === Array && data.screen_id.length > 0 && active_header_index === undefined) {
           if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
-            _NavData[index].type = "active"
-          }
-          else if(activeCode !== ''){
-            if(data.message === serverMessages[activeCode].textToDisplay)
             _NavData[index].type = "active"
           }
           else {

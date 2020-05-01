@@ -230,11 +230,31 @@ var PickBack = React.createClass({
               </div>
             )
           }
+          var cancelScanFlag = this.state.pickBackCancelButtonData
+          var cancelButton
+          if (cancelScanFlag) {
+            cancelButton = (
+              <div>
+                <div className="cancel-scan">
+                  <Button1
+                    disabled={false}
+                    text={_("Cancel Scan")}
+                    module={appConstants.PICK_BACK}
+                    action={appConstants.CANCEL_SCAN_ALL}
+                    color={"black"}
+                  />
+                </div>
+              </div>
+            )
+          } else {
+            cancelButton = <div></div>
+          }
 
           this._component = (
             <div className="grid-container">
               <Modal />
               {binComponent}
+              {cancelButton}
               {this.state.PreviousPickBackDetails &&
                 this.state.PreviousPickBackDetails.length > 0 && (
                   <PreviousDetails

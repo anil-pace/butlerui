@@ -8,24 +8,38 @@ var BinMap = React.createClass({
 		var bindata = this.props.bindata ? this.props.bindata.ppsbin_list : {};
 		var pickFrontSelectedBin = this.props.pickFrontSelectedBin ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : '';
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
+		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		
 		if(Object.entries(bindata).length > 0 ){
 			for(var  k in bindata){
-			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT || bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT){
+			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT ){
 				maxLeftCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT || bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT){
+				maxCenterLeftCount++;
+			}
+			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
+				maxCenterRightCount++;
+			}
+			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT){
 				maxRightCount++;
 			}}}
 
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
 		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
+
+		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 ?
 		style = {
 			height:maxBlockHeight+"%",
 			width: maxWidth <= 38 ? 38 : maxWidth
 		}
+		:
+		style = {
+			height: 105 +"px",
+			width: 38 
+		}
+
 		if(Object.entries(bindata).length > 0 ){
 		for(let i=0; i<bindata.length; i++){
 				if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){

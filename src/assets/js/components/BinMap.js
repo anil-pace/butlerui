@@ -6,7 +6,7 @@ var BinMap = React.createClass({
 	processData: function(){
 		var data =  Object.assign({},(this.props.mapDetails || {}));
 		var bindata = this.props.bindata ? this.props.bindata.ppsbin_list : {};
-		var pickFrontSelectedBin = this.props.pickFrontSelectedBin.ppsbin_list.length > 0 ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : '';
+		var pickFrontSelectedBin = this.props.pickFrontSelectedBin ? (this.props.pickFrontSelectedBin.ppsbin_list.length > 0 ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : ''):'';
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
 		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		

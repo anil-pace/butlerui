@@ -538,6 +538,11 @@ var serverMessages = {
     textToDisplay: "Press PPTL",
     screen_id: "pick_front_pptl_press"
   },
+  //Scan Box
+  "PkB.S.001": {
+    textToDisplay: "Scan Box",
+    screen_id: "pick_back_packing_box"
+    },
   load_unit_id: "Load_Unit_Id",
   load_unit_label: "Load_Unit_Label",
   service_request_id: "Service_Request_Id"

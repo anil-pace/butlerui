@@ -21,7 +21,7 @@ var BinMap = React.createClass({
 			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
 				maxCenterRightCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT || bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT){
 				maxRightCount++;
 			}}}
 

@@ -35,7 +35,7 @@ function getStateData(ths) {
           quantity: modalData[i].quantity,
           load_unit_id: modalData[i].load_unit_id,
           load_unit_label: modalData[i].load_unit_label,
-          service_request_id: modalData[i].service_request_id
+          service_request_id: modalData[i].service_request_id,
         }
         if (modalData[i].service_request_id.length === 0) {
           modalData[i].service_request_id = "--"
@@ -67,7 +67,7 @@ function getStateData(ths) {
   loadComponent(modalType, modalData, ths)
   return {
     data: modalData,
-    type: modalType
+    type: modalType,
   }
 }
 
@@ -82,7 +82,7 @@ function attachKeyboard(id) {
         "a s d f g h j k l",
         "{shift} z x c v b n m . {shift}",
         "{space}",
-        "{a} {c}"
+        "{a} {c}",
       ],
       shift: [
         "( ) { } [ ] = ~ ` -",
@@ -91,20 +91,20 @@ function attachKeyboard(id) {
         "A S D F G H J K L",
         "{shift} Z X C V B N M . {shift}",
         "{space}",
-        "{a} {c}"
-      ]
+        "{a} {c}",
+      ],
     },
     css: {
       container:
-        "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
+        "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad",
     },
     reposition: true,
     alwaysOpen: false,
     initialFocus: true,
-    visible: function(e, keypressed, el) {
+    visible: function (e, keypressed, el) {
       el.value = ""
     },
-    accepted: function(e, keypressed, el) {}
+    accepted: function (e, keypressed, el) {},
   })
   $("#" + id)
     .data("keyboard")
@@ -115,15 +115,15 @@ function attachNumpad(id) {
   virtualKeyBoard1 = $("#" + id).keyboard({
     layout: "custom",
     customLayout: {
-      default: ["1 2 3", "4 5 6", "7 8 9", ". 0 {b}", "{a} {c}"]
+      default: ["1 2 3", "4 5 6", "7 8 9", ". 0 {b}", "{a} {c}"],
     },
     reposition: true,
     alwaysOpen: false,
     initialFocus: true,
-    accepted: function(e, keypressed, el) {},
-    visible: function(e, keypressed, el) {
+    accepted: function (e, keypressed, el) {},
+    visible: function (e, keypressed, el) {
       el.value = ""
-    }
+    },
   })
   $("#" + id)
     .data("keyboard")
@@ -143,9 +143,7 @@ function attachDateTime(id, toggleTime) {
 }
 
 function removeTextField() {
-  $(".modal-body")
-    .find("input:text")
-    .val("")
+  $(".modal-body").find("input:text").val("")
 }
 
 function parseValue(rowValue, arg) {
@@ -207,17 +205,19 @@ function loadComponent(modalType, modalData, ths) {
               </span>
             )
             parseValue(rowValue, modalData[0][key])
-          } else headerArray.push(<th>{_(keyName)}</th>)
+          } else {
+            headerArray.push(<th>{_(keyName)}</th>)
+          }
         }
       }
       var tr = []
-      modalData.map(function(value, index) {
+      modalData.map(function (value, index) {
         var rowData = []
         var serialNumbers = []
         for (var key in value) {
           if (value.hasOwnProperty(key)) {
             if (value[key].constructor.name === "Array") {
-              value[key].map(function(val, id) {
+              value[key].map(function (val, id) {
                 serialNumbers.push(<div>{val}</div>)
               })
             }
@@ -226,7 +226,8 @@ function loadComponent(modalType, modalData, ths) {
               key === "load_unit_label" ||
               key === "service_request_id"
             ) {
-              rowData.push("")
+              // Removed as per BSS-23401
+              // rowData.push("")
             } else {
               rowData.push(
                 <td>
@@ -308,14 +309,14 @@ function loadComponent(modalType, modalData, ths) {
       rowData = []
       title = _("Input Extra Details")
       var modalData = modalData
-      var rowData = modalData.checklist_data.map(function(data, index) {
+      var rowData = modalData.checklist_data.map(function (data, index) {
         serial = index
         if (
           modalData.checklist_index === index + 1 ||
           (modalData.checklist_index === "all" &&
             index < mainstore.scanDetails()["current_qty"])
         ) {
-          var d = data.map(function(data1, index1) {
+          var d = data.map(function (data1, index1) {
             var keyvalue = Object.keys(data1)
             var inputBoxValue = data1[keyvalue]["value"]
             if (
@@ -942,23 +943,23 @@ function loadComponent(modalType, modalData, ths) {
 
 var Modal = React.createClass({
   virtualKeyBoard1: "",
-  componentDidMount: function(id) {
+  componentDidMount: function (id) {
     /*$(".modal").click(function(e){
       e.stopPropagation();
         return false;
     });*/
   },
 
-  componentWillMount: function() {
+  componentWillMount: function () {
     mainstore.addChangeListener(this.onChange)
   },
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     mainstore.removeChangeListener(this.onChange)
   },
-  onChange: function() {
+  onChange: function () {
     this.setState(getStateData(this))
   },
-  render: function() {
+  render: function () {
     return (
       <div className="modal">
         <div className="modal-dialog">
@@ -969,7 +970,7 @@ var Modal = React.createClass({
         </div>
       </div>
     )
-  }
+  },
 })
 
 module.exports = Modal

@@ -15,7 +15,7 @@ var ProductInfo = React.createClass({
         });
 
         return (
-            <div className="table-wrapper">
+            <div className="table-wrapper" style={{overflow:"scroll" }}>
 				<table className="table">									
 					<tbody>
 						{arr1}

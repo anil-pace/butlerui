@@ -541,7 +541,7 @@ var serverMessages = {
   //Scan Box
   "PkB.S.001": {
     textToDisplay: "Scan Box",
-    screen_id: "pick_back_packing_box"
+    screen_id: "pick_front_pptl_press"
     },
   load_unit_id: "Load_Unit_Id",
   load_unit_label: "Load_Unit_Label",

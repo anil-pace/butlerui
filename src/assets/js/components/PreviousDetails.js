@@ -59,7 +59,7 @@ var PreviousDetails = React.createClass({
     var showPrevLocation = false
     let compSpecificPreviousLocation =
       this.props.previousLocationFlag &&
-      this.props.previousLocationFlag === "PickBackScreen"
+      this.props.previousLocationFlag === "disable"
         ? true
         : false
 
@@ -102,16 +102,10 @@ var PreviousDetails = React.createClass({
                   </p>
                 </section>
               )
-            } else if (idx === 1) {
-              return (
-                <section key={key + idx} className="p-put-row">
-                  <p className="p-put-key">{_(key) + " :"}</p>
-                  <p className="p-put-value">
-                    {previousDetails[key].trim() || "--"}
-                  </p>
-                </section>
-              )
-            } else if (idx === 2 && compSpecificPreviousLocation) {
+            } else if (
+              idx === 1 ||
+              (idx === 2 && compSpecificPreviousLocation)
+            ) {
               return (
                 <section key={key + idx} className="p-put-row">
                   <p className="p-put-key">{_(key) + " :"}</p>

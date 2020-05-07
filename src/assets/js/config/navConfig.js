@@ -578,20 +578,12 @@ var navData = {
             "level": 1,
             "type": 'active'
         }],
-        [{
-            "screen_id": "pick_back_scan",
-            "code": "Common.001",
-            "image": svgConstants.scan,
-            "message": "Scan Slot",
-            "showImage": true,
-            "level": 1,
-            "type": 'passive'
-        }, {
+        [ {
             "screen_id": "search_entity_scan",
             "code": "Common.000",
             "message": "Remove Item",
             "showImage": true,
-            "level": 2,
+            "level": 1,
             "type": 'passive'
         }],
         [{

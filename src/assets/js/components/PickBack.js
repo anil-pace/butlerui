@@ -262,7 +262,7 @@ var PickBack = React.createClass({
                     customizeClass={"customize_WaitingForMsu"}
                     typeToShow={_("Curent Pick Details")}
                     type="pick"
-                    previousLocationFlag="PickBackScreen"
+                    previousLocationFlag="disable"
                   />
                 )}
             </div>
@@ -458,7 +458,7 @@ var PickBack = React.createClass({
                     customizeClass={customizedPositionClass}
                     typeToShow={_("Curent Pick Details")}
                     type="pick"
-                    previousLocationFlag="PickBackScreen"
+                    previousLocationFlag="disable"
                   />
                 )}
               <BinMap

@@ -54,7 +54,12 @@ var ProductInfo = React.createClass({
     ) : (
       <div
         className="packingBoxTableInfo"
-        style={{ width: "520px", height: "549px", display: "block" }}
+        style={{
+          width: "520px",
+          height: "549px",
+          display: "block",
+          marginLeft: "0",
+        }}
       >
         {imageurl !== "-" ? (
           <div className="packingBoxImage">

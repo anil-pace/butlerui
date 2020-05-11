@@ -5686,6 +5686,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutBackExceptionStatus"] = this.getExceptionStatus()
         data["InvoiceRequired"] = this.getInvoiceStatus()
         data["InvoiceType"] = this.getInvoiceType()
+        data["ToteId"] = this.getToteId()
         break
       case appConstants.PUT_BACK_INVOICE:
         data["HeaderMessg"] = this.getHeaderMessg()

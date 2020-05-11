@@ -246,7 +246,8 @@ var PutBack = React.createClass({
           }
           this._component = (
             <div className="grid-container">
-              {this.state.InvoiceRequired &&
+              {this.state.ToteId &&
+              this.state.InvoiceRequired &&
               this.state.InvoiceRequired.invoiceFlag ? (
                 <div className="gor-invoice-put-back">
                   {utils.frntStringTransform("FRNT.PBI.03", invoiceStringArg)}{" "}
@@ -392,7 +393,8 @@ var PutBack = React.createClass({
           )
           this._component = (
             <div className="grid-container">
-              {this.state.InvoiceRequired &&
+              {this.state.ToteId &&
+              this.state.InvoiceRequired &&
               this.state.InvoiceRequired.invoiceFlag ? (
                 <div className="gor-invoice-put-back">
                   {utils.frntStringTransform("FRNT.PBI.03", invoiceStringArg)}{" "}

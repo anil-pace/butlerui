@@ -10,6 +10,7 @@ var ProductInfo = React.createClass({
       : "-"
     var PutContainerFlag = this.props.putContainerFlag
     var arr1 = []
+    let widthpatch = this.props.widthpatch 
 
     flowIndicator === "Pick"
       ? $.each(infoDetails, function (key, value) {
@@ -55,7 +56,7 @@ var ProductInfo = React.createClass({
       <div
         className="packingBoxTableInfo"
         style={{
-          width: "520px",
+           width:   widthpatch!== '' ? widthpatch : "520px",
           height: "549px",
           display: "block",
           marginLeft: "0",

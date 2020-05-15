@@ -15,6 +15,7 @@ function getState() {
     logoutState: mainstore.getLogoutState(),
     scanAllowed: mainstore.getScanAllowedStatus(),
     ppsMode: mainstore.getPpsMode(),
+    ppsProfile: mainstore.getPpsProfile(),
     ppsId: mainstore.getSeatName(),
     uphCount: mainstore.getUPHCount(),
     isUPHActive: mainstore.isUPHActive(),
@@ -224,6 +225,9 @@ var Header = React.createClass({
           <div className="ppsMode">
             {" "}
             PPS Mode : {this.state.ppsMode.toUpperCase()}{" "}
+          </div>
+          <div className="ppsMode">
+            PPS Profile : {this.state.ppsProfile}
           </div>
           {this.state.isUPHActive && isFrontScreen && !isAuditMode ? (
             <UPHIndicator

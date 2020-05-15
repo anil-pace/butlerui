@@ -80,6 +80,7 @@ var serverMessages = {
   "PtF.H.024":
     "No space currently available for this SKU, Remove all entities from bin & press PPTL",
   "PtF.H.027": "Scan Entities Serial No. from Bin {0}",
+  "PtF.H.026": "Scan SKU code from Bin {0}",
   "PtF.H.028": "Scan serial no. of {0} damaged entities",
   "PkF.H.001": "Wait for MSU",
   "PkF.H.002": "Confirm MSU Release",

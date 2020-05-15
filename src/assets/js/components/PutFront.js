@@ -704,7 +704,7 @@ var PutFront = React.createClass({
           )
           kqHeadMessage =
             remainingEntitiesToBeScanned !== 0
-              ? utils.frntStringTransform("PtF.H.025", [
+              ? utils.frntStringTransform("PtF.H.028", [
                   remainingEntitiesToBeScanned,
                 ])
               : _("No more entities to be scanned")

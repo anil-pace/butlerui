@@ -12,16 +12,20 @@ var BinMap = React.createClass({
 		
 		if(Object.entries(bindata).length > 0 ){
 			for(var  k in bindata){
-			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT ){
+			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT 
+				&& bindata[k].selected_state === true){
 				maxLeftCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT){
+			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT
+				&& bindata[k].selected_state === true){
 				maxCenterLeftCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT
+				&& bindata[k].selected_state === true){
 				maxCenterRightCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT
+				&& bindata[k].selected_state === true){
 				maxRightCount++;
 			}}}
 
@@ -29,7 +33,7 @@ var BinMap = React.createClass({
 		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
 
-		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 ?
+		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 &&(maxRightCount >1 || maxLeftCount >1)?
 		style = {
 			height:maxBlockHeight+"%",
 			width: maxWidth <= 38 ? 38 : maxWidth

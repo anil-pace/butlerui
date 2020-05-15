@@ -11,6 +11,7 @@ var appConstants = {
   SEND_DATA: "/send_data",
   COMPONENT: "/components",
   LANG: "/language", //Language from api
+  FRONT: "front",
   OPERATOR_SEAT: "OPERATOR_SEAT",
   LOGIN_SEAT: "LOGIN_SEAT",
   SCAN_ITEMS: "Scan the item(s)",

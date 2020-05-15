@@ -8,33 +8,36 @@ var BinMap = React.createClass({
 		var bindata = this.props.bindata ? this.props.bindata.ppsbin_list : {};
 		var pickFrontSelectedBin = this.props.pickFrontSelectedBin ? (this.props.pickFrontSelectedBin.ppsbin_list.length > 0 ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : ''):'';
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
+		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		
 		if(Object.entries(bindata).length > 0 ){
 			for(var  k in bindata){
-			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT){
+			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT
+				&& bindata[k].selected_state === true){
 				maxLeftCount++;
 			} 
-			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT){
+			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_LEFT
+				&& bindata[k].selected_state === true){
 				maxCenterLeftCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_CENTER_RIGHT
+				&& bindata[k].selected_state === true){
 				maxCenterRightCount++;
 			}
-			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT){
+			else if(bindata[k].direction === allresourceConstants.BIN_GROUP_RIGHT
+				&& bindata[k].selected_state === true){
 				maxRightCount++;
 			}}}
 
 		maxBlockCount = maxLeftCount > maxRightCount ? maxLeftCount :maxRightCount;
 		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
-
-		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 ?
-		style = {
-			height:maxBlockHeight+"%",
-			width: maxWidth <= 38 ? maxWidth : 38
-				}
-			:
+		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 && (maxLeftCount>1 || maxRightCount>1)?
+				style = {
+					height:maxBlockHeight+"%",
+					width: maxWidth <= 38 ? maxWidth : 38
+						}
+					:
 			style = {
 				height: 105 +"px",
 				width: 38 

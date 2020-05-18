@@ -74,6 +74,12 @@ var serverMessages = {
   "PtF.H.020": "Warehouse Full Remove all entities from bin & press PPTL",
   "PtF.H.021": "Scan IRT Bin",
   "PtF.H.022": "Scan {0} damaged entities",
+  "PtF.H.023": "No space currently available for this SKU",
+  "PtF.H.024":
+    "No space currently available for this SKU, Remove all entities from bin & press PPTL",
+  "PtF.H.027": "Scan Entities Serial No. from Bin {0}",
+  "PtF.H.026": "Scan SKU code from Bin {0}",
+  "PtF.H.028": "Scan serial no. of {0} damaged entities",
   "PkF.H.001": "Wait for MSU",
   "PkF.H.002": "Confirm MSU Release",
   "PkF.H.003": "Scan Slot",
@@ -489,30 +495,30 @@ var serverMessages = {
   //location_required
   "PkF.S.001": {
     textToDisplay: "Location",
-    screen_id: ""
+    screen_id: "",
   },
   //packing_box
   "PkF.S.002": {
     textToDisplay: "Place Box",
-    screen_id: "pick_front_packing_box"
+    screen_id: "pick_front_packing_box",
   },
   //ud -staging
   "UdpF.S.001": {
     textToDisplay: "Put Entity",
-    screen_id: ""
+    screen_id: "",
   },
   //ud-Non-staging
   "UdpF.S.002": {
     textToDisplay: "Scan Entity",
-    screen_id: ""
+    screen_id: "",
   },
   "UdpF.S.003": {
     textToDisplay: "Scan Tote",
-    screen_id: ""
+    screen_id: "",
   },
   "UdpF.S.004": {
     textToDisplay: "Scan",
-    screen_id: ["ud_put_front_entity_scan", "ud_put_front_place_items_in_rack"]
+    screen_id: ["ud_put_front_entity_scan", "ud_put_front_place_items_in_rack"],
   },
   //item_scan
   "PkF.S.003": {
@@ -522,22 +528,22 @@ var serverMessages = {
       "pick_front_working_table",
       "pick_front_more_item_scan",
       "pick_front_container_break",
-      "dock_carrying_unit"
-    ]
+      "dock_carrying_unit",
+    ],
   },
   //checklist
   "PkF.S.004": {
     textToDisplay: "Checklist",
-    screen_id: "pick_front_checklist"
+    screen_id: "pick_front_checklist",
   },
   //press_pptl
   "PkF.S.005": {
     textToDisplay: "Press PPTL",
-    screen_id: "pick_front_pptl_press"
+    screen_id: "pick_front_pptl_press",
   },
   load_unit_id: "Load_Unit_Id",
   load_unit_label: "Load_Unit_Label",
-  service_request_id: "Service_Request_Id"
+  service_request_id: "Service_Request_Id",
 }
 
 module.exports = serverMessages

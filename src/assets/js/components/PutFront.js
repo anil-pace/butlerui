@@ -358,6 +358,7 @@ var PutFront = React.createClass({
                   scanDetails={this.state.PutFrontScanDetails}
                   productDetails={this.state.PutFrontProductDetails}
                   itemUid={this.state.PutFrontItemUid}
+                  marginLeftpatch="22%"
                 />
               </div>
               <div className="cancel-scan">

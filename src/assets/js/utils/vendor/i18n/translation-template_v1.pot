@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 11:21+0000\n"
+"POT-Creation-Date: 2020-05-19 10:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2031,6 +2031,7 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:351
 #: src/assets/js/serverMessages/server_messages_lang.js:356
 #: src/assets/js/serverMessages/server_messages_lang.js:365
+#: src/assets/js/serverMessages/server_messages_lang.js:806
 msgid "Scan Tote"
 msgstr ""
 
@@ -4489,4 +4490,24 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 msgid "{0} unexpected. Scanned {1} does not exist."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:807
+msgid "No space currently available for this SKU"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:809
+msgid ""
+"No space currently available for this SKU, Remove all entities from bin "
+"number and press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:812
+msgid ""
+"No space currently available for this SKU, Remove all entities from bin & "
+"press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:814
+msgid "Warehouse Full! Remove all entities from bin number and press PPTL."
 msgstr ""

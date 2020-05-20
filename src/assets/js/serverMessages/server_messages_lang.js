@@ -809,4 +809,5 @@ function server_messages_list() {
   _("Call for Help")
   _("{0} unexpected. Scanned {1} does not exist.")
   _("Scan Tote")
+  _("unknown")
 }

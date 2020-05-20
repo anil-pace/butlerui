@@ -474,7 +474,7 @@ function server_messages_list() {
   _("Please put oversized entities in IRT bin and scan the bin")
   _("Please put oversized entities in exception area")
   _("Entity Damaged")
-  _("Warehouse Full Remove all entities from bin & press PPTL")
+  _("Warehouse Full! Remove all entities from bin number and press PPTL.")
   _("Enter Quantity")
   _("Are you sure you want to cancel the exception?")
   _("All scan and print will be cancelled. Confirm to cancel?")

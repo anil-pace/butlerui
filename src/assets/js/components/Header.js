@@ -9,6 +9,7 @@ var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
 var EmergencyModal = require('./Modal/EmergencyModal')
 
+
 function getState() {
   return {
     spinner: mainstore.getSpinnerState(),
@@ -249,7 +250,21 @@ var Header = React.createClass({
           ) : (
             ""
           )}
-          {mainstore.getSystemEmergency() && <EmergencyModal title="Operation paused"/>}
+          {mainstore.getSystemEmergency() && 
+              <EmergencyModal 
+              title="Operation paused"
+              bodyContent="Butler operations have been halted."
+              bodySubcontent="Please wait for the operation to resume or contact your supervisor for further steps."
+          />}
+          {mainstore.getSystemEmergency() && 
+            <EmergencyModal 
+              title="System Error"
+              bodyContent="There is a problem with the order/PPS-bin you are working on."
+              bodySubcontent="Please place any items/tote/packing-box you may have in your hand in bin-x."
+              bodyAction="Support has been informed. Press OK to move to another transaction."
+              actionTobetaken = "true"
+          />}
+
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}

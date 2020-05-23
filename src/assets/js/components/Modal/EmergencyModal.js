@@ -1,5 +1,6 @@
 var React = require('react');
-var ModalHeader = require("./ModalHeader")
+var Button1 = require("../Button/Button")
+var appConstants = require("../../constants/appConstants")
 
 var ModalEmergency = React.createClass({
   render: function () {
@@ -21,9 +22,22 @@ var ModalEmergency = React.createClass({
                     </div>
                 </div>
                 <div style={{"fontSize":"1.5em"}} className="modal-body">
-                    <div style={{"color": "red", "fontWeight": "bold"}}>Butler operations have been halted.</div>
-                    <div> Please wait for the operation to resume or contact your supervisor for further steps.</div>
-            </div>
+                    <div style={{"color": "red", "fontWeight": "bold"}}>{this.props.bodyContent}</div>
+                    <div>{this.props.bodySubcontent}</div>
+                    <div>{this.props.bodyAction}</div>
+                </div>
+                {this.props.actionTobetaken && 
+                  <div style={{"float": "right", "margin": "0 20px 20px 0"}}>
+                    <Button1
+                    disabled={false}
+                    text={_("OK")}
+                    color={"orange"}
+                    module={appConstants.PUT_BACK}
+                    action={appConstants.DECLINE_CANCEL_INVOICE
+                    }
+                  />
+                </div>
+                }
           </div>
         </div>
       </div>

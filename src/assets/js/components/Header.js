@@ -264,6 +264,12 @@ var Header = React.createClass({
               bodyAction="Support has been informed. Press OK to move to another transaction."
               actionTobetaken = "true"
           />}
+        {mainstore.getSystemEmergency() && 
+            <EmergencyModal 
+              title="System Stop"
+              bodyContent="All bins are currently facing some issue."
+              bodySubcontent="Please contact support and wait for the issue to be resolved."
+          />}
 
           <div className={cssClass} onClick={this.openKeyboard}>
             <img

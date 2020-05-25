@@ -6606,6 +6606,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickBackExceptionData"] = this.getExceptionData()
         data["pickBackCancelButtonData"] = this.cancelScanDetails()
         data["PreviousPickBackDetails"] = this.getPreviousPickBackDetails()
+        data["PickBackReprintEnabled"] = this.isReprintEnabled()
         data["printerInfo"] = this.getPrinterInfo();
         data["isPrinterVisible"] = this.getPrinterVisibility();
         data["PickBackCancelScan"] = this.cancelScanDetails()

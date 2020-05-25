@@ -205,7 +205,7 @@ var PickBack = React.createClass({
         var cancelButton = "";
         var reprintButton = '';
         var cancelScanDisabled =this.state.PickBackCancelScan
-        var { PickBackReprintEnabled } = this.state;
+        var PickBackReprintEnabled = this.state.PickBackReprintEnabled;
         let printer_visible = false
         let printer_border_color = 'yellow'
         if (this.state.printerInfo) {
@@ -270,6 +270,7 @@ var PickBack = React.createClass({
               )}
               {binComponent}
               <div className='actions'>
+                {reprintButton}
                 {cancelButton}
               </div>
             </div>

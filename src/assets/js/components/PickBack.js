@@ -202,6 +202,82 @@ var PickBack = React.createClass({
         }
         break
       case appConstants.PICK_BACK_SCAN:
+        var cancelButton = "";
+        var reprintButton = '';
+        var cancelScanDisabled =this.state.PickBackCancelScan
+        var { PickBackReprintEnabled } = this.state;
+        let printer_visible = false
+        let printer_border_color = 'yellow'
+        if (this.state.printerInfo) {
+          printer_visible = this.state.printerInfo.printer_visible
+          printer_border_color = this.state.printerInfo.printer_border_color
+        }
+        var topPosition = this.state.SplitScreenFlag ? '180px' : '5px'
+        var reprintIconStyle = {
+          top: topPosition,
+          borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color]
+        }
+
+        if (cancelScanDisabled) {
+          cancelButton = (
+            <div>
+              <Button1
+                disabled={false}
+                text={_('Cancel')}
+                module={appConstants.PICK_BACK}
+                action={appConstants.CANCEL_SCAN}
+                color={'black'}
+              />{' '}
+            </div>
+          )
+        } else {
+          cancelButton = <div />
+        }
+
+        reprintButton = PickBackReprintEnabled ? (
+          <Button1
+            disabled={false}
+            text={_('Reprint')}
+            module={appConstants.PICK_FRONT}
+            action={appConstants.REPRINT_REQUEST}
+            color={'black'}
+          />
+        ) : (
+            ''
+          )
+
+        if (this.state.PickBackExceptionStatus == false) {
+          this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
+          var binComponent = "";
+          if (this.state.OrigBinUse) {
+            binComponent = (<BinsFlex binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} seatType={this.state.SeatType} />);
+          } else {
+            binComponent = (<div className='main-container'>
+              <Bins binsData={this.state.PickBackBinData} screenId={this.state.PickBackScreenId} />
+            </div>);
+          }
+          this._component = (
+            <div className='grid-container'>
+              <Modal />
+              {printer_visible && (
+                <div className='reprintIcon' style={reprintIconStyle}>
+                  <img
+                    height='140px'
+                    width='140px'
+                    src={'./assets/images/Printer.gif'}
+                  />
+                </div>
+              )}
+              {binComponent}
+              <div className='actions'>
+                {cancelButton}
+              </div>
+            </div>
+          );
+        } else {
+          this._component = this.getExceptionComponent();
+        }
+        break;
       case appConstants.PICK_BACK_NO_SCAN:
         if (this.state.PickBackExceptionStatus == false) {
           this._navigation = (

@@ -1011,7 +1011,7 @@ var Bin = React.createClass({
         <div
           className={
             "bin selected " +
-            (compData["ppsbin_blink_state"] ? "blink1" : "no-excess-item") +
+            (compData["ppsbin_blink_state"] ? "blink1" : "") +
             binClass
           }
           style={
@@ -1028,7 +1028,7 @@ var Bin = React.createClass({
           <div
             className={
               "pptl selected " +
-              (compData["ppsbin_blink_state"] ? "blink" : "no-excess-item") +
+              (compData["ppsbin_blink_state"] ? "blink" : "") +
               binClass
             }
             onClick={this.pressPptl.bind(
@@ -1057,7 +1057,7 @@ var Bin = React.createClass({
     ) {
       return (
         <div
-          className={"bin " + (compData["ppsbin_blink_state"] ? "blink1" : "no-excess-item")}
+          className={"bin " + (compData["ppsbin_blink_state"] ? "blink1" : "")}
           style={
             compData["ppsbin_light_color"]
               ? {
@@ -1071,7 +1071,7 @@ var Bin = React.createClass({
           {binParams.ppsBinCount}
           <div
             className={
-              "pptl " + (compData["ppsbin_blink_state"] ? "blink" : "no-excess-item")
+              "pptl " + (compData["ppsbin_blink_state"] ? "blink" : "")
             }
             style={
               compData["ppsbin_light_color"]

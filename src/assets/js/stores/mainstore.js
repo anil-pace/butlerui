@@ -6597,6 +6597,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
       
       case appConstants.PICK_BACK_SCAN:
+      case appConstants.PICK_BACK_SELECT_BIN_FOR_REPRINT:
         data["PickBackNavData"] = this.getNavData()
         data["PickBackNotification"] = this.getNotificationData()
         data["PickBackBinData"] = this.getBinData()
@@ -6609,8 +6610,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickBackReprintEnabled"] = this.isReprintEnabled()
         data["printerInfo"] = this.getPrinterInfo();
         data["isPrinterVisible"] = this.getPrinterVisibility();
-        data["PickBackCancelScan"] = this.cancelScanDetails()
         break;
+
+      // case appConstants.PICK_BACK_SELECT_BIN_FOR_REPRINT:
+      //   data["PickBackNavData"] = this.getNavData()
+      //   data["PickBackNotification"] = this.getNotificationData()
+      //   data["PickBackBinData"] = this.getBinData()
+      //   data["PickBackScreenId"] = this.getScreenId()
+      //   data["PickBackServerNavData"] = this.getServerNavData()
+      //   data["PickBackExceptionStatus"] = this.getExceptionStatus()
+      //   data["PickBackExceptionData"] = this.getExceptionData()
+      //   data["pickBackCancelButtonData"] = this.cancelScanDetails()
+      //   data["PreviousPickBackDetails"] = this.getPreviousPickBackDetails()
+      //   break;
+
       case appConstants.PICK_BACK_BIN:
       case appConstants.PICK_BACK_NO_SCAN:
         

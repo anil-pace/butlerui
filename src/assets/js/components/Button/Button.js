@@ -530,8 +530,8 @@ var Button1 = React.createClass({
           case appConstants.REPRINT_REQUEST:
             data["event_name"] = appConstants.REPRINT_REQUEST
             data["event_data"] = null
-            ActionCreators.setCancelButtonStatus(false)
-            ;-ActionCreators.postDataToInterface(data)
+            ActionCreators.setCancelButtonStatus(false);
+            ActionCreators.postDataToInterface(data)
             this.showModal(null, appConstants.REPRINT_REQUEST)
             break
           case appConstants.CANCEL_REPRINT_REQUEST:
@@ -581,7 +581,11 @@ var Button1 = React.createClass({
             data["event_name"] = "cancel_tote_scan"
             data["event_data"]["barcode"] = this.props.barcode
             ActionCreators.postDataToInterface(data)
-            break
+            break;
+          case appConstants.CANCEL_BIN_FOR_REPRINT:
+              data["event_name"] = "cancel_bin_for_reprint";
+              ActionCreators.postDataToInterface(data)
+              break
           case appConstants.CANCEL_SCAN_TOTE:
             data["event_name"] = "cancel_tote_scan"
             data["event_data"]["barcode"] = mainstore.getToteDeatils()
@@ -599,7 +603,11 @@ var Button1 = React.createClass({
             data["event_data"]["ppsbin_id"] = "undefined"
             data["event_data"]["type"] = mainstore.getExceptionType()
             ActionCreators.postDataToInterface(data)
-            break
+            break;
+          case appConstants.REPRINT_REQUIRED:
+              data["event_name"] = appConstants.REPRINT_REQUIRED
+              ActionCreators.postDataToInterface(data)
+              break
           case appConstants.SKIP_PRINTING:
             data["event_name"] = "pick_back_exception"
             data["event_data"]["ppsbin_id"] = mainstore.getSelectedBin()

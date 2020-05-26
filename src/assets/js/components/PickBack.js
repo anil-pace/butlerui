@@ -200,11 +200,13 @@ var PickBack = React.createClass({
         } else {
           this._component = this.getExceptionComponent()
         }
-        break
+        break;
+      
       case appConstants.PICK_BACK_SCAN:
+      case appConstants.PICK_BACK_SELECT_BIN_FOR_REPRINT:
         var cancelButton = "";
         var reprintButton = '';
-        var cancelScanDisabled =this.state.PickBackCancelScan
+        var cancelScanDisabled =this.state.pickBackCancelButtonData
         var PickBackReprintEnabled = this.state.PickBackReprintEnabled;
         let printer_visible = false
         let printer_border_color = 'yellow'
@@ -225,7 +227,7 @@ var PickBack = React.createClass({
                 disabled={false}
                 text={_('Cancel')}
                 module={appConstants.PICK_BACK}
-                action={appConstants.CANCEL_SCAN}
+                action={appConstants.CANCEL_BIN_FOR_REPRINT}
                 color={'black'}
               />{' '}
             </div>
@@ -238,8 +240,8 @@ var PickBack = React.createClass({
           <Button1
             disabled={false}
             text={_('Reprint')}
-            module={appConstants.PICK_FRONT}
-            action={appConstants.REPRINT_REQUEST}
+            module={appConstants.PICK_BACK}
+            action={appConstants.REPRINT_REQUIRED}
             color={'black'}
           />
         ) : (
@@ -279,6 +281,7 @@ var PickBack = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+
       case appConstants.PICK_BACK_NO_SCAN:
         if (this.state.PickBackExceptionStatus == false) {
           this._navigation = (

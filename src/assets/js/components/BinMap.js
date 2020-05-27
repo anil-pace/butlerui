@@ -7,8 +7,8 @@ var BinMap = React.createClass({
 		var data =  Object.assign({},(this.props.mapDetails || {}));
 		var bindata = this.props.bindata ? this.props.bindata.ppsbin_list : {};
 		var pickFrontSelectedBin = this.props.pickFrontSelectedBin ? (this.props.pickFrontSelectedBin.ppsbin_list.length > 0 ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : ''):'';
-		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
+		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,centerbar="grey",
+		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
 		
 		if(Object.entries(bindata).length > 0 ){
 			for(var  k in bindata){
@@ -29,7 +29,7 @@ var BinMap = React.createClass({
 		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
 
-		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 ?
+		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 &&(maxRightCount >1 || maxLeftCount >1)?
 		style = {
 			height:maxBlockHeight+"%",
  			width: maxWidth <= 38 ? maxWidth : 38
@@ -44,9 +44,13 @@ var BinMap = React.createClass({
 			if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){
 					leftCol.push(<li key={k} style={style} className={'sel'}></li>);
 				}
-			else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){
-				rightCol.push(<li key={k} style={style} className={'sel'}></li>);
-			}
+				else if((bindata[i].direction === allresourceConstants.BIN_GROUP_RIGHT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_RIGHT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){
+					rightCol.push(<li key={k} style={style} className={'sel'}></li>);
+				}
+				else if(bindata[i].direction === allresourceConstants.BIN_GROUP_CENTER &&
+					bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true){
+						centerbar = "blue"
+				}
 		}
 	}
 
@@ -93,7 +97,8 @@ var BinMap = React.createClass({
 			leftCol:leftCol,
 			rightCol:rightCol,
 			leftColCount:leftColCount,
-			rightColCount:rightColCount
+			rightColCount:rightColCount,
+			centerbar:centerbar
 		}
 	},
 	render:function(){
@@ -104,7 +109,7 @@ var BinMap = React.createClass({
 		return (
 				<div style={transformStyle} className={"binMapWrapper "+this.props.screenClass}>
 					<div className="mapCont">
-					<div className="msuSpace"></div>
+					<div style ={mapStructure.centerbar === "blue" ? {backgroundColor:"#0390FF"} : {}} className="msuSpace"></div>
 					<div className={"col1 "+mapStructure.leftColCount}>
 					<ul>
 					{mapStructure.leftCol}

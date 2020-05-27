@@ -463,7 +463,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _NavData = navConfig.pickBack[4]
           } else if (_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN) {
             _NavData = navConfig.pickBack[1]
-          } else if (_seatData.screen_id === appConstants.PICK_BACK_SCAN) {
+          } else if (_seatData.screen_id === appConstants.PICK_BACK_SCAN || _seatData.screen_id === appConstants.PICK_BACK_REPRINT_BINS) {
             _NavData = navConfig.pickBack[2]
           } else if (
             _seatData.screen_id === appConstants.PICK_BACK_PACKING_BOX

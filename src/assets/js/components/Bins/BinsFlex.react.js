@@ -100,7 +100,47 @@ var Bin = React.createClass({
     var compData = this.props.binData
     var binParams = this.getBinParams(compData)
 
-    if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
+    if (this.props.screenId === appConstants.PICK_BACK_REPRINT_BINS){
+      return (
+        <div
+          className={
+            "bin " +
+            (compData["pps_blink_state"]
+              ? "selected blink1 "
+              : "no-excess-item")
+          }
+        >
+          {binParams.iconToShow}
+          {binParams.ppsBinCount}
+          <div
+            className={
+              "pptl " +
+              (compData["pps_blink_state"]
+                ? "selected blink "
+                : "no-excess-item")
+            }
+            style={
+              compData["ppsbin_light_color"]
+                ? {
+                    backgroundColor:
+                      appConstants.BIN_LIGHT_COLOR[
+                        compData["ppsbin_light_color"]
+                      ]
+                  }
+                : {}
+            }
+            onClick={this.pressPptl.bind(
+              this,
+              compData.ppsbin_id,
+              compData.ppsbin_state
+            )}
+          >
+            {compData.ppsbin_id}
+          </div>
+        </div>
+      )
+    }
+    else if (this.props.screenId == appConstants.PICK_BACK_EXCEPTION_REPRINT) {
       return (
         <div
           className={

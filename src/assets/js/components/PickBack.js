@@ -203,7 +203,7 @@ var PickBack = React.createClass({
         break;
       
       case appConstants.PICK_BACK_SCAN:
-      case appConstants.PICK_BACK_SELECT_BIN_FOR_REPRINT:
+      case appConstants.PICK_BACK_REPRINT_BINS:
         var cancelButton = "";
         var reprintButton = '';
         var cancelScanDisabled =this.state.pickBackCancelButtonData
@@ -227,7 +227,7 @@ var PickBack = React.createClass({
                 disabled={false}
                 text={_('Cancel')}
                 module={appConstants.PICK_BACK}
-                action={appConstants.CANCEL_BIN_FOR_REPRINT}
+                action={appConstants.CANCEL_REPRINT_BINS}
                 color={'black'}
               />{' '}
             </div>

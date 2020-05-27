@@ -582,8 +582,8 @@ var Button1 = React.createClass({
             data["event_data"]["barcode"] = this.props.barcode
             ActionCreators.postDataToInterface(data)
             break;
-          case appConstants.CANCEL_BIN_FOR_REPRINT:
-              data["event_name"] = "cancel_bin_for_reprint";
+          case appConstants.CANCEL_REPRINT_BINS:
+              data["event_name"] = "cancel_reprint_request";
               ActionCreators.postDataToInterface(data)
               break
           case appConstants.CANCEL_SCAN_TOTE:

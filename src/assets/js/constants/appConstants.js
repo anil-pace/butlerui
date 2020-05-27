@@ -190,6 +190,7 @@ var appConstants = {
   AUDIT_FRONT_IRT_BIN_CONFIRM: "audit_front_irt_bin_confirm",
   DEFAULT: "default",
   AUDIT: "audit_front",
+  AUDIT_SIDELINE_ACKNOWLEDGED: "audit_sideline_acknowledged",
   SET_AUDIT_DATA: "SET_AUDIT_DATA",
   AUDIT_SCAN: "audit_scan",
   AUDIT_SCAN_SR: "audit_scan_sr",

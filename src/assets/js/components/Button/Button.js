@@ -690,7 +690,13 @@ var Button1 = React.createClass({
           case appConstants.CANCEL_EXCEPTION_TO_SERVER:
             data["event_name"] = "cancel_exception"
             ActionCreators.postDataToInterface(data)
-            break
+            break;
+
+          case appConstants.AUDIT_SIDELINE_ACKNOWLEDGED:
+              data["event_name"] = "audit_sideline_acknowledged"
+              ActionCreators.postDataToInterface(data)
+              break;
+
           default:
             return true
         }

@@ -17,14 +17,16 @@ var ModalEmergency = React.createClass({
                         width="70px"
                       />
                     </div>
-                    <div style={{"color" : "red", "fontWeight": "bold"}} className="modal-title">
+                    <div style={{"color" : "#4D5055", "padding": "25px 20px", "fontWeight":"bold"}} className="modal-title">
                         {this.props.title}
                     </div>
                 </div>
                 <div style={{"fontSize":"1.5em"}} className="modal-body">
                     <div style={{"color": "red", "fontWeight": "bold"}}>{this.props.bodyContent}</div>
                     <div>{this.props.bodySubcontent}</div>
-                    <div>{this.props.bodyAction}</div>
+                    <div><span>{this.props.bodyAction}</span> 
+                          <span style={{"fontWeight": "bold", "color" :"#000000"}}>{this.props.msgAction}</span>
+                    </div>
                 </div>
                 {this.props.actionTobetaken && 
                   <div style={{"float": "right", "margin": "0 20px 20px 0"}}>
@@ -32,9 +34,8 @@ var ModalEmergency = React.createClass({
                     disabled={false}
                     text={_("OK")}
                     color={"orange"}
-                    module={appConstants.PUT_BACK}
-                    action={appConstants.DECLINE_CANCEL_INVOICE
-                    }
+                    module = {this.props.module}
+                    action={this.props.action}
                   />
                 </div>
                 }

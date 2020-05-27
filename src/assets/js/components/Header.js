@@ -256,13 +256,16 @@ var Header = React.createClass({
               bodyContent="Butler operations have been halted."
               bodySubcontent="Please wait for the operation to resume or contact your supervisor for further steps."
           />}
-          {mainstore.getSystemEmergency() && 
+          {mainstore.getSystemAuditError() && 
             <EmergencyModal 
               title="System Error"
-              bodyContent="There is a problem with the order/PPS-bin you are working on."
-              bodySubcontent="Please place any items/tote/packing-box you may have in your hand in bin-x."
-              bodyAction="Support has been informed. Press OK to move to another transaction."
-              actionTobetaken = "true"
+              bodyContent="There is a problem with the transaction you are working on."
+              bodySubcontent="Please place any items you may have in your hand back in the slot."
+              bodyAction="Support has been informed. "
+              msgAction = "Tap OK to move to another transaction."
+              actionTobetaken = {true}
+              module = {appConstants.AUDIT}
+              action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
           />}
         {mainstore.getSystemEmergency() && 
             <EmergencyModal 

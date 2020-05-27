@@ -1637,9 +1637,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.ops_paused
     } else return null
   },
-  getSystemError: function () {
-    if (_seatData.hasOwnProperty("system_error")) {
-      return _seatData.system_error
+  getSystemAuditError: function () {
+    if (_seatData.hasOwnProperty("audit_sideline_error")) {
+      return _seatData.audit_sideline_error
     } else return null
   },
   getSystemStop: function () {

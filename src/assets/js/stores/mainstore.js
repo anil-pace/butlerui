@@ -1638,8 +1638,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     } else return null
   },
   getSystemAuditError: function () {
-    if (_seatData.hasOwnProperty("audit_sideline_error")) {
-      return _seatData.audit_sideline_error
+    if (_seatData.hasOwnProperty("audit_sideline_popup")) {
+      return _seatData.audit_sideline_popup
     } else return null
   },
   getSystemPutPickError: function () {

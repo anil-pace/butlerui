@@ -1642,9 +1642,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.audit_sideline_error
     } else return null
   },
-  getSystemStop: function () {
-    if (_seatData.hasOwnProperty("system_stop")) {
-      return _seatData.system_stop
+  getSystemPutPickError: function () {
+    if (_seatData.hasOwnProperty("auto_sideline_confirm_required")) {
+      return _seatData.auto_sideline_confirm_required
     } else return null
   },
   getGamificationExpand: function () {

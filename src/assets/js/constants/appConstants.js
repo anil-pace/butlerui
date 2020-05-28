@@ -191,6 +191,7 @@ var appConstants = {
   DEFAULT: "default",
   AUDIT: "audit_front",
   AUDIT_SIDELINE_ACKNOWLEDGED: "audit_sideline_acknowledged",
+  AUTO_SIDELINE_CONFIRM: "auto_sideline_confirm",
   SET_AUDIT_DATA: "SET_AUDIT_DATA",
   AUDIT_SCAN: "audit_scan",
   AUDIT_SCAN_SR: "audit_scan_sr",

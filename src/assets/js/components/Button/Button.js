@@ -62,6 +62,23 @@ var Button1 = React.createClass({
         $(".modal.notification-error").modal("hide")
         $(".modal").removeClass("notification-error")
         break
+      
+      case appConstants.SYSTEM_ERROR:
+        switch(action){
+          case appConstants.AUDIT_SIDELINE_ACKNOWLEDGED:
+              data["event_name"] = "audit_sideline_acknowledged"
+              ActionCreators.postDataToInterface(data);
+              closeModalBox();
+              break;
+          
+          case appConstants.AUTO_SIDELINE_CONFIRM:
+            data["event_name"] = "auto_sideline_confirm"
+            ActionCreators.postDataToInterface(data);
+            closeModalBox();
+            break;
+        }
+        
+
 
       case appConstants.PUT_BACK:
         switch (action) {
@@ -691,12 +708,6 @@ var Button1 = React.createClass({
             data["event_name"] = "cancel_exception"
             ActionCreators.postDataToInterface(data)
             break;
-
-          case appConstants.AUDIT_SIDELINE_ACKNOWLEDGED:
-              data["event_name"] = "audit_sideline_acknowledged"
-              ActionCreators.postDataToInterface(data);
-              closeModalBox();
-              break;
 
           default:
             return true

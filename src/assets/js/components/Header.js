@@ -258,20 +258,25 @@ var Header = React.createClass({
           />}
           {mainstore.getSystemAuditError() && 
             <EmergencyModal 
-              title="System Error"
-              bodyContent="There is a problem with the transaction you are working on."
-              bodySubcontent="Please place any items you may have in your hand back in the slot."
-              bodyAction="Support has been informed. "
-              msgAction = "Tap OK to move to another transaction."
-              actionTobetaken = {true}
-              module = {appConstants.AUDIT}
-              action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
+                title="System Error"
+                bodyContent="There is a problem with the transaction you are working on."
+                bodySubcontent="Please place any items you may have in your hand back in the slot."
+                bodyAction="Support has been informed, "
+                msgAction = "Tap OK to move to another transaction."
+                actionTobetaken = {true}
+                module = {appConstants.SYSTEM_ERROR}
+                action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
           />}
-        {mainstore.getSystemEmergency() && 
+        {mainstore.getSystemPutPickError() && 
             <EmergencyModal 
-              title="System Stop"
-              bodyContent="All bins are currently facing some issue."
-              bodySubcontent="Please contact support and wait for the issue to be resolved."
+                title="System Error"
+                bodyContent="There is a problem with the transaction you are working on."
+                bodySubcontent="Please place any items you may have in your hand back in bin-x."
+                bodyAction="Support has been informed, "
+                msgAction = "Tap OK to move to another transaction."
+                actionTobetaken = {true}
+                module = {appConstants.SYSTEM_ERROR}
+                action = {appConstants.AUTO_SIDELINE_CONFIRM}
           />}
 
           <div className={cssClass} onClick={this.openKeyboard}>

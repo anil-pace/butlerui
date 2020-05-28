@@ -274,7 +274,7 @@ var appConstants = {
   CONFIRM_LOGOUT_REQUEST: "confirm_logout_request",
   CANCEL_LOGOUT_REQUEST: "cancel_logout_request",
   REPRINT_REQUEST: "reprint_request",
-  REPRINT_REQUIRED: "reprint_required",
+  REPRINT_BUTTON_PRESS: "reprint_button_press",
   CANCEL_REPRINT_REQUEST: "cancel_reprint_request",
   CONFIRM_REPRINT_LAST_REQUEST: "reprint_last_confirm",
   CONFIRM_REPRINT_ALL_REQUEST: "reprint_all_confirm",

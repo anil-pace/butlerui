@@ -241,7 +241,7 @@ var PickBack = React.createClass({
             disabled={false}
             text={_('Reprint')}
             module={appConstants.PICK_BACK}
-            action={appConstants.REPRINT_REQUIRED}
+            action={appConstants.REPRINT_BUTTON_PRESS}
             color={'black'}
           />
         ) : (

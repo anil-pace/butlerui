@@ -604,8 +604,8 @@ var Button1 = React.createClass({
             data["event_data"]["type"] = mainstore.getExceptionType()
             ActionCreators.postDataToInterface(data)
             break;
-          case appConstants.REPRINT_REQUIRED:
-              data["event_name"] = appConstants.REPRINT_REQUIRED
+          case appConstants.REPRINT_BUTTON_PRESS:
+              data["event_name"] = appConstants.REPRINT_BUTTON_PRESS
               ActionCreators.postDataToInterface(data)
               break
           case appConstants.SKIP_PRINTING:

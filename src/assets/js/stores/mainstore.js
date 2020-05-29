@@ -1642,7 +1642,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.audit_sideline_popup
     } else return null
   },
-  getSystemPutPickError: function () {
+  getSystemPickError: function () {
     if (_seatData.hasOwnProperty("auto_sideline_confirm_required")) {
       return _seatData.auto_sideline_confirm_required
     } else return null
@@ -6348,7 +6348,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["printerInfo"] = this.getPrinterInfo()
         data["isPrinterVisible"] = this.getPrinterVisibility()
         data["BinMapDetails"] = this._getBinMapDetails()
-        data["BinMapGroupDetails"] = this.getSelectedBinGroup()
+        data["BinMapGroupDetails"] = this.gegtSelectedBinGroup()
         data["PickFrontBinData"] = this.getBinData()
         data["PickFrontScanDetails"] = this.scanDetails()
         data["PickFrontProductDetails"] = this.productDetails()

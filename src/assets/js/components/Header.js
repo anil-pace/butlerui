@@ -256,7 +256,7 @@ var Header = React.createClass({
               bodyContent="Butler operations have been halted."
               bodySubcontent="Please wait for the operation to resume or contact your supervisor for further steps."
           />}
-          {mainstore.getSystemAuditError() && 
+          {mainstore.getSystemAuditError() === true && 
             <EmergencyModal 
                 title="System Error"
                 bodyContent="There is a problem with the transaction you are working on."
@@ -267,7 +267,7 @@ var Header = React.createClass({
                 module = {appConstants.SYSTEM_ERROR}
                 action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
           />}
-        {mainstore.getSystemPutPickError() && 
+        {mainstore.getSystemPickError() === true && 
             <EmergencyModal 
                 title="System Error"
                 bodyContent="There is a problem with the transaction you are working on."

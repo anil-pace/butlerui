@@ -344,6 +344,7 @@ var serverMessages = {
   "PkB.I.007": "{0} undocked successfully",
   "PkB.I.008": "{0} scan successful.",
   "PkB.I.009": "Packing box replaced successfully",
+  "PkB.I.012": "Reprinting for bin-{0}",
   "PkB.W.001": "Please complete pickback for pending bin and then proceed",
   "PkB.W.002": "{0} associated with another bin",
   "PkB.W.003": "Wrong barcode scanned",
@@ -454,6 +455,7 @@ var serverMessages = {
   PpB001: "Excess quantity",
   "PtB.H.012": "Scan or Enter {0} number",
   "PtB.I.019": "{0} scan successful", // not generic from backend
+  "PtB.I.022": "Select Bin for reprint the label",
   //codes for front end
   "FRNT.PBI.01": "Please scan or enter {0} number",
   "FRNT.PBI.02": "Exit {0}",

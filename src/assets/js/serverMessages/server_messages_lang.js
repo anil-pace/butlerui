@@ -824,4 +824,6 @@ function server_messages_list() {
   _(
     "Please wait for the operation to resume or contact your supervisor for further steps."
   )
+  _("Reprinting for bin-{0}")
+  _("Select Bin for reprint the label")
 }

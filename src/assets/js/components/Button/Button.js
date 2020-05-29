@@ -66,7 +66,8 @@ var Button1 = React.createClass({
       case appConstants.SYSTEM_ERROR:
         switch(action){
           case appConstants.AUDIT_SIDELINE_ACKNOWLEDGED:
-              data["event_name"] = "audit_sideline_acknowledged"
+              data["event_name"] = "audit_actions"
+              data["event_data"]["type"] = "audit_sideline_acknowledged"
               ActionCreators.postDataToInterface(data);
               closeModalBox();
               break;

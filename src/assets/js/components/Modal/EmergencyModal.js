@@ -7,7 +7,7 @@ var ModalEmergency = React.createClass({
     return (
             <div style={{"display" :"block", "zIndex": 9999}} className="modal">
             <div id="emergencyOverlay" className="emergencyOverlay"> </div>
-            <div className="modal-dialog">
+            <div style={{"marginLeft": "25%", "marginTop" :"8%"}} className="modal-dialog">
             <div className="modal-content">
                 <div style={{"background" : "transparent"}} className="modal-header">
                     <div style={{"float" : "left", "padding" :"1em 1em 0em 2em"}}>

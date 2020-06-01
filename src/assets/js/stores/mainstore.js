@@ -1642,6 +1642,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.audit_sideline_popup
     } else return null
   },
+  getBinToSideline: function () {
+    if (_seatData.hasOwnProperty("bin_to_sideline")) {
+      return _seatData.bin_to_sideline
+    } else return []
+  },
   getSystemPickError: function () {
     if (_seatData.hasOwnProperty("auto_sideline_confirm_required")) {
       return _seatData.auto_sideline_confirm_required

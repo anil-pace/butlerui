@@ -1625,8 +1625,8 @@ var Bin = React.createClass({
               : {}
           }
         >
-          {binParams.ppsBinCount}
           {binParams.iconToShow}
+          <span style={{"top": "-30px"}}>{binParams.ppsBinCount}</span>
           <div
             className={
               "pptl selected " + (compData["ppsbin_blink_state"] ? "blink" : "")

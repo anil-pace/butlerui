@@ -23,7 +23,13 @@ var ModalEmergency = React.createClass({
                 </div>
                 <div style={{"fontSize":"1.5em"}} className="modal-body">
                     <div style={{"color": "red", "fontWeight": "bold"}}>{this.props.bodyContent}</div>
-                    <div>{this.props.bodySubcontent}</div>
+                    <div>
+                      <span>{this.props.bodySubcontent}</span>
+                      {this.props.binId ? 
+                        <span style={{"color":"red"}}>{"bin-"+ this.props.binId + "."}</span> 
+                        : ""
+                      }
+                    </div>
                     <div><span>{this.props.bodyAction}</span> 
                           <span style={{"fontWeight": "bold", "color" :"#000000"}}>{this.props.msgAction}</span>
                     </div>

@@ -271,7 +271,8 @@ var Header = React.createClass({
             <EmergencyModal 
                 title="System Error"
                 bodyContent="There is a problem with the transaction you are working on."
-                bodySubcontent= {"Please place any items you may have in your hand back in bin-"+ mainstore.getBinToSideline() + " ."}
+                bodySubcontent= {"Please place any items you may have in your hand back in "}
+                binId = {mainstore.getBinToSideline()}
                 bodyAction="Support has been informed, "
                 msgAction = "Tap OK to move to another transaction."
                 actionTobetaken = {true}

@@ -14,10 +14,10 @@ var SystemIdle = React.createClass({
 					{isAllPpsBlocked ? 
 						(<div className="idleScreen">
 							<div className="ppsBlocked">
-								<div style={{"marginLeft": "15%", "wordSpacing": "10px"}}>{_("All the bins are")} </div>
-								<div style={{"marginLeft": "15%", "wordSpacing": "10px"}}>{_("currently facing")} </div>
-								<div style={{"marginLeft": "22.5%", "wordSpacing": "10px"}}>{_("some issue.")} </div>
-								<div style={{"marginTop": "10%", "wordSpacing": "10px"}}>{_("Please contact support.")} </div>
+								<div style={{"marginLeft": "15%", "letterSpacing": "5px"}}>{_("All the bins are")} </div>
+								<div style={{"marginLeft": "15%", "letterSpacing": "5px"}}>{_("currently facing")} </div>
+								<div style={{"marginLeft": "22.5%", "letterSpacing": "5px"}}>{_("some issue.")} </div>
+								<div style={{"marginTop": "10%", "letterSpacing": "5px"}}>{_("Please contact support.")} </div>
 							</div>
 						</div>) 
 						:

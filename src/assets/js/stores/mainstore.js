@@ -1647,6 +1647,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.bin_to_sideline
     } else return []
   },
+  getAllPpsBlocked: function () {
+    if (_seatData.hasOwnProperty("pps_blocked")) {
+      return _seatData.pps_blocked
+    } else return null
+  },
   getSystemPickError: function () {
     if (_seatData.hasOwnProperty("auto_sideline_confirm_required")) {
       return _seatData.auto_sideline_confirm_required

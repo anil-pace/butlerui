@@ -463,7 +463,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _NavData = navConfig.pickBack[4]
           } else if (_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN) {
             _NavData = navConfig.pickBack[1]
-          } else if (_seatData.screen_id === appConstants.PICK_BACK_SCAN) {
+          } else if (_seatData.screen_id === appConstants.PICK_BACK_SCAN || _seatData.screen_id === appConstants.PICK_BACK_REPRINT_BINS) {
             _NavData = navConfig.pickBack[2]
           } else if (
             _seatData.screen_id === appConstants.PICK_BACK_PACKING_BOX
@@ -6615,9 +6615,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails()
         break
 
-      case appConstants.PICK_BACK_BIN:
+      
       case appConstants.PICK_BACK_SCAN:
-      case appConstants.PICK_BACK_NO_SCAN:
+      case appConstants.PICK_BACK_REPRINT_BINS:
         data["PickBackNavData"] = this.getNavData()
         data["PickBackNotification"] = this.getNotificationData()
         data["PickBackBinData"] = this.getBinData()
@@ -6627,6 +6627,14 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickBackExceptionData"] = this.getExceptionData()
         data["pickBackCancelButtonData"] = this.cancelScanDetails()
         data["PreviousPickBackDetails"] = this.getPreviousPickBackDetails()
+        data["PickBackReprintEnabled"] = this.isReprintEnabled()
+        data["printerInfo"] = this.getPrinterInfo();
+        data["isPrinterVisible"] = this.getPrinterVisibility();
+        break;
+
+      case appConstants.PICK_BACK_BIN:
+      case appConstants.PICK_BACK_NO_SCAN:
+        
         break
       case appConstants.PICK_BACK_EXCEPTION_REPRINT:
       case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:

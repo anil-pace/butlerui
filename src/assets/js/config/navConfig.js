@@ -513,7 +513,7 @@ var navData = {
     ],
     "pickBack": [
         [{
-            "screen_id": "pick_back_scan",
+            "screen_id": ["pick_back_scan", "pick_back_reprint_bins"],
             "code": "Common.001",
             "image": svgConstants.scan,
             "message": "Scan Tote",
@@ -537,7 +537,7 @@ var navData = {
             "type": 'passive'
         }],
         [{
-            "screen_id": "pick_back_scan",
+            "screen_id": ["pick_back_scan", "pick_back_reprint_bins"],
             "code": "Common.001",
             "image": svgConstants.scan,
             "message": "Scan Tote",

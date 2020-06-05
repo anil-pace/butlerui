@@ -29,12 +29,12 @@ var BinMap = React.createClass({
 		maxBlockHeight = maxBlockCount !== 0  ? 40/maxBlockCount : 0;
 		maxWidth = ((maxBlockHeight/100)*150);
 
-		maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 &&(maxRightCount >1 || maxLeftCount >1)?
-		style = {
-			height:maxBlockHeight+"%",
- 			width: maxWidth <= 38 ? maxWidth : 38
-		}
-		:
+		// maxCenterRightCount === 0 &&  maxCenterLeftCount === 0 &&(maxRightCount >1 || maxLeftCount >1)?
+		// style = {
+		// 	height:maxBlockHeight+"%",
+ 		// 	width: maxWidth <= 38 ? maxWidth : 38
+		// }
+		
 		style = {
 			height: 105 +"px",
 			width: 38 

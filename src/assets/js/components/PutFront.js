@@ -1339,6 +1339,9 @@ var PutFront = React.createClass({
                 <div className="product-details-container extraHandling">
                   <PrdtDetails
                     productInfo={this.state.PutFrontProductDetails}
+                    widthpatch ="17em"
+                    heightpatch="12em"
+                    headerwidth= "11.9em"
                   />
                 </div>
                 <div className="msu-send-container">
@@ -1531,6 +1534,9 @@ var PutFront = React.createClass({
                 <div className="product-details-container extraHandling">
                   <PrdtDetails
                     productInfo={this.state.PutFrontProductDetails}
+                    widthpatch ="17em"
+                    heightpatch="12em"
+                    headerwidth ="11.9em"
                   />
                 </div>
                 <div className="msu-send-container">

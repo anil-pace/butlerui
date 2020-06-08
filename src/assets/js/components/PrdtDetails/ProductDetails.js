@@ -98,6 +98,9 @@ var ProductDetails = React.createClass({
   },
   render: function () {
     var flag = this.props.QLCodeDetails
+    let widthpatch = this.props.widthpatch ? this.props.widthpatch : ''
+    let heightpatch = this.props.heightpatch ? this.props.heightpatch : ''
+    let headerwidth = this.props.headerwidth ? this.props.headerwidth : ''
     let flowIndicator = this.props.flowIndicator ? this.props.flowIndicator : ""
     var barcodeArr = flag ? this.displayCode(this.props.productInfo) : ""
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
@@ -148,8 +151,8 @@ var ProductDetails = React.createClass({
           </div>
         ) : (
             <div className="productTableInfo table-wrapper">
-              <div className="productHeader">{_("Details")}</div>
-              <ProductInfo flowIndicator = {flowIndicator} infoDetails={product_info_locale} flag="codeDetails" />
+              <div className="productHeader" style={headerwidth!== '' ? {width:headerwidth} : {}}>{_("Details")}</div>
+              <ProductInfo flowIndicator = {flowIndicator} infoDetails={product_info_locale} flag="codeDetails" widthpatch= {widthpatch} heightpatch= {heightpatch}/>
             </div>
           )}
       </div>

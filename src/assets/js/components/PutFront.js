@@ -785,7 +785,16 @@ var PutFront = React.createClass({
               <div className='main-container'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
                 <div className="product-details-container extraHandling">
+<<<<<<< HEAD
                   <PrdtDetails productInfo={this.state.PutFrontProductDetails} />
+=======
+                  <PrdtDetails
+                    productInfo={this.state.PutFrontProductDetails}
+                    widthpatch ="17em"
+                    heightpatch="12em"
+                    headerwidth= "11.9em"
+                  />
+>>>>>>> e16764346... BSS-24252: [UDP flow]- The information box is coming distorted on put front screen.
                 </div>
                 <div className="msu-send-container">
                   <div style={{"marginLeft": "10%"}} className="msu-send-button">
@@ -887,7 +896,16 @@ var PutFront = React.createClass({
               <div className='main-container udp-flow'>
                 <Rack hideSlotDetails={true} isDrawer={false} slotType={null} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} />
                 <div className="product-details-container extraHandling">
+<<<<<<< HEAD
                   <PrdtDetails productInfo={this.state.PutFrontProductDetails} />
+=======
+                  <PrdtDetails
+                    productInfo={this.state.PutFrontProductDetails}
+                    widthpatch ="17em"
+                    heightpatch="12em"
+                    headerwidth ="11.9em"
+                  />
+>>>>>>> e16764346... BSS-24252: [UDP flow]- The information box is coming distorted on put front screen.
                 </div>
                 <div className="msu-send-container">
                 <span style ={{marginBottom: "12px", marginLeft:"12%",  marginRight:"10%"}} > 

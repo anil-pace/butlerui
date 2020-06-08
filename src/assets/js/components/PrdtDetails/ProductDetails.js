@@ -95,11 +95,23 @@ var ProductDetails = React.createClass({
     });
     return code;
   },
+<<<<<<< HEAD
   render: function() {
     var flag = this.props.QLCodeDetails;
     var barcodeArr = flag ? this.displayCode(this.props.productInfo) : '';
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed();
     var uomConversionFactor, uomDisplayUnit;
+=======
+  render: function () {
+    var flag = this.props.QLCodeDetails
+    let widthpatch = this.props.widthpatch ? this.props.widthpatch : ''
+    let heightpatch = this.props.heightpatch ? this.props.heightpatch : ''
+    let headerwidth = this.props.headerwidth ? this.props.headerwidth : ''
+    let flowIndicator = this.props.flowIndicator ? this.props.flowIndicator : ""
+    var barcodeArr = flag ? this.displayCode(this.props.productInfo) : ""
+    var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
+    var uomConversionFactor, uomDisplayUnit
+>>>>>>> e16764346... BSS-24252: [UDP flow]- The information box is coming distorted on put front screen.
     var trailedDisplayText = flag
       ? utils.get3dotTrailedText(barcodeArr[0].displayvalue, 5, 5, 10)
       : '';
@@ -145,11 +157,19 @@ var ProductDetails = React.createClass({
             </div>
           </div>
         ) : (
+<<<<<<< HEAD
           <div>
             <div className='productHeader'>{_('Details')}</div>
             <ProductInfo infoDetails={product_info_locale} flag='codeDetails' />
           </div>
         )}
+=======
+            <div className="productTableInfo table-wrapper">
+              <div className="productHeader" style={headerwidth!== '' ? {width:headerwidth} : {}}>{_("Details")}</div>
+              <ProductInfo flowIndicator = {flowIndicator} infoDetails={product_info_locale} flag="codeDetails" widthpatch= {widthpatch} heightpatch= {heightpatch}/>
+            </div>
+          )}
+>>>>>>> e16764346... BSS-24252: [UDP flow]- The information box is coming distorted on put front screen.
       </div>
     );
   }

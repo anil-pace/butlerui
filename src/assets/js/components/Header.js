@@ -240,7 +240,7 @@ var Header = React.createClass({
               upperThreshold={uphThreshold && uphThreshold.upper_threshold}
             />
           ) : (
-            ""
+            <div style={{"order": "3", "marginTop": "10px", "marginLeft": "auto"  }}> </div>
           )}
           <div className={cssClass} onClick={this.openKeyboard}>
             <img

@@ -6617,6 +6617,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
 
       
       case appConstants.PICK_BACK_SCAN:
+      case appConstants.PICK_BACK_BIN:
+      case appConstants.PICK_BACK_NO_SCAN:
       case appConstants.PICK_BACK_REPRINT_BINS:
         data["PickBackNavData"] = this.getNavData()
         data["PickBackNotification"] = this.getNotificationData()
@@ -6631,11 +6633,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["printerInfo"] = this.getPrinterInfo();
         data["isPrinterVisible"] = this.getPrinterVisibility();
         break;
-
-      case appConstants.PICK_BACK_BIN:
-      case appConstants.PICK_BACK_NO_SCAN:
         
-        break
       case appConstants.PICK_BACK_EXCEPTION_REPRINT:
       case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:
       case appConstants.PICK_BACK_EXCEPTION_DIS_ASSOCIATE_TOTE:

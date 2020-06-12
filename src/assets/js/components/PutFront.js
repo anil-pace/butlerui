@@ -447,12 +447,15 @@ var PutFront = React.createClass({
           <div className="grid-container">
             <Modal />
             {this.state.SplitScreenFlag && (
+              <div style={{ position: "absolute", top: "0px", left: "0px" }}>
               <BinMap
                 orientation={this.state.groupOrientation}
                 mapDetails={this.state.BinMapDetails}
+                bindata={this.state.bindata}
                 selectedGroup={this.state.BinMapGroupDetails}
                 screenClass="putFrontFlow"
               />
+              </div>
             )}
             {selected_screen}
           </div>

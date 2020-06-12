@@ -6061,6 +6061,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["BinMapGroupDetails"] = this.getSelectedBinGroup()
         data["PutFrontNotification"] = this.getNotificationData()
         data["GetIRTScanStatus"] = this.getIRTScanStatus()
+        data["bindata"] = this.getBinData()
         break
       case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
         data["PutFrontScreenId"] = this.getScreenId()

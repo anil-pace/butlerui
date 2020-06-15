@@ -243,9 +243,12 @@ var PickFront = React.createClass({
           loader = (
             <SplitPPS1
               orientation={this.state.groupOrientation}
+              displayBinId={true}
               groupInfo={this.state.BinMapDetails}
               undockAwaited={this.state.UndockAwaited}
+              customizeClassSplitPPS={adjustStyleOnSplitPPS}
               docked={this.state.DockedGroup}
+              selectedbin={this.state.PickCurrentBin}
             />
           )
         }

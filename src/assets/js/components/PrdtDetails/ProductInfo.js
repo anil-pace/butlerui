@@ -57,7 +57,7 @@ var ProductInfo = React.createClass({
       <div
         className="packingBoxTableInfo"
         style={{
-           width:   widthpatch!== '' ? widthpatch : "130%",
+           width:   widthpatch!== '' ? widthpatch : "100%",
            height:  heightpatch!== '' ? heightpatch : "549px",
           display: "block",
           marginLeft: "0",

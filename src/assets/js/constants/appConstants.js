@@ -273,6 +273,7 @@ var appConstants = {
   CONFIRM_BIN_FULL_REQUEST: "bin_full_confirmed",
   CANCEL_LAST_SCAN: "cancel_last_scan",
   CONFIRM_LOGOUT: "confirm_logout",
+  FEEDBACK_MODAL: "feedback_request",
   CONFIRM_LOGOUT_REQUEST: "confirm_logout_request",
   CANCEL_LOGOUT_REQUEST: "cancel_logout_request",
   REPRINT_REQUEST: "reprint_request",
@@ -316,7 +317,7 @@ var appConstants = {
     pink: "#FF1BA5",
     white: "#FFFFFF",
     cyan: "#00FFFF",
-    yellow: "#FFFF00"
+    yellow: "#FFFF00",
   },
   PICK_FRONT_SCAN_PACKS: "pick_front_scan_packs",
   ERROR_NOTIFICATION: "ERROR_NOTIFICATION",

@@ -231,15 +231,17 @@ var PutFront = React.createClass({
           this._component = (
             <div className='grid-container'>
               <Modal />
-              {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='PutFrontFlowScan' bindata = {this.state.bindata}
+              <div style={{"position": "absolute", "top":"0%", "left":"0em"}}>
+                  {this.state.SplitScreenFlag && <BinMap orientation={this.state.groupOrientation} mapDetails={this.state.BinMapDetails} selectedGroup={this.state.BinMapGroupDetails} screenClass='PutFrontFlowScan' bindata = {this.state.bindata}
                />}
+              </div>
               <div className={"single-bin" + (this.state.SplitScreenFlag ? ' gor-fixed-position' : '') + (this.state.SplitScreenFlag ? '' : ' fix-top')}>
                 <Bins binsData={this.state.PutFrontCurrentBin} screenId={this.state.PutFrontScreenId} />
                 <div className="text">{_("CURRENT BIN")}</div>
               </div>
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem} classStyle="put_front_place_item_in_rack"/>
-                <div style={{ width:"340px"}}>
+                <div style={{ width:"45%"}}>
                 <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} classStyle="put_front_place_item_in_rack"/>
                 </div>
               </div>
@@ -253,6 +255,7 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
         break;
+
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} subMessage={allresourceConstants.UNDOCK_PUSH} />);

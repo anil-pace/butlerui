@@ -180,6 +180,12 @@ function loadComponent(modalType, modalData, ths) {
       var serverMessages = []
       var rowHeader = []
       var rowValue = []
+      var serviceRequestIds = [];
+      modalData.map((eachIteration) => {
+        if(!serviceRequestIds.includes(eachIteration["service_request_id"].toString())){
+          serviceRequestIds.push(eachIteration["service_request_id"].toString());
+        }
+      });
       for (var key in modalData[0]) {
         if (modalData[0].hasOwnProperty(key)) {
           serverMessages = mainstore.getServerMessages()
@@ -204,7 +210,7 @@ function loadComponent(modalType, modalData, ths) {
                 {_("Service Request ID") + ":"}
               </span>
             )
-            parseValue(rowValue, modalData[0][key])
+            parseValue(rowValue, serviceRequestIds);
           } else {
             headerArray.push(<th>{_(keyName)}</th>)
           }

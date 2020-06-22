@@ -543,7 +543,7 @@ var serverMessages = {
   //press_pptl
   "PkF.S.005": {
     textToDisplay: "Press PPTL",
-    screen_id: "pick_front_pptl_press",
+    screen_id: ["pick_front_pptl_press","pick_back_scan"]
   },
   //Scan Box
   "PkB.S.001": {

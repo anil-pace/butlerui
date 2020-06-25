@@ -8,6 +8,10 @@ var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
 var EmergencyModal = require('./Modal/EmergencyModal')
+var FeedbackModal = require("./Modal/FeedbackModal")
+var Modal = require("./Modal/Modal")
+var ActionCreators = require("../actions/CommonActions");
+var loginstore = require('../stores/loginstore');
 
 
 function getState() {
@@ -30,9 +34,11 @@ var Header = React.createClass({
   virtualKeyBoard: "",
   exceptionMenu: "",
   searchMenu: "",
+
   getInitialState: function() {
     return getState()
   },
+
   openKeyboard: function() {
     $("#actionMenu").hide()
     $(".form-control").blur()
@@ -91,17 +97,7 @@ var Header = React.createClass({
       .data("keyboard")
       .reveal()
   },
-  logoutSession: function() {
-    $("#actionMenu").hide()
-    if (
-      mainstore.getLogoutState() === "false" ||
-      mainstore.getLogoutState() === false
-    ) {
-      return false
-    } else {
-      CommonActions.logoutSession(true)
-    }
-  },
+  
   componentDidMount: function() {},
   enableException: function() {
     CommonActions.enableException(true)
@@ -115,12 +111,25 @@ var Header = React.createClass({
     CommonActions.updateSeatData([], "itemSearch")
     $("#actionMenu").hide()
   },
+
+  showModal: function (data, type, e) {
+    CommonActions.setFeedback(true);
+    $("#actionMenu").hide();
+
+    ActionCreators.showModal({
+      data: data,
+      type: type,
+    });
+    e.stopPropagation();
+    return false;
+  },
+
   showMenu: function() {
-    $("#actionMenu").toggle()
-    $(".subMenu").hide()
+    $("#actionMenu").toggle();
+    $(".subMenu").hide();
   },
   refresh: function() {
-    location.reload()
+    location.reload();
   },
   componentWillMount: function() {
     mainstore.addChangeListener(this.onChange)
@@ -194,6 +203,7 @@ var Header = React.createClass({
     var logoutClass
     var cssClass
     var disableScanClass
+    var feedbackModal = loginstore.getFeedback();
     var invoiceFlow =
       mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false
     this.getExceptionMenu()
@@ -223,6 +233,8 @@ var Header = React.createClass({
       ppsRequestedStatus = (<div className="ppsMode">
       PPS Requested Status : {this.state.ppsRequestedStatus}
     </div>)
+
+    
       
     }
     
@@ -279,6 +291,8 @@ var Header = React.createClass({
                 action = {appConstants.AUTO_SIDELINE_CONFIRM}
           />}
 
+           {feedbackModal && <FeedbackModal />}
+
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}
@@ -311,7 +325,13 @@ var Header = React.createClass({
           <div className={logoutClass} onClick={this.notifyTower}>
             {_("Call for Help")}
           </div>
-          <div className={logoutClass} onClick={this.logoutSession}>
+          <div className={logoutClass} 
+                onClick={this.showModal.bind(
+                    this,
+                    null,
+                    appConstants.FEEDBACK_MODAL
+                  )}
+                >
             {_("Logout")}
           </div>
         </div>

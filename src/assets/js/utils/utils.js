@@ -60,6 +60,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     })
   },
   connectToWebSocket: function (data) {
+    if(ws && data!== undefined){
+      ws.send(JSON.stringify(data))
+      return;
+    }
     self = this
     ws = new WebSocket(configConstants.WEBSOCKET_IP)
     if ("WebSocket" in window) {

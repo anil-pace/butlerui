@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="172px" height="172px" viewBox="0 0 172 172" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 59.1 (101010) - https://sketch.com -->
+    <title>2B1A5D77-43E9-4CA2-B2E0-CB75AC6B9148</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-3.3%" y="-7.0%" width="106.7%" height="114.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="4" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.3" transform="translate(-1250.000000, -473.000000)" fill="#4ACA57">
+            <g id="Group-8" transform="translate(382.000000, 289.000000)">
+                <g id="Exit-invoice-popup">
+                    <g id="Box-serial-numbers" filter="url(#filter-1)">
+                        <g id="Group-11" transform="translate(808.000000, 171.000000)">
+                            <g id="Group-3" transform="translate(71.000000, 24.000000)">
+                                <path d="M71.163,7.064 C35.819,7.064 7.064,35.819 7.064,71.163 C7.064,106.507 35.819,135.262 71.163,135.262 C106.507,135.262 135.261,106.507 135.261,71.163 C135.261,35.819 106.507,7.064 71.163,7.064 Z M71.163,142.326 C31.923,142.326 -8.52651283e-14,110.403 -8.52651283e-14,71.163 C-8.52651283e-14,31.923 31.923,1.42108547e-14 71.163,1.42108547e-14 C110.402,1.42108547e-14 142.325,31.923 142.325,71.163 C142.325,110.403 110.402,142.326 71.163,142.326 L71.163,142.326 Z" id="Fill-67"></path>
+                                <path d="M39.9998747,49.715274 C37.7128426,47.428242 34.0030581,47.428242 31.716026,49.715274 C29.4279913,52.0033087 29.4279913,55.7120906 31.716026,58.0001253 L39.9998747,66.283974 L48.284726,58.0001253 C50.571758,55.7120906 50.571758,52.0033087 48.284726,49.715274 C45.9966913,47.428242 42.2879094,47.428242 39.9998747,49.715274" id="Fill-68"></path>
+                                <path d="M102.000125,49.715274 C104.287157,47.428242 107.995939,47.428242 110.283974,49.715274 C112.572009,52.0033087 112.572009,55.7120906 110.283974,58.0001253 L102.000125,66.283974 L93.715274,58.0001253 C91.428242,55.7120906 91.428242,52.0033087 93.715274,49.715274 C96.0033087,47.428242 99.7120906,47.428242 102.000125,49.715274" id="Fill-69"></path>
+                                <path d="M98.584,92.676 C98.584,107.822 86.308,120.098 71.162,120.098 C56.016,120.098 43.74,107.822 43.74,92.676 L98.584,92.676" id="Fill-70"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

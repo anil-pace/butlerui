@@ -7,6 +7,15 @@ var jqueryPosition = require("jquery-ui/position")
 var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
+<<<<<<< HEAD
+=======
+var EmergencyModal = require('./Modal/EmergencyModal')
+var FeedbackModal = require("./Modal/FeedbackModal")
+var Modal = require("./Modal/Modal")
+var ActionCreators = require("../actions/CommonActions");
+var loginstore = require('../stores/loginstore');
+
+>>>>>>> 6a333625b... BSS-25042 :NPS Feedback Epic
 
 function getState() {
   return {
@@ -27,10 +36,19 @@ var Header = React.createClass({
   virtualKeyBoard: "",
   exceptionMenu: "",
   searchMenu: "",
+<<<<<<< HEAD
   getInitialState: function () {
     return getState()
   },
   openKeyboard: function () {
+=======
+
+  getInitialState: function() {
+    return getState()
+  },
+
+  openKeyboard: function() {
+>>>>>>> 6a333625b... BSS-25042 :NPS Feedback Epic
     $("#actionMenu").hide()
     $(".form-control").blur()
     virtualKeyBoard_header = $("#barcode").keyboard({
@@ -86,6 +104,7 @@ var Header = React.createClass({
     })
     $("#barcode").data("keyboard").reveal()
   },
+<<<<<<< HEAD
   logoutSession: function () {
     $("#actionMenu").hide()
     if (
@@ -99,6 +118,11 @@ var Header = React.createClass({
   },
   componentDidMount: function () {},
   enableException: function () {
+=======
+  
+  componentDidMount: function() {},
+  enableException: function() {
+>>>>>>> 6a333625b... BSS-25042 :NPS Feedback Epic
     CommonActions.enableException(true)
     var data = {}
     data["code"] = null
@@ -110,12 +134,25 @@ var Header = React.createClass({
     CommonActions.updateSeatData([], "itemSearch")
     $("#actionMenu").hide()
   },
-  showMenu: function () {
-    $("#actionMenu").toggle()
-    $(".subMenu").hide()
+
+  showModal: function (data, type, e) {
+    CommonActions.setFeedback(true);
+    $("#actionMenu").hide();
+
+    ActionCreators.showModal({
+      data: data,
+      type: type,
+    });
+    e.stopPropagation();
+    return false;
   },
-  refresh: function () {
-    location.reload()
+
+  showMenu: function() {
+    $("#actionMenu").toggle();
+    $(".subMenu").hide();
+  },
+  refresh: function() {
+    location.reload();
   },
   componentWillMount: function () {
     mainstore.addChangeListener(this.onChange)
@@ -189,6 +226,7 @@ var Header = React.createClass({
     var logoutClass
     var cssClass
     var disableScanClass
+    var feedbackModal = loginstore.getFeedback();
     var invoiceFlow =
       mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false
     this.getExceptionMenu()
@@ -211,12 +249,25 @@ var Header = React.createClass({
     } else {
       disableScanClass = "disableScanClass"
     }
+<<<<<<< HEAD
     if (this.state.ppsRequestedStatus !== "undefined") {
       ppsRequestedStatus = (
         <div className="ppsMode">
           PPS Requested Status : {this.state.ppsRequestedStatus}
         </div>
       )
+=======
+    var isFrontScreen = this.state.frontScreen === appConstants.FRONT
+    const { uphThreshold, uphCount, ppsMode } = this.state
+    const isAuditMode = ppsMode.toUpperCase() === "AUDIT" ? true : false
+    if(this.state.ppsRequestedStatus !== "undefined"){
+      ppsRequestedStatus = (<div className="ppsMode">
+      PPS Requested Status : {this.state.ppsRequestedStatus}
+    </div>)
+
+    
+      
+>>>>>>> 6a333625b... BSS-25042 :NPS Feedback Epic
     }
     var isFrontScreen = this.state.frontScreen === appConstants.FRONT
     const { uphThreshold, uphCount } = this.state
@@ -242,6 +293,40 @@ var Header = React.createClass({
           ) : (
             <div style={{"order": "3", "marginTop": "10px", "marginLeft": "auto"  }}> </div>
           )}
+<<<<<<< HEAD
+=======
+          {mainstore.getSystemEmergency() && 
+              <EmergencyModal 
+              title="Operation paused"
+              bodyContent="Butler operations have been halted."
+              bodySubcontent="Please wait for the operation to resume or contact your supervisor for further steps."
+          />}
+          {mainstore.getSystemAuditError() === true && 
+            <EmergencyModal 
+                title="System Error"
+                bodyContent="There is a problem with the transaction you are working on."
+                bodySubcontent="Please place any items you may have in your hand back in the slot."
+                bodyAction="Support has been informed, "
+                msgAction = "Tap OK to move to another transaction."
+                actionTobetaken = {true}
+                module = {appConstants.SYSTEM_ERROR}
+                action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
+          />}
+        {mainstore.getSystemPickError() === true && 
+            <EmergencyModal 
+                title="System Error"
+                bodyContent="There is a problem with the transaction you are working on."
+                bodySubcontent= {"Please place any items you may have in your hand back in bin-"+ mainstore.getBinToSideline() + " ."}
+                bodyAction="Support has been informed, "
+                msgAction = "Tap OK to move to another transaction."
+                actionTobetaken = {true}
+                module = {appConstants.SYSTEM_ERROR}
+                action = {appConstants.AUTO_SIDELINE_CONFIRM}
+          />}
+
+           {feedbackModal && <FeedbackModal />}
+
+>>>>>>> 6a333625b... BSS-25042 :NPS Feedback Epic
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}
@@ -274,7 +359,13 @@ var Header = React.createClass({
           <div className={logoutClass} onClick={this.notifyTower}>
             {_("Call for Help")}
           </div>
-          <div className={logoutClass} onClick={this.logoutSession}>
+          <div className={logoutClass} 
+                onClick={this.showModal.bind(
+                    this,
+                    null,
+                    appConstants.FEEDBACK_MODAL
+                  )}
+                >
             {_("Logout")}
           </div>
         </div>

@@ -165,15 +165,30 @@ var PutFront = React.createClass({
       case appConstants.PUT_FRONT_SCAN:
         if (this.state.PutFrontExceptionStatus == false) {
           if (this.state.OrigBinUse || this.state.PutFrontBinCoordinatePlotting) {
-            binComponent = (<div style={{ width: "100%", marginLeft: "18%" }} className="binsFlexWrapperContainer">
+            if(this.state.SplitScreenFlag){
+              binComponent = (<div style={{ width: "100%", marginLeft: "15%", display: "flex", alignItems: "center", justifyContent:"space-between" }} className="binsFlexWrapperContainer">
               <BinsFlex binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} seatType={this.state.SeatType} binCoordinatePlotting={true} />
-              <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+              <Wrapper 
+                productDetails={this.state.PutFrontProductDetails}
+                itemUid={this.state.PutFrontItemUid} />
             </div>)
+            }
+            else{
+              binComponent = (<div style={{ width: "100%", marginLeft:"0px", display: "flex", alignItems: "center", justifyContent:"space-between" }} className="binsFlexWrapperContainer">
+              <BinsFlex binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} seatType={this.state.SeatType} binCoordinatePlotting={true} />
+              <Wrapper 
+                productDetails={this.state.PutFrontProductDetails}
+                itemUid={this.state.PutFrontItemUid} />
+            </div>)
+            }
+            
           }
           else {
             binComponent = (<div className='main-container'>
               <Bins binsData={this.state.PutFrontBinData} screenId={this.state.PutFrontScreenId} />
-              <Wrapper productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+              <Wrapper 
+                productDetails={this.state.PutFrontProductDetails}
+                itemUid={this.state.PutFrontItemUid} />
             </div>)
           }
           this._navigation = (<Navigation navData={this.state.PutFrontNavData} serverNavData={this.state.PutFrontServerNavData} navMessagesJson={this.props.navMessagesJson} />);
@@ -223,7 +238,11 @@ var PutFront = React.createClass({
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} putDirection={this.state.PutFrontPutDirection} heavyItemInfo={isHeavyItem} classStyle="put_front_place_item_in_rack"/>
                 <div style={{ width:"340px"}}>
-                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} classStyle="put_front_place_item_in_rack"/>
+                <Wrapper 
+                  scanDetails={this.state.PutFrontScanDetails} 
+                  productDetails={this.state.PutFrontProductDetails} 
+                  itemUid={this.state.PutFrontItemUid} 
+                  classStyle="put_front_place_item_in_rack"/>
                 </div>
               </div>
               <div className='cancel-scan'>
@@ -344,7 +363,10 @@ var PutFront = React.createClass({
               </div>
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} />
-                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+                <Wrapper 
+                  scanDetails={this.state.PutFrontScanDetails} 
+                  productDetails={this.state.PutFrontProductDetails} 
+                  itemUid={this.state.PutFrontItemUid} />
               </div>
             </div>
           );
@@ -366,7 +388,10 @@ var PutFront = React.createClass({
               </div>
               <div className='main-container'>
                 <Rack isDrawer={this.state.isDrawer} slotType={this.state.SlotType} rackData={this.state.PutFrontRackDetails} />
-                <Wrapper scanDetails={this.state.PutFrontScanDetails} productDetails={this.state.PutFrontProductDetails} itemUid={this.state.PutFrontItemUid} />
+                <Wrapper 
+                  scanDetails={this.state.PutFrontScanDetails} 
+                  productDetails={this.state.PutFrontProductDetails} 
+                  itemUid={this.state.PutFrontItemUid} />
               </div>
               <div className='cancel-scan'>
                 <Button1 disabled={false} text={_("Cancel")} module={appConstants.PUT_FRONT} action={appConstants.CANCEL_SCAN} barcode={this.state.PutFrontItemUid} color={"black"} />

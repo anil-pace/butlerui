@@ -612,7 +612,14 @@ var Audit = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal />
-              <div style={{ position: "absolute", left: "0px", top: "0px", height:"515px" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: "0px",
+                  top: "0px",
+                  height: "515px",
+                }}
+              >
                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
               </div>
               <div className="main-container space-left">
@@ -764,6 +771,7 @@ var Audit = React.createClass({
           var SubPackData = "";
           var DamageData = "";
           var FinalDamageData = "";
+          var actionableButtons = "";
           var Slot = "";
           var displayStyle;
           var auditPossibleContainerNames = this.state
@@ -800,11 +808,26 @@ var Audit = React.createClass({
             this.state.AuditSRStatus
           )
             AuditMessage = (
-              <Reconcile
-                navMessagesJson={this.props.navMessagesJson}
-                message={SRmessage}
-              />
+              <div
+                style={{ marginTop: "10vh", fontSize: "18px", width: "100%" }}
+              >
+                <Reconcile
+                  navMessagesJson={this.props.navMessagesJson}
+                  message={SRmessage}
+                />
+              </div>
             );
+          actionableButtons = (
+            <div className="staging-action">
+              <Button1
+                disabled={false}
+                text={_("OK")}
+                module={appConstants.AUDIT}
+                action={appConstants.FINISH_CURRENT_AUDIT}
+                color={"orange"}
+              />
+            </div>
+          );
           if (
             this.state.AuditReconcileBoxSerialData["tableRows"].length !== 0 ||
             this.state.AuditReconcileItemInBoxData["tableRows"].length !== 0 ||
@@ -815,6 +838,24 @@ var Audit = React.createClass({
             this.state.FinalDamageReconcileData["tableRows"].length !== 0
           ) {
             AuditMessage = <div></div>;
+            actionableButtons = (
+              <div className="staging-action">
+                <Button1
+                  disabled={false}
+                  text={_("Back")}
+                  module={appConstants.AUDIT}
+                  action={appConstants.CANCEL_FINISH_AUDIT}
+                  color={"black"}
+                />
+                <Button1
+                  disabled={false}
+                  text={_("OK")}
+                  module={appConstants.AUDIT}
+                  action={appConstants.FINISH_CURRENT_AUDIT}
+                  color={"orange"}
+                />
+              </div>
+            );
           }
           if (this.state.AuditReconcileBoxSerialData["tableRows"].length != 0)
             BoxSerialData = (
@@ -880,26 +921,18 @@ var Audit = React.createClass({
               }
             >
               <Modal />
-              <div style={{ position: "absolute", left: "0px", top: "0px", height: "515px"}}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: "0px",
+                  top: "0px",
+                  height: "515px",
+                }}
+              >
                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
               </div>
               {subComponent}
-              <div className="staging-action">
-                <Button1
-                  disabled={false}
-                  text={_("Back")}
-                  module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_FINISH_AUDIT}
-                  color={"black"}
-                />
-                <Button1
-                  disabled={false}
-                  text={_("OK")}
-                  module={appConstants.AUDIT}
-                  action={appConstants.FINISH_CURRENT_AUDIT}
-                  color={"orange"}
-                />
-              </div>
+              {actionableButtons}
             </div>
           );
         } else {

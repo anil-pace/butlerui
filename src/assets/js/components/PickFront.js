@@ -1,44 +1,44 @@
-var React = require('react')
-var PickFrontStore = require('../stores/PickFrontStore')
-var mainstore = require('../stores/mainstore')
-var Header = require('./Header')
-var KQ = require('./ProductDetails/KQ')
-var ExceptionHeader = require('./ExceptionHeader')
-var KQExceptionMissing = require('./ProductDetails/KQExceptionMissing')
-var KQExceptionDamaged = require('./ProductDetails/KQExceptionDamaged')
-var NumericIndicator = require('./ProductDetails/NumericIndicator')
-var allresourceConstants = require('../constants/resourceConstants')
-var Navigation = require('./Navigation/Navigation.react')
-var Spinner = require('./Spinner/LoaderButler')
-var Notification = require('./Notification/Notification')
-var Bins = require('./Bins/Bins.react')
-var BinsFlex = require('./Bins/BinsFlexArrange.react')
-var Button1 = require('./Button/Button')
-var Wrapper = require('./ProductDetails/Wrapper')
-var WrapperSplitRoll = require('./ProductDetails/WrapperSplitRoll')
-var appConstants = require('../constants/appConstants')
-var Rack = require('./Rack/MsuRack.js')
-var BoxSerial = require('./BoxSerial.js')
-var Modal = require('./Modal/Modal')
-var CurrentSlot = require('./CurrentSlot')
-var BinMap = require('./BinMap')
-var PrdtDetails = require('./PrdtDetails/ProductDetails.js')
-var CommonActions = require('../actions/CommonActions')
-var Exception = require('./Exception/Exception')
-var TabularData = require('./TabularData')
-var OrderDetails = require('./OrderDetails/OrderDetails.js')
-var Pallet = require('./Pallet/pallet')
-var CheckList = require('./CheckList.js')
-var utils = require('../utils/utils.js')
-var PackingDetails = require('./PrdtDetails/PackingDetails.js')
-var SplitPPS = require('./SplitPPS')
-var SplitPPS1 = require('./SplitPPS1')
-var PreviousDetails = require('./PreviousDetails')
-var TextEditor = require('./ProductDetails/textEditor')
-var ItemTable = require('./itemTable')
-var CurrentBin = require('./CurrentBin')
-var CurrentActiveBin= require('./CurrentActiveBin');
-var Footer = require('./Footer');
+var React = require("react")
+var PickFrontStore = require("../stores/PickFrontStore")
+var mainstore = require("../stores/mainstore")
+var Header = require("./Header")
+var KQ = require("./ProductDetails/KQ")
+var ExceptionHeader = require("./ExceptionHeader")
+var KQExceptionMissing = require("./ProductDetails/KQExceptionMissing")
+var KQExceptionDamaged = require("./ProductDetails/KQExceptionDamaged")
+var NumericIndicator = require("./ProductDetails/NumericIndicator")
+var allresourceConstants = require("../constants/resourceConstants")
+var Navigation = require("./Navigation/Navigation.react")
+var Spinner = require("./Spinner/LoaderButler")
+var Notification = require("./Notification/Notification")
+var Bins = require("./Bins/Bins.react")
+var BinsFlex = require("./Bins/BinsFlexArrange.react")
+var Button1 = require("./Button/Button")
+var Wrapper = require("./ProductDetails/Wrapper")
+var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll")
+var appConstants = require("../constants/appConstants")
+var Rack = require("./Rack/MsuRack.js")
+var BoxSerial = require("./BoxSerial.js")
+var Modal = require("./Modal/Modal")
+var CurrentSlot = require("./CurrentSlot")
+var BinMap = require("./BinMap")
+var PrdtDetails = require("./PrdtDetails/ProductDetails.js")
+var CommonActions = require("../actions/CommonActions")
+var Exception = require("./Exception/Exception")
+var TabularData = require("./TabularData")
+var OrderDetails = require("./OrderDetails/OrderDetails.js")
+var Pallet = require("./Pallet/pallet")
+var CheckList = require("./CheckList.js")
+var utils = require("../utils/utils.js")
+var PackingDetails = require("./PrdtDetails/PackingDetails.js")
+var SplitPPS = require("./SplitPPS")
+var SplitPPS1 = require("./SplitPPS1")
+var PreviousDetails = require("./PreviousDetails")
+var TextEditor = require("./ProductDetails/textEditor")
+var ItemTable = require("./itemTable")
+var CurrentBin = require("./CurrentBin")
+var CurrentActiveBin = require("./CurrentActiveBin")
+var Footer = require("./Footer")
 var checkListOpen = false
 
 function getStateData() {
@@ -49,7 +49,7 @@ function getStateData() {
     PutFrontCurrentBinCount: mainstore.getPutFrontCurrentBinCount(),
     udpBinMapDetails: mainstore.getUDPMapDetails(),
     selectedPPSBin: mainstore._getSelectedPpsBin(),
-    currentBinWidget: mainstore._getCurrentBinWidget()
+    currentBinWidget: mainstore._getCurrentBinWidget(),
   }
   return Object.assign({}, screenData, splitPPSData)
 }
@@ -58,10 +58,10 @@ var PickFront = React.createClass({
   _notification: "",
   _component: "",
   _navigation: "",
-  getInitialState: function() {
+  getInitialState: function () {
     return getStateData()
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     if (
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS ||
@@ -74,10 +74,10 @@ var PickFront = React.createClass({
     }
     mainstore.addChangeListener(this.onChange)
   },
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     mainstore.removeChangeListener(this.onChange)
   },
-  onChange: function() {
+  onChange: function () {
     this.setState(getStateData())
     if (
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
@@ -91,18 +91,18 @@ var PickFront = React.createClass({
     }
   },
 
-  getNotificationComponent: function(footer) {
+  getNotificationComponent: function (footer) {
     if (this.state.PickFrontNotification != undefined) {
-        this._notification = (
-          <Notification
-            notification={this.state.PickFrontNotification}
-            navMessagesJson={this.props.navMessagesJson}
-            withFooter = {footer !== "" ? true :false}
-          />
-        )
+      this._notification = (
+        <Notification
+          notification={this.state.PickFrontNotification}
+          navMessagesJson={this.props.navMessagesJson}
+          withFooter={footer !== "" ? true : false}
+        />
+      )
     } else {
       if ($(".modal.notification-error").is(":visible")) {
-        setTimeout(function() {
+        setTimeout(function () {
           $(".modal.notification-error").data(
             "bs.modal"
           ).options.backdrop = true
@@ -113,12 +113,8 @@ var PickFront = React.createClass({
 
         return null
       } else if ($(".modal.in").is(":visible")) {
-        setTimeout(function() {
-          if (
-            $(".modal.in")
-              .find("div")
-              .hasClass("modal-footer")
-          ) {
+        setTimeout(function () {
+          if ($(".modal.in").find("div").hasClass("modal-footer")) {
             //check when errorcode is true and modal has buttons
             $(".modal.in").data("bs.modal").options.backdrop = "static"
           } else {
@@ -131,12 +127,12 @@ var PickFront = React.createClass({
       this._notification = ""
     }
   },
-  showModal: function(data, index, manual) {
+  showModal: function (data, index, manual) {
     if (manual == true) checkListOpen = false
     var data = {
       checklist_data: data,
       checklist_index: index,
-      product_details: this.state.PickFrontProductDetails
+      product_details: this.state.PickFrontProductDetails,
     }
     console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen)
     if (
@@ -144,10 +140,10 @@ var PickFront = React.createClass({
       checkListOpen == false
     ) {
       checkListOpen = true
-      setTimeout(function() {
+      setTimeout(function () {
         CommonActions.showModal({
           data: data,
-          type: "pick_checklist"
+          type: "pick_checklist",
         })
         $(".modal").modal()
         //$('.modal').data('bs.modal').escape(); // reset keyboard
@@ -158,22 +154,20 @@ var PickFront = React.createClass({
       this.state.PickFrontChecklistOverlayStatus === false &&
       checkListOpen == true
     ) {
-      setTimeout(function() {
+      setTimeout(function () {
         $(".modal").modal("hide")
 
-        $(".modal")
-          .data("bs.modal")
-          .escape() // reset keyboard
+        $(".modal").data("bs.modal").escape() // reset keyboard
         $(".modal").data("bs.modal").options.backdrop = true
         $("button.close", $(".modal")).show()
       }, 0)
       checkListOpen = false
     }
   },
-  getExceptionComponent: function(footer) {
-    var exceptionCancelScanClass = "cancel-scan";
-    if(footer !== ""){
-      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer";
+  getExceptionComponent: function (footer) {
+    var exceptionCancelScanClass = "cancel-scan"
+    if (footer !== "") {
+      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer"
     }
     var _rightComponent = ""
     this._navigation = ""
@@ -194,22 +188,22 @@ var PickFront = React.createClass({
       </div>
     )
   },
-  callAPItoGetData: function(data) {
+  callAPItoGetData: function (data) {
     CommonActions.getOrphanItemData(data)
   },
 
-  getScreenComponent: function(screen_id, footer) {
-    var actionClass = "actions";
-    var binsFlexClass = "binsFlexWrapperContainer";
-    var mainContainerClass = "main-container";
-    var exceptionCancelScanClass = "cancel-scan";
-    var itemSearchfooterClass = "itemSearchfooter";
-    if(footer !== ""){
-      binsFlexClass = "binsFlexWrapperContainer-with-footer";
-      actionClass = "actions actions-with-footer";
-      mainContainerClass = "main-container main-container-with-footer";
-      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer";
-      itemSearchfooterClass = "itemSearchfooter itemSearchfooter-with-footer";
+  getScreenComponent: function (screen_id, footer) {
+    var actionClass = "actions"
+    var binsFlexClass = "binsFlexWrapperContainer"
+    var mainContainerClass = "main-container"
+    var exceptionCancelScanClass = "cancel-scan"
+    var itemSearchfooterClass = "itemSearchfooter"
+    if (footer !== "") {
+      binsFlexClass = "binsFlexWrapperContainer-with-footer"
+      actionClass = "actions actions-with-footer"
+      mainContainerClass = "main-container main-container-with-footer"
+      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer"
+      itemSearchfooterClass = "itemSearchfooter itemSearchfooter-with-footer"
     }
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
@@ -361,7 +355,10 @@ var PickFront = React.createClass({
               <Modal />
               <div className={mainContainerClass}>
                 {rackType}
-                <PrdtDetails productInfo={this.state.PickFrontProductDetails} flowIndicator ="Pick"/>
+                <PrdtDetails
+                  productInfo={this.state.PickFrontProductDetails}
+                  flowIndicator="Pick"
+                />
               </div>
               <div className={actionClass}>{cancelButton}</div>
             </div>
@@ -411,7 +408,10 @@ var PickFront = React.createClass({
               <Modal />
               <div className="main-container">
                 {checklistData}
-                <PrdtDetails flowIndicator ="Pick" productInfo={this.state.PickFrontProductDetails} />
+                <PrdtDetails
+                  flowIndicator="Pick"
+                  productInfo={this.state.PickFrontProductDetails}
+                />
                 <div className="rightWrapper">
                   <div className="">
                     <KQ scanDetails={this.state.PickFrontScanDetails} />
@@ -612,7 +612,7 @@ var PickFront = React.createClass({
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
                     seatType={this.state.SeatType}
-                    withFooter = {footer !== "" ? true :false}
+                    withFooter={footer !== "" ? true : false}
                   />
                   <WrapperSplitRoll
                     scanDetails={this.state.PickFrontScanDetails}
@@ -648,26 +648,29 @@ var PickFront = React.createClass({
 
           var reprintIconStyle = {
             top: topPosition,
-            borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color]
+            borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color],
           }
           this._component = (
             <div className="grid-container">
               <Modal cancelClicked={cancelClicked} />
               <div className="single-bin udp-flow">
-              <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-              {this.state.SplitScreenFlag && (
-               <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass='frontFlow'
-                  bindata = {this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
-                />
-              )}
-               {this.state.currentBinWidget  && 
-                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-               }
+                <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
+                {this.state.SplitScreenFlag && (
+                  <BinMap
+                    orientation={this.state.groupOrientation}
+                    mapDetails={this.state.BinMapDetails}
+                    selectedGroup={this.state.BinMapGroupDetails}
+                    screenClass="frontFlow"
+                    bindata={this.state.bindata}
+                    pickFrontSelectedBin={this.state.pickFrontSelectedBin}
+                  />
+                )}
+                {this.state.currentBinWidget && (
+                  <CurrentActiveBin
+                    selected={true}
+                    details={this.state.PutFrontCurrentBinCount}
+                  />
+                )}
               </div>
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
@@ -742,10 +745,7 @@ var PickFront = React.createClass({
           } else {
             if (this.state.OrigBinUse) {
               binComponent = (
-                <div
-                  className={binsFlexClass}
-                  style={{ display: 'flex' }}
-                >
+                <div className={binsFlexClass} style={{ display: "flex" }}>
                   <BinsFlex
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
@@ -875,7 +875,7 @@ var PickFront = React.createClass({
         var topPosition = this.state.SplitScreenFlag ? "320px" : "140px"
         var reprintIconStyle = {
           top: topPosition,
-          borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color]
+          borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color],
         }
 
         if (this.state.PickFrontExceptionStatus == false) {
@@ -938,7 +938,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
-                withFooter = {footer !== "" ? true :false}
+                withFooter={footer !== "" ? true : false}
               />
             )
           } else {
@@ -954,19 +954,22 @@ var PickFront = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal cancelClicked={cancelClicked} />
-                <div className="single-bin udp-flow">
+              <div className="single-bin udp-flow">
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
                 <BinMap
                   orientation={this.state.groupOrientation}
                   mapDetails={this.state.BinMapDetails}
                   selectedGroup={this.state.BinMapGroupDetails}
                   screenClass="frontFlow"
-                  bindata ={this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
+                  bindata={this.state.bindata}
+                  pickFrontSelectedBin={this.state.pickFrontSelectedBin}
                 />
-               {this.state.currentBinWidget  && 
-                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-               }
+                {this.state.currentBinWidget && (
+                  <CurrentActiveBin
+                    selected={true}
+                    details={this.state.PutFrontCurrentBinCount}
+                  />
+                )}
               </div>
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
@@ -1775,7 +1778,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
-                withFooter = {footer !== "" ? true :false}
+                withFooter={footer !== "" ? true : false}
               />
             )
           } else {
@@ -1845,7 +1848,8 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={screen_id}
                 seatType={this.state.SeatType}
-                withFooter = {footer !== "" ? true :false}
+                withFooter={footer !== "" ? true : false}
+                screenClass="binPrintout"
               />
             )
           } else {
@@ -1879,16 +1883,19 @@ var PickFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
             />
           )
+
           this._component = (
             <div className="grid-container">
               <Modal />
               {this.state.SplitScreenFlag && (
-                <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass="putFrontFlow"
-                />
+                <div style={{ position: "absolute", top: "0px", left: "0px" }}>
+                  <BinMap
+                    orientation={this.state.groupOrientation}
+                    mapDetails={this.state.BinMapDetails}
+                    selectedGroup={this.state.BinMapGroupDetails}
+                    screenClass="putFrontFlow"
+                  />
+                </div>
               )}
               {binComponent}
               {reprintButton}
@@ -2107,7 +2114,10 @@ var PickFront = React.createClass({
               <Modal />
               <div className="main-container">
                 {rackType}
-                <PrdtDetails productInfo={this.state.PickFrontProductDetails} flowIndicator ="Pick" />
+                <PrdtDetails
+                  productInfo={this.state.PickFrontProductDetails}
+                  flowIndicator="Pick"
+                />
               </div>
             </div>
           )
@@ -2121,7 +2131,7 @@ var PickFront = React.createClass({
     }
   },
 
-  render: function(data) {
+  render: function (data) {
     var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
     this.getNotificationComponent(footer)
     this.getScreenComponent(this.state.PickFrontScreenId, footer)
@@ -2134,7 +2144,7 @@ var PickFront = React.createClass({
         {footer}
       </div>
     )
-  }
+  },
 })
 
 module.exports = PickFront

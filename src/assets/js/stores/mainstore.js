@@ -6806,6 +6806,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["AuditExceptionData"] = this.getExceptionData()
         data["AuditExceptionStatus"] = this.getExceptionStatus()
         data["AuditShowModal"] = this.getModalStatus()
+        data["AuditSlotDetails"] = this.getCurrentSlot()
         data["AuditCancelScanStatus"] = this.getCancelScanStatus()
         data["AuditPackData"] = this.getPackData()
         data["AuditSubPackData"] = this.getSubPackData()

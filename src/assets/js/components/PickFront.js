@@ -1891,7 +1891,6 @@ var PickFront = React.createClass({
                     mapDetails={this.state.BinMapDetails}
                     selectedGroup={this.state.BinMapGroupDetails}
                     screenClass="putFrontFlow"
-                    bindata={this.state.PickFrontBinData}
                   />
                 </div>
               )}

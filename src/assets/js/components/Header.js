@@ -8,6 +8,7 @@ var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
 
+
 function getState() {
   return {
     spinner: mainstore.getSpinnerState(),
@@ -238,6 +239,35 @@ var Header = React.createClass({
           ) : (
             ""
           )}
+          {mainstore.getSystemEmergency() && 
+              <EmergencyModal 
+              title="Operation paused"
+              bodyContent="Butler operations have been halted."
+              bodySubcontent="Please wait for the operation to resume or contact your supervisor for further steps."
+          />}
+          {mainstore.getSystemAuditError() === true && 
+            <EmergencyModal 
+                title="System Error"
+                bodyContent="There is a problem with the transaction you are working on."
+                bodySubcontent="Please place any items you may have in your hand back in the slot."
+                bodyAction="Support has been informed, "
+                msgAction = "Tap OK to move to another transaction."
+                actionTobetaken = {true}
+                module = {appConstants.SYSTEM_ERROR}
+                action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
+          />}
+        {mainstore.getSystemPickError() === true && 
+            <EmergencyModal 
+                title="System Error"
+                bodyContent="There is a problem with the transaction you are working on."
+                bodySubcontent= {"Please place any items you may have in your hand back in bin-"+ mainstore.getBinToSideline() + " ."}
+                bodyAction="Support has been informed, "
+                msgAction = "Tap OK to move to another transaction."
+                actionTobetaken = {true}
+                module = {appConstants.SYSTEM_ERROR}
+                action = {appConstants.AUTO_SIDELINE_CONFIRM}
+          />}
+
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}

@@ -830,4 +830,7 @@ function server_messages_list() {
   _("Fill")
   _("Empty")
   _("Is MSU Slot Empty?")
+  _("Scan PpsBin or Dock Tote")
+  _("Product with different tag found in scanned slot. Please scan another slot")
+  _("Multiple SKUs Found in Container.")
 }

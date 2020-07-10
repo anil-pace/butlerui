@@ -5963,6 +5963,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["isKQEnabled"] = this.getKQEnabled()
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         data["bindata"] = this.getBinData()
+        data["PutFrontCancelScan"] = this.cancelScanDetails()
         break
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data["PutFrontNavData"] = this.getNavData()

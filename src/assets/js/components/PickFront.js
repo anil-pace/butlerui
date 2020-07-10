@@ -1,48 +1,48 @@
-var React = require("react")
-var PickFrontStore = require("../stores/PickFrontStore")
-var mainstore = require("../stores/mainstore")
-var Header = require("./Header")
-var KQ = require("./ProductDetails/KQ")
-var ExceptionHeader = require("./ExceptionHeader")
-var KQExceptionMissing = require("./ProductDetails/KQExceptionMissing")
-var KQExceptionDamaged = require("./ProductDetails/KQExceptionDamaged")
-var NumericIndicator = require("./ProductDetails/NumericIndicator")
-var allresourceConstants = require("../constants/resourceConstants")
-var Navigation = require("./Navigation/Navigation.react")
-var Spinner = require("./Spinner/LoaderButler")
-var Notification = require("./Notification/Notification")
-var Bins = require("./Bins/Bins.react")
-var BinsFlex = require("./Bins/BinsFlexArrange.react")
-var Button1 = require("./Button/Button")
-var Wrapper = require("./ProductDetails/Wrapper")
-var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll")
-var appConstants = require("../constants/appConstants")
-var Rack = require("./Rack/MsuRack.js")
-var BoxSerial = require("./BoxSerial.js")
-var Modal = require("./Modal/Modal")
-var CurrentSlot = require("./CurrentSlot")
-var BinMap = require("./BinMap")
-var PrdtDetails = require("./PrdtDetails/ProductDetails.js")
-var CommonActions = require("../actions/CommonActions")
-var Exception = require("./Exception/Exception")
-var TabularData = require("./TabularData")
-var OrderDetails = require("./OrderDetails/OrderDetails.js")
-var Pallet = require("./Pallet/pallet")
-var CheckList = require("./CheckList.js")
-var utils = require("../utils/utils.js")
-var PackingDetails = require("./PrdtDetails/PackingDetails.js")
-var SplitPPS = require("./SplitPPS")
-var SplitPPS1 = require("./SplitPPS1")
-var PreviousDetails = require("./PreviousDetails")
-var TextEditor = require("./ProductDetails/textEditor")
-var ItemTable = require("./itemTable")
-var CurrentBin = require("./CurrentBin")
-var CurrentActiveBin = require("./CurrentActiveBin")
-var Footer = require("./Footer")
-var checkListOpen = false
+var React = require("react");
+var PickFrontStore = require("../stores/PickFrontStore");
+var mainstore = require("../stores/mainstore");
+var Header = require("./Header");
+var KQ = require("./ProductDetails/KQ");
+var ExceptionHeader = require("./ExceptionHeader");
+var KQExceptionMissing = require("./ProductDetails/KQExceptionMissing");
+var KQExceptionDamaged = require("./ProductDetails/KQExceptionDamaged");
+var NumericIndicator = require("./ProductDetails/NumericIndicator");
+var allresourceConstants = require("../constants/resourceConstants");
+var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
+var Button1 = require("./Button/Button");
+var Wrapper = require("./ProductDetails/Wrapper");
+var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll");
+var appConstants = require("../constants/appConstants");
+var Rack = require("./Rack/MsuRack.js");
+var BoxSerial = require("./BoxSerial.js");
+var Modal = require("./Modal/Modal");
+var CurrentSlot = require("./CurrentSlot");
+var BinMap = require("./BinMap");
+var PrdtDetails = require("./PrdtDetails/ProductDetails.js");
+var CommonActions = require("../actions/CommonActions");
+var Exception = require("./Exception/Exception");
+var TabularData = require("./TabularData");
+var OrderDetails = require("./OrderDetails/OrderDetails.js");
+var Pallet = require("./Pallet/pallet");
+var CheckList = require("./CheckList.js");
+var utils = require("../utils/utils.js");
+var PackingDetails = require("./PrdtDetails/PackingDetails.js");
+var SplitPPS = require("./SplitPPS");
+var SplitPPS1 = require("./SplitPPS1");
+var PreviousDetails = require("./PreviousDetails");
+var TextEditor = require("./ProductDetails/textEditor");
+var ItemTable = require("./itemTable");
+var CurrentBin = require("./CurrentBin");
+var CurrentActiveBin = require("./CurrentActiveBin");
+var Footer = require("./Footer");
+var checkListOpen = false;
 
 function getStateData() {
-  var screenData = mainstore.getScreenData()
+  var screenData = mainstore.getScreenData();
   var splitPPSData = {
     groupInfo: mainstore._getBinMapDetails(),
     groupOrientation: mainstore._getBinMapOrientation(),
@@ -50,8 +50,8 @@ function getStateData() {
     udpBinMapDetails: mainstore.getUDPMapDetails(),
     selectedPPSBin: mainstore._getSelectedPpsBin(),
     currentBinWidget: mainstore._getCurrentBinWidget(),
-  }
-  return Object.assign({}, screenData, splitPPSData)
+  };
+  return Object.assign({}, screenData, splitPPSData);
 }
 
 var PickFront = React.createClass({
@@ -59,7 +59,7 @@ var PickFront = React.createClass({
   _component: "",
   _navigation: "",
   getInitialState: function () {
-    return getStateData()
+    return getStateData();
   },
   componentWillMount: function () {
     if (
@@ -70,15 +70,15 @@ var PickFront = React.createClass({
       this.showModal(
         this.state.PickFrontChecklistDetails,
         this.state.PickFrontChecklistIndex
-      )
+      );
     }
-    mainstore.addChangeListener(this.onChange)
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function () {
-    mainstore.removeChangeListener(this.onChange)
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function () {
-    this.setState(getStateData())
+    this.setState(getStateData());
     if (
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS ||
@@ -87,7 +87,7 @@ var PickFront = React.createClass({
       this.showModal(
         this.state.PickFrontChecklistDetails,
         this.state.PickFrontChecklistIndex
-      )
+      );
     }
   },
 
@@ -99,78 +99,78 @@ var PickFront = React.createClass({
           navMessagesJson={this.props.navMessagesJson}
           withFooter={footer !== "" ? true : false}
         />
-      )
+      );
     } else {
       if ($(".modal.notification-error").is(":visible")) {
         setTimeout(function () {
           $(".modal.notification-error").data(
             "bs.modal"
-          ).options.backdrop = true
-          $(".modal-backdrop").remove()
-          $(".modal.notification-error").modal("hide")
-          $(".modal").removeClass("notification-error")
-        }, 0)
+          ).options.backdrop = true;
+          $(".modal-backdrop").remove();
+          $(".modal.notification-error").modal("hide");
+          $(".modal").removeClass("notification-error");
+        }, 0);
 
-        return null
+        return null;
       } else if ($(".modal.in").is(":visible")) {
         setTimeout(function () {
           if ($(".modal.in").find("div").hasClass("modal-footer")) {
             //check when errorcode is true and modal has buttons
-            $(".modal.in").data("bs.modal").options.backdrop = "static"
+            $(".modal.in").data("bs.modal").options.backdrop = "static";
           } else {
             //check when errorcode is true and modal has NO buttons
-            $(".modal.in").data("bs.modal").options.backdrop = true
+            $(".modal.in").data("bs.modal").options.backdrop = true;
           }
-        }, 0)
-        return null
+        }, 0);
+        return null;
       }
-      this._notification = ""
+      this._notification = "";
     }
   },
   showModal: function (data, index, manual) {
-    if (manual == true) checkListOpen = false
+    if (manual == true) checkListOpen = false;
     var data = {
       checklist_data: data,
       checklist_index: index,
       product_details: this.state.PickFrontProductDetails,
-    }
-    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen)
+    };
+    console.log(this.state.PickFrontChecklistOverlayStatus, checkListOpen);
     if (
       this.state.PickFrontChecklistOverlayStatus === true &&
       checkListOpen == false
     ) {
-      checkListOpen = true
+      checkListOpen = true;
       setTimeout(function () {
         CommonActions.showModal({
           data: data,
           type: "pick_checklist",
-        })
-        $(".modal").modal()
+        });
+        $(".modal").modal();
         //$('.modal').data('bs.modal').escape(); // reset keyboard
-        $(".modal").data("bs.modal").options.backdrop = "static"
-        return false
-      }, 0)
+        $(".modal").data("bs.modal").options.backdrop = "static";
+        return false;
+      }, 0);
     } else if (
       this.state.PickFrontChecklistOverlayStatus === false &&
       checkListOpen == true
     ) {
       setTimeout(function () {
-        $(".modal").modal("hide")
+        $(".modal").modal("hide");
 
-        $(".modal").data("bs.modal").escape() // reset keyboard
-        $(".modal").data("bs.modal").options.backdrop = true
-        $("button.close", $(".modal")).show()
-      }, 0)
-      checkListOpen = false
+        $(".modal").data("bs.modal").escape(); // reset keyboard
+        $(".modal").data("bs.modal").options.backdrop = true;
+        $("button.close", $(".modal")).show();
+      }, 0);
+      checkListOpen = false;
     }
   },
   getExceptionComponent: function (footer) {
-    var exceptionCancelScanClass = "cancel-scan"
+    var exceptionCancelScanClass = "cancel-scan";
     if (footer !== "") {
-      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer"
+      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer";
     }
-    var _rightComponent = ""
-    this._navigation = ""
+    var _rightComponent = "";
+    this._navigation = "";
     return (
       <div className="grid-container exception">
         <Modal />
@@ -186,24 +186,24 @@ var PickFront = React.createClass({
           />
         </div>
       </div>
-    )
+    );
   },
   callAPItoGetData: function (data) {
-    CommonActions.getOrphanItemData(data)
+    CommonActions.getOrphanItemData(data);
   },
 
   getScreenComponent: function (screen_id, footer) {
-    var actionClass = "actions"
-    var binsFlexClass = "binsFlexWrapperContainer"
-    var mainContainerClass = "main-container"
-    var exceptionCancelScanClass = "cancel-scan"
-    var itemSearchfooterClass = "itemSearchfooter"
+    var actionClass = "actions";
+    var binsFlexClass = "binsFlexWrapperContainer";
+    var mainContainerClass = "main-container";
+    var exceptionCancelScanClass = "cancel-scan";
+    var itemSearchfooterClass = "itemSearchfooter";
     if (footer !== "") {
-      binsFlexClass = "binsFlexWrapperContainer-with-footer"
-      actionClass = "actions actions-with-footer"
-      mainContainerClass = "main-container main-container-with-footer"
-      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer"
-      itemSearchfooterClass = "itemSearchfooter itemSearchfooter-with-footer"
+      binsFlexClass = "binsFlexWrapperContainer-with-footer";
+      actionClass = "actions actions-with-footer";
+      mainContainerClass = "main-container main-container-with-footer";
+      exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer";
+      itemSearchfooterClass = "itemSearchfooter itemSearchfooter-with-footer";
     }
     switch (screen_id) {
       case appConstants.ARA_PICK_FRONT:
@@ -213,17 +213,17 @@ var PickFront = React.createClass({
             serverNavData={this.state.PickFrontServerNavData}
             navMessagesJson={this.props.navMessagesJson}
           />
-        )
-        var loader = <Spinner />
+        );
+        var loader = <Spinner />;
         this._component = (
           <div className="grid-container">
             <div className="main-container ara-pick-loader">{loader}</div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
-        var previousPickDetails = ""
-        var loader = <Spinner />
+        var previousPickDetails = "";
+        var loader = <Spinner />;
         if (this.state.PreviousDetails) {
           previousPickDetails = (
             <PreviousDetails
@@ -231,7 +231,7 @@ var PickFront = React.createClass({
               customizeClass={"customize_WaitingForMsu"}
               type="pick"
             />
-          )
+          );
         }
         if (this.state.BinMapDetails && this.state.rollCageStatus) {
           loader = (
@@ -241,7 +241,7 @@ var PickFront = React.createClass({
               undockAwaited={this.state.UndockAwaited}
               docked={this.state.DockedGroup}
             />
-          )
+          );
         }
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
@@ -250,24 +250,24 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
               {previousPickDetails}
               <div className="main-container">{loader}</div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_LOCATION_CONFIRM:
       case appConstants.PICK_FRONT_LOCATION_SCAN:
         var locationBtnEnable = this.state.PickFrontLocationButtonEnable
           ? false
-          : true
+          : true;
         var locationButton = (
           <Button1
             disabled={locationBtnEnable}
@@ -276,7 +276,7 @@ var PickFront = React.createClass({
             action={appConstants.CONFIRM_LOCATION}
             color={"orange"}
           />
-        )
+        );
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -284,7 +284,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -297,17 +297,17 @@ var PickFront = React.createClass({
               </div>
               {locationButton}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
       case appConstants.PICK_FRONT_CONTAINER_BREAK:
       case appConstants.PICK_FRONT_ITEM_SCAN:
-        var cancelScanFlag = this.state.PickFrontCancelScan
-        var cancelButton
-        var rackType = ""
-        let isHeavyItem = this.state.PickFrontHeavyItemsFlag
+        var cancelScanFlag = this.state.PickFrontCancelScan;
+        var cancelButton;
+        var rackType = "";
+        let isHeavyItem = this.state.PickFrontHeavyItemsFlag;
         if (cancelScanFlag) {
           cancelButton = (
             <div>
@@ -319,9 +319,9 @@ var PickFront = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
         } else {
-          cancelButton = <div />
+          cancelButton = <div />;
         }
 
         if (this.state.PickFrontExceptionStatus == false) {
@@ -331,10 +331,10 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
 
           if (this.state.PickFrontRackTypeMPU) {
-            rackType = <Pallet />
+            rackType = <Pallet />;
           } else {
             rackType = (
               <Rack
@@ -344,7 +344,7 @@ var PickFront = React.createClass({
                 putDirection={this.state.PickFrontPickDirection}
                 heavyItemInfo={isHeavyItem}
               />
-            )
+            );
           }
 
           this._component = (
@@ -359,15 +359,15 @@ var PickFront = React.createClass({
               </div>
               <div className={actionClass}>{cancelButton}</div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_CHECKLIST:
-        var cancelScanFlag = this.state.PickFrontCancelScan
-        var cancelButton
+        var cancelScanFlag = this.state.PickFrontCancelScan;
+        var cancelButton;
         if (cancelScanFlag) {
           cancelButton = (
             <div>
@@ -379,11 +379,11 @@ var PickFront = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
         } else {
-          cancelButton = <div />
+          cancelButton = <div />;
         }
-        var checklistData = ""
+        var checklistData = "";
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -391,14 +391,14 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
 
           checklistData = (
             <CheckList
               checklistData={this.state.PickFrontChecklistData}
               checklistIndex={this.state.PickFrontChecklistIndex}
             />
-          )
+          );
 
           this._component = (
             <div className="grid-container">
@@ -417,11 +417,11 @@ var PickFront = React.createClass({
               </div>
               <div className={actionClass}>{cancelButton}</div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_CONTAINER_SCAN:
         if (this.state.PickFrontExceptionStatus == false) {
@@ -431,7 +431,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -443,25 +443,25 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PER_ITEM_PRINT:
         if (this.state.PickFrontExceptionStatus == false) {
-          var cancelScanFlag = this.state.PrintCancelScan
+          var cancelScanFlag = this.state.PrintCancelScan;
           var cancelScanDisabled =
-            cancelScanFlag || cancelScanFlag === undefined ? false : true
-          var binComponent
+            cancelScanFlag || cancelScanFlag === undefined ? false : true;
+          var binComponent;
           this._navigation = (
             <Navigation
               navData={this.state.PickFrontNavData}
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           binComponent = (
             <div className="main-container">
               <div className="printImage" />
@@ -470,7 +470,7 @@ var PickFront = React.createClass({
                 hideCounters={true}
               />
             </div>
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -515,20 +515,20 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
 
-        break
+        break;
 
       case appConstants.PICK_FRONT_MORE_ITEM_SCAN:
       case appConstants.PICK_FRONT_WORKING_TABLE:
-        var cancelScanFlag = this.state.PickFrontCancelScan
-        var cancelClicked = mainstore.getCancelButtonStatus()
-        var { PickFrontReprintEnabled } = this.state
+        var cancelScanFlag = this.state.PickFrontCancelScan;
+        var cancelClicked = mainstore.getCancelButtonStatus();
+        var { PickFrontReprintEnabled } = this.state;
         var cancelScanDisabled =
-          cancelScanFlag || cancelScanFlag === undefined ? false : true
+          cancelScanFlag || cancelScanFlag === undefined ? false : true;
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -536,7 +536,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (
             this.state.PickFrontScanDetails.current_qty > 0 &&
             this.state.PickFrontChecklistDetails.length > 0
@@ -549,9 +549,9 @@ var PickFront = React.createClass({
                 action={appConstants.EDIT_DETAILS}
                 color={"orange"}
               />
-            )
+            );
           } else {
-            var editButton = ""
+            var editButton = "";
           }
           var BinFull = (
             <Button1
@@ -561,9 +561,9 @@ var PickFront = React.createClass({
               action={appConstants.BIN_FULL}
               color={"black"}
             />
-          )
+          );
           // Pick Front Flow Customer Trolley Support Print Enhancements
-          var reprintButton = ""
+          var reprintButton = "";
           reprintButton = PickFrontReprintEnabled ? (
             <Button1
               disabled={false}
@@ -574,8 +574,8 @@ var PickFront = React.createClass({
             />
           ) : (
             ""
-          )
-          var binComponent = ""
+          );
+          var binComponent = "";
 
           if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
             if (this.state.OrigBinUse) {
@@ -588,7 +588,7 @@ var PickFront = React.createClass({
                     itemUid={this.state.PickFrontItemUid}
                   />
                 </div>
-              )
+              );
             } else {
               binComponent = (
                 <div className={mainContainerClass}>
@@ -599,7 +599,7 @@ var PickFront = React.createClass({
                     itemUid={this.state.PickFrontItemUid}
                   />
                 </div>
-              )
+              );
             }
           } else {
             if (this.state.OrigBinUse) {
@@ -617,7 +617,7 @@ var PickFront = React.createClass({
                     itemUid={this.state.PickFrontItemUid}
                   />
                 </div>
-              )
+              );
             } else {
               binComponent = (
                 <div className={mainContainerClass}>
@@ -631,22 +631,22 @@ var PickFront = React.createClass({
                     itemUid={this.state.PickFrontItemUid}
                   />
                 </div>
-              )
+              );
             }
           }
-          var topPosition = this.state.SplitScreenFlag ? "320px" : "140px"
+          var topPosition = this.state.SplitScreenFlag ? "320px" : "140px";
 
-          let printer_visible = false
-          let printer_border_color = "yellow"
+          let printer_visible = false;
+          let printer_border_color = "yellow";
           if (this.state.printerInfo) {
-            printer_visible = this.state.printerInfo.printer_visible
-            printer_border_color = this.state.printerInfo.printer_border_color
+            printer_visible = this.state.printerInfo.printer_visible;
+            printer_border_color = this.state.printerInfo.printer_border_color;
           }
 
           var reprintIconStyle = {
             top: topPosition,
             borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color],
-          }
+          };
           this._component = (
             <div className="grid-container">
               <Modal cancelClicked={cancelClicked} />
@@ -698,11 +698,11 @@ var PickFront = React.createClass({
                   : ""}
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_PACKING_BOX:
         if (this.state.PickFrontExceptionStatus == false) {
@@ -712,8 +712,8 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
-          var binComponent = ""
+          );
+          var binComponent = "";
 
           if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
             if (this.state.OrigBinUse) {
@@ -726,7 +726,7 @@ var PickFront = React.createClass({
                     itemUid={this.state.PickFrontItemUid}
                   />
                 </div>
-              )
+              );
             } else {
               binComponent = (
                 <div className="main-container adjust-main-container">
@@ -737,7 +737,7 @@ var PickFront = React.createClass({
                     itemUid={this.state.PickFrontItemUid}
                   />
                 </div>
-              )
+              );
             }
           } else {
             if (this.state.OrigBinUse) {
@@ -752,7 +752,7 @@ var PickFront = React.createClass({
                     boxTypeInfo={this.state.PickFrontPackingBoxType}
                   />
                 </div>
-              )
+              );
             } else {
               binComponent = (
                 <div className="main-container adjust-main-container">
@@ -764,7 +764,7 @@ var PickFront = React.createClass({
                     boxTypeInfo={this.state.PickFrontPackingBoxType}
                   />
                 </div>
-              )
+              );
             }
           }
           this._component = (
@@ -780,14 +780,14 @@ var PickFront = React.createClass({
               )}
               {binComponent}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.ITEM_SEARCH:
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -812,10 +812,10 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.ITEM_SEARCH_RESULT:
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -844,16 +844,16 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PICK_FRONT_PPTL_PRESS:
-        var cancelScanFlag = this.state.PickFrontCancelScan
+        var cancelScanFlag = this.state.PickFrontCancelScan;
         var cancelScanDisabled =
-          cancelScanFlag || cancelScanFlag === undefined ? false : true
-        var cancelButton
-        var cancelClicked = mainstore.getCancelButtonStatus()
-        var { PickFrontReprintEnabled } = this.state
+          cancelScanFlag || cancelScanFlag === undefined ? false : true;
+        var cancelButton;
+        var cancelClicked = mainstore.getCancelButtonStatus();
+        var { PickFrontReprintEnabled } = this.state;
         var BinFull = (
           <Button1
             disabled={false}
@@ -862,18 +862,18 @@ var PickFront = React.createClass({
             action={appConstants.BIN_FULL}
             color={"black"}
           />
-        )
-        let printer_visible = false
-        let printer_border_color = "yellow"
+        );
+        let printer_visible = false;
+        let printer_border_color = "yellow";
         if (this.state.printerInfo) {
-          printer_visible = this.state.printerInfo.printer_visible
-          printer_border_color = this.state.printerInfo.printer_border_color
+          printer_visible = this.state.printerInfo.printer_visible;
+          printer_border_color = this.state.printerInfo.printer_border_color;
         }
-        var topPosition = this.state.SplitScreenFlag ? "320px" : "140px"
+        var topPosition = this.state.SplitScreenFlag ? "320px" : "140px";
         var reprintIconStyle = {
           top: topPosition,
           borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color],
-        }
+        };
 
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
@@ -882,7 +882,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (
             this.state.PickFrontScanDetails.current_qty > 0 &&
             this.state.PickFrontChecklistDetails.length > 0
@@ -895,9 +895,9 @@ var PickFront = React.createClass({
                 action={appConstants.EDIT_DETAILS}
                 color={"orange"}
               />
-            )
+            );
           } else {
-            var editButton = ""
+            var editButton = "";
           }
           if (!cancelScanDisabled) {
             cancelButton = (
@@ -911,12 +911,12 @@ var PickFront = React.createClass({
                 />{" "}
                 {editButton}
               </div>
-            )
+            );
           } else {
-            cancelButton = <div />
+            cancelButton = <div />;
           }
           // Pick Front Flow Customer Trolley Support Print Enhancements
-          var reprintButton = ""
+          var reprintButton = "";
           reprintButton = PickFrontReprintEnabled ? (
             <Button1
               disabled={false}
@@ -927,8 +927,8 @@ var PickFront = React.createClass({
             />
           ) : (
             ""
-          )
-          var binComponent = ""
+          );
+          var binComponent = "";
           if (this.state.OrigBinUse) {
             binComponent = (
               <BinsFlex
@@ -937,7 +937,7 @@ var PickFront = React.createClass({
                 seatType={this.state.SeatType}
                 withFooter={footer !== "" ? true : false}
               />
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -946,7 +946,7 @@ var PickFront = React.createClass({
                   screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 />
               </div>
-            )
+            );
           }
           this._component = (
             <div className="grid-container">
@@ -987,16 +987,16 @@ var PickFront = React.createClass({
                   : ""}
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_SKIP_BIN:
       case appConstants.PICK_FRONT_NO_FREE_BIN:
-        var skipDockingButton
-        var skipDockingBtnEnable = this.state.PickFrontSkipDockingBtnEnable
+        var skipDockingButton;
+        var skipDockingBtnEnable = this.state.PickFrontSkipDockingBtnEnable;
         if (skipDockingBtnEnable) {
           skipDockingButton = (
             <Button1
@@ -1006,9 +1006,9 @@ var PickFront = React.createClass({
               action={appConstants.SKIP_DOCKING}
               color={"black"}
             />
-          )
+          );
         } else {
-          skipDockingButton = ""
+          skipDockingButton = "";
         }
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
@@ -1017,7 +1017,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -1038,18 +1038,18 @@ var PickFront = React.createClass({
                 {skipDockingButton}
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_EXCEPTION_DAMAGED_ENTITY:
-        var _button
-        var headerDataToShow = this.state.PickFrontServerNavData.code || ""
+        var _button;
+        var headerDataToShow = this.state.PickFrontServerNavData.code || "";
         var remainingEntitiesToBeScanned = this.state.PickFrontServerNavData.details.slice(
           -1
-        )[0]
+        )[0];
 
         if (!this.state.GetIRTScanStatus) {
           _button = (
@@ -1062,7 +1062,7 @@ var PickFront = React.createClass({
                 color={"orange"}
               />
             </div>
-          )
+          );
         } else {
           _button = (
             <div className="staging-action">
@@ -1074,7 +1074,7 @@ var PickFront = React.createClass({
                 color={"orange"}
               />
             </div>
-          )
+          );
         }
 
         this._component = (
@@ -1111,10 +1111,10 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-        var buttonActivateFlag = mainstore.getExeptionQuanity()
+        var buttonActivateFlag = mainstore.getExeptionQuanity();
         this._component = (
           <div className="grid-container exception">
             <Modal />
@@ -1178,12 +1178,12 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
+        );
 
-        break
+        break;
 
       case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_PACK:
-        var buttonActivateFlag = mainstore.getExeptionQuanity()
+        var buttonActivateFlag = mainstore.getExeptionQuanity();
         this._component = (
           <div className="grid-container exception">
             <Modal />
@@ -1238,11 +1238,11 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
+        );
 
-        break
+        break;
       case appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK:
-        var buttonActivateFlag = mainstore.getExeptionQuanity()
+        var buttonActivateFlag = mainstore.getExeptionQuanity();
         this._component = (
           <div className="grid-container exception">
             <Modal />
@@ -1305,12 +1305,12 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
+        );
 
-        break
+        break;
 
       case appConstants.PICK_FRONT_IRT_BIN_CONFIRM:
-        var selected_screen
+        var selected_screen;
         if (!this.state.GetIRTScanStatus) {
           selected_screen = (
             <div className="gor-exception-align">
@@ -1330,7 +1330,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
           selected_screen = (
             <div className="gor-exception-align">
@@ -1338,7 +1338,7 @@ var PickFront = React.createClass({
                 {_("Please put exception entities in IRT bin and scan the bin")}
               </div>
             </div>
-          )
+          );
         }
         this._component = (
           <div className="grid-container exception">
@@ -1355,11 +1355,11 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PICK_FRONT_REPRINT_EXCEPTION:
-        var selected_screen
+        var selected_screen;
 
         selected_screen = (
           <div className="gor-exception-align">
@@ -1376,7 +1376,7 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
+        );
 
         this._component = (
           <div className="grid-container exception">
@@ -1393,11 +1393,11 @@ var PickFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PICK_FRONT_EXCEPTION_MISSING_BOX:
-        this._navigation = ""
+        this._navigation = "";
         if (this.state.PickFrontExceptionScreen == "box_serial") {
           this._component = (
             <div className="grid-container exception">
@@ -1438,7 +1438,7 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else if (this.state.PickFrontExceptionScreen == "confirm_from_user") {
           this._component = (
             <div className="grid-container exception">
@@ -1472,9 +1472,9 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         }
-        break
+        break;
 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
@@ -1484,8 +1484,8 @@ var PickFront = React.createClass({
             serverNavData={this.state.PickFrontServerNavData}
             navMessagesJson={this.props.navMessagesJson}
           />
-        )
-        var _button
+        );
+        var _button;
         if (this.state.PickFrontScreenId == appConstants.SCANNER_MANAGEMENT) {
           _button = (
             <div className="staging-action">
@@ -1506,7 +1506,7 @@ var PickFront = React.createClass({
                 color={"orange"}
               />
             </div>
-          )
+          );
         } else {
           _button = (
             <div className="staging-action">
@@ -1519,7 +1519,7 @@ var PickFront = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
         }
         this._component = (
           <div className="grid-container audit-reconcilation">
@@ -1541,8 +1541,8 @@ var PickFront = React.createClass({
             {_button}
             <Modal />
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PICK_FRONT_PACKING_CONTAINER_SCAN:
         if (this.state.PickFrontExceptionStatus == false) {
@@ -1552,7 +1552,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           var _button = (
             <div className="staging-action">
               <Button1
@@ -1572,7 +1572,7 @@ var PickFront = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -1587,13 +1587,13 @@ var PickFront = React.createClass({
                 <OrderDetails orderData={this.state.PickFrontBoxOrderDetails} />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
       case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
-        var cancelClicked = mainstore.getCancelButtonStatus()
+        var cancelClicked = mainstore.getCancelButtonStatus();
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -1601,7 +1601,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (
             this.state.PickFrontScanDetails.current_qty > 0 &&
             this.state.PickFrontChecklistDetails.length > 0
@@ -1614,9 +1614,9 @@ var PickFront = React.createClass({
                 action={appConstants.EDIT_DETAILS}
                 color={"orange"}
               />
-            )
+            );
           } else {
-            var editButton = ""
+            var editButton = "";
           }
           var BinFull = (
             <Button1
@@ -1626,8 +1626,8 @@ var PickFront = React.createClass({
               action={appConstants.BIN_FULL}
               color={"black"}
             />
-          )
-          var binComponent = ""
+          );
+          var binComponent = "";
           if (this.state.OrigBinUse) {
             binComponent = (
               <div className={binsFlexClass}>
@@ -1642,7 +1642,7 @@ var PickFront = React.createClass({
                   itemUid={this.state.PickFrontItemUid}
                 />
               </div>
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -1656,7 +1656,7 @@ var PickFront = React.createClass({
                   itemUid={this.state.PickFrontItemUid}
                 />
               </div>
-            )
+            );
           }
           var btnId = this.state.PickFrontPackingButtonType,
             btnName,
@@ -1664,16 +1664,16 @@ var PickFront = React.createClass({
             action,
             actionBtnStatus,
             cancelButton = "",
-            cancelButtonStatus = this.state.PickFrontPackingCancelStatus
+            cancelButtonStatus = this.state.PickFrontPackingCancelStatus;
           if (btnId) {
-            btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full")
+            btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
             action =
               btnId === "box_discard"
                 ? appConstants.DISCARD_PACKING_BOX
-                : appConstants.BOX_FULL
+                : appConstants.BOX_FULL;
             actionBtnStatus = this.state.PickFrontPackingButtonDisable
               ? false
-              : true
+              : true;
             actionBtn = (
               <Button1
                 disabled={actionBtnStatus}
@@ -1682,7 +1682,7 @@ var PickFront = React.createClass({
                 action={action}
                 color={"black"}
               />
-            )
+            );
           }
           if (cancelButtonStatus) {
             cancelButton = (
@@ -1693,7 +1693,7 @@ var PickFront = React.createClass({
                 action={appConstants.CANCEL_SCAN}
                 color={"black"}
               />
-            )
+            );
           }
           this._component = (
             <div className="grid-container gor-pck-itm-scn">
@@ -1717,16 +1717,16 @@ var PickFront = React.createClass({
                 {this.state.PickFrontBinFullStatus && BinFull}
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
       case appConstants.PICK_FRONT_PACKING_PPTL_PRESS:
-        var cancelScanFlag = this.state.PickFrontCancelScan
+        var cancelScanFlag = this.state.PickFrontCancelScan;
         var cancelScanDisabled =
-          cancelScanFlag || cancelScanFlag === undefined ? false : true
-        var cancelButton
+          cancelScanFlag || cancelScanFlag === undefined ? false : true;
+        var cancelButton;
 
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (
@@ -1735,7 +1735,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (
             this.state.PickFrontScanDetails.current_qty > 0 &&
             this.state.PickFrontChecklistDetails.length > 0
@@ -1748,9 +1748,9 @@ var PickFront = React.createClass({
                 action={appConstants.EDIT_DETAILS}
                 color={"orange"}
               />
-            )
+            );
           } else {
-            var editButton = ""
+            var editButton = "";
           }
           if (!cancelScanDisabled) {
             cancelButton = (
@@ -1764,11 +1764,11 @@ var PickFront = React.createClass({
                 />{" "}
                 {editButton}
               </div>
-            )
+            );
           } else {
-            cancelButton = <div className="cancel-scan" />
+            cancelButton = <div className="cancel-scan" />;
           }
-          var binComponent = ""
+          var binComponent = "";
           if (this.state.OrigBinUse) {
             binComponent = (
               <BinsFlex
@@ -1777,7 +1777,7 @@ var PickFront = React.createClass({
                 seatType={this.state.SeatType}
                 withFooter={footer !== "" ? true : false}
               />
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -1786,22 +1786,22 @@ var PickFront = React.createClass({
                   screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 />
               </div>
-            )
+            );
           }
           var btnId = this.state.PickFrontPackingButtonType,
             btnName,
             actionBtn,
             action,
-            actionBtnStatus
+            actionBtnStatus;
           if (btnId) {
-            btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full")
+            btnName = btnId === "box_discard" ? _("Box Full") : _("Box Full");
             action =
               btnId === "box_discard"
                 ? appConstants.DISCARD_PACKING_BOX
-                : appConstants.BOX_FULL
+                : appConstants.BOX_FULL;
             actionBtnStatus = this.state.PickFrontPackingButtonDisable
               ? false
-              : true
+              : true;
             actionBtn = (
               <Button1
                 disabled={actionBtnStatus}
@@ -1810,7 +1810,7 @@ var PickFront = React.createClass({
                 action={action}
                 color={"black"}
               />
-            )
+            );
           }
           this._component = (
             <div className="grid-container">
@@ -1830,14 +1830,14 @@ var PickFront = React.createClass({
               {cancelButton}
               {actionBtn}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
       case appConstants.PICK_FRONT_BIN_PRINTOUT:
       case appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT:
-        var reprintButton = ""
+        var reprintButton = "";
         if (!this.state.PickFrontExceptionStatus) {
           if (this.state.OrigBinUse) {
             binComponent = (
@@ -1848,7 +1848,7 @@ var PickFront = React.createClass({
                 withFooter={footer !== "" ? true : false}
                 screenClass="binPrintout"
               />
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -1857,7 +1857,7 @@ var PickFront = React.createClass({
                   screenId={screen_id}
                 />
               </div>
-            )
+            );
           }
           reprintButton =
             this.state.PickFrontScreenId ===
@@ -1871,7 +1871,7 @@ var PickFront = React.createClass({
               />
             ) : (
               ""
-            )
+            );
 
           this._navigation = (
             <Navigation
@@ -1879,7 +1879,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
 
           this._component = (
             <div className="grid-container">
@@ -1897,18 +1897,18 @@ var PickFront = React.createClass({
               {binComponent}
               {reprintButton}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_DOCK_TOTE:
       case appConstants.PICK_FRONT_SKIP_TOTE:
-        var rackType = ""
-        var adjustStyleOnSplitPPS = ""
-        var cancelScanDisabled = this.state.PickFrontCancelScan ? true : false
-        var cancelButton
+        var rackType = "";
+        var adjustStyleOnSplitPPS = "";
+        var cancelScanDisabled = this.state.PickFrontCancelScan ? true : false;
+        var cancelButton;
         if (cancelScanDisabled) {
           cancelButton = (
             <div className={exceptionCancelScanClass}>
@@ -1920,9 +1920,9 @@ var PickFront = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
         } else {
-          cancelButton = ""
+          cancelButton = "";
         }
 
         if (!this.state.PickFrontExceptionStatus) {
@@ -1932,9 +1932,9 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (this.state.PickFrontChecklistData) {
-            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS";
           }
           this._component = (
             <div className="grid-container">
@@ -1960,18 +1960,18 @@ var PickFront = React.createClass({
               </div>
               <div className={actionClass}>{cancelButton}</div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_SLOT_SCAN:
       case appConstants.PICK_FRONT_TOTE_CONFIRM:
         if (this.state.PickFrontExceptionStatus == false) {
           var carryingUnitBtnEnable = this.state.PickFrontCarryingUnitBtnEnable
             ? false
-            : true
+            : true;
           var carryingUnitButton = (
             <Button1
               disabled={carryingUnitBtnEnable}
@@ -1980,14 +1980,14 @@ var PickFront = React.createClass({
               action={appConstants.NEW_CARRYING_UNIT}
               color={"black"}
             />
-          )
+          );
           this._navigation = (
             <Navigation
               navData={this.state.PickFrontNavData}
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -2000,14 +2000,62 @@ var PickFront = React.createClass({
               </div>
               <div className={actionClass}>{carryingUnitButton}</div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
+
+      case appConstants.PICK_FRONT_SLOT_EMPTY_CONFIRM:
+        if (this.state.PickFrontExceptionStatus == false) {
+          this._navigation = (
+            <Navigation
+              navData={this.state.PickFrontNavData}
+              serverNavData={this.state.PickFrontServerNavData}
+              navMessagesJson={this.props.navMessagesJson}
+            />
+          );
+          rackType = (
+            <Rack
+              isDrawer={this.state.isDrawer}
+              slotType={this.state.SlotType}
+              rackData={this.state.PickFrontRackDetails}
+            />
+          );
+          btnContainer = (
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-end" }}>
+                  <Button1
+                    disabled={false}
+                    text={_("Fill")}
+                    module={appConstants.PICK_FRONT}
+                    action={appConstants.MSU_SLOT_FILLED}
+                    color={"black"}
+                  />
+                  <Button1
+                    disabled={false}
+                    text={_("Empty")}
+                    module={appConstants.PICK_FRONT}
+                    action={appConstants.MSU_SLOT_EMPTY}
+                    color={"orange"}
+                  />
+                </div>
+          )
+          this._component = (
+            <div className="grid-container">
+              <Modal />
+              <div className={mainContainerClass}>
+                {rackType}
+                {btnContainer}
+              </div>
+            </div>
+          );
+        } else {
+          this._component = this.getExceptionComponent(footer);
+        }
+        break;
 
       case appConstants.PICK_FRONT_ONE_STEP_SCAN:
-        var rackType = ""
+        var rackType = "";
         if (!this.state.PickFrontExceptionStatus) {
           this._navigation = (
             <Navigation
@@ -2015,7 +2063,7 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
 
           this._component = (
             <div className="grid-container">
@@ -2045,17 +2093,17 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_UNDOCK_TOTE:
         if (!this.state.PickFrontExceptionStatus) {
           var subMessage = this.state.PickFrontServerNavData.details
             ? this.state.PickFrontServerNavData.details[0]
-            : ""
+            : "";
           this._navigation = (
             <Navigation
               navData={this.state.PickFrontNavData}
@@ -2063,7 +2111,7 @@ var PickFront = React.createClass({
               subMessage={"Scan " + subMessage + " and gently push it away"}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
 
           this._component = (
             <div className="grid-container">
@@ -2079,14 +2127,14 @@ var PickFront = React.createClass({
                 selectedbin={this.state.PickCurrentBin}
               />
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       case appConstants.PICK_FRONT_SCAN_PACKS:
-        var rackType = ""
+        var rackType = "";
         if (!this.state.PickFrontExceptionStatus) {
           this._navigation = (
             <Navigation
@@ -2094,9 +2142,9 @@ var PickFront = React.createClass({
               serverNavData={this.state.PickFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (this.state.PickFrontRackTypeMPU) {
-            rackType = <Pallet />
+            rackType = <Pallet />;
           } else {
             rackType = (
               <Rack
@@ -2104,7 +2152,7 @@ var PickFront = React.createClass({
                 slotType={this.state.SlotType}
                 rackData={this.state.PickFrontRackDetails}
               />
-            )
+            );
           }
           this._component = (
             <div className="grid-container">
@@ -2117,21 +2165,21 @@ var PickFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent(footer)
+          this._component = this.getExceptionComponent(footer);
         }
-        break
+        break;
 
       default:
-        return true
+        return true;
     }
   },
 
   render: function (data) {
-    var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
-    this.getNotificationComponent(footer)
-    this.getScreenComponent(this.state.PickFrontScreenId, footer)
+    var footer = mainstore.getGamificationUrl() ? <Footer /> : "";
+    this.getNotificationComponent(footer);
+    this.getScreenComponent(this.state.PickFrontScreenId, footer);
     return (
       <div className="main">
         <Header />
@@ -2140,8 +2188,8 @@ var PickFront = React.createClass({
         {this._notification}
         {footer}
       </div>
-    )
+    );
   },
-})
+});
 
-module.exports = PickFront
+module.exports = PickFront;

@@ -59,11 +59,13 @@ var appConstants = {
   PICK_BACK_EXCEPTION_OVERRIDE_TOTE: "pick_back_override_tote_required",
   PICK_BACK_PACKING_BOX: "pick_back_packing_box",
   PUT_BACK_SCAN: "put_back_scan",
+  
   PUT_BACK_TOTE_CLOSE: "put_back_tote_close",
   PUT_BACK_SCAN_TOTE: "put_back_scan_tote",
   PUT_BACK_EXCEPTION: "put_back_exception",
   PUT_FRONT_WAITING_FOR_RACK: "put_front_waiting_for_rack",
   PUT_FRONT_PLACE_ITEMS_IN_RACK: "put_front_place_items_in_rack",
+  
   PUT_BACK_EXCEPTION_PUT_EXTRA_ITEM_IN_IRT_BIN:
     "put_back_put_extra_item_in_irt_bin",
   PICK_FRONT_REPRINT_EXCEPTION: "pick_front_reprint_exception",
@@ -396,6 +398,9 @@ var appConstants = {
   PREV_LOCATION: "Location",
   CONFIRM_CLOSE_INVOICE: "confirm_close_invoice",
   INVOICE_REQUIRED: "INVOICE_REQUIRED",
+  PICK_FRONT_SLOT_EMPTY_CONFIRM: "pick_front_slot_empty_confirm",
+  MSU_SLOT_EMPTY: "msuSlot_empty",
+  MSU_SLOT_FILLED: "msuSlot_filled",
 }
 
 module.exports = appConstants

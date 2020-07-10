@@ -589,6 +589,18 @@ var Button1 = React.createClass({
               ActionCreators.logoutSession(true)
             }
             break
+          case appConstants.MSU_SLOT_EMPTY:
+            data["event_name"] = "pick_front"
+            data["event_data"]["action"] = "msuSlot_empty";
+            ActionCreators.postDataToInterface(data)
+            break;
+
+          case appConstants.MSU_SLOT_FILLED:
+            data["event_name"] = "pick_front"
+            data["event_data"]["action"] = "msuSlot_filled";
+            ActionCreators.postDataToInterface(data)
+            break;
+
           default:
             return true
         }

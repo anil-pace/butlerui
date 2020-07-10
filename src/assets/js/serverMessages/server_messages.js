@@ -468,6 +468,7 @@ var serverMessages = {
   "PkF.H.018": "Scan {0} {1} and place in Bin {2}",
   "PkF.H.021": "Put Pack list in {0} and press PPTL to confirm",
   "PkF.H.022": "Waiting for {0} to be docked",
+  "PkF.H.042": "Is MSU Slot Empty?",
   "PtB.H.020": "Waiting for put_away to complete from front",
   "UdpF.I.001": "{0} scan successful",
   "UdpF.I.002": "Entity scan successful",
@@ -533,7 +534,7 @@ var serverMessages = {
       "pick_front_working_table",
       "pick_front_more_item_scan",
       "pick_front_container_break",
-      "dock_carrying_unit",
+      "dock_carrying_unit"
     ],
   },
   //checklist

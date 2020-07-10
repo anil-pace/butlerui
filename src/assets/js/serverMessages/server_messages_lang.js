@@ -827,4 +827,7 @@ function server_messages_list() {
   _("Reprinting for bin-{0}")
   _("Select Bin for reprinting the label")
   _("Scan entities again to confirm")
+  _("Fill")
+  _("Empty")
+  _("Is MSU Slot Empty?")
 }

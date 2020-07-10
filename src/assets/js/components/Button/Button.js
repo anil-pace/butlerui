@@ -591,13 +591,13 @@ var Button1 = React.createClass({
             break
           case appConstants.MSU_SLOT_EMPTY:
             data["event_name"] = "pick_front"
-            data["event_data"]["action"] = "msuSlot_empty";
+            data["event_data"]["action"] = "slot_empty";
             ActionCreators.postDataToInterface(data)
             break;
 
           case appConstants.MSU_SLOT_FILLED:
             data["event_name"] = "pick_front"
-            data["event_data"]["action"] = "msuSlot_filled";
+            data["event_data"]["action"] = "slot_filled";
             ActionCreators.postDataToInterface(data)
             break;
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-01 15:07+0000\n"
+"POT-Creation-Date: 2020-07-13 04:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4953,4 +4953,33 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:828
 msgid "Select Bin for reprinting the label"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:829
+msgid "Scan entities again to confirm"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:830
+msgid "Fill"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:831
+msgid "Empty"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:832
+msgid "Is MSU Slot Empty?"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:833
+msgid "Scan PpsBin or Dock Tote"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:834
+msgid ""
+"Product with different tag found in scanned slot. Please scan another slot"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:835
+msgid "Multiple SKUs Found in Container."
 msgstr ""

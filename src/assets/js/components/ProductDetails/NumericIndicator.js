@@ -202,7 +202,7 @@ var NumericIndicator = React.createClass({
   },
 
   checkKqAllowed: function (arg) {
-    if(arg === "good"){
+    if(arg === "good_quantity"){
       if(this.state.value >= this.state.goodQuantity){
         this._appendClassUp = "gor-plus-sign disable"
         this._enableIncrement = false
@@ -405,7 +405,7 @@ var NumericIndicator = React.createClass({
   render: function (data) {
     var inputType = this.props.inputType ? this.props.inputType : "text"
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
-      this.checkKqAllowed("good");
+      this.checkKqAllowed(appConstants.GOOD_QUANTITY);
       return (
         <div
           className={

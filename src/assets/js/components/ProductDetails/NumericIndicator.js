@@ -211,6 +211,13 @@ var NumericIndicator = React.createClass({
         this._appendClassUp = "gor-plus-sign enable"
         this._enableIncrement = true
       }
+      if (this.state.value <= 0) {
+        this._appendClassDown = "gor-minus-sign disable"
+        this._enableDecrement = false
+      } else {
+        this._appendClassDown = "gor-minus-sign enable"
+        this._enableDecrement = true
+      }
     }
     else{
       if (this.state.value <= 0) {

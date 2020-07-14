@@ -201,21 +201,33 @@ var NumericIndicator = React.createClass({
     }
   },
 
-  checkKqAllowed: function () {
-    if (this.state.value <= 0) {
-      this._appendClassDown = "gor-minus-sign disable"
-      this._enableDecrement = false
-    } else {
-      this._appendClassDown = "gor-minus-sign enable"
-      this._enableDecrement = true
+  checkKqAllowed: function (arg) {
+    if(arg === "good"){
+      if(this.state.value >= this.state.goodQuantity){
+        this._appendClassUp = "gor-plus-sign disable"
+        this._enableIncrement = false
+      }
+      else{
+        this._appendClassUp = "gor-plus-sign enable"
+        this._enableIncrement = true
+      }
     }
-
-    if (this.state.value >= 9999) {
-      this._appendClassUp = "gor-plus-sign disable"
-      this._enableIncrement = false
-    } else {
-      this._appendClassUp = "gor-plus-sign enable"
-      this._enableIncrement = true
+    else{
+      if (this.state.value <= 0) {
+        this._appendClassDown = "gor-minus-sign disable"
+        this._enableDecrement = false
+      } else {
+        this._appendClassDown = "gor-minus-sign enable"
+        this._enableDecrement = true
+      }
+  
+      if (this.state.value >= 9999) {
+        this._appendClassUp = "gor-plus-sign disable"
+        this._enableIncrement = false
+      } else {
+        this._appendClassUp = "gor-plus-sign enable"
+        this._enableIncrement = true
+      }
     }
   },
 
@@ -386,7 +398,7 @@ var NumericIndicator = React.createClass({
   render: function (data) {
     var inputType = this.props.inputType ? this.props.inputType : "text"
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
-      this.checkKqAllowed();
+      this.checkKqAllowed("good");
       return (
         <div
           className={

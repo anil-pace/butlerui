@@ -1900,7 +1900,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           }
           data["tableRows"].push([
             new self.tableCol(
-              value.pps_bin_id,
+              (value.pps_bin_id === "0" ? "Master PPTL" : value.pps_bin_id),
               "enabled",
               false,
               "small",

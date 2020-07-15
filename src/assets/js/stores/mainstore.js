@@ -5965,6 +5965,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["bindata"] = this.getBinData()
         data["PutFrontCancelScan"] = this.cancelScanDetails()
         break
+
+      case appConstants.UDP_PUT_FRONT_DAMAGED_EXCEPTION:
+          data["PutFrontNavData"] = this.getNavData()
+          data["PutFrontServerNavData"] = this.getServerNavData()
+          data["PutFrontScreenId"] = this.getScreenId()
+          data["PutFrontExceptionData"] = this.getExceptionData()
+          data["PutFrontNotification"] = this.getNotificationData()
+          data["PutFrontExcessItems"] = this._getExcessItemsData()
+          data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag()
+          break
+    
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data["PutFrontNavData"] = this.getNavData()
         data["PutFrontServerNavData"] = this.getServerNavData()

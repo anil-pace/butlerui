@@ -1640,6 +1640,48 @@ var PutFront = React.createClass({
         }
 
         break;
+      case appConstants.UDP_PUT_FRONT_DAMAGED_EXCEPTION:
+        var _button
+        this._modalContent = ""
+        _button = (
+          <div className="staging-action">
+            <Button1
+              disabled={true}
+              text={_("Next")}
+              module={appConstants.PUT_FRONT}
+              action={appConstants.EXCESS_ITEM_BIN}
+              color={"orange"}
+            />
+          </div>
+        )
+        this._component = (
+          <div className="grid-container exception">
+            <Modal />
+            <Exception data={this.state.PutFrontExceptionData} />
+            <div className="exception-right">
+              <div className="main-container">
+                <div className="kq-exception">
+                  <div className="kq-header">{_("Scan damaged entities")}</div>
+                  <TabularData
+                    data={this.state.PutFrontExcessItems}
+                    className="limit-height width-extra "
+                  />
+                  {_button}
+                </div>
+              </div>
+            </div>
+            <div className="cancel-scan">
+              <Button1
+                disabled={false}
+                text={_("Cancel Exception")}
+                module={appConstants.PUT_FRONT}
+                action={appConstants.CANCEL_EXCEPTION_MODAL}
+                color={"black"}
+              />
+            </div>
+          </div>
+        )
+         break;
 
       default:
         return true;

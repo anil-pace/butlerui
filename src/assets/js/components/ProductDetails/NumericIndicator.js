@@ -54,9 +54,9 @@ var NumericIndicator = React.createClass({
       this.props.execType === appConstants.GOOD_PACK ||
       this.props.execType === appConstants.GOOD_SUB_PACK
     ) {
-      this._updatedQtyGood++
+      this._updatedQtyGood++;
       this.setState({
-        value: this._updatedQtyGood
+        goodQuantity: this.state.goodQuantity+1
       })
     } else if (
       this.props.execType === appConstants.MISSING_QUANTITY ||
@@ -104,7 +104,7 @@ var NumericIndicator = React.createClass({
     ) {
       this._updatedQtyGood--
       this.setState({
-        value: this._updatedQtyGood
+        goodQuantity: this.state.goodQuantity-1
       })
     } else if (
       this.props.execType === appConstants.MISSING_QUANTITY ||
@@ -202,24 +202,6 @@ var NumericIndicator = React.createClass({
   },
 
   checkKqAllowed: function (arg) {
-    if(arg === "good_quantity"){
-      if(this.state.value >= this.state.goodQuantity){
-        this._appendClassUp = "gor-plus-sign disable"
-        this._enableIncrement = false
-      }
-      else{
-        this._appendClassUp = "gor-plus-sign enable"
-        this._enableIncrement = true
-      }
-      if (this.state.value <= 0) {
-        this._appendClassDown = "gor-minus-sign disable"
-        this._enableDecrement = false
-      } else {
-        this._appendClassDown = "gor-minus-sign enable"
-        this._enableDecrement = true
-      }
-    }
-    else{
       if (this.state.value <= 0) {
         this._appendClassDown = "gor-minus-sign disable"
         this._enableDecrement = false
@@ -235,7 +217,6 @@ var NumericIndicator = React.createClass({
         this._appendClassUp = "gor-plus-sign enable"
         this._enableIncrement = true
       }
-    }
   },
 
   checkKqAllowedForAuditDamagedQuantity: function (isKQEnabled) {
@@ -405,7 +386,7 @@ var NumericIndicator = React.createClass({
   render: function (data) {
     var inputType = this.props.inputType ? this.props.inputType : "text"
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
-      this.checkKqAllowed(appConstants.GOOD_QUANTITY);
+      //this.checkKqAllowed(appConstants.GOOD_QUANTITY);
       return (
         <div
           className={
@@ -425,8 +406,8 @@ var NumericIndicator = React.createClass({
             <input
               disabled
               id="keyboard"
-              value={this.state.value}
-              //value={this.state.goodQuantity}
+              //value={this.state.value}
+              value={this.state.goodQuantity}
               type={inputType}
               name="quantity"
               className={"gor-quantity-text gor_" + this.props.execType}

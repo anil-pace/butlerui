@@ -7,6 +7,7 @@ var jqueryPosition = require("jquery-ui/position")
 var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
+var EmergencyModal = require('./Modal/EmergencyModal')
 
 
 function getState() {

@@ -1,5 +1,6 @@
 var React = require("react")
 var ProductImage = require("../PrdtDetails/ProductImage")
+var customiseCSS = require("../../utils/customizeCSS")
 
 var ProductInfo = React.createClass({
   render: function () {
@@ -10,42 +11,56 @@ var ProductInfo = React.createClass({
       : "-"
     var PutContainerFlag = this.props.putContainerFlag
     var arr1 = []
-    let widthpatch = this.props.widthpatch 
-    let heightpatch = this.props.heightpatch 
+    let widthpatch = this.props.widthpatch
+    let heightpatch = this.props.heightpatch
+    let clientSpecificJSX = this.props.clientSpecificJSX
+      ? this.props.clientSpecificJSX
+      : false
 
-    flowIndicator === "Pick"
-      ? $.each(infoDetails, function (key, value) {
-          return arr1.push(
-            <tr>
-              <td className="key"> {key} </td>
-              <td className="value">{value} </td>
-            </tr>
-          )
-          return arr1
-        })
-      : $.each(infoDetails, function (key, value) {
-          if (
-            key === "QlcodeDigits" &&
-            value !== "" &&
-            PutContainerFlag === true
-          ) {
-            arr1.push(
-              <div className="detailsOuterWrapper">
-                <span className="detailsDispValShort">{value}</span>
-              </div>
+    // Customised the Product Info component as per the client
+    // Valid JSX to be received if customization needed
+
+    if (
+      !clientSpecificJSX ||
+      (clientSpecificJSX && !React.isValidElement(clientSpecificJSX))
+    ) {
+      flowIndicator === "Pick"
+        ? $.each(infoDetails, function (key, value) {
+            return arr1.push(
+              <tr>
+                <td className="key"> {key} </td>
+                <td className="value">{value} </td>
+              </tr>
             )
-          } else if (key !== "QlcodeDigits") {
-            arr1.push(
-              <div className="detailsOuterWrapper">
-                <div className="detailsInnerWrapper">
-                  <span className="detailsDispName"> {key + ":"} </span>
-                  <span className="detailsDispVal">{value}</span>
+            return arr1
+          })
+        : $.each(infoDetails, function (key, value) {
+            if (
+              key === "QlcodeDigits" &&
+              value !== "" &&
+              PutContainerFlag === true
+            ) {
+              arr1.push(
+                <div className="detailsOuterWrapper">
+                  <span className="detailsDispValShort">{value}</span>
                 </div>
-              </div>
-            )
-          }
-          return arr1
-        })
+              )
+            } else if (key !== "QlcodeDigits") {
+              arr1.push(
+                <div className="detailsOuterWrapper">
+                  <div className="detailsInnerWrapper">
+                    <span className="detailsDispName"> {key + ":"} </span>
+                    <span className="detailsDispVal">{value}</span>
+                  </div>
+                </div>
+              )
+            }
+
+            return arr1
+          })
+    } else {
+      return clientSpecificJSX
+    }
 
     return flowIndicator === "Pick" ? (
       <div className="table-wrapper">
@@ -57,8 +72,8 @@ var ProductInfo = React.createClass({
       <div
         className="packingBoxTableInfo"
         style={{
-           width:   widthpatch!== '' ? widthpatch : "520px",
-           height:  heightpatch!== '' ? heightpatch : "549px",
+          width: widthpatch !== "" ? widthpatch : "520px",
+          height: heightpatch !== "" ? heightpatch : "549px",
           display: "block",
           marginLeft: "0",
         }}

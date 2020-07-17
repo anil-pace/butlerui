@@ -4772,22 +4772,26 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     data["image_url"] = null
     var self = this
     if (
-      _seatData.excess_items &&
-      Object.keys(_seatData.excess_items).length > 0
+      _seatData.damaged_items &&
+      Object.keys(_seatData.damaged_items).length > 0
     ) {
       var product_details,
         product_sku,
         quantity,
+        type, 
+        serial,
         total_excess = 0
-      _seatData.excess_items.map(function (value, index) {
+      _seatData.damaged_items.map(function (value, index) {
         value.product_info.map(function (product_details, index) {
           if (product_details[0].product_sku) {
             product_sku = product_details[0].product_sku
-            quantity = value.qty
+            quantity = value.qty;
+            type = value.type;
+            serial = value.serial.length === 0 ? "--" : value.serial;
             total_excess += quantity
             data["tableRows"].push([
               new self.tableCol(
-                product_sku,
+                type,
                 "enabled",
                 false,
                 "small",
@@ -4807,7 +4811,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
                 false
               ),
               new self.tableCol(
-                product_sku,
+                serial,
                 "enabled",
                 false,
                 "small",

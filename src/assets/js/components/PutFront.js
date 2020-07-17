@@ -1646,7 +1646,7 @@ var PutFront = React.createClass({
         _button = (
           <div className="staging-action">
             <Button1
-              disabled={true}
+              disabled={false}
               text={_("Next")}
               module={appConstants.PUT_FRONT}
               action={appConstants.EXCESS_ITEM_BIN}

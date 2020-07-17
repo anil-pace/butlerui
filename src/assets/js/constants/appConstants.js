@@ -356,7 +356,7 @@ var appConstants = {
   UDP_PUT_FRONT_MISSING: "ud_put_front_missing",
   UDP_PUT_FRONT_UNEXPECTED: "ud_put_front_unexpected",
   UDP_UNEXPECTED_ITEM: "ud_put_front_unexpected",
-  UDP_PUT_FRONT_DAMAGED_EXCEPTION: "udp_put_front_damaged_exception",
+  UDP_PUT_FRONT_DAMAGED_EXCEPTION: "ud_put_front_damaged_exception",
   CLOSE_UNEXPECTED_SCAN: "CLOSE_UNEXPECTED_SCAN",
   SEND_MSU: "send_msu",
   CLOSE_CART: "close_cart",

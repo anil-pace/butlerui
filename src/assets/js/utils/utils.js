@@ -583,148 +583,148 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
-  data.state_data = {
-    seat_name: "back_1",
-    notification_list: [
-      {
-        level: "info",
-        code: "PtB.I.006",
-        details: [],
-        description: "Entity scan successful.",
-      },
-    ],
-    current_bin_widget: true,
-    exception_allowed: [
-      {
-        event: "extra_items",
-        exception_id: "PtB004",
-        details: [],
-        exception_name: "Extra Items In Bin",
-      }
-    ],
-    roll_cage_flow: false,
-    bin_coordinate_plotting: true,
-    event: "extra_items_scan",
-    pps_profile: "default",
-    audit_sideline_popup: false,
-    pps_requested_status: "undefined",
-    screen_id:
-      "udp_put_front_damaged_exception" /*"put_back_scan_excess_item"*/,
-    ops_paused: false,
-    logout_allowed: false,
-    excess_items: [
-      {
-        product_info: [
-          [
-            {
-              product_sku: "a2",
-              display_data: [
-                { locale: "ja-JP", display_name: "製品SKU" },
-                { locale: "en-US", display_name: "Product SKU" },
-              ],
-            },
-          ],
-          [
-            {
-              display_data: [
-                { locale: "en-US", display_name: "product_local_image_url" },
-              ],
-              product_local_image_url: null,
-            },
-          ],
-          [
-            {
-              display_data: [
-                { locale: "ja-JP", display_name: "製品バーコード" },
-                { locale: "en-US", display_name: "Product Barcodes" },
-              ],
-              product_barcodes: ["a2"],
-            },
-          ],
-          [
-            {
-              display_data: [
-                { locale: "ja-JP", display_name: "商品の寸法" },
-                { locale: "en-US", display_name: "Product Dimensions" },
-              ],
-              product_dimensions: [3, 1, 10],
-            },
-          ],
-        ],
-        serial: [],
-        type: "Item",
-        qty: 2,
-      },
-      {
-        product_info: [
-          [
-            {
-              product_sku: "a1",
-              display_data: [
-                { locale: "ja-JP", display_name: "製品SKU" },
-                { locale: "en-US", display_name: "Product SKU" },
-              ],
-            },
-          ],
-          [
-            {
-              display_data: [
-                { locale: "en-US", display_name: "product_local_image_url" },
-              ],
-              product_local_image_url: null,
-            },
-          ],
-          [
-            {
-              display_data: [
-                { locale: "ja-JP", display_name: "製品バーコード" },
-                { locale: "en-US", display_name: "Product Barcodes" },
-              ],
-              product_barcodes: ["a1"],
-            },
-          ],
-          [
-            {
-              display_data: [
-                { locale: "ja-JP", display_name: "商品の寸法" },
-                { locale: "en-US", display_name: "Product Dimensions" },
-              ],
-              product_dimensions: [3, 1, 10],
-            },
-          ],
-        ],
-        serial: [],
-        type: "Item",
-        qty: 1,
-      },
-    ],
-    pps_requested_mode: "undefined",
-    operator_orientation: "0",
-    time_stamp: "2020-07-15T12:08:02Z",
-    api_version: "1",
-    auto_sideline_confirm_required: false,
-    group_info: { "1": "center" },
-    bin_to_sideline: [],
-    bin_plotting: true,
-    exception_type: "extra_items",
-    pps_blocked: false,
-    error_popup_disabled: false,
-    user_loggedin: "default_user_name",
-    screen_version: "1",
-    docked: [],
-    seat_type: "front",
-    mode: "put",
-    is_idle: false,
-    uph_count: 0,
-    header_msge_list: [
-      {
-        level: "info",
-        code: "PtB.H.010",
-        details: [],
-        description: "Scan Excess Entity Quantity",
-      },
-    ],
-  };
+  // data.state_data = {
+  //   seat_name: "back_1",
+  //   notification_list: [
+  //     {
+  //       level: "info",
+  //       code: "PtB.I.006",
+  //       details: [],
+  //       description: "Entity scan successful.",
+  //     },
+  //   ],
+  //   current_bin_widget: true,
+  //   exception_allowed: [
+  //     {
+  //       event: "extra_items",
+  //       exception_id: "PtB004",
+  //       details: [],
+  //       exception_name: "Extra Items In Bin",
+  //     }
+  //   ],
+  //   roll_cage_flow: false,
+  //   bin_coordinate_plotting: true,
+  //   event: "extra_items_scan",
+  //   pps_profile: "default",
+  //   audit_sideline_popup: false,
+  //   pps_requested_status: "undefined",
+  //   screen_id:
+  //     "udp_put_front_damaged_exception" /*"put_back_scan_excess_item"*/,
+  //   ops_paused: false,
+  //   logout_allowed: false,
+  //   excess_items: [
+  //     {
+  //       product_info: [
+  //         [
+  //           {
+  //             product_sku: "a2",
+  //             display_data: [
+  //               { locale: "ja-JP", display_name: "製品SKU" },
+  //               { locale: "en-US", display_name: "Product SKU" },
+  //             ],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             display_data: [
+  //               { locale: "en-US", display_name: "product_local_image_url" },
+  //             ],
+  //             product_local_image_url: null,
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             display_data: [
+  //               { locale: "ja-JP", display_name: "製品バーコード" },
+  //               { locale: "en-US", display_name: "Product Barcodes" },
+  //             ],
+  //             product_barcodes: ["a2"],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             display_data: [
+  //               { locale: "ja-JP", display_name: "商品の寸法" },
+  //               { locale: "en-US", display_name: "Product Dimensions" },
+  //             ],
+  //             product_dimensions: [3, 1, 10],
+  //           },
+  //         ],
+  //       ],
+  //       serial: [],
+  //       type: "Item",
+  //       qty: 2,
+  //     },
+  //     {
+  //       product_info: [
+  //         [
+  //           {
+  //             product_sku: "a1",
+  //             display_data: [
+  //               { locale: "ja-JP", display_name: "製品SKU" },
+  //               { locale: "en-US", display_name: "Product SKU" },
+  //             ],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             display_data: [
+  //               { locale: "en-US", display_name: "product_local_image_url" },
+  //             ],
+  //             product_local_image_url: null,
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             display_data: [
+  //               { locale: "ja-JP", display_name: "製品バーコード" },
+  //               { locale: "en-US", display_name: "Product Barcodes" },
+  //             ],
+  //             product_barcodes: ["a1"],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             display_data: [
+  //               { locale: "ja-JP", display_name: "商品の寸法" },
+  //               { locale: "en-US", display_name: "Product Dimensions" },
+  //             ],
+  //             product_dimensions: [3, 1, 10],
+  //           },
+  //         ],
+  //       ],
+  //       serial: [],
+  //       type: "Item",
+  //       qty: 1,
+  //     },
+  //   ],
+  //   pps_requested_mode: "undefined",
+  //   operator_orientation: "0",
+  //   time_stamp: "2020-07-15T12:08:02Z",
+  //   api_version: "1",
+  //   auto_sideline_confirm_required: false,
+  //   group_info: { "1": "center" },
+  //   bin_to_sideline: [],
+  //   bin_plotting: true,
+  //   exception_type: "extra_items",
+  //   pps_blocked: false,
+  //   error_popup_disabled: false,
+  //   user_loggedin: "default_user_name",
+  //   screen_version: "1",
+  //   docked: [],
+  //   seat_type: "front",
+  //   mode: "put",
+  //   is_idle: false,
+  //   uph_count: 0,
+  //   header_msge_list: [
+  //     {
+  //       level: "info",
+  //       code: "PtB.H.010",
+  //       details: [],
+  //       description: "Scan Excess Entity Quantity",
+  //     },
+  //   ],
+  // };
   console.log(data);
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

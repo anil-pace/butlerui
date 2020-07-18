@@ -1649,7 +1649,7 @@ var PutFront = React.createClass({
               disabled={this.state.PutFrontDamagedExceptionFlag}
               text={_("Next")}
               module={appConstants.PUT_FRONT}
-              action={appConstants.EXCESS_ITEM_BIN}
+              action={appConstants.UDP_DAMAGED_QUANTITY_EXCEPTION}
               color={"orange"}
             />
           </div>

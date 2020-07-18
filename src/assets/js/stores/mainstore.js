@@ -43,7 +43,7 @@ var _seatData,
   popupVisible = false,
   _showSpinner = true,
   _goodQuantity = 0,
-  _goodQuantity_1 =0,
+  _goodQuantity_udp =0,
   _pickQuantity = 0,
   _damagedQuantity = 0,
   _putFrontExceptionScreen = "good",
@@ -4092,8 +4092,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   setGoodQuanity: function (data) {
     _goodQuantity = data;
-    _goodQuantity_1 = data;
-    console.log("========> good quantity is " + _goodQuantity_1);
+    _goodQuantity_udp = data;
   },
   setPickedQuantity: function (data) {
     _pickQuantity = data
@@ -5253,16 +5252,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData.screen_id ==
       appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
     ) {
-      if (_goodQuantity_1 == _seatData.put_quantity) {
+      if (_goodQuantity_udp == _seatData.put_quantity) {
         flag = type = true
       } else {
-          _goodQuantity_1 +
-        console.log("good " + _goodQuantity_1);
-        console.log("missing " + _missingQuantity);
-        console.log("damaged " + _damagedQuantity);
-        console.log("unscannable " + _unscannableQuantity);
         flag =
-          _goodQuantity_1 +
+          _goodQuantity_udp +
             _missingQuantity +
             _damagedQuantity +
             _unscannableQuantity !=

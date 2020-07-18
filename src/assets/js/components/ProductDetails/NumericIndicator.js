@@ -47,8 +47,8 @@ var NumericIndicator = React.createClass({
     CommonActions.generateNotification(data);
     return;
   },
-  callMe: function(){
-    this.updateStore();
+  updateStore: function(){
+    this.updatingStore();
   },
 
   changeValueIncrement: function (event) {
@@ -60,7 +60,7 @@ var NumericIndicator = React.createClass({
       this._updatedQtyGood++;
       this.setState({
         goodQuantity: this.state.goodQuantity + 1,
-      }, this.callMe);
+      }, this.updateStore);
     } else if (
       this.props.execType === appConstants.MISSING_QUANTITY ||
       this.props.execType === appConstants.PACK_MISSING ||
@@ -70,7 +70,7 @@ var NumericIndicator = React.createClass({
 
       this.setState({
         value: this._updatedQtyMissing,
-      }, this.callMe);
+      }, this.updateStore);
     } else if (
       this.props.execType === appConstants.UNSCANNABLE_QUANTITY ||
       this.props.execType === appConstants.BAD_BARCODE_PACK ||
@@ -80,7 +80,7 @@ var NumericIndicator = React.createClass({
 
       this.setState({
         value: this._updatedQtyUnscannble,
-      }, this.callMe);
+      }, this.updateStore);
     } else if (
       this.props.execType === appConstants.DAMAGED_QUANTITY ||
       this.props.execType === appConstants.DAMAGED_PACK ||
@@ -90,12 +90,12 @@ var NumericIndicator = React.createClass({
 
       this.setState({
         value: this._updatedQtyDamaged,
-      }, this.callMe);
+      }, this.updateStore);
     } else {
       this._qty++;
       this.setState({
         value: this._qty,
-      }, this.callMe);
+      }, this.updateStore);
     }
   },
 
@@ -108,7 +108,7 @@ var NumericIndicator = React.createClass({
       this._updatedQtyGood--;
       this.setState({
         goodQuantity: this.state.goodQuantity - 1,
-      }, this.callMe);
+      }, this.updateStore);
     } else if (
       this.props.execType === appConstants.MISSING_QUANTITY ||
       this.props.execType === appConstants.PACK_MISSING ||
@@ -118,7 +118,7 @@ var NumericIndicator = React.createClass({
 
       this.setState({
         value: this._updatedQtyMissing,
-      }, this.callMe);
+      }, this.updateStore);
     } else if (
       this.props.execType === appConstants.UNSCANNABLE_QUANTITY ||
       this.props.execType === appConstants.BAD_BARCODE_PACK ||
@@ -128,7 +128,7 @@ var NumericIndicator = React.createClass({
 
       this.setState({
         value: this._updatedQtyUnscannble,
-      }, this.callMe);
+      }, this.updateStore);
     } else if (
       this.props.execType === appConstants.DAMAGED_QUANTITY ||
       this.props.execType === appConstants.DAMAGED_PACK ||
@@ -138,16 +138,16 @@ var NumericIndicator = React.createClass({
 
       this.setState({
         value: this._updatedQtyDamaged,
-      }, this.callMe);
+      }, this.updateStore);
     } else {
       this._qty--;
       this.setState({
         value: this._qty,
-      }, this.callMe);
+      }, this.updateStore);
     }
   },
 
-  updateStore: function (event, qty) {
+  updatingStore: function (event, qty) {
     // var total_entered =
     //   this._updatedQtyGood +
     //   this._updatedQtyMissing +
@@ -161,7 +161,6 @@ var NumericIndicator = React.createClass({
         case appConstants.GOOD_SUB_PACK:
           this._updatedQtyGood = this.state.goodQuantity;
           CommonActions.updateGoodQuantity(parseInt(this._updatedQtyGood));
-          console.log("----update store "+ this._updatedQtyGood);
           break;
         case appConstants.MISSING_QUANTITY:
         case appConstants.PACK_MISSING:
@@ -410,8 +409,7 @@ var NumericIndicator = React.createClass({
     }, 0);
   },
   render: function (data) {
-    var x = this.state.goodQuantity;
-    console.log("this.state.goodQuantity" + this.state.goodQuantity);
+    //var x = this.state.goodQuantity;
     var inputType = this.props.inputType ? this.props.inputType : "text";
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
       this.checkKqAllowed(appConstants.GOOD_QUANTITY);
@@ -435,7 +433,7 @@ var NumericIndicator = React.createClass({
               disabled
               id="keyboard"
               //value={this.state.value}
-              value={x}
+              value={this.state.goodQuantity}
               type={inputType}
               name="quantity"
               className={"gor-quantity-text gor_" + this.props.execType}

@@ -832,7 +832,8 @@ var PutFront = React.createClass({
               </div>
               <div className="finish-damaged-barcode padding">
                 <Button1
-                  disabled={buttonActivateFlag}
+                  //disabled={buttonActivateFlag}
+                  disabled = {false}
                   text={_("Validate and Confirm")}
                   color={"orange"}
                   module={appConstants.PUT_FRONT}

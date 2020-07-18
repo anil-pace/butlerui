@@ -5160,6 +5160,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return true
   },
+  _getUdpDamagedExceptionFlag: function () {
+    if (
+      _seatData.damaged_items != undefined &&
+      Object.keys(_seatData.damaged_items).length > 0
+    ) {
+      return false
+    }
+    return true
+  },
   _getWareHouseExceptionFlag: function () {
     if (_seatData.exception_type === "warehousefull_exception") {
       return false
@@ -6153,7 +6162,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           data["PutFrontExceptionData"] = this.getExceptionData()
           data["PutFrontNotification"] = this.getNotificationData()
           data["PutFrontExcessItems"] = this._getUdpDamagedItemsData()
-          data["PutFrontExceptionFlag"] = this._getExcessExceptionFlag()
+          data["PutFrontDamagedExceptionFlag"] = this._getUdpDamagedExceptionFlag()
           break
     
       case appConstants.PUT_FRONT_WAITING_UNDOCK:

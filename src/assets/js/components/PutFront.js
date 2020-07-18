@@ -1630,7 +1630,16 @@ var PutFront = React.createClass({
             <div className="grid-container">
               <Modal />
               {this._subComponent}
-              <div className="main-container">
+              <div style={{flexDirection:"column"}}  className="main-container">
+                <SplitPPS
+                  orientation={this.state.groupOrientation}
+                  displayBinId={true}
+                  groupInfo={this.state.udpBinMapDetails}
+                  undockAwaited={null}
+                  ruleset={"withBorder"}
+                  docked={this.state.selectedTotes}
+                  customizeClassSplitPPS={adjustStyleOnSplitPPS}
+                />
                 <Spinner />
               </div>
             </div>

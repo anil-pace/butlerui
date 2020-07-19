@@ -173,8 +173,8 @@ var PutFront = React.createClass({
                     docked={this.state.DockedGroup}
                   />
                 ) : (
-                  <Spinner />
-                )}
+                    <Spinner />
+                  )}
               </div>
             </div>
           );
@@ -240,8 +240,8 @@ var PutFront = React.createClass({
                       customizeClassSplitPPS={adjustStyleOnSplitPPS}
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   <div
                     style={
                       this.state.MobileFlag
@@ -272,13 +272,13 @@ var PutFront = React.createClass({
               <Modal />
               {this.state.binPlotting === true
                 ? this.state.SplitScreenFlag && (
-                    <BinMap
-                      orientation={this.state.groupOrientation}
-                      mapDetails={this.state.BinMapDetails}
-                      selectedGroup={this.state.BinMapGroupDetails}
-                      screenClass="putFrontFlow"
-                    />
-                  )
+                  <BinMap
+                    orientation={this.state.groupOrientation}
+                    mapDetails={this.state.BinMapDetails}
+                    selectedGroup={this.state.BinMapGroupDetails}
+                    screenClass="putFrontFlow"
+                  />
+                )
                 : ""}
               {binComponent}
             </div>
@@ -715,16 +715,16 @@ var PutFront = React.createClass({
           kqHeadMessage =
             remainingEntitiesToBeScanned !== 0
               ? (function () {
-                  if (navMessagesJson != undefined) {
-                    message_args.unshift(navMessagesJson[msgCode]);
-                    if (message_args[0] == undefined) {
-                      return server_message;
-                    } else {
-                      var header_message = _.apply(null, message_args);
-                      return header_message;
-                    }
+                if (navMessagesJson != undefined) {
+                  message_args.unshift(navMessagesJson[msgCode]);
+                  if (message_args[0] == undefined) {
+                    return server_message;
+                  } else {
+                    var header_message = _.apply(null, message_args);
+                    return header_message;
                   }
-                })()
+                }
+              })()
               : _("No more entities to be scanned");
         }
         this._component = (
@@ -785,7 +785,7 @@ var PutFront = React.createClass({
         var UnscannableNI;
         if (!this.state.UnmarkedContainer) {
           UnscannableNI = (<div className="gor-NI-wrapper">
-            <hr style={{"margin":"10px 0 10px 0"}}/>
+            <hr style={{ "margin": "10px 0 10px 0" }} />
             <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
             <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
           </div>);
@@ -803,20 +803,20 @@ var PutFront = React.createClass({
 
               <div className="main-container exception1 displayBlocked">
 
-              <div className="gor-NI-wrapper">
-                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                <div className="gor-NI-wrapper">
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">{_("Expected Quantity")}</div>
                   <NumericIndicator execType={appConstants.EXPECTED_QUANTITY} />
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType={appConstants.MISSING_QUANTITY} />
                 </div>
@@ -824,16 +824,16 @@ var PutFront = React.createClass({
                 {UnscannableNI}
 
                 <div className="gor-NI-wrapper">
-                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType={appConstants.DAMAGED_QUANTITY} />
-                  <hr style={{"margin":"10px 0 10px 0"}}/>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                 </div>
               </div>
               <div className="finish-damaged-barcode padding">
                 <Button1
                   //disabled={buttonActivateFlag}
-                  disabled = {false}
+                  disabled={false}
                   text={_("Validate and Confirm")}
                   color={"orange"}
                   module={appConstants.PUT_FRONT}
@@ -1182,11 +1182,11 @@ var PutFront = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className="itemSearchfooter">
@@ -1382,20 +1382,20 @@ var PutFront = React.createClass({
         this._modalContent = "";
         this._component = "";
         this._subComponent = "";
-        if( this.state.PutFrontCancelScan === false){
+        if (this.state.PutFrontCancelScan === false) {
           cancelBtn = (<div></div>)
         }
-        else{
+        else {
           cancelBtn = (<div className="cancel-scan">
-                  <Button1
-                    disabled={false}
-                    text={_("Cancel Scan")}
-                    module={appConstants.PUT_FRONT}
-                    action={appConstants.CANCEL_SCAN_UDP}
-                    barcode={this.state.PutFrontItemUid}
-                    color={"black"}
-                  />
-                </div>)
+            <Button1
+              disabled={false}
+              text={_("Cancel Scan")}
+              module={appConstants.PUT_FRONT}
+              action={appConstants.CANCEL_SCAN_UDP}
+              barcode={this.state.PutFrontItemUid}
+              color={"black"}
+            />
+          </div>)
         }
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
@@ -1580,8 +1580,8 @@ var PutFront = React.createClass({
                           itemUid={this.state.itemUid}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   </span>
                   <div
@@ -1631,7 +1631,7 @@ var PutFront = React.createClass({
             <div className="grid-container">
               <Modal />
               {this._subComponent}
-              <div style={{flexDirection:"column"}}  className="main-container">
+              <div style={{ flexDirection: "column" }} className="main-container">
                 <SplitPPS
                   orientation={this.state.groupOrientation}
                   displayBinId={true}
@@ -1641,7 +1641,7 @@ var PutFront = React.createClass({
                   docked={this.state.selectedTotes}
                   customizeClassSplitPPS={adjustStyleOnSplitPPS}
                 />
-                <Spinner />
+                <Spinner needZoomout={true} />
               </div>
             </div>
           );
@@ -1691,7 +1691,7 @@ var PutFront = React.createClass({
             </div>
           </div>
         )
-         break;
+        break;
 
       default:
         return true;

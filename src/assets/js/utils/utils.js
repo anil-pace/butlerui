@@ -182,7 +182,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           }
           uomDisplayUnit !== ""
             ? (keyValue =
-                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
+              keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
             : (keyValue = keyValue);
         } else if (key != "display_data" && key != "product_local_image_url") {
           keyValue = value[0][key] + " ";
@@ -424,7 +424,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       .done(function (response) {
         CommonActions.updateSeatData(response.data, type, status, method);
       })
-      .fail(function (jqXhr) {});
+      .fail(function (jqXhr) { });
   },
   ///itemsearch
   getOrphanItemData: function (data, seat_name) {
@@ -583,148 +583,63 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 });
 
 var putSeatData = function (data) {
+  data.state_data = { "seat_name": "front_2", "notification_list": [{ "level": "info", "code": "UdpF.I.001", "details": ["Tote"], "description": "Tote scan successful" }], "current_bin_widget": true, "is_ud_without_staging": false, "exception_allowed": [], "roll_cage_flow": false, "bin_coordinate_plotting": true, "event": "initialise", "pps_profile": "default", "audit_sideline_popup": false, "pps_requested_status": "undefined", "screen_id": "ud_put_front_waiting_for_rack", "ops_paused": false, "logout_allowed": true, "pps_requested_mode": "undefined", "operator_orientation": "0", "time_stamp": "2020-07-18T08:07:33Z", "api_version": "1", "mode": "put", "auto_sideline_confirm_required": false, "group_info": { "1": "center" }, "scan_allowed": true, "bin_to_sideline": [], "bin_plotting": true, "pps_blocked": false, "structure": [2, 5], "error_popup_disabled": false, "user_loggedin": "default_user_name", "screen_version": "1", "previous_put_details": false, "msu_eta": 71, "docked": [], "seat_type": "front", "ppsbin_list": [{ "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "6", "orig_coordinate": [0, 200], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [2, 5], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [{ "service_request_id": ["ESR341"], "load_unit_id": ["1"], "product_sku": "a2", "load_unit_label": "Bin", "serial": [], "type": "Item", "quantity": 4 }], "ppsbin_id": "1", "orig_coordinate": [0, 0], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": true, "ppsbin_state": "staged", "ppsbin_count": "2", "coordinate": [1, 5], "group_id": "1", "totes_associated": "true" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "7", "orig_coordinate": [200, 200], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [2, 4], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "2", "orig_coordinate": [200, 0], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 4], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "8", "orig_coordinate": [400, 200], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [2, 3], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "3", "orig_coordinate": [400, 0], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 3], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "9", "orig_coordinate": [600, 200], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [2, 2], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "4", "orig_coordinate": [600, 0], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 2], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "10", "orig_coordinate": [800, 200], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [2, 1], "group_id": "1", "totes_associated": "false" }, { "breadth": "100", "direction": "center", "bin_info": [], "ppsbin_id": "5", "orig_coordinate": [800, 0], "back_drawing_start": "left", "height": "100", "front_drawing_start": "left", "length": "200", "selected_state": false, "ppsbin_state": "empty", "ppsbin_count": "0", "coordinate": [1, 1], "group_id": "1", "totes_associated": "false" }], "is_idle": false, "uph_count": 0, "header_msge_list": [{ "level": "info", "code": "UdpF.H.005", "details": [], "description": "Wait for MSU or Scan tote" }] }
   // data.state_data = {
-  //   seat_name: "back_1",
-  //   notification_list: [
-  //     {
-  //       level: "info",
-  //       code: "PtB.I.006",
-  //       details: [],
-  //       description: "Entity scan successful.",
-  //     },
-  //   ],
-  //   current_bin_widget: true,
-  //   exception_allowed: [
-  //     {
-  //       event: "extra_items",
-  //       exception_id: "PtB004",
-  //       details: [],
-  //       exception_name: "Extra Items In Bin",
-  //     }
-  //   ],
-  //   roll_cage_flow: false,
-  //   bin_coordinate_plotting: true,
-  //   event: "extra_items_scan",
-  //   pps_profile: "default",
-  //   audit_sideline_popup: false,
-  //   pps_requested_status: "undefined",
-  //   screen_id:
-  //     "udp_put_front_damaged_exception" /*"put_back_scan_excess_item"*/,
-  //   ops_paused: false,
-  //   logout_allowed: false,
-  //   excess_items: [
-  //     {
-  //       product_info: [
-  //         [
-  //           {
-  //             product_sku: "a2",
-  //             display_data: [
-  //               { locale: "ja-JP", display_name: "製品SKU" },
-  //               { locale: "en-US", display_name: "Product SKU" },
-  //             ],
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             display_data: [
-  //               { locale: "en-US", display_name: "product_local_image_url" },
-  //             ],
-  //             product_local_image_url: null,
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             display_data: [
-  //               { locale: "ja-JP", display_name: "製品バーコード" },
-  //               { locale: "en-US", display_name: "Product Barcodes" },
-  //             ],
-  //             product_barcodes: ["a2"],
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             display_data: [
-  //               { locale: "ja-JP", display_name: "商品の寸法" },
-  //               { locale: "en-US", display_name: "Product Dimensions" },
-  //             ],
-  //             product_dimensions: [3, 1, 10],
-  //           },
-  //         ],
-  //       ],
-  //       serial: [],
-  //       type: "Item",
-  //       qty: 2,
-  //     },
-  //     {
-  //       product_info: [
-  //         [
-  //           {
-  //             product_sku: "a1",
-  //             display_data: [
-  //               { locale: "ja-JP", display_name: "製品SKU" },
-  //               { locale: "en-US", display_name: "Product SKU" },
-  //             ],
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             display_data: [
-  //               { locale: "en-US", display_name: "product_local_image_url" },
-  //             ],
-  //             product_local_image_url: null,
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             display_data: [
-  //               { locale: "ja-JP", display_name: "製品バーコード" },
-  //               { locale: "en-US", display_name: "Product Barcodes" },
-  //             ],
-  //             product_barcodes: ["a1"],
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             display_data: [
-  //               { locale: "ja-JP", display_name: "商品の寸法" },
-  //               { locale: "en-US", display_name: "Product Dimensions" },
-  //             ],
-  //             product_dimensions: [3, 1, 10],
-  //           },
-  //         ],
-  //       ],
-  //       serial: [],
-  //       type: "Item",
-  //       qty: 1,
-  //     },
-  //   ],
-  //   pps_requested_mode: "undefined",
-  //   operator_orientation: "0",
-  //   time_stamp: "2020-07-15T12:08:02Z",
-  //   api_version: "1",
-  //   auto_sideline_confirm_required: false,
-  //   group_info: { "1": "center" },
-  //   bin_to_sideline: [],
-  //   bin_plotting: true,
-  //   exception_type: "extra_items",
-  //   pps_blocked: false,
-  //   error_popup_disabled: false,
-  //   user_loggedin: "default_user_name",
-  //   screen_version: "1",
-  //   docked: [],
-  //   seat_type: "front",
-  //   mode: "put",
-  //   is_idle: false,
-  //   uph_count: 0,
-  //   header_msge_list: [
-  //     {
-  //       level: "info",
-  //       code: "PtB.H.010",
-  //       details: [],
-  //       description: "Scan Excess Entity Quantity",
-  //     },
-  //   ],
-  // };
+  //   "seat_name": "front_3",
+  //   "unmarked_container": false,
+  //   "notification_list": [],
+  //   "current_bin_widget": true,
+  //   "good_quantity": 3,
+  //   "exception_allowed": [{
+  //   "event": "unscannable_or_missing_or_damaged",
+  //   "exception_id": "PtF001",
+  //   "details": [],
+  //   "exception_name": "Issue with Entity"
+  //   }, {
+  //   "event": "space_unavailable",
+  //   "exception_id": "PtF002",
+  //   "details": [],
+  //   "exception_name": "Space Unavailable To Put"
+  //   }],
+  //   "roll_cage_flow": false,
+  //   "bin_coordinate_plotting": true,
+  //   "event": "unscannable_or_missing_or_damaged",
+  //   "pps_profile": "default",
+  //   "audit_sideline_popup": false,
+  //   "pps_requested_status": "undefined",
+  //   "screen_id": "put_front_unscannable_or_missing_or_damaged",
+  //   "ops_paused": false,
+  //   "logout_allowed": false,
+  //   "pps_requested_mode": "undefined",
+  //   "operator_orientation": "0",
+  //   "time_stamp": "2020-07-12T20:23:29Z",
+  //   "put_quantity": 5,
+  //   "api_version": "1",
+  //   "auto_sideline_confirm_required": false,
+  //   "group_info": {
+  //   "1": "center"
+  //   },
+  //   "scan_allowed": false,
+  //   "bin_to_sideline": [],
+  //   "bin_plotting": true,
+  //   "exception_type": "unscannable_or_missing_or_damaged",
+  //   "pps_blocked": false,
+  //   "error_popup_disabled": false,
+  //   "user_loggedin": "default_user_name",
+  //   "screen_version": "1",
+  //   "docked": [],
+  //   "seat_type": "front",
+  //   "mode": "put",
+  //   "is_idle": false,
+  //   "uph_count": 0,
+  //   "header_msge_list": [{
+  //   "level": "info",
+  //   "code": "PtF.H.005",
+  //   "details": [],
+  //   "description": "Enter Quantity"
+  //   }]
+  //   }
+
   console.log(data);
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:

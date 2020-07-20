@@ -5,7 +5,9 @@ var CustomisedStore = require("../../stores/customisedStore")
 var ProductInfo = React.createClass({
   customizedJSX: false,
   validateCustomizedJSX: function (CustomisedStore) {
-    const isValid = CustomisedStore && React.isValidElement(<CustomisedStore />)
+    const isValid =
+      typeof CustomisedStore === "function" &&
+      React.isValidElement(<CustomisedStore />)
     if (isValid && CustomisedStore) {
       return { customJSX: true, CustomisedStore: CustomisedStore }
     } else {

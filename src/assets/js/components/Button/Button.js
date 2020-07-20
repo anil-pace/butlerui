@@ -280,6 +280,11 @@ var Button1 = React.createClass({
             ActionCreators.postDataToInterface(data)
             closeModalBox()
             break
+          case appConstants.UDP_DAMAGED_QUANTITY_EXCEPTION:
+            data["event_name"] = "udp_damaged_exception"
+            data["event_data"]["action"] = "confirm_button_press"
+            data["event_data"]["event"] = mainstore.getExceptionType()
+            ActionCreators.postDataToInterface(data)
           default:
             return true
         }

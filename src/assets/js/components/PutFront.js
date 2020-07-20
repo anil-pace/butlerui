@@ -173,8 +173,8 @@ var PutFront = React.createClass({
                     docked={this.state.DockedGroup}
                   />
                 ) : (
-                  <Spinner />
-                )}
+                    <Spinner />
+                  )}
               </div>
             </div>
           );
@@ -240,8 +240,8 @@ var PutFront = React.createClass({
                       customizeClassSplitPPS={adjustStyleOnSplitPPS}
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   <div
                     style={
                       this.state.MobileFlag
@@ -272,13 +272,13 @@ var PutFront = React.createClass({
               <Modal />
               {this.state.binPlotting === true
                 ? this.state.SplitScreenFlag && (
-                    <BinMap
-                      orientation={this.state.groupOrientation}
-                      mapDetails={this.state.BinMapDetails}
-                      selectedGroup={this.state.BinMapGroupDetails}
-                      screenClass="putFrontFlow"
-                    />
-                  )
+                  <BinMap
+                    orientation={this.state.groupOrientation}
+                    mapDetails={this.state.BinMapDetails}
+                    selectedGroup={this.state.BinMapGroupDetails}
+                    screenClass="putFrontFlow"
+                  />
+                )
                 : ""}
               {binComponent}
             </div>
@@ -715,16 +715,16 @@ var PutFront = React.createClass({
           kqHeadMessage =
             remainingEntitiesToBeScanned !== 0
               ? (function () {
-                  if (navMessagesJson != undefined) {
-                    message_args.unshift(navMessagesJson[msgCode]);
-                    if (message_args[0] == undefined) {
-                      return server_message;
-                    } else {
-                      var header_message = _.apply(null, message_args);
-                      return header_message;
-                    }
+                if (navMessagesJson != undefined) {
+                  message_args.unshift(navMessagesJson[msgCode]);
+                  if (message_args[0] == undefined) {
+                    return server_message;
+                  } else {
+                    var header_message = _.apply(null, message_args);
+                    return header_message;
                   }
-                })()
+                }
+              })()
               : _("No more entities to be scanned");
         }
         this._component = (
@@ -784,17 +784,14 @@ var PutFront = React.createClass({
         var buttonActivateFlag = mainstore.getExeptionQuanity();
         var UnscannableNI;
         if (!this.state.UnmarkedContainer) {
-          UnscannableNI = (
-            <div className="gor-NI-wrapper">
-              <hr />
-              <div className="exception-qty-title">
-                {_("Unscannable Quantity")}
-              </div>
-              <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
-            </div>
-          );
-        } else {
-          UnscannableNI = <div></div>;
+          UnscannableNI = (<div className="gor-NI-wrapper">
+            <hr style={{ "margin": "10px 0 10px 0" }} />
+            <div className="exception-qty-title">{_("Unscannable Quantity")}</div>
+            <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
+          </div>);
+        }
+        else {
+          UnscannableNI = (<div></div>);
         }
         this._navigation = "";
         this._component = (
@@ -805,36 +802,38 @@ var PutFront = React.createClass({
               <ExceptionHeader data={this.state.PutFrontServerNavData} />
 
               <div className="main-container exception1 displayBlocked">
+
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Good Quantity")}
-                  </div>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
+                  <div className="exception-qty-title">{_("Expected Quantity")}</div>
+                  <NumericIndicator execType={appConstants.EXPECTED_QUANTITY} />
+                </div>
+
+                <div className="gor-NI-wrapper">
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
                   <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Missing Quantity")}
-                  </div>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
+                  <div className="exception-qty-title">{_("Missing Quantity")}</div>
                   <NumericIndicator execType={appConstants.MISSING_QUANTITY} />
                 </div>
 
                 {UnscannableNI}
 
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Damaged Quantity")}
-                  </div>
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
+                  <div className="exception-qty-title">{_("Damaged Quantity")}</div>
                   <NumericIndicator execType={appConstants.DAMAGED_QUANTITY} />
-                  <hr />
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                 </div>
               </div>
               <div className="finish-damaged-barcode padding">
                 <Button1
-                  disabled={buttonActivateFlag}
+                  //disabled={buttonActivateFlag}
+                  disabled={false}
                   text={_("Validate and Confirm")}
                   color={"orange"}
                   module={appConstants.PUT_FRONT}
@@ -1183,11 +1182,11 @@ var PutFront = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className="itemSearchfooter">
@@ -1383,20 +1382,20 @@ var PutFront = React.createClass({
         this._modalContent = "";
         this._component = "";
         this._subComponent = "";
-        if( this.state.PutFrontCancelScan === false){
+        if (this.state.PutFrontCancelScan === false) {
           cancelBtn = (<div></div>)
         }
-        else{
+        else {
           cancelBtn = (<div className="cancel-scan">
-                  <Button1
-                    disabled={false}
-                    text={_("Cancel Scan")}
-                    module={appConstants.PUT_FRONT}
-                    action={appConstants.CANCEL_SCAN_UDP}
-                    barcode={this.state.PutFrontItemUid}
-                    color={"black"}
-                  />
-                </div>)
+            <Button1
+              disabled={false}
+              text={_("Cancel Scan")}
+              module={appConstants.PUT_FRONT}
+              action={appConstants.CANCEL_SCAN_UDP}
+              barcode={this.state.PutFrontItemUid}
+              color={"black"}
+            />
+          </div>)
         }
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
@@ -1427,10 +1426,13 @@ var PutFront = React.createClass({
                       </p>
                       <div className="missing-list">
                         <section className="list-head">
-                          <span className="list-head-cell">
+                          <span className="list-head-cell-col-4">
                             {_("Product SKU")}
                           </span>
-                          <span className="list-head-cell">{_("Barcode")}</span>
+                          <span className="list-head-cell-col-4">{_("Barcode")}</span>
+                          <span className="list-head-cell-col-4">
+                            {_("Quantity")}
+                          </span>
                         </section>
                         <div className="list-content">
                           {this.state.missingItemList.map(function (
@@ -1442,11 +1444,14 @@ var PutFront = React.createClass({
                                 key={tuple.product_sku + idx}
                                 className="tuple-row"
                               >
-                                <span className="tuple-row-cell">
+                                <span className="tuple-row-cell-col-4">
                                   {tuple.product_sku}
                                 </span>
-                                <span className="tuple-row-cell">
+                                <span className="tuple-row-cell-col-4">
                                   {tuple.product_barcode}
+                                </span>
+                                <span className="tuple-row-cell-col-4">
+                                  {tuple.quantity}
                                 </span>
                               </section>
                             );
@@ -1581,8 +1586,8 @@ var PutFront = React.createClass({
                           itemUid={this.state.itemUid}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   </span>
                   <div
@@ -1632,8 +1637,17 @@ var PutFront = React.createClass({
             <div className="grid-container">
               <Modal />
               {this._subComponent}
-              <div className="main-container">
-                <Spinner />
+              <div style={{ flexDirection: "column" }} className="main-container">
+                <SplitPPS
+                  orientation={this.state.groupOrientation}
+                  displayBinId={true}
+                  groupInfo={this.state.udpBinMapDetails}
+                  undockAwaited={null}
+                  ruleset={"withBorder"}
+                  docked={this.state.selectedTotes}
+                  customizeClassSplitPPS={adjustStyleOnSplitPPS}
+                />
+                <Spinner needZoomout={true} />
               </div>
             </div>
           );
@@ -1641,6 +1655,48 @@ var PutFront = React.createClass({
           this._component = this.getExceptionComponent();
         }
 
+        break;
+      case appConstants.UDP_PUT_FRONT_DAMAGED_EXCEPTION:
+        var _button
+        this._modalContent = ""
+        _button = (
+          <div className="staging-action">
+            <Button1
+              disabled={this.state.PutFrontDamagedExceptionFlag}
+              text={_("Next")}
+              module={appConstants.PUT_FRONT}
+              action={appConstants.UDP_DAMAGED_QUANTITY_EXCEPTION}
+              color={"orange"}
+            />
+          </div>
+        )
+        this._component = (
+          <div className="grid-container exception">
+            <Modal />
+            <Exception data={this.state.PutFrontExceptionData} />
+            <div className="exception-right">
+              <div className="main-container">
+                <div className="kq-exception">
+                  <div className="kq-header">{_("Scan damaged entities")}</div>
+                  <TabularData
+                    data={this.state.PutFrontExcessItems}
+                    className="limit-height width-extra "
+                  />
+                  {_button}
+                </div>
+              </div>
+            </div>
+            <div className="cancel-scan">
+              <Button1
+                disabled={false}
+                text={_("Cancel Exception")}
+                module={appConstants.PUT_FRONT}
+                action={appConstants.CANCEL_EXCEPTION_MODAL}
+                color={"black"}
+              />
+            </div>
+          </div>
+        )
         break;
 
       default:

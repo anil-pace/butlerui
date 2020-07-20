@@ -589,6 +589,18 @@ var Button1 = React.createClass({
               ActionCreators.logoutSession(true)
             }
             break
+          case appConstants.MSU_SLOT_EMPTY:
+            data["event_name"] = "pick_front"
+            data["event_data"]["action"] = "slot_empty";
+            ActionCreators.postDataToInterface(data)
+            break;
+
+          case appConstants.MSU_SLOT_FILLED:
+            data["event_name"] = "pick_front"
+            data["event_data"]["action"] = "slot_filled";
+            ActionCreators.postDataToInterface(data)
+            break;
+
           default:
             return true
         }
@@ -601,7 +613,7 @@ var Button1 = React.createClass({
             ActionCreators.postDataToInterface(data)
             break;
           case appConstants.CANCEL_REPRINT_BINS:
-              data["event_name"] = "cancel_reprint_request";
+              data["event_name"] = "cancel_scan_all";
               ActionCreators.postDataToInterface(data)
               break
           case appConstants.CANCEL_SCAN_TOTE:

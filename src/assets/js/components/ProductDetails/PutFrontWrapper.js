@@ -6,17 +6,17 @@ var ProductInfo = require("../PrdtDetails/ProductInfo")
 var appConstants = require("../../constants/appConstants")
 
 var PutWrapper = React.createClass({
-  getInitialState: function () {
+  getInitialState: function() {
     return {}
   },
-  componentWillMount: function () {
+  componentWillMount: function() {
     mainstore.addChangeListener(this.onChange)
   },
-  componentWillUnmount: function () {
+  componentWillUnmount: function() {
     mainstore.removeChangeListener(this.onChange)
   },
-  onChange: function () {},
-  displayLocale: function (data, uomConversionFactor = 1, uomDisplayUnit = "") {
+  onChange: function() {},
+  displayLocale: function(data, uomConversionFactor = 1, uomDisplayUnit = "") {
     product_info_locale = {}
     image_url = {}
     var language_locale = sessionStorage.getItem("localeData")
@@ -26,79 +26,66 @@ var PutWrapper = React.createClass({
     } else {
       locale = JSON.parse(language_locale)["data"]["locale"]
     }
-    data.map(function (value, index) {
+    data.map(function(value, index) {
       var keyValue = ""
       var imageKey
-      if (Array.isArray(value)) {
-        for (var key in value[0]) {
-          if (key === "product_dimensions") {
-            var dimension = value[0][key]
-            for (var i = 0; i < dimension.length; i++) {
-              if (i === 0) {
-                keyValue =
-                  Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
-              } else {
-                keyValue =
-                  keyValue +
-                  " X " +
-                  Math.round(dimension[i] * uomConversionFactor * 10) / 10
-              }
+if(Array.isArray(value)){
+      for (var key in value[0]) {
+        if (key === "product_dimensions") {
+          var dimension = value[0][key]
+          for (var i = 0; i < dimension.length; i++) {
+            if (i === 0) {
+              keyValue =
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
+            } else {
+              keyValue =
+                keyValue +
+                " X " +
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10
             }
-            uomDisplayUnit !== ""
-              ? (keyValue =
-                  keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
-              : (keyValue = keyValue)
-          } else if (
-            key != "display_data" &&
-            key != "product_local_image_url"
-          ) {
-            keyValue = value[0][key] + " "
-          } else if (
-            key != "display_data" &&
-            key == "product_local_image_url"
-          ) {
-            imageKey = value[0][key]
+          }
+          uomDisplayUnit !== ""
+            ? (keyValue =
+                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
+            : (keyValue = keyValue)
+        } else if (key != "display_data" && key != "product_local_image_url") {
+          keyValue = value[0][key] + " "
+        } else if (key != "display_data" && key == "product_local_image_url") {
+          imageKey = value[0][key]
+        }
+      }
+      value[0].display_data.map(function(data_locale, index1) {
+        if (data_locale.locale == locale) {
+          if (data_locale.display_name != "product_local_image_url") {
+            product_info_locale[data_locale.display_name] = keyValue
           }
         }
-        value[0].display_data.map(function (data_locale, index1) {
-          if (data_locale.locale == locale) {
-            if (data_locale.display_name != "product_local_image_url") {
-              product_info_locale[data_locale.display_name] = keyValue
-            }
-          }
-          if (data_locale.display_name === "SSCC Code") {
-            product_info_locale["QlcodeDigits"] =
-              value[0]["carrier_id"] && value[0]["carrier_id"].length > 0
-                ? value[0]["carrier_id"].substr(
-                    value[0]["carrier_id"].length - 4
-                  )
-                : ""
-          }
-          if (data_locale.display_name == "product_local_image_url") {
-            if (
-              imageKey === "outer_each" ||
-              imageKey === "inner_each" ||
-              imageKey === "outer_inner"
-            ) {
-              image_url[data_locale.display_name] =
-                "assets/images/" + imageKey + ".gif"
-            } else if (imageKey === "outer" || imageKey === "inner") {
-              image_url[data_locale.display_name] =
-                "assets/images/" + imageKey + ".png"
-            } else image_url[data_locale.display_name] = imageKey
-          }
-        })
-      }
+        if(data_locale.display_name  === "SSCC Code" ){
+          product_info_locale['QlcodeDigits'] = (value[0]['carrier_id'] && value[0]['carrier_id'].length >0) ? value[0]['carrier_id'].substr(value[0]['carrier_id'].length-4) : ''
+        }
+        if (data_locale.display_name == "product_local_image_url") {
+          if (
+            imageKey === "outer_each" ||
+            imageKey === "inner_each" ||
+            imageKey === "outer_inner"
+          ) {
+            image_url[data_locale.display_name] =
+              "assets/images/" + imageKey + ".gif"
+          } else if (imageKey === "outer" || imageKey === "inner") {
+            image_url[data_locale.display_name] =
+              "assets/images/" + imageKey + ".png"
+          } else image_url[data_locale.display_name] = imageKey
+        }
+      })
+    }
     })
   },
-  render: function (data) {
+  render: function(data) {
     var isUnitConversionAllowed = mainstore.isUnitConversionAllowed()
     var putContainerFlag = mainstore.getPutContainerFlag()
     var uomConversionFactor, uomDisplayUnit
-    let marginLeftpatch = this.props.marginLeftpatch
-      ? this.props.marginLeftpatch
-      : ""
-    let widthpatch = marginLeftpatch ? "305px" : ""
+    let marginLeftpatch = this.props.marginLeftpatch ? this.props.marginLeftpatch : ''
+    let widthpatch = marginLeftpatch ? "305px" : ''
     if (isUnitConversionAllowed) {
       uomConversionFactor = mainstore.getUOMConversionFactor()
       uomDisplayUnit = mainstore.getUOMDisplayUnit()
@@ -112,31 +99,28 @@ var PutWrapper = React.createClass({
     }
 
     return (
-      <div className="rightContainer" style={{ marginLeft: marginLeftpatch }}>
+      <div className="rightContainer" style={{marginLeft: marginLeftpatch}}>
         <div className="productDetailsContainer">
-          <ProductInfo
-            infoDetails={product_info_locale}
-            flag="codeDetails"
-            imageurl={image_url.product_local_image_url}
-            putContainerFlag={putContainerFlag}
-            widthpatch={widthpatch}
-            clientSpecificJSX={this.props.clientSpecificJSX}
-          />
-          {this.props.scanDetails ? (
-            <div
-              className="kqContainer"
-              style={{ width: "243px", marginRight: "1%", height: "272px" }}
-            >
-              <KQ
-                scanDetails={this.props.scanDetails}
-                itemUid={this.props.itemUid}
+              <ProductInfo
+                infoDetails={product_info_locale}
+                flag="codeDetails"
+                imageurl ={image_url.product_local_image_url}
+                putContainerFlag = {putContainerFlag}
+                widthpatch = {widthpatch}
               />
-            </div>
-          ) : null}
-        </div>
+        {this.props.scanDetails ? (
+          <div className="kqContainer" style = {{width: "243px", marginRight: "1%",
+            height: "272px"}}>
+            <KQ
+              scanDetails={this.props.scanDetails}
+              itemUid={this.props.itemUid}
+            />
+          </div>
+        ) : null}
+      </div>
       </div>
     )
-  },
+  }
 })
 
 module.exports = PutWrapper

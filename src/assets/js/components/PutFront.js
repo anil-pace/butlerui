@@ -1,40 +1,40 @@
-var React = require("react")
-var PutFrontStore = require("../stores/PutFrontStore")
-var Header = require("./Header")
-var Navigation = require("./Navigation/Navigation.react")
-var Spinner = require("./Spinner/LoaderButler")
-var Notification = require("./Notification/Notification")
-var Bins = require("./Bins/Bins.react")
-var BinsFlex = require("./Bins/BinsFlexArrange.react")
-var NumericIndicator = require("./ProductDetails/NumericIndicator")
-var Button1 = require("./Button/Button")
-var Wrapper = require("./ProductDetails/PutFrontWrapper")
-var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll")
-var appConstants = require("../constants/appConstants")
-var allresourceConstants = require("../constants/resourceConstants")
-var Rack = require("./Rack/MsuRack.js")
-var Modal = require("./Modal/Modal")
-var ReactModal = require("./Modal/ReactModal")
-var mainstore = require("../stores/mainstore")
-var Exception = require("./Exception/Exception")
-var ExceptionHeader = require("./ExceptionHeader")
-var KQ = require("./ProductDetails/KQ")
-var KQExceptionMissing = require("./ProductDetails/KQExceptionMissing")
-var KQExceptionDamaged = require("./ProductDetails/KQExceptionDamaged")
-var TabularData = require("./TabularData")
-var BinMap = require("./BinMap")
-var SplitPPS = require("./SplitPPS")
-var utils = require("../utils/utils.js")
-var PreviousDetails = require("./PreviousDetails")
-var ProductDetUDP = require("./ProductDetails/ProductDetUDP")
-var ActionCreators = require("../actions/CommonActions")
-var PrdtDetails = require("./PrdtDetails/ProductDetails.js")
-var CurrentBin = require("./CurrentBin")
-var TextEditor = require("./ProductDetails/textEditor")
-var ItemTable = require("./itemTable")
-var CheckList = require("./CheckList")
-var CurrentActiveBin = require("./CurrentActiveBin")
-var PackingDetails = require("./PrdtDetails/PackingDetails")
+var React = require("react");
+var PutFrontStore = require("../stores/PutFrontStore");
+var Header = require("./Header");
+var Navigation = require("./Navigation/Navigation.react");
+var Spinner = require("./Spinner/LoaderButler");
+var Notification = require("./Notification/Notification");
+var Bins = require("./Bins/Bins.react");
+var BinsFlex = require("./Bins/BinsFlexArrange.react");
+var NumericIndicator = require("./ProductDetails/NumericIndicator");
+var Button1 = require("./Button/Button");
+var Wrapper = require("./ProductDetails/PutFrontWrapper");
+var WrapperSplitRoll = require("./ProductDetails/WrapperSplitRoll");
+var appConstants = require("../constants/appConstants");
+var allresourceConstants = require("../constants/resourceConstants");
+var Rack = require("./Rack/MsuRack.js");
+var Modal = require("./Modal/Modal");
+var ReactModal = require("./Modal/ReactModal");
+var mainstore = require("../stores/mainstore");
+var Exception = require("./Exception/Exception");
+var ExceptionHeader = require("./ExceptionHeader");
+var KQ = require("./ProductDetails/KQ");
+var KQExceptionMissing = require("./ProductDetails/KQExceptionMissing");
+var KQExceptionDamaged = require("./ProductDetails/KQExceptionDamaged");
+var TabularData = require("./TabularData");
+var BinMap = require("./BinMap");
+var SplitPPS = require("./SplitPPS");
+var utils = require("../utils/utils.js");
+var PreviousDetails = require("./PreviousDetails");
+var ProductDetUDP = require("./ProductDetails/ProductDetUDP");
+var ActionCreators = require("../actions/CommonActions");
+var PrdtDetails = require("./PrdtDetails/ProductDetails.js");
+var CurrentBin = require("./CurrentBin");
+var TextEditor = require("./ProductDetails/textEditor");
+var ItemTable = require("./itemTable");
+var CheckList = require("./CheckList");
+var CurrentActiveBin = require("./CurrentActiveBin");
+var PackingDetails = require("./PrdtDetails/PackingDetails");
 
 var PutFront = React.createClass({
   _notification: "",
@@ -42,13 +42,13 @@ var PutFront = React.createClass({
   _navigation: "",
   _modalContent: "",
   getInitialState: function () {
-    return this.getStateData()
+    return this.getStateData();
   },
   componentWillReceiveProps: function () {
-    this.setState(this.getStateData())
+    this.setState(this.getStateData());
   },
   getStateData: function () {
-    var screenData = mainstore.getScreenData()
+    var screenData = mainstore.getScreenData();
     var splitPPSData = {
       BinMapDetails: mainstore._getBinMapDetails(),
       groupOrientation: mainstore._getBinMapOrientation(),
@@ -76,18 +76,18 @@ var PutFront = React.createClass({
       selectedPPSBin: mainstore._getSelectedPpsBin(),
       PutFrontItemUid: mainstore.getItemUid(),
       PutFrontIsCrossDockEnabled: mainstore.IsCrossDockEnabled(),
-    }
+    };
 
-    return Object.assign({}, screenData, splitPPSData)
+    return Object.assign({}, screenData, splitPPSData);
   },
   componentWillMount: function () {
-    mainstore.addChangeListener(this.onChange)
+    mainstore.addChangeListener(this.onChange);
   },
   componentWillUnmount: function () {
-    mainstore.removeChangeListener(this.onChange)
+    mainstore.removeChangeListener(this.onChange);
   },
   onChange: function () {
-    this.setState(this.getStateData())
+    this.setState(this.getStateData());
   },
   getNotificationComponent: function () {
     if (this.state.PutFrontNotification != undefined) {
@@ -96,38 +96,38 @@ var PutFront = React.createClass({
           notification={this.state.PutFrontNotification}
           navMessagesJson={this.props.navMessagesJson}
         />
-      )
+      );
     } else {
       if ($(".modal.notification-error").is(":visible")) {
         setTimeout(function () {
           $(".modal.notification-error").data(
             "bs.modal"
-          ).options.backdrop = true
-          $(".modal-backdrop").remove()
-          $(".modal.notification-error").modal("hide")
-          $(".modal").removeClass("notification-error")
-        }, 0)
+          ).options.backdrop = true;
+          $(".modal-backdrop").remove();
+          $(".modal.notification-error").modal("hide");
+          $(".modal").removeClass("notification-error");
+        }, 0);
 
-        return null
+        return null;
       } else if ($(".modal.in").is(":visible")) {
         setTimeout(function () {
           if ($(".modal.in").find("div").hasClass("modal-footer")) {
             //check when errorcode is true and modal has buttons
-            $(".modal.in").data("bs.modal").options.backdrop = "static"
+            $(".modal.in").data("bs.modal").options.backdrop = "static";
           } else {
             //check when errorcode is true and modal has NO buttons
-            $(".modal.in").data("bs.modal").options.backdrop = true
+            $(".modal.in").data("bs.modal").options.backdrop = true;
           }
-        }, 0)
-        return null
+        }, 0);
+        return null;
       }
-      this._notification = ""
+      this._notification = "";
     }
   },
 
   getExceptionComponent: function () {
-    var _rightComponent = ""
-    this._navigation = ""
+    var _rightComponent = "";
+    this._navigation = "";
     return (
       <div className="grid-container exception">
         <Modal />
@@ -143,10 +143,10 @@ var PutFront = React.createClass({
           />
         </div>
       </div>
-    )
+    );
   },
   callAPItoGetData: function (data) {
-    ActionCreators.getOrphanItemData(data)
+    ActionCreators.getOrphanItemData(data);
   },
 
   getScreenComponent: function (screen_id) {
@@ -160,7 +160,7 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               showSpinner={this.state.MobileFlag}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -177,36 +177,14 @@ var PutFront = React.createClass({
                 )}
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
 
-        break
+        break;
       case appConstants.PUT_FRONT_SCAN:
         if (this.state.PutFrontExceptionStatus == false) {
-          // let clientSpecificJSX = arr1.push(
-          //   <div className="detailsOuterWrapper">
-          //     <div className="detailsInnerWrapper">
-          //       <span
-          //         className="detailsDispName"
-          //         style={{ fontWeight: 700, color: "blue" }}
-          //       >
-          //         {key + ":"}
-          //       </span>
-          //       <span
-          //         className="detailsDispVal"
-          //         style={{ fontWeight: 700, color: "red" }}
-          //       >
-          //         {value}
-          //       </span>
-          //     </div>
-          //   </div>
-          // )
-
-          let clientSpecificJSX
-          // let clientSpecificJSX = <div>Sudivya Thakkar</div>
-          // console.log("Sud", React.isValidElement(clientSpecificJSX))
           if (
             this.state.OrigBinUse ||
             this.state.PutFrontBinCoordinatePlotting
@@ -225,10 +203,9 @@ var PutFront = React.createClass({
                 <Wrapper
                   productDetails={this.state.PutFrontProductDetails}
                   itemUid={this.state.PutFrontItemUid}
-                  clientSpecificJSX={clientSpecificJSX}
                 />
               </div>
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -239,10 +216,9 @@ var PutFront = React.createClass({
                 <Wrapper
                   productDetails={this.state.PutFrontProductDetails}
                   itemUid={this.state.PutFrontItemUid}
-                  clientSpecificJSX={clientSpecificJSX}
                 />
               </div>
-            )
+            );
           }
           if (
             this.state.BinPlotting !== undefined &&
@@ -277,12 +253,11 @@ var PutFront = React.createClass({
                       scanDetails={this.state.PutFrontScanDetails}
                       productDetails={this.state.PutFrontProductDetails}
                       itemUid={this.state.PutFrontItemUid}
-                      clientSpecificJSX={clientSpecificJSX}
                     />
                   </div>
                 </div>
               </div>
-            )
+            );
           }
           this._navigation = (
             <Navigation
@@ -291,7 +266,7 @@ var PutFront = React.createClass({
               showSpinner={this.state.MobileFlag}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -307,10 +282,10 @@ var PutFront = React.createClass({
                 : ""}
               {binComponent}
             </div>
-          )
+          );
         } else {
-          var _rightComponent = ""
-          this._navigation = ""
+          var _rightComponent = "";
+          this._navigation = "";
           this._component = (
             <div className="grid-container exception">
               <Modal />
@@ -329,9 +304,9 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         }
-        break
+        break;
       case appConstants.PUT_FRONT_PLACE_ITEMS_IN_RACK:
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
@@ -340,9 +315,9 @@ var PutFront = React.createClass({
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           //need to check this case, if we need flexible bins here?
-          let isHeavyItem = this.state.PutFrontHeavyItemsFlag
+          let isHeavyItem = this.state.PutFrontHeavyItemsFlag;
 
           this._component = (
             <div className="grid-container">
@@ -400,11 +375,11 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         if (this.state.PutFrontExceptionStatus == false) {
@@ -415,7 +390,7 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               subMessage={allresourceConstants.UNDOCK_PUSH}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -428,14 +403,14 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.PUT_FRONT_EXCEPTION_WAREHOUSE_FULL:
-        var selected_screen
+        var selected_screen;
 
         this._navigation = (
           <Navigation
@@ -443,7 +418,7 @@ var PutFront = React.createClass({
             serverNavData={this.state.PutFrontServerNavData}
             navMessagesJson={this.props.navMessagesJson}
           />
-        )
+        );
         if (!this.state.GetIRTScanStatus) {
           selected_screen = (
             <div>
@@ -462,7 +437,7 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
           selected_screen = (
             <div className="kq-exception">
@@ -470,7 +445,7 @@ var PutFront = React.createClass({
                 {_("Please put remaining entities in IRT bin and scan the bin")}
               </div>
             </div>
-          )
+          );
         }
         this._component = (
           <div className="grid-container">
@@ -485,8 +460,8 @@ var PutFront = React.createClass({
             )}
             {selected_screen}
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PUT_FRONT_PPTL_PRESS:
         if (this.state.PutFrontExceptionStatus == false) {
@@ -497,7 +472,7 @@ var PutFront = React.createClass({
                 screenId={this.state.PutFrontScreenId}
                 seatType={this.state.SeatType}
               />
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -506,7 +481,7 @@ var PutFront = React.createClass({
                   screenId={this.state.PutFrontScreenId}
                 />
               </div>
-            )
+            );
           }
           this._navigation = (
             <Navigation
@@ -514,7 +489,7 @@ var PutFront = React.createClass({
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -528,11 +503,11 @@ var PutFront = React.createClass({
               )}
               {binComponent}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.PUT_FRONT_BIN_WAREHOUSE_FULL:
       case appConstants.PUT_FRONT_WAREHOUSE_FULL_IRT_SCAN:
@@ -544,7 +519,7 @@ var PutFront = React.createClass({
                 screenId={this.state.PutFrontScreenId}
                 seatType={this.state.SeatType}
               />
-            )
+            );
           } else {
             binComponent = (
               <div className="main-container">
@@ -553,7 +528,7 @@ var PutFront = React.createClass({
                   screenId={this.state.PutFrontScreenId}
                 />
               </div>
-            )
+            );
           }
           this._navigation = (
             <Navigation
@@ -561,7 +536,7 @@ var PutFront = React.createClass({
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -575,11 +550,11 @@ var PutFront = React.createClass({
               )}
               {binComponent}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
       case appConstants.PUT_FRONT_PLACE_UNMARKED_ENTITY_IN_RACK:
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
@@ -588,7 +563,7 @@ var PutFront = React.createClass({
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           //need to check this case, if we need flexible bins here?
           this._component = (
             <div className="grid-container">
@@ -628,11 +603,11 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
       case appConstants.PUT_FRONT_SCAN_RACK_FOR_UNMARKED_ENTITY:
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
@@ -641,7 +616,7 @@ var PutFront = React.createClass({
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           //need to check this case, if we need flexible bins here?
           this._component = (
             <div className="grid-container">
@@ -688,27 +663,27 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
-        var data = this.state.PutFrontServerNavData
-        var server_message = data.description
-        var navMessagesJson = mainstore.getServerMessages()
-        var msgCode = data.code
-        var message_args = data.details.slice(0)
+        var data = this.state.PutFrontServerNavData;
+        var server_message = data.description;
+        var navMessagesJson = mainstore.getServerMessages();
+        var msgCode = data.code;
+        var message_args = data.details.slice(0);
         var _button,
           isUnmarked = this.state.isUnmarkedContainer,
           unmarkedContainer,
           confirmDisabled,
-          kqHeadMessage
+          kqHeadMessage;
         var remainingEntitiesToBeScanned = this.state.PutFrontServerNavData.details.slice(
           -1
-        )[0]
+        )[0];
         confirmDisabled =
-          this.state.PutFrontDamagedQuantity.current_qty > 0 ? false : true
+          this.state.PutFrontDamagedQuantity.current_qty > 0 ? false : true;
         _button = (
           <div className="staging-action">
             <Button1
@@ -719,15 +694,15 @@ var PutFront = React.createClass({
               color={"orange"}
             />
           </div>
-        )
+        );
         if (isUnmarked) {
           unmarkedContainer = (
             <KQExceptionDamaged
               scanDetailsDamaged={this.state.PutFrontDamagedQuantity}
               action={"DAMAGED"}
             />
-          )
-          kqHeadMessage = _("Damaged Quantity")
+          );
+          kqHeadMessage = _("Damaged Quantity");
         } else {
           unmarkedContainer = (
             <div>
@@ -736,21 +711,21 @@ var PutFront = React.createClass({
                 className="limit-height width-extra "
               />
             </div>
-          )
+          );
           kqHeadMessage =
             remainingEntitiesToBeScanned !== 0
               ? (function () {
                   if (navMessagesJson != undefined) {
-                    message_args.unshift(navMessagesJson[msgCode])
+                    message_args.unshift(navMessagesJson[msgCode]);
                     if (message_args[0] == undefined) {
-                      return server_message
+                      return server_message;
                     } else {
-                      var header_message = _.apply(null, message_args)
-                      return header_message
+                      var header_message = _.apply(null, message_args);
+                      return header_message;
                     }
                   }
                 })()
-              : _("No more entities to be scanned")
+              : _("No more entities to be scanned");
         }
         this._component = (
           <div className="grid-container exception">
@@ -775,8 +750,8 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PUT_FRONT_WRONG_UNDOCK:
         if (this.state.PutFrontExceptionStatus == false) {
@@ -787,7 +762,7 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               subMessage={allresourceConstants.WRONG_UNDOCK}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -799,15 +774,15 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY:
-        var buttonActivateFlag = mainstore.getExeptionQuanity()
-        var UnscannableNI
+        var buttonActivateFlag = mainstore.getExeptionQuanity();
+        var UnscannableNI;
         if (!this.state.UnmarkedContainer) {
           UnscannableNI = (
             <div className="gor-NI-wrapper">
@@ -817,11 +792,11 @@ var PutFront = React.createClass({
               </div>
               <NumericIndicator execType={appConstants.UNSCANNABLE_QUANTITY} />
             </div>
-          )
+          );
         } else {
-          UnscannableNI = <div></div>
+          UnscannableNI = <div></div>;
         }
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div className="grid-container exception">
             <Modal />
@@ -877,10 +852,10 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN:
-        var selected_screen
+        var selected_screen;
         if (!this.state.GetIRTScanStatus) {
           selected_screen = (
             <div className="exception-right">
@@ -900,7 +875,7 @@ var PutFront = React.createClass({
                 </div>
               </div>
             </div>
-          )
+          );
         } else {
           selected_screen = (
             <div className="exception-right">
@@ -912,7 +887,7 @@ var PutFront = React.createClass({
                 </div>
               </div>
             </div>
-          )
+          );
         }
 
         this._component = (
@@ -930,8 +905,8 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:
         if (this.state.PutFrontExceptionScreen == "take_item_from_bin") {
@@ -967,7 +942,7 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else if (this.state.PutFrontExceptionScreen == "revised_quantity") {
           this._component = (
             <div className="grid-container exception">
@@ -1002,10 +977,10 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         }
 
-        break
+        break;
       case appConstants.PUT_FRONT_EXCESS_ITEMS_PPSBIN:
         this._component = (
           <div className="grid-container exception">
@@ -1030,8 +1005,8 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_TOTE:
         this._component = (
           <div className="grid-container exception">
@@ -1056,10 +1031,10 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.PUT_FRONT_EXCEPTION_EXCESS_ITEMS:
-        var _button
+        var _button;
         _button = (
           <div className="staging-action">
             <Button1
@@ -1070,7 +1045,7 @@ var PutFront = React.createClass({
               color={"orange"}
             />
           </div>
-        )
+        );
         this._component = (
           <div className="grid-container exception">
             <Modal />
@@ -1099,8 +1074,8 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
         this._navigation = (
@@ -1109,8 +1084,8 @@ var PutFront = React.createClass({
             serverNavData={this.state.PutFrontServerNavData}
             navMessagesJson={this.props.navMessagesJson}
           />
-        )
-        var _button
+        );
+        var _button;
         if (this.state.PutFrontScreenId == appConstants.SCANNER_MANAGEMENT) {
           _button = (
             <div className="staging-action">
@@ -1131,7 +1106,7 @@ var PutFront = React.createClass({
                 color={"orange"}
               />
             </div>
-          )
+          );
         } else {
           _button = (
             <div className="staging-action">
@@ -1144,7 +1119,7 @@ var PutFront = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
         }
         this._component = (
           <div className="grid-container audit-reconcilation">
@@ -1166,10 +1141,10 @@ var PutFront = React.createClass({
             {_button}
             <Modal />
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.ITEM_SEARCH:
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -1194,10 +1169,10 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.ITEM_SEARCH_RESULT:
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -1226,12 +1201,12 @@ var PutFront = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.UDP_PUT_FRONT_TOTE_SCAN:
-        var adjustStyleOnSplitPPS = ""
-        this._modalContent = ""
+        var adjustStyleOnSplitPPS = "";
+        this._modalContent = "";
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -1240,9 +1215,9 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               showSpinner={this.state.MobileFlag}
             />
-          )
+          );
           if (this.state.PutFrontChecklistData) {
-            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS";
           }
           this._component = (
             <div className="grid-container">
@@ -1263,14 +1238,30 @@ var PutFront = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
       case appConstants.UDP_PUT_FRONT_BIN_SCAN:
-        var adjustStyleOnSplitPPS = ""
-        this._modalContent = ""
+        if (mainstore.cancelScanDetails() === false) {
+          cancelBtn = (<div></div>);
+        } else {
+          cancelBtn = (
+            <div className="cancel-scan">
+              <Button1
+                disabled={false}
+                text={_("Cancel Scan")}
+                module={appConstants.PUT_FRONT}
+                action={appConstants.CANCEL_SCAN_UDP}
+                barcode={this.state.PutFrontItemUid}
+                color={"black"}
+              />
+            </div>
+          );
+        }
+        var adjustStyleOnSplitPPS = "";
+        this._modalContent = "";
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -1279,9 +1270,9 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               showSpinner={this.state.MobileFlag}
             />
-          )
+          );
           if (this.state.PutFrontChecklistData) {
-            adjustStyleOnSplitPPS = "centerAlignSplitPPS"
+            adjustStyleOnSplitPPS = "centerAlignSplitPPS";
           }
           this._component = (
             <div className="grid-container">
@@ -1302,27 +1293,18 @@ var PutFront = React.createClass({
                   customizeClassSplitPPS={adjustStyleOnSplitPPS}
                 />
               </div>
-              <div className="cancel-scan">
-                <Button1
-                  disabled={false}
-                  text={_("Cancel Scan")}
-                  module={appConstants.PUT_FRONT}
-                  action={appConstants.CANCEL_SCAN_UDP}
-                  barcode={this.state.PutFrontItemUid}
-                  color={"black"}
-                />
-              </div>
+              {cancelBtn}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.UDP_PUT_FRONT_ENTITY_SCAN:
-        this._modalContent = ""
-        this._component = ""
-        this._subComponent = ""
+        this._modalContent = "";
+        this._component = "";
+        this._subComponent = "";
         if (this.state.PutFrontIsCrossDockEnabled === true) {
           this._subComponent = (
             <PreviousDetails
@@ -1330,7 +1312,7 @@ var PutFront = React.createClass({
               customizeClass={"customize_WaitingForMsu"}
               type="put"
             />
-          )
+          );
         } else {
           this._subComponent = (
             <div className="single-bin udp-flow">
@@ -1343,7 +1325,7 @@ var PutFront = React.createClass({
               <CurrentBin details={this.state.PutFrontCurrentBinCount} />
               <PreviousDetails previousDetails={this.state.PreviousDetails} />
             </div>
-          )
+          );
         }
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
@@ -1353,7 +1335,7 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               showSpinner={this.state.MobileFlag}
             />
-          )
+          );
           this._component = (
             <div className="grid-container udp-flow">
               <Modal />
@@ -1390,17 +1372,32 @@ var PutFront = React.createClass({
                 </div>
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
       case appConstants.UDP_PUT_FRONT_MISSING:
       case appConstants.UDP_PUT_FRONT_UNEXPECTED:
       case appConstants.UDP_PUT_FRONT_PLACE_ITEMS_IN_RACK:
-        this._modalContent = ""
-        this._component = ""
-        this._subComponent = ""
+        this._modalContent = "";
+        this._component = "";
+        this._subComponent = "";
+        if( this.state.PutFrontCancelScan === false){
+          cancelBtn = (<div></div>)
+        }
+        else{
+          cancelBtn = (<div className="cancel-scan">
+                  <Button1
+                    disabled={false}
+                    text={_("Cancel Scan")}
+                    module={appConstants.PUT_FRONT}
+                    action={appConstants.CANCEL_SCAN_UDP}
+                    barcode={this.state.PutFrontItemUid}
+                    color={"black"}
+                  />
+                </div>)
+        }
         if (this.state.PutFrontExceptionStatus == false) {
           this._navigation = (
             <Navigation
@@ -1409,7 +1406,7 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               showSpinner={this.state.MobileFlag}
             />
-          )
+          );
           if (
             this.state.PutFrontScreenId === appConstants.UDP_PUT_FRONT_MISSING
           ) {
@@ -1452,7 +1449,7 @@ var PutFront = React.createClass({
                                   {tuple.product_barcode}
                                 </span>
                               </section>
-                            )
+                            );
                           })}
                         </div>
                       </div>
@@ -1488,7 +1485,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
               </ReactModal>
-            )
+            );
           } else if (
             this.state.PutFrontScreenId ===
             appConstants.UDP_PUT_FRONT_UNEXPECTED
@@ -1522,7 +1519,7 @@ var PutFront = React.createClass({
                   </div>
                 </div>
               </ReactModal>
-            )
+            );
           }
           if (this.state.PutFrontIsCrossDockEnabled === true) {
             this._subComponent = (
@@ -1531,7 +1528,7 @@ var PutFront = React.createClass({
                 customizeClass={"customize_WaitingForMsu"}
                 type="put"
               />
-            )
+            );
           } else {
             this._subComponent = (
               <div className="single-bin udp-flow">
@@ -1547,7 +1544,7 @@ var PutFront = React.createClass({
                 />
                 <PreviousDetails previousDetails={this.state.PreviousDetails} />
               </div>
-            )
+            );
           }
           this._component = (
             <div className="grid-container">
@@ -1602,26 +1599,17 @@ var PutFront = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className="cancel-scan">
-                <Button1
-                  disabled={false}
-                  text={_("Cancel Scan")}
-                  module={appConstants.PUT_FRONT}
-                  action={appConstants.CANCEL_SCAN_UDP}
-                  barcode={this.state.PutFrontItemUid}
-                  color={"black"}
-                />
-              </div>
+              {cancelBtn}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
       case appConstants.UDP_PUT_FRONT_WAITING_FOR_RACK:
-        this._modalContent = ""
-        this._component = ""
-        this._subComponent = ""
+        this._modalContent = "";
+        this._component = "";
+        this._subComponent = "";
         if (this.state.PutFrontExceptionStatus == false) {
           if (this.state.PutFrontIsCrossDockEnabled === true) {
             this._subComponent = (
@@ -1630,7 +1618,7 @@ var PutFront = React.createClass({
                 customizeClass={"customize_WaitingForMsu"}
                 type="put"
               />
-            )
+            );
           }
           this._navigation = (
             <Navigation
@@ -1639,7 +1627,7 @@ var PutFront = React.createClass({
               navMessagesJson={this.props.navMessagesJson}
               showSpinner={this.state.MobileFlag}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -1648,21 +1636,21 @@ var PutFront = React.createClass({
                 <Spinner />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
 
-        break
+        break;
 
       default:
-        return true
+        return true;
     }
   },
 
   render: function (data) {
-    this.getNotificationComponent()
-    this.getScreenComponent(this.state.PutFrontScreenId)
+    this.getNotificationComponent();
+    this.getScreenComponent(this.state.PutFrontScreenId);
     return (
       <div className="main">
         <Header />
@@ -1671,8 +1659,8 @@ var PutFront = React.createClass({
         {this._modalContent}
         {this._notification}
       </div>
-    )
+    );
   },
-})
+});
 
-module.exports = PutFront
+module.exports = PutFront;

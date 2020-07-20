@@ -1,8 +1,22 @@
 var React = require("react")
 var ProductImage = require("../PrdtDetails/ProductImage")
-var customiseCSS = require("../../utils/customizeCSS")
+var CustomisedStore = require("../../stores/customisedStore")
 
 var ProductInfo = React.createClass({
+  customizedJSX: false,
+  validateCustomizedJSX: function (CustomisedStore) {
+    const isValid = CustomisedStore && React.isValidElement(<CustomisedStore />)
+    if (isValid && CustomisedStore) {
+      return { customJSX: true, CustomisedStore: CustomisedStore }
+    } else {
+      return { customJSX: false }
+    }
+  },
+  componentDidMount() {
+    this.customizedJSX =
+      CustomisedStore && this.validateCustomizedJSX(CustomisedStore)
+  },
+
   render: function () {
     var infoDetails = this.props.infoDetails
     let flowIndicator = this.props.flowIndicator
@@ -13,17 +27,15 @@ var ProductInfo = React.createClass({
     var arr1 = []
     let widthpatch = this.props.widthpatch
     let heightpatch = this.props.heightpatch
-    let clientSpecificJSX = this.props.clientSpecificJSX
-      ? this.props.clientSpecificJSX
-      : false
 
     // Customised the Product Info component as per the client
     // Valid JSX to be received if customization needed
 
-    if (
-      !clientSpecificJSX ||
-      (clientSpecificJSX && !React.isValidElement(clientSpecificJSX))
-    ) {
+    if (this.customizedJSX && this.customizedJSX.customJSX) {
+      arr1.push(
+        this.customizedJSX.CustomisedStore(infoDetails, flowIndicator, arr1)
+      )
+    } else {
       flowIndicator === "Pick"
         ? $.each(infoDetails, function (key, value) {
             return arr1.push(
@@ -32,7 +44,6 @@ var ProductInfo = React.createClass({
                 <td className="value">{value} </td>
               </tr>
             )
-            return arr1
           })
         : $.each(infoDetails, function (key, value) {
             if (
@@ -49,17 +60,14 @@ var ProductInfo = React.createClass({
               arr1.push(
                 <div className="detailsOuterWrapper">
                   <div className="detailsInnerWrapper">
-                    <span className="detailsDispName"> {key + ":"} </span>
+                    <span className="detailsDispName "> {key + ":"} </span>
                     <span className="detailsDispVal">{value}</span>
                   </div>
                 </div>
               )
             }
-
             return arr1
           })
-    } else {
-      return clientSpecificJSX
     }
 
     return flowIndicator === "Pick" ? (

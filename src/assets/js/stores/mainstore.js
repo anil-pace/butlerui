@@ -478,7 +478,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _seatData.screen_id === appConstants.PICK_FRONT_ONE_STEP_SCAN ||
             _seatData.screen_id === appConstants.PICK_FRONT_DOCK_TOTE ||
             _seatData.screen_id === appConstants.PICK_FRONT_UNDOCK_TOTE ||
-            _seatData.screen_id === appConstants.PICK_FRONT_SLOT_SCAN
+            _seatData.screen_id === appConstants.PICK_FRONT_SLOT_SCAN ||
+            _seatData.screen_id === appConstants.PICK_FRONT_SLOT_EMPTY_CONFIRM
           )
             _NavData = navConfig.pickFront[0]
           else if (_seatData.screen_id === appConstants.PICK_FRONT_NO_FREE_BIN)
@@ -5962,6 +5963,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["isKQEnabled"] = this.getKQEnabled()
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         data["bindata"] = this.getBinData()
+        data["PutFrontCancelScan"] = this.cancelScanDetails()
         break
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data["PutFrontNavData"] = this.getNavData()
@@ -6294,6 +6296,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontCancelScan"] = this.cancelScanDetails()
         data["PickFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         break
+      
+      case appConstants.PICK_FRONT_SLOT_EMPTY_CONFIRM:
+          data["PickFrontNavData"] = this.getNavData()
+          data["PickFrontServerNavData"] = this.getServerNavData()
+          data["PickFrontScreenId"] = this.getScreenId()
+          data["PickFrontRackDetails"] = this.getRackDetails()
+          data["isDrawer"] = this.getDrawerFlag()
+          data["SlotType"] = this.getSlotType()
+          data["PickFrontExceptionData"] = this.getExceptionData()
+          data["PickFrontNotification"] = this.getNotificationData()
+          data["PickFrontExceptionStatus"] = this.getExceptionStatus()
+          data["PickFrontRackTypeMPU"] = this.getRackType()
+          break
+
 
       case appConstants.PICK_FRONT_CHECKLIST:
         data["PickFrontNavData"] = this.getNavData()

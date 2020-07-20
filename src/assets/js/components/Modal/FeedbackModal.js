@@ -22,18 +22,34 @@ var FeedbackModal = React.createClass({
   },
 
   sendFeedback: function (rating) {
-    let feedback = {
-      data_type: "",
-      data: {},
+    switch(rating){
+      case 1:
+        this.refs.colorPicker_1.style.background = "#EC5A5A";
+        break;
+
+      case 2:
+          this.refs.colorPicker_2.style.background = "#FF8400";
+          break;
+
+      case 3:
+          this.refs.colorPicker_3.style.background = "#4ACA57";
+          break;
     }
-    var sessionData = JSON.parse(sessionStorage.getItem("sessionData"))
-    feedback["data_type"] = "logout";
-    feedback["data"]["rating"] = rating + "";
-    feedback["data"]["auth-token"] = sessionData.data["auth-token"];
-    feedback["data"]["seat_name"] = sessionData.data.seat_name;
-    feedback["data"]["username"] = mainstore.getUsername();
-    CommonActions.webSocketConnection(feedback);
-    this.logoutSession();
+    var self = this;
+    setTimeout(function(){
+      let feedback = {
+        data_type: "",
+        data: {},
+      }
+      var sessionData = JSON.parse(sessionStorage.getItem("sessionData"))
+      feedback["data_type"] = "logout";
+      feedback["data"]["rating"] = rating + "";
+      feedback["data"]["auth-token"] = sessionData.data["auth-token"];
+      feedback["data"]["seat_name"] = sessionData.data.seat_name;
+      feedback["data"]["username"] = mainstore.getUsername();
+      CommonActions.webSocketConnection(feedback);
+      self.logoutSession();
+    },0);
   },
   
   render: function () {
@@ -47,6 +63,7 @@ var FeedbackModal = React.createClass({
           width: "33%",
           margin: "0 -5%"
         }}
+        ref={'colorPicker_' + (index + 1)}
         data-feedback={rating}
         onClick={this.sendFeedback.bind(this, (ratings.indexOf(rating) + 1))}
       >
@@ -78,13 +95,13 @@ var FeedbackModal = React.createClass({
                 style={{
                   color: "#4D5055",
                   backgroundColor: "#EFEFEF",
-                  fontSize: "20px",
+                  fontSize: "24px",
                 }}
                 className="modal-title"
               >
                 How was your experience ?
               </div>
-              <div onClick={this.closeFeedbackModal} style={{fontSize: "2em", paddingRight: "1em", color: "#000", cursor: "pointer"}}> X </div>
+              <div onClick={this.closeFeedbackModal} style={{fontSize: "2em", paddingRight: "1em", color: "#000", cursor: "pointer", transform:"scale(1.5,1)"}}> X </div>
             </div>
             <div style={{ fontSize: "1.5em" }} className="modal-body">
               <div className="buttonContainer center-block chklstButtonContainer">

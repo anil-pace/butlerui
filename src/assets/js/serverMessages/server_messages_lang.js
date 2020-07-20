@@ -827,4 +827,11 @@ function server_messages_list() {
   _("Reprinting for bin-{0}")
   _("Select Bin for reprinting the label")
   _("Scan entities again to confirm")
+  _("Fill")
+  _("Empty")
+  _("Is MSU Slot Empty?")
+  _("Scan PpsBin or Dock Tote")
+  _("Invalid Tote. More than one type of entities found")
+  _("Same product with different tag found in scanned slot. Please scan another slot")
+  _("Switched to Bin {0}")
 }

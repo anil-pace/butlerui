@@ -47,7 +47,7 @@ var NumericIndicator = React.createClass({
     CommonActions.generateNotification(data);
     return;
   },
-  updateStore: function(){
+  updateStore: function () {
     this.updatingStore();
   },
 
@@ -275,8 +275,7 @@ var NumericIndicator = React.createClass({
       if (event.type === "mousedown") {
         this.changeValueDecrement(event);
       }
-
-      self.updateStore();
+      //self.updateStore();
     }
   },
 
@@ -328,9 +327,12 @@ var NumericIndicator = React.createClass({
             self.props.execType === appConstants.GOOD_SUB_PACK
           ) {
             self._updatedQtyGood = txtBoxVal;
+            if (txtBoxVal > mainstore.getGoodQuantity()) {
+              self._updatedQtyGood = mainstore.getGoodQuantity();
+            }
             CommonActions.updateGoodQuantity(parseInt(self._updatedQtyGood));
             self.setState({
-              value: self._updatedQtyGood,
+              goodQuantity: self._updatedQtyGood,
             });
           } else if (
             self.props.execType === appConstants.MISSING_QUANTITY ||
@@ -409,7 +411,6 @@ var NumericIndicator = React.createClass({
     }, 0);
   },
   render: function (data) {
-    //var x = this.state.goodQuantity;
     var inputType = this.props.inputType ? this.props.inputType : "text";
     if (this.props.execType === appConstants.GOOD_QUANTITY) {
       this.checkKqAllowed(appConstants.GOOD_QUANTITY);
@@ -423,14 +424,12 @@ var NumericIndicator = React.createClass({
         >
           <div>
             <span
-              //className={this._appendClassDown + " hideMe"}
               className={this._appendClassDown}
               action={this.props.action}
               onClick={this.decrementValue}
               onMouseDown={this.decrementValue}
             ></span>
             <input
-              disabled
               id="keyboard"
               //value={this.state.value}
               value={this.state.goodQuantity}
@@ -439,7 +438,6 @@ var NumericIndicator = React.createClass({
               className={"gor-quantity-text gor_" + this.props.execType}
             />
             <span
-              //className={this._appendClassUp + " hideMe"}
               className={this._appendClassUp}
               action={this.props.action}
               onClick={this.incrementValue}
@@ -514,8 +512,8 @@ var NumericIndicator = React.createClass({
               ></span>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       );
     } else {

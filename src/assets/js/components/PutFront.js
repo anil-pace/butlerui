@@ -1426,10 +1426,13 @@ var PutFront = React.createClass({
                       </p>
                       <div className="missing-list">
                         <section className="list-head">
-                          <span className="list-head-cell">
+                          <span className="list-head-cell-col-4">
                             {_("Product SKU")}
                           </span>
-                          <span className="list-head-cell">{_("Barcode")}</span>
+                          <span className="list-head-cell-col-4">{_("Barcode")}</span>
+                          <span className="list-head-cell-col-4">
+                            {_("Quantity")}
+                          </span>
                         </section>
                         <div className="list-content">
                           {this.state.missingItemList.map(function (
@@ -1441,11 +1444,14 @@ var PutFront = React.createClass({
                                 key={tuple.product_sku + idx}
                                 className="tuple-row"
                               >
-                                <span className="tuple-row-cell">
+                                <span className="tuple-row-cell-col-4">
                                   {tuple.product_sku}
                                 </span>
-                                <span className="tuple-row-cell">
+                                <span className="tuple-row-cell-col-4">
                                   {tuple.product_barcode}
+                                </span>
+                                <span className="tuple-row-cell-col-4">
+                                  {tuple.quantity}
                                 </span>
                               </section>
                             );

@@ -1595,7 +1595,7 @@ var PutFront = React.createClass({
                     style={{ marginLeft: "10%" }}
                   >
                     <Button1
-                      disabled={true}
+                      disabled={false}
                       text={_("Send MSU")}
                       module={appConstants.PUT_FRONT}
                       action={appConstants.SEND_MSU}

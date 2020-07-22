@@ -8,8 +8,14 @@ var BinMap = React.createClass({
 		var bindata = this.props.bindata ? this.props.bindata.ppsbin_list : {};
 		var pickFrontSelectedBin = this.props.pickFrontSelectedBin ? (this.props.pickFrontSelectedBin.ppsbin_list.length > 0 ? this.props.pickFrontSelectedBin.ppsbin_list[0].ppsbin_id : ''):'';
 		var leftCol = [],leftColCount,rightColCount,selectedGroup = this.props.selectedGroup,isSelected,centerbar="grey",
-		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxBlockHeight=0,style=null,maxWidth=null;
-		if(Object.entries(bindata).length > 0 && Object.values(data).length === 1){
+		rightCol=[],maxBlockCount=0,maxLeftCount=0,maxRightCount=0,maxCenterLeftCount=0,maxCenterRightCount=0,maxBlockHeight=0,style=null,maxWidth=null,brokenBarFlow;
+		let group_info_direction = data[1]
+		let group_info = Object.values(data)
+		 brokenBarFlow = group_info.find(el=>{
+			return el !== group_info_direction
+		})
+
+		if(Object.entries(bindata).length > 0 && brokenBarFlow === undefined){
 			for(var  k in bindata){
 			if(bindata[k].direction === allresourceConstants.BIN_GROUP_LEFT){
 				maxLeftCount++;
@@ -24,7 +30,7 @@ var BinMap = React.createClass({
 				maxRightCount++;
 			}}}
 
-		else if(Object.entries(bindata).length > 0 && Object.values(data).length > 1){
+		else if(Object.entries(bindata).length > 0 && brokenBarFlow !== undefined){
 			for(var  key in data){
 							if(data[key] === allresourceConstants.BIN_GROUP_LEFT ){
 								 maxLeftCount++;
@@ -49,7 +55,7 @@ var BinMap = React.createClass({
 			height: 105 +"px",
 			width: 38 
 		}
-		if(Object.entries(bindata).length > 0 && Object.values(data).length=== 1){
+		if(Object.entries(bindata).length > 0 && brokenBarFlow === undefined){
 		for(let i=0; i<bindata.length; i++){
 			if((bindata[i].direction === allresourceConstants.BIN_GROUP_LEFT  && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true)) || (bindata[i].direction === allresourceConstants.BIN_CENTER_LEFT && (bindata[i].ppsbin_id === pickFrontSelectedBin || bindata[i].selected_state === true))){
 					leftCol.push(<li key={k} style={style} className={'sel'}></li>);
@@ -63,7 +69,7 @@ var BinMap = React.createClass({
 				}
 		}
 	}
-else if(Object.values(data).length >1){
+else if(Object.entries(bindata).length > 0 && brokenBarFlow !== undefined){
 		for(var  k in data){
 			if(data.hasOwnProperty(k)){
 				isSelected = selectedGroup === k ? "sel" : "";

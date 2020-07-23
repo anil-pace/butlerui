@@ -561,10 +561,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           else if (
             _seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN &&
             _seatData.k_deep_audit
-          )
-            _NavData = navConfig.sraudit[1]
-          else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
-            _NavData = navConfig.sraudit[1]
+          ) {
+            if (_seatData.disable_reconcile_screen === true)
+              _NavData = navConfig.sraudit[2]
+            else
+              _NavData = navConfig.sraudit[1]
+
+          }
+          else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR) {
+            if (_seatData.disable_reconcile_screen === true)
+              _NavData = navConfig.sraudit[2]
+            else
+              _NavData = navConfig.sraudit[1]
+          }
           else if (
             _seatData.screen_id === appConstants.AUDIT_RECONCILE &&
             _seatData.k_deep_audit

@@ -5670,6 +5670,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.header_msge_list[0]
     }
   },
+  getMsuSendBtnStatus: function () {
+    if (_seatData.send_msu_enabled) {
+      return _seatData.send_msu_enabled
+    }
+    return null;
+  },
 
   getInvoiceStatus: function (data) {
     if (_seatData.invoice_required) {
@@ -6174,6 +6180,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         data["bindata"] = this.getBinData()
         data["PutFrontCancelScan"] = this.cancelScanDetails()
+        data["isMsuSendBtnEnabled"] = this.getMsuSendBtnStatus()
         break
 
       case appConstants.UDP_PUT_FRONT_DAMAGED_EXCEPTION:

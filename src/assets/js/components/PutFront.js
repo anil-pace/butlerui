@@ -1566,9 +1566,9 @@ var PutFront = React.createClass({
                 <div className="product-details-container extraHandling">
                   <PrdtDetails
                     productInfo={this.state.PutFrontProductDetails}
-                    widthpatch="17em"
-                    heightpatch="12em"
-                    headerwidth="11.9em"
+                    widthpatch="100%"
+                    heightpatch="100%"
+                    headerwidth="100%"
                   />
                 </div>
                 <div className="msu-send-container">

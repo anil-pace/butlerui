@@ -1361,7 +1361,7 @@ var PutFront = React.createClass({
                     className="msu-send-button"
                   >
                     <Button1
-                      disabled={false}
+                      disabled={this.state.isMsuSendBtnEnabled ? !this.state.isMsuSendBtnEnabled : false}
                       text={_("Send MSU")}
                       module={appConstants.PUT_FRONT}
                       action={appConstants.SEND_MSU}
@@ -1566,9 +1566,9 @@ var PutFront = React.createClass({
                 <div className="product-details-container extraHandling">
                   <PrdtDetails
                     productInfo={this.state.PutFrontProductDetails}
-                    widthpatch="17em"
-                    heightpatch="12em"
-                    headerwidth="11.9em"
+                    widthpatch="100%"
+                    heightpatch="100%"
+                    headerwidth="100%"
                   />
                 </div>
                 <div className="msu-send-container">
@@ -1595,7 +1595,7 @@ var PutFront = React.createClass({
                     style={{ marginLeft: "10%" }}
                   >
                     <Button1
-                      disabled={false}
+                      disabled={this.state.isMsuSendBtnEnabled ? !this.state.isMsuSendBtnEnabled : true}
                       text={_("Send MSU")}
                       module={appConstants.PUT_FRONT}
                       action={appConstants.SEND_MSU}

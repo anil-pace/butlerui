@@ -1744,10 +1744,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   getCurrentSelectedBin: function () {
-    if (_seatData && _seatData.current_bin_id) {
-      return _seatData.current_bin_id
+    var binData = {}
+    binData["structure"] = [1, 1]
+    binData["ppsbin_list"] = []
+    if (_seatData.ppsbin_list) {
+      _seatData.ppsbin_list.map(function (value, index) {
+        if (value.selected_state == true) binData["ppsbin_list"].push(value)
+      })
     }
-    return false
+    return binData
   },
   getPutFrontCurrentBinCount: function () {
     var itemCount = null

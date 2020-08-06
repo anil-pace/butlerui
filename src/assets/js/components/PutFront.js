@@ -34,6 +34,7 @@ var TextEditor = require("./ProductDetails/textEditor");
 var ItemTable = require("./itemTable");
 var CheckList = require("./CheckList");
 var CurrentActiveBin = require("./CurrentActiveBin");
+
 var PackingDetails = require("./PrdtDetails/PackingDetails");
 
 var PutFront = React.createClass({
@@ -1321,7 +1322,10 @@ var PutFront = React.createClass({
                 selectedGroup={this.state.selectedPPSBin}
                 screenClass="putFrontFlow"
               />
-              <CurrentBin details={this.state.PutFrontCurrentBinCount} />
+              <CurrentActiveBin
+                selected={true}
+                details={this.state.PutFrontCurrentBinCount}
+              />
               <PreviousDetails previousDetails={this.state.PreviousDetails} />
             </div>
           );

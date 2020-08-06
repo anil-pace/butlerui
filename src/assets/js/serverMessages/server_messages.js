@@ -336,7 +336,7 @@ var serverMessages = {
   "PkB.E.009": "Entity Scan not expected. Press PPTL",
   "PkB.E.010": "{0} in use at front seat",
   "PkB.E.011": "{0} cannot be associated with bin of another seat",
-  "PkB.E.012": "{0} cannot be associated with inactive bin",
+  "PkB.E.012": "Tote cannot be associated with inactive bin",
   "PkB.E.013": "Ignoring exception because bin is in use",
   "PkB.I.001": "Exception cancelled",
   "PkB.I.002": "{0} scan cancelled",
@@ -549,7 +549,7 @@ var serverMessages = {
   //press_pptl
   "PkF.S.005": {
     textToDisplay: "Press PPTL",
-    screen_id: ["pick_front_pptl_press","pick_back_scan"]
+    screen_id: ["pick_front_pptl_press", "pick_back_scan"]
   },
   //Scan Box
   "PkB.S.001": {

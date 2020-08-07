@@ -278,8 +278,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getExpectedQuantity: function () {
     if (_seatData.hasOwnProperty("put_quantity")) {
       _putQuantity = _seatData.put_quantity
-      return _putQuantity
     }
+    else if (_seatData.hasOwnProperty("pick_quantity")) {
+      _putQuantity = _seatData.pick_quantity
+    }
+    return _putQuantity
   },
   getPickedQuantity: function () {
     if (_seatData.hasOwnProperty("pick_quantity")) {
@@ -5255,17 +5258,29 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData.screen_id ==
       appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
     ) {
-      if (
-        _goodQuantity === _seatData.pick_quantity &&
-        _unscannableQuantity === 0
-      ) {
+      // if (
+      //   _goodQuantity === _seatData.pick_quantity &&
+      //   _unscannableQuantity === 0
+      // ) {
+      //   flag = type = true
+      // } else {
+      //   flag =
+      //     _goodQuantity + _missingQuantity + _damagedQuantity !=
+      //     _seatData.pick_quantity
+      //   details = _seatData.pick_quantity
+      // }
+      if (_goodQuantity_udp == _seatData.pick_quantity) {
         flag = type = true
       } else {
         flag =
-          _goodQuantity + _missingQuantity + _damagedQuantity !=
+          _goodQuantity_udp +
+          _missingQuantity +
+          _damagedQuantity +
+          _unscannableQuantity !=
           _seatData.pick_quantity
         details = _seatData.pick_quantity
       }
+      _goodQuantity = _goodQuantity_udp
     } else if (
       _seatData.screen_id ==
       appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY

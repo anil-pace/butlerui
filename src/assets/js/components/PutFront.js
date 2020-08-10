@@ -34,6 +34,7 @@ var TextEditor = require("./ProductDetails/textEditor");
 var ItemTable = require("./itemTable");
 var CheckList = require("./CheckList");
 var CurrentActiveBin = require("./CurrentActiveBin");
+
 var PackingDetails = require("./PrdtDetails/PackingDetails");
 
 var PutFront = React.createClass({
@@ -1324,7 +1325,10 @@ var PutFront = React.createClass({
                 screenClass="putFrontFlow"
                 bindata={this.state.bindata}
               />
-              <CurrentBin details={this.state.PutFrontCurrentBinCount} />
+              <CurrentActiveBin
+                selected={true}
+                details={this.state.PutFrontCurrentBinCount}
+              />
               <PreviousDetails previousDetails={this.state.PreviousDetails} />
             </div>
           );
@@ -1353,9 +1357,9 @@ var PutFront = React.createClass({
                 <div className="product-details-container extraHandling">
                   <PrdtDetails
                     productInfo={this.state.PutFrontProductDetails}
-                    widthpatch="17em"
+                    widthpatch="100%"
                     heightpatch="12em"
-                    headerwidth="11.9em"
+                    headerwidth="100%"
                   />
                 </div>
                 <div className="msu-send-container">
@@ -1364,7 +1368,7 @@ var PutFront = React.createClass({
                     className="msu-send-button"
                   >
                     <Button1
-                      disabled={false}
+                      disabled={this.state.isMsuSendBtnEnabled ? !this.state.isMsuSendBtnEnabled : false}
                       text={_("Send MSU")}
                       module={appConstants.PUT_FRONT}
                       action={appConstants.SEND_MSU}
@@ -1569,9 +1573,9 @@ var PutFront = React.createClass({
                 <div className="product-details-container extraHandling">
                   <PrdtDetails
                     productInfo={this.state.PutFrontProductDetails}
-                    widthpatch="17em"
-                    heightpatch="12em"
-                    headerwidth="11.9em"
+                    widthpatch="100%"
+                    heightpatch="100%"
+                    headerwidth="100%"
                   />
                 </div>
                 <div className="msu-send-container">
@@ -1598,7 +1602,7 @@ var PutFront = React.createClass({
                     style={{ marginLeft: "10%" }}
                   >
                     <Button1
-                      disabled={false}
+                      disabled={this.state.isMsuSendBtnEnabled ? !this.state.isMsuSendBtnEnabled : true}
                       text={_("Send MSU")}
                       module={appConstants.PUT_FRONT}
                       action={appConstants.SEND_MSU}

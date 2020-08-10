@@ -401,6 +401,7 @@ var NumericIndicator = React.createClass({
     /*Using settimeout to overcome the flux issue of Invariant Violation 
         when there are two simultaneous dispatches*/
     setTimeout(function () {
+      CommonActions.updateGoodQuantity(parseInt(self.state.goodQuantity));
       CommonActions.updateKQQuantity(
         parseInt(
           self.props.execType === appConstants.GOOD_QUANTITY

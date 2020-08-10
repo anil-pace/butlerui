@@ -1,38 +1,40 @@
-var React = require('react');
-var Header = require('./Header');
-var allresourceConstants = require('../constants/resourceConstants');
+var React = require("react")
+var Header = require("./Header")
+var allresourceConstants = require("../constants/resourceConstants")
 
 var CurrentActiveBin = React.createClass({
-  render: function() {
+  render: function () {
+    let currentActiveBin = this.props.details && this.props.details.currBin
     return (
-      <div className='current-bin-wrapper'>
-        <div
-          className={
-            'p-put-details current-bin ' +
-            (this.props.selected ? 'selected' : '')
-          }
-        >
+      currentActiveBin && (
+        <div className="current-bin-wrapper">
           <div
-            style={{
-              background: '#0390FF',
-              fontSize: '4rem'
-            }}
-            className='p-put-head'
+            className={
+              "p-put-details current-bin " +
+              (this.props.selected ? "selected" : "")
+            }
           >
-            {' '}
-            {this.props.details.currBin || '--'}{' '}
+            <div
+              style={{
+                background: "#0390FF",
+                fontSize: "4rem",
+              }}
+              className="p-put-head"
+            >
+              {this.props.details.currBin}
+            </div>
+          </div>
+          <div
+            style={{ color: "#000000", fontSize: "2.2rem" }}
+            className="bin-text"
+          >
+            {" "}
+            {_(allresourceConstants.CURR_BIN)}{" "}
           </div>
         </div>
-        <div
-          style={{ color: '#000000', fontSize: '2.2rem' }}
-          className='bin-text'
-        >
-          {' '}
-          {_(allresourceConstants.CURR_BIN)}{' '}
-        </div>
-      </div>
-    );
-  }
-});
+      )
+    )
+  },
+})
 
-module.exports = CurrentActiveBin;
+module.exports = CurrentActiveBin

@@ -336,7 +336,7 @@ var serverMessages = {
   "PkB.E.009": "Entity Scan not expected. Press PPTL",
   "PkB.E.010": "{0} in use at front seat",
   "PkB.E.011": "{0} cannot be associated with bin of another seat",
-  "PkB.E.012": "{0} cannot be associated with inactive bin",
+  "PkB.E.012": "Tote cannot be associated with inactive bin",
   "PkB.E.013": "Ignoring exception because bin is in use",
   "PkB.I.001": "Exception cancelled",
   "PkB.I.002": "{0} scan cancelled",
@@ -470,6 +470,7 @@ var serverMessages = {
   "PkF.H.021": "Put Pack list in {0} and press PPTL to confirm",
   "PkF.H.022": "Waiting for {0} to be docked",
   "PkF.H.042": "Is MSU Slot Empty?",
+  "PkF.H.043": "Place entities in highlighted bins and press PPTL",
   "PtB.H.020": "Waiting for put_away to complete from front",
   "UdpF.I.001": "{0} scan successful",
   "UdpF.I.002": "Entity scan successful",
@@ -498,6 +499,7 @@ var serverMessages = {
   "UdpF.H.007": "Scan same entity or slot to confirm",
   "UdpF.H.008": "Scan Tote",
   "UdpF.H.009": "Scan PpsBin or Dock Tote",
+  "UdpF.H.010": "Dock Tote or Wait for MSU",
   "Search.H.001": "Scan entity in slot and confirm",
   "Search.H.002": "Move {0} excess item to IRT bin and confirm",
   "Search.H.003": "Move {0} excess item to IRT bin and scan IRT bin",
@@ -549,7 +551,7 @@ var serverMessages = {
   //press_pptl
   "PkF.S.005": {
     textToDisplay: "Press PPTL",
-    screen_id: ["pick_front_pptl_press","pick_back_scan"]
+    screen_id: ["pick_front_pptl_press", "pick_back_scan"]
   },
   //Scan Box
   "PkB.S.001": {

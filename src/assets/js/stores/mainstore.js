@@ -278,8 +278,11 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getExpectedQuantity: function () {
     if (_seatData.hasOwnProperty("put_quantity")) {
       _putQuantity = _seatData.put_quantity
-      return _putQuantity
     }
+    else if (_seatData.hasOwnProperty("pick_quantity")) {
+      _putQuantity = _seatData.pick_quantity
+    }
+    return _putQuantity
   },
   getPickedQuantity: function () {
     if (_seatData.hasOwnProperty("pick_quantity")) {
@@ -299,15 +302,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getNavData: function () {
     /* dynamic header navigation implementation */
-    let active_header_index = _seatData.active_header_index;
+    let active_header_index = _seatData.active_header_index
     let activeCode
     if (_seatData.header_steps) {
       var headerSteps = _seatData.header_steps
       if (active_header_index !== undefined) {
-        activeCode = headerSteps[active_header_index] === undefined ? '' : headerSteps[active_header_index]
-      }
-      else if (active_header_index === undefined) {
-        activeCode = ''
+        activeCode =
+          headerSteps[active_header_index] === undefined
+            ? ""
+            : headerSteps[active_header_index]
+      } else if (active_header_index === undefined) {
+        activeCode = ""
       }
 
       navConfig.header = []
@@ -323,21 +328,22 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       }
       _NavData = navConfig.header
       _NavData.map(function (data, index) {
-        if (data.screen_id.constructor === Array && data.screen_id.length > 0 && active_header_index === undefined) {
+        if (
+          data.screen_id.constructor === Array &&
+          data.screen_id.length > 0 &&
+          active_header_index === undefined
+        ) {
           if (data.screen_id.indexOf(_seatData.screen_id) != -1) {
             _NavData[index].type = "active"
-          }
-          else {
+          } else {
             _NavData[index].type = "passive"
           }
         } else if (_seatData.screen_id == data.screen_id) {
           _NavData[index].type = "active"
-        }
-        else if (activeCode !== '') {
+        } else if (activeCode !== "") {
           if (data.message === serverMessages[activeCode].textToDisplay)
             _NavData[index].type = "active"
-        }
-        else {
+        } else {
           _NavData[index].type = "passive"
         }
         /* condition to NOT show indexing when there is one active item in header_steps */
@@ -464,7 +470,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
             _NavData = navConfig.pickBack[4]
           } else if (_seatData.screen_id === appConstants.PICK_BACK_NO_SCAN) {
             _NavData = navConfig.pickBack[1]
-          } else if (_seatData.screen_id === appConstants.PICK_BACK_SCAN || _seatData.screen_id === appConstants.PICK_BACK_REPRINT_BINS) {
+          } else if (
+            _seatData.screen_id === appConstants.PICK_BACK_SCAN ||
+            _seatData.screen_id === appConstants.PICK_BACK_REPRINT_BINS
+          ) {
             _NavData = navConfig.pickBack[2]
           } else if (
             _seatData.screen_id === appConstants.PICK_BACK_PACKING_BOX
@@ -561,10 +570,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           else if (
             _seatData.screen_id === appConstants.AUDIT_LOCATION_SCAN &&
             _seatData.k_deep_audit
-          )
-            _NavData = navConfig.sraudit[1]
-          else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR)
-            _NavData = navConfig.sraudit[1]
+          ) {
+            if (_seatData.disable_reconcile_screen === true)
+              _NavData = navConfig.sraudit[2]
+            else
+              _NavData = navConfig.sraudit[1]
+
+          }
+          else if (_seatData.screen_id === appConstants.AUDIT_SCAN_SR) {
+            if (_seatData.disable_reconcile_screen === true)
+              _NavData = navConfig.sraudit[2]
+            else
+              _NavData = navConfig.sraudit[1]
+          }
           else if (
             _seatData.screen_id === appConstants.AUDIT_RECONCILE &&
             _seatData.k_deep_audit
@@ -1741,16 +1759,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   getPutFrontCurrentBinCount: function () {
     var itemCount = null
-    var currBin = null
+    var currBin =
+      _seatData && _seatData.current_bin_id
+        ? _seatData && _seatData.current_bin_id
+        : false
     if (_seatData.ppsbin_list) {
       _seatData.ppsbin_list.map(function (value, index) {
         if (value.selected_state == true) {
           itemCount = parseInt(value.ppsbin_count || 0)
-          currBin = value.ppsbin_id || "--"
           return true
         }
       })
     }
+
     return {
       count: itemCount,
       currBin: currBin,
@@ -1901,7 +1922,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           }
           data["tableRows"].push([
             new self.tableCol(
-              (value.pps_bin_id === "0" ? "Master PPTL" : value.pps_bin_id),
+              value.pps_bin_id === "0" ? "Master PPTL" : value.pps_bin_id,
               "enabled",
               false,
               "small",
@@ -3841,20 +3862,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   setCurrentSeat: function (data) {
     //showModal = false;
-    _action = undefined;
-    _binId = undefined;
-    _enableException = false;
-    _putFrontExceptionScreen = 'good';
-    _goodQuantity = 0;
-    _pickQuantity = 0;
-    _putQuantity = 0;
-    _damagedQuantity = 0;
-    _unscannableQuantity = 0;
-    _missingQuantity = 0;
-    _activeException = null;
-    _showSpinner = false;
-    _enableException = false;
-    _seatData = data;
+    _action = undefined
+    _binId = undefined
+    _enableException = false
+    _putFrontExceptionScreen = "good"
+    _goodQuantity = 0
+    _pickQuantity = 0
+    _putQuantity = 0
+    _damagedQuantity = 0
+    _unscannableQuantity = 0
+    _missingQuantity = 0
+    _activeException = null
+    _showSpinner = false
+    _enableException = false
+    _seatData = data
     if (
       _seatData.screen_id !== appConstants.PICK_FRONT_MORE_ITEM_SCAN &&
       _seatData.screen_id !== appConstants.PICK_FRONT_PPTL_PRESS &&
@@ -4091,8 +4112,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _damagedQuantity
   },
   setGoodQuanity: function (data) {
-    _goodQuantity = data;
-    _goodQuantity_udp = data;
+    _goodQuantity = data
+    _goodQuantity_udp = data
   },
   setPickedQuantity: function (data) {
     _pickQuantity = data
@@ -4787,9 +4808,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         value.product_info.map(function (product_details, index) {
           if (product_details[0].product_sku) {
             product_sku = product_details[0].product_sku
-            quantity = value.qty;
-            type = value.type;
-            serial = value.serial.length === 0 ? "--" : value.serial;
+            quantity = value.qty
+            type = value.type
+            serial = value.serial.length === 0 ? "--" : value.serial
             total_excess += quantity
             data["tableRows"].push([
               new self.tableCol(
@@ -5237,22 +5258,23 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData.screen_id ==
       appConstants.PICK_FRONT_MISSING_OR_UNSCANNABLE_DAMAGED_SUBPACK
     ) {
-      if (
-        _goodQuantity === _seatData.pick_quantity &&
-        _unscannableQuantity === 0
-      ) {
+      if (_goodQuantity_udp == _seatData.pick_quantity) {
         flag = type = true
       } else {
         flag =
-          _goodQuantity + _missingQuantity + _damagedQuantity !=
+          _goodQuantity_udp +
+          _missingQuantity +
+          _damagedQuantity +
+          _unscannableQuantity !=
           _seatData.pick_quantity
         details = _seatData.pick_quantity
       }
+      _goodQuantity = _goodQuantity_udp
     } else if (
       _seatData.screen_id ==
       appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
     ) {
-      console.log("====> _goodQuantity_udp" + _goodQuantity_udp);
+      console.log("====> _goodQuantity_udp" + _goodQuantity_udp)
       if (_goodQuantity_udp == _seatData.put_quantity) {
         flag = type = true
       } else {
@@ -5264,7 +5286,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           _seatData.put_quantity
         details = _seatData.put_quantity
       }
-      _goodQuantity = _goodQuantity_udp;
+      _goodQuantity = _goodQuantity_udp
     } else if (
       _seatData.screen_id == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
       _seatData.screen_id == appConstants.PICK_FRONT_PPTL_PRESS ||
@@ -5652,6 +5674,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.header_msge_list[0]
     }
   },
+  getMsuSendBtnStatus: function () {
+    if (_seatData.send_msu_enabled) {
+      return _seatData.send_msu_enabled
+    }
+    return null;
+  },
 
   getInvoiceStatus: function (data) {
     if (_seatData.invoice_required) {
@@ -5701,8 +5729,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       return _seatData.bin_coordinate_plotting
   },
   getBinPlottingFlag: function () {
-    if (_seatData.hasOwnProperty("bin_plotting"))
-      return _seatData.bin_plotting
+    if (_seatData.hasOwnProperty("bin_plotting")) return _seatData.bin_plotting
   },
   getPutContainerFlag: function () {
     if (_seatData.hasOwnProperty("put_container"))
@@ -6157,6 +6184,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         data["bindata"] = this.getBinData()
         data["PutFrontCancelScan"] = this.cancelScanDetails()
+        data["isMsuSendBtnEnabled"] = this.getMsuSendBtnStatus()
         break
 
       case appConstants.UDP_PUT_FRONT_DAMAGED_EXCEPTION:
@@ -6166,7 +6194,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontExceptionData"] = this.getExceptionData()
         data["PutFrontNotification"] = this.getNotificationData()
         data["PutFrontExcessItems"] = this._getUdpDamagedItemsData()
-        data["PutFrontDamagedExceptionFlag"] = this._getUdpDamagedExceptionFlag()
+        data[
+          "PutFrontDamagedExceptionFlag"
+        ] = this._getUdpDamagedExceptionFlag()
         break
 
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
@@ -6514,7 +6544,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontRackTypeMPU"] = this.getRackType()
         break
 
-
       case appConstants.PICK_FRONT_CHECKLIST:
         data["PickFrontNavData"] = this.getNavData()
         data["PickFrontServerNavData"] = this.getServerNavData()
@@ -6836,7 +6865,6 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontDamagedQuantity"] = this.getDamagedScanDetails()
         break
 
-
       case appConstants.PICK_BACK_SCAN:
       case appConstants.PICK_BACK_BIN:
       case appConstants.PICK_BACK_NO_SCAN:
@@ -6851,9 +6879,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["pickBackCancelButtonData"] = this.cancelScanDetails()
         data["PreviousPickBackDetails"] = this.getPreviousPickBackDetails()
         data["PickBackReprintEnabled"] = this.isReprintEnabled()
-        data["printerInfo"] = this.getPrinterInfo();
-        data["isPrinterVisible"] = this.getPrinterVisibility();
-        break;
+        data["printerInfo"] = this.getPrinterInfo()
+        data["isPrinterVisible"] = this.getPrinterVisibility()
+        break
 
       case appConstants.PICK_BACK_EXCEPTION_REPRINT:
       case appConstants.PICK_BACK_EXCEPTION_SKIP_PRINTING:

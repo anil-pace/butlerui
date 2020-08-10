@@ -4,7 +4,7 @@ var mainstore = require("../stores/mainstore")
 var ActionCreators = require("../actions/CommonActions")
 
 var SplitPPS = React.createClass({
-  showModal: function(data, type, e) {
+  showModal: function (data, type, e) {
     ActionCreators.showModal({
       data: data,
       type: type
@@ -13,7 +13,7 @@ var SplitPPS = React.createClass({
     e.stopPropagation()
     return false
   },
-  processData: function() {
+  processData: function () {
     let groupInfo =
       this.props.groupInfo && this.props.groupInfo.ppsBinIds
         ? this.props.groupInfo.ppsBinIds
@@ -54,8 +54,8 @@ var SplitPPS = React.createClass({
       maxCenterCount > 0
         ? maxCenterCount
         : maxLeftCount > maxRightCount
-        ? maxLeftCount
-        : maxRightCount
+          ? maxLeftCount
+          : maxRightCount
 
     maxBlockHeight =
       maxCenterCount > 0 ? 75 / maxBlockCount : 50 / maxBlockCount
@@ -74,7 +74,7 @@ var SplitPPS = React.createClass({
 
       /* Start =>special condition for pick_front_slot_scan to limit font size when only one bin is there */
       if (parseInt(fontSize, 10) > parseInt("88px", 10)) {
-        ;(fontSize = 62.5 + "px"), (padding = 0 + "%")
+        ; (fontSize = 62.5 + "px"), (padding = 0 + "%")
       }
       /* End */
 
@@ -129,68 +129,69 @@ var SplitPPS = React.createClass({
     var showBinIcon
     for (var k in data) {
       if (data.hasOwnProperty(k)) {
-if(Object.keys(binInfo).length >0){
-        if (
-          binInfo[k].length > 0 &&
-          data[k] === allresourceConstants.BIN_GROUP_LEFT
-        ) {
-          showBinIcon = (
-            <div
-              className="tote"
-              style={{
-                fontSize: "0.5em",
-                position: "absolute",
-                right: "0.1em"
-              }}
-            >
-              <span
-                className="glyphicon glyphicon-info-sign info-icon"
-                onClick={this.showModal.bind(this, binInfo[k], "bin-info")}
-              />
-            </div>
-          )
-		} 
-	
-		else if (
-          binInfo[k].length > 0 &&
-          data[k] === allresourceConstants.BIN_GROUP_RIGHT
-        ) {
-          showBinIcon = (
-            <div
-              className="tote"
-              style={{
-                fontSize: "0.5em",
-                position: "absolute",
-                marginLeft: "0.1em"
-              }}
-            >
-              <span
-                className="glyphicon glyphicon-info-sign info-icon"
-                onClick={this.showModal.bind(this, binInfo[k], "bin-info")}
-              />
-            </div>
-          )
-        } else if (
-          binInfo[k].length > 0 &&
-          (data[k] === allresourceConstants.BIN_GROUP_CENTER ||
-            data[k] === allresourceConstants.BIN_GROUP_CENTER_TOP)
-        ) {
-          showBinIcon = (
-            <div
-              className="tote"
-              style={{
-                fontSize: "0.5em",
-                position: "absolute",
-                marginLeft: "0.1em"
-              }}
-            >
-              <span
-                className="glyphicon glyphicon-info-sign info-icon"
-                onClick={this.showModal.bind(this, binInfo[k], "bin-info")}
-              />
-            </div>
-          )
-        }} else {
+        if (Object.keys(binInfo).length > 0) {
+          if (
+            binInfo[k].length > 0 &&
+            data[k] === allresourceConstants.BIN_GROUP_LEFT
+          ) {
+            showBinIcon = (
+              <div
+                className="tote"
+                style={{
+                  fontSize: "0.5em",
+                  position: "absolute",
+                  right: "0.1em"
+                }}
+              >
+                <span
+                  className="glyphicon glyphicon-info-sign info-icon"
+                  onClick={this.showModal.bind(this, binInfo[k], "bin-info")}
+                />
+              </div>
+            )
+          }
+
+          else if (
+            binInfo[k].length > 0 &&
+            data[k] === allresourceConstants.BIN_GROUP_RIGHT
+          ) {
+            showBinIcon = (
+              <div
+                className="tote"
+                style={{
+                  fontSize: "0.5em",
+                  position: "absolute",
+                  marginLeft: "0.1em"
+                }}
+              >
+                <span
+                  className="glyphicon glyphicon-info-sign info-icon"
+                  onClick={this.showModal.bind(this, binInfo[k], "bin-info")}
+                />
+              </div>
+            )
+          } else if (
+            binInfo[k].length > 0 &&
+            (data[k] === allresourceConstants.BIN_GROUP_CENTER ||
+              data[k] === allresourceConstants.BIN_GROUP_CENTER_TOP)
+          ) {
+            showBinIcon = (
+              <div
+                className="tote"
+                style={{
+                  fontSize: "0.5em",
+                  position: "absolute",
+                  marginLeft: "0.1em"
+                }}
+              >
+                <span
+                  className="glyphicon glyphicon-info-sign info-icon"
+                  onClick={this.showModal.bind(this, binInfo[k], "bin-info")}
+                />
+              </div>
+            )
+          }
+        } else {
           showBinIcon = ""
         }
         if (data[k] === allresourceConstants.BIN_GROUP_LEFT) {
@@ -384,7 +385,6 @@ if(Object.keys(binInfo).length >0){
           } else {
             centerCol.push(
               <li className="noBackGround" key={k} style={style}>
-                {showBinIcon}
                 <span>{this.props.displayBinId ? k : null}</span>
               </li>
             )
@@ -399,7 +399,7 @@ if(Object.keys(binInfo).length >0){
       centerCol: centerCol
     }
   },
-  render: function() {
+  render: function () {
     var mapStructure = this.processData()
     var orientation = Number(this.props.orientation || 0)
     var transformStyle = {
@@ -426,8 +426,8 @@ if(Object.keys(binInfo).length >0){
               {mapStructure.centerCol.length >= 1 ? (
                 <ul>{mapStructure.centerCol}</ul>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
 
             <div className={"col1 three"}>
@@ -440,8 +440,8 @@ if(Object.keys(binInfo).length >0){
                   {mapStructure.leftCol}
                 </ul>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
 
             <div className="col2 spriteIcons"></div>
@@ -455,8 +455,8 @@ if(Object.keys(binInfo).length >0){
                   {mapStructure.rightCol}
                 </ul>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
           </div>
         </div>
@@ -485,8 +485,8 @@ if(Object.keys(binInfo).length >0){
                   {mapStructure.leftCol}
                 </ul>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
             <div className="col2 spriteIcons"></div>
             <div className={"col3 three"}>
@@ -499,16 +499,16 @@ if(Object.keys(binInfo).length >0){
                   {mapStructure.rightCol}
                 </ul>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
 
             <div className={"col4 three"}>
               {mapStructure.centerCol.length >= 1 ? (
                 <ul>{mapStructure.centerCol}</ul>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
           </div>
         </div>

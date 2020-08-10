@@ -277,6 +277,7 @@ var PutFront = React.createClass({
                     mapDetails={this.state.BinMapDetails}
                     selectedGroup={this.state.BinMapGroupDetails}
                     screenClass="putFrontFlow"
+                    bindata={this.state.bindata}
                   />
                 )
                 : ""}
@@ -456,6 +457,7 @@ var PutFront = React.createClass({
                 mapDetails={this.state.BinMapDetails}
                 selectedGroup={this.state.BinMapGroupDetails}
                 screenClass="putFrontFlow"
+                bindata={this.state.bindata}
               />
             )}
             {selected_screen}
@@ -1320,6 +1322,7 @@ var PutFront = React.createClass({
                 mapDetails={this.state.udpBinMapDetails}
                 selectedGroup={this.state.selectedPPSBin}
                 screenClass="putFrontFlow"
+                bindata={this.state.bindata}
               />
               <CurrentBin details={this.state.PutFrontCurrentBinCount} />
               <PreviousDetails previousDetails={this.state.PreviousDetails} />

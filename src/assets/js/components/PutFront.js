@@ -278,8 +278,7 @@ var PutFront = React.createClass({
                     mapDetails={this.state.BinMapDetails}
                     selectedGroup={this.state.BinMapGroupDetails}
                     screenClass="putFrontFlow"
-                    bindata={this.state.bindata}
-                  />
+                    />
                 )
                 : ""}
               {binComponent}
@@ -331,6 +330,7 @@ var PutFront = React.createClass({
                     mapDetails={this.state.BinMapDetails}
                     selectedGroup={this.state.BinMapGroupDetails}
                     screenClass="PutFrontFlowScan"
+                    bindata={this.state.bindata}
                   />
                 )}
               </div>

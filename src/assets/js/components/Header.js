@@ -7,6 +7,10 @@ var jqueryPosition = require("jquery-ui/position")
 var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
+var FeedbackModal = require("./Modal/FeedbackModal")
+var Modal = require("./Modal/Modal")
+var ActionCreators = require("../actions/CommonActions");
+var loginstore = require('../stores/loginstore');
 
 function getState() {
   return {
@@ -86,18 +90,8 @@ var Header = React.createClass({
     })
     $("#barcode").data("keyboard").reveal()
   },
-  logoutSession: function () {
-    $("#actionMenu").hide()
-    if (
-      mainstore.getLogoutState() === "false" ||
-      mainstore.getLogoutState() === false
-    ) {
-      return false
-    } else {
-      CommonActions.logoutSession(true)
-    }
-  },
-  componentDidMount: function () {},
+
+  componentDidMount: function () { },
   enableException: function () {
     CommonActions.enableException(true)
     var data = {}
@@ -105,6 +99,16 @@ var Header = React.createClass({
     data["level"] = "error"
     CommonActions.generateNotification(data)
     $("#actionMenu").hide()
+  },
+  showModal: function (data, type, e) {
+    CommonActions.setFeedback(true);
+    $("#actionMenu").hide();
+    ActionCreators.showModal({
+      data: data,
+      type: type,
+    });
+    e.stopPropagation();
+    return false;
   },
   enableSearch: function () {
     CommonActions.updateSeatData([], "itemSearch")
@@ -189,6 +193,7 @@ var Header = React.createClass({
     var logoutClass
     var cssClass
     var disableScanClass
+    var feedbackModal = loginstore.getFeedback();
     var invoiceFlow =
       mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false
     this.getExceptionMenu()
@@ -240,8 +245,9 @@ var Header = React.createClass({
               upperThreshold={uphThreshold && uphThreshold.upper_threshold}
             />
           ) : (
-            <div style={{"order": "3", "marginTop": "10px", "marginLeft": "auto"  }}> </div>
-          )}
+              <div style={{ "order": "3", "marginTop": "10px", "marginLeft": "auto" }}> </div>
+            )}
+          {feedbackModal && <FeedbackModal />}
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
               src={allSvgConstants.scanHeader}
@@ -274,7 +280,13 @@ var Header = React.createClass({
           <div className={logoutClass} onClick={this.notifyTower}>
             {_("Call for Help")}
           </div>
-          <div className={logoutClass} onClick={this.logoutSession}>
+          <div className={logoutClass}
+            onClick={this.showModal.bind(
+              this,
+              null,
+              appConstants.FEEDBACK_MODAL
+            )}
+          >
             {_("Logout")}
           </div>
         </div>

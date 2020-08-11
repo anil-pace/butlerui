@@ -46,7 +46,6 @@ var BinMap = React.createClass({
         }
       }
     } else if (
-      Object.entries(bindata).length > 0 &&
       Object.values(data).length > 1
     ) {
       for (var key in data) {

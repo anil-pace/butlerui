@@ -573,8 +573,8 @@ var PickFront = React.createClass({
               color={"black"}
             />
           ) : (
-            ""
-          );
+              ""
+            );
           var binComponent = "";
 
           if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
@@ -692,8 +692,8 @@ var PickFront = React.createClass({
 
                 {this.state.PickFrontScreenId !==
                   appConstants.PICK_FRONT_WORKING_TABLE &&
-                this.state.PickFrontButtonStatus == true &&
-                this.state.PickFrontButtonType == "bin_full"
+                  this.state.PickFrontButtonStatus &&
+                  this.state.PickFrontButtonType === "bin_full"
                   ? BinFull
                   : ""}
               </div>
@@ -826,11 +826,11 @@ var PickFront = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className={itemSearchfooterClass}>
@@ -926,8 +926,8 @@ var PickFront = React.createClass({
               color={"black"}
             />
           ) : (
-            ""
-          );
+              ""
+            );
           var binComponent = "";
           if (this.state.OrigBinUse) {
             binComponent = (
@@ -953,15 +953,15 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
               <div className="single-bin udp-flow">
                 <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-                  {this.state.SplitScreenFlag && (
-                <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass="frontFlow"
-                  bindata={this.state.bindata}
-                  pickFrontSelectedBin={this.state.pickFrontSelectedBin}
-                />
+                {this.state.SplitScreenFlag && (
+                  <BinMap
+                    orientation={this.state.groupOrientation}
+                    mapDetails={this.state.BinMapDetails}
+                    selectedGroup={this.state.BinMapGroupDetails}
+                    screenClass="frontFlow"
+                    bindata={this.state.bindata}
+                    pickFrontSelectedBin={this.state.pickFrontSelectedBin}
+                  />
                 )}
                 {this.state.currentBinWidget && (
                   <CurrentActiveBin
@@ -984,7 +984,7 @@ var PickFront = React.createClass({
                 {cancelButton}
                 {reprintButton}
                 {this.state.PickFrontButtonStatus == true &&
-                this.state.PickFrontButtonType == "bin_full"
+                  this.state.PickFrontButtonType == "bin_full"
                   ? BinFull
                   : ""}
               </div>
@@ -1033,8 +1033,8 @@ var PickFront = React.createClass({
                     displayBinId={true}
                   />
                 ) : (
-                  <Spinner />
-                )}
+                    <Spinner />
+                  )}
               </div>
               <div className="btn-actions-skip-docking">
                 {skipDockingButton}
@@ -1089,10 +1089,10 @@ var PickFront = React.createClass({
                   <div className="kq-header">
                     {remainingEntitiesToBeScanned !== 0
                       ? utils.frntStringTransform(
-                          headerDataToShow,
-                          [remainingEntitiesToBeScanned],
-                          appConstants.INVOICE_REQUIRED
-                        )
+                        headerDataToShow,
+                        [remainingEntitiesToBeScanned],
+                        appConstants.INVOICE_REQUIRED
+                      )
                       : _("No more entities to be scanned")}
                   </div>
                   <TabularData
@@ -1125,16 +1125,22 @@ var PickFront = React.createClass({
               <ExceptionHeader data={this.state.PickFrontServerNavData} />
 
               <div className="main-container exception1 displayBlocked">
+
                 <div className="gor-NI-wrapper">
-                  <hr />
-                  <div className="exception-qty-title">
-                    {_("Good Quantity")}
-                  </div>
-                  <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
+                  <div className="exception-qty-title">{_("Expected Quantity")}</div>
+                  <NumericIndicator execType={appConstants.EXPECTED_QUANTITY} />
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr />
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
+                  <div className="exception-qty-title">{_("Good Quantity")}</div>
+                  <NumericIndicator execType={appConstants.GOOD_QUANTITY} />
+                </div>
+
+
+                <div className="gor-NI-wrapper">
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">
                     {_("Missing Quantity")}
                   </div>
@@ -1142,7 +1148,7 @@ var PickFront = React.createClass({
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr />
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">
                     {_("Unscannable Quantity")}
                   </div>
@@ -1152,7 +1158,7 @@ var PickFront = React.createClass({
                 </div>
 
                 <div className="gor-NI-wrapper">
-                  <hr />
+                  <hr style={{ "margin": "10px 0 10px 0" }} />
                   <div className="exception-qty-title">
                     {_("Damaged Quantity")}
                   </div>
@@ -1162,7 +1168,7 @@ var PickFront = React.createClass({
               </div>
               <div className="finish-damaged-barcode padding">
                 <Button1
-                  disabled={buttonActivateFlag}
+                  disabled={false}
                   text={_("Validate and Confirm")}
                   color={"orange"}
                   module={appConstants.PICK_FRONT}
@@ -1863,17 +1869,17 @@ var PickFront = React.createClass({
           }
           reprintButton =
             this.state.PickFrontScreenId ===
-            appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT ? (
-              <Button1
-                disabled={false}
-                text={_("Reprint")}
-                module={appConstants.PICK_FRONT}
-                action={appConstants.REPRINT}
-                color={"black"}
-              />
-            ) : (
-              ""
-            );
+              appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT ? (
+                <Button1
+                  disabled={false}
+                  text={_("Reprint")}
+                  module={appConstants.PICK_FRONT}
+                  action={appConstants.REPRINT}
+                  color={"black"}
+                />
+              ) : (
+                ""
+              );
 
           this._navigation = (
             <Navigation
@@ -2026,21 +2032,21 @@ var PickFront = React.createClass({
           );
           btnContainer = (
             <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-end" }}>
-                  <Button1
-                    disabled={false}
-                    text={_("Fill")}
-                    module={appConstants.PICK_FRONT}
-                    action={appConstants.MSU_SLOT_FILLED}
-                    color={"black"}
-                  />
-                  <Button1
-                    disabled={false}
-                    text={_("Empty")}
-                    module={appConstants.PICK_FRONT}
-                    action={appConstants.MSU_SLOT_EMPTY}
-                    color={"orange"}
-                  />
-                </div>
+              <Button1
+                disabled={false}
+                text={_("Fill")}
+                module={appConstants.PICK_FRONT}
+                action={appConstants.MSU_SLOT_FILLED}
+                color={"black"}
+              />
+              <Button1
+                disabled={false}
+                text={_("Empty")}
+                module={appConstants.PICK_FRONT}
+                action={appConstants.MSU_SLOT_EMPTY}
+                color={"orange"}
+              />
+            </div>
           )
           this._component = (
             <div className="grid-container">

@@ -1322,10 +1322,7 @@ var PutFront = React.createClass({
                 selectedGroup={this.state.selectedPPSBin}
                 screenClass="putFrontFlow"
               />
-              <CurrentActiveBin
-                selected={true}
-                details={this.state.PutFrontCurrentBinCount}
-              />
+              <CurrentBin details={this.state.PutFrontCurrentBinCount} />
               <PreviousDetails previousDetails={this.state.PreviousDetails} />
             </div>
           );

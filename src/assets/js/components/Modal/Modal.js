@@ -489,7 +489,7 @@ function loadComponent(modalType, modalData, ths) {
     case appConstants.BIN_FULL:
       component = [];
       var execType = appConstants.DEFAULT;
-      if (mainstore.isMsioEnabled() === true) {
+      if (mainstore.isMsioFlagEnabled()) {
         execType = appConstants.MSIO_DEFAULT;
       };
       component.push(

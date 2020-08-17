@@ -104,7 +104,7 @@ function attachKeyboard(id) {
     visible: function (e, keypressed, el) {
       el.value = ""
     },
-    accepted: function (e, keypressed, el) {},
+    accepted: function (e, keypressed, el) { },
   })
   $("#" + id)
     .data("keyboard")
@@ -120,7 +120,7 @@ function attachNumpad(id) {
     reposition: true,
     alwaysOpen: false,
     initialFocus: true,
-    accepted: function (e, keypressed, el) {},
+    accepted: function (e, keypressed, el) { },
     visible: function (e, keypressed, el) {
       el.value = ""
     },
@@ -182,7 +182,7 @@ function loadComponent(modalType, modalData, ths) {
       var rowValue = []
       var serviceRequestIds = [];
       modalData.map((eachIteration) => {
-        if(!serviceRequestIds.includes(eachIteration["service_request_id"].toString())){
+        if (!serviceRequestIds.includes(eachIteration["service_request_id"].toString())) {
           serviceRequestIds.push(eachIteration["service_request_id"].toString());
         }
       });
@@ -327,9 +327,9 @@ function loadComponent(modalType, modalData, ths) {
             var inputBoxValue = data1[keyvalue]["value"]
             if (
               modalData.checklist_data[index][index1][keyvalue[0]].Format ==
-                "Integer" ||
+              "Integer" ||
               modalData.checklist_data[index][index1][keyvalue[0]].Format ==
-                "Float"
+              "Float"
             ) {
               var inputBox = (
                 <input
@@ -487,7 +487,11 @@ function loadComponent(modalType, modalData, ths) {
       title = _("Box Full")
       break
     case appConstants.BIN_FULL:
-      component = []
+      component = [];
+      var execType = appConstants.DEFAULT;
+      if (mainstore.isMsioFlagEnabled()) {
+        execType = appConstants.MSIO_DEFAULT;
+      };
       component.push(
         <div>
           <div className="rowMiddle">
@@ -498,7 +502,7 @@ function loadComponent(modalType, modalData, ths) {
               {!ths.props.cancelClicked && (
                 <NumericIndicator
                   Formattingclass={"widerComponent"}
-                  execType={appConstants.DEFAULT}
+                  execType={execType}
                   scanDetails={mainstore.getScanDetails()}
                 />
               )}

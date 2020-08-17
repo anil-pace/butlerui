@@ -3725,6 +3725,10 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return data
   },
 
+  isMsioFlagEnabled: function () {
+    return (_seatData && _seatData.show_bin_full_default_zero) ? _seatData.show_bin_full_default_zero : false;
+  },
+
   getScanDetails: function () {
     if (_seatData["scan_details"] == undefined) {
       var data = {

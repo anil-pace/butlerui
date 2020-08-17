@@ -35,7 +35,12 @@ var ProductInfo = React.createClass({
 
     if (this.customizedJSX && this.customizedJSX.customJSX) {
       arr1.push(
-        this.customizedJSX.CustomisedStore(infoDetails, flowIndicator, arr1)
+        this.customizedJSX.CustomisedStore(
+          infoDetails,
+          flowIndicator,
+          arr1,
+          PutContainerFlag
+        )
       )
     } else {
       flowIndicator === "Pick"

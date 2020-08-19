@@ -6,7 +6,7 @@ var LoaderButler = React.createClass({
   formatTime: function (arg) {
     var result
     if (typeof arg === "object" && arg.constructor !== Array) {
-      result = _("MSU busy at PPS") + " " + arg.pps_id
+      result = _("MSU busy at PPS {0}").replace("{0}", arg.pps_id); // + " " + arg.pps_id;
     } else if (typeof arg === "number") {
       result = {}
       var hrs = Math.floor(arg / 3600)

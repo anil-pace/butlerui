@@ -1729,6 +1729,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getItemUid: function () {
     return _seatData.item_uid
   },
+  getSlotEmpty: function () {
+    return _seatData.is_slot_empty ? _seatData.is_slot_empty : false;
+  },
 
   getRackDetails: function () {
     if (_seatData.hasOwnProperty("rack_details")) {

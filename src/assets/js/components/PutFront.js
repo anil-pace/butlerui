@@ -76,7 +76,6 @@ var PutFront = React.createClass({
       ToteId: mainstore.getToteId(),
       selectedPPSBin: mainstore._getSelectedPpsBin(),
       PutFrontItemUid: mainstore.getItemUid(),
-      isSlotEmpty: mainstore.getSlotEmpty(),
       PutFrontIsCrossDockEnabled: mainstore.IsCrossDockEnabled(),
     };
 
@@ -316,7 +315,6 @@ var PutFront = React.createClass({
               navData={this.state.PutFrontNavData}
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
-              subMessage={this.state.isSlotEmpty ? allresourceConstants.EMPTY_SLOT_MESSAGE : null}
             />
           );
           //need to check this case, if we need flexible bins here?

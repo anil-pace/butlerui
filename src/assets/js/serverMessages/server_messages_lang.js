@@ -837,4 +837,5 @@ function server_messages_list() {
   _("introduced folder for mitsubishi client")
   _("testing with devops_1")
   _("testing with devops_2")
+  _("pushing in default folder")
 }

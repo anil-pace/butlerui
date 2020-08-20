@@ -834,4 +834,5 @@ function server_messages_list() {
   _("Invalid Tote. More than one type of entities found")
   _("Same product with different tag found in scanned slot. Please scan another slot")
   _("Switched to Bin {0}")
+  _("introduced folder for mitsubishi client")
 }

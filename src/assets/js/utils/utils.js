@@ -1,11 +1,11 @@
-var objectAssign = require("react/lib/Object.assign")
-var EventEmitter = require("events").EventEmitter
-var configConstants = require("../constants/configConstants")
-var resourceConstants = require("../constants/resourceConstants")
-var appConstants = require("../constants/appConstants")
-var CommonActions = require("../actions/CommonActions")
-var serverMessages = require("../serverMessages/server_messages")
-var ws, self
+var objectAssign = require("react/lib/Object.assign");
+var EventEmitter = require("events").EventEmitter;
+var configConstants = require("../constants/configConstants");
+var resourceConstants = require("../constants/resourceConstants");
+var appConstants = require("../constants/appConstants");
+var CommonActions = require("../actions/CommonActions");
+var serverMessages = require("../serverMessages/server_messages");
+var ws, self;
 
 var utils = objectAssign({}, EventEmitter.prototype, {
   enableKeyboard: function () {
@@ -39,40 +39,40 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       alwaysOpen: false,
       initialFocus: true,
       visible: function (e, keypressed, el) {
-        el.value = ""
+        el.value = "";
         //$(".authNotify").css("display","none");
       },
 
       accepted: function (e, keypressed, el) {
-        var usernameValue = document.getElementById("username").value
-        var passwordValue = document.getElementById("password").value
+        var usernameValue = document.getElementById("username").value;
+        var passwordValue = document.getElementById("password").value;
         if (
           usernameValue != null &&
           usernameValue != "" &&
           passwordValue != null &&
           passwordValue != ""
         ) {
-          $("#loginBtn").prop("disabled", false)
+          $("#loginBtn").prop("disabled", false);
         } else {
-          $("#loginBtn").prop("disabled", true)
+          $("#loginBtn").prop("disabled", true);
         }
       },
-    })
+    });
   },
   connectToWebSocket: function (data) {
-    if(ws && data!== undefined){
-      ws.send(JSON.stringify(data))
+    if (ws && data !== undefined) {
+      ws.send(JSON.stringify(data));
       return;
     }
-    self = this
-    ws = new WebSocket(configConstants.WEBSOCKET_IP)
+    self = this;
+    ws = new WebSocket(configConstants.WEBSOCKET_IP);
     if ("WebSocket" in window) {
       ws.onopen = function () {
-        $("#username, #password").prop("disabled", false)
-        console.log("connected")
-        utils.checkSessionStorage()
-        clearTimeout(utils.connectToWebSocket)
-      }
+        $("#username, #password").prop("disabled", false);
+        console.log("connected");
+        utils.checkSessionStorage();
+        clearTimeout(utils.connectToWebSocket);
+      };
       ws.onmessage = function (evt) {
         if (
           evt.data == "CLIENTCODE_409" ||
@@ -82,34 +82,34 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           evt.data == "CLIENTCODE_503" ||
           evt.data == "CLIENTCODE_403"
         ) {
-          var msgCode = evt.data
-          CommonActions.showErrorMessage(serverMessages[msgCode])
-          sessionStorage.setItem("sessionData", null)
-          CommonActions.loginSeat(false)
-          utils.enableKeyboard()
+          var msgCode = evt.data;
+          CommonActions.showErrorMessage(serverMessages[msgCode]);
+          sessionStorage.setItem("sessionData", null);
+          CommonActions.loginSeat(false);
+          utils.enableKeyboard();
         } else if (evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED) {
-          utils.sessionLogout()
-          return false
+          utils.sessionLogout();
+          return false;
         } else {
-          var received_msg = evt.data
-          var data
+          var received_msg = evt.data;
+          var data;
           try {
-            data = JSON.parse(evt.data)
+            data = JSON.parse(evt.data);
             if (data.hasOwnProperty("data")) {
               if (data.data == "disconnect") {
-                utils.sessionLogout()
-                return false
+                utils.sessionLogout();
+                return false;
               }
             }
-            putSeatData(data)
-            CommonActions.setCurrentSeat(data.state_data)
+            putSeatData(data);
+            CommonActions.setCurrentSeat(data.state_data);
           } catch (err) {
             //intentionally left blank
           }
 
-          CommonActions.setServerMessages()
+          CommonActions.setServerMessages();
         }
-      }
+      };
       ws.onclose = function () {
         //serverMessages.CLIENTCODE_003;
         /* alert(JSON.stringify(evt));
@@ -121,17 +121,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                  }*/
         //$("#username, #password").prop('disabled', true);
         //alert("Connection is closed...");
-        setTimeout(utils.connectToWebSocket, 100)
-      }
+        setTimeout(utils.connectToWebSocket, 100);
+      };
     } else {
-      alert("WebSocket NOT supported by your Browser!")
+      alert("WebSocket NOT supported by your Browser!");
     }
   },
   getCurrentLang: function () {
     var localeStr = window.sessionStorage.getItem("localeData"),
       localeObj = localeStr ? JSON.parse(localeStr) : {},
-      localeLang = localeObj && localeObj.data ? localeObj.data.locale : null
-    return localeLang
+      localeLang = localeObj && localeObj.data ? localeObj.data.locale : null;
+    return localeLang;
   },
   get3dotTrailedText: function (
     serial,
@@ -139,14 +139,14 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     rearLimit = 5,
     stringLength
   ) {
-    let trailedText = ""
+    let trailedText = "";
     if (serial.length > stringLength) {
       trailedText =
-        serial.slice(0, frontlimit) + "..." + serial.slice(-rearLimit)
+        serial.slice(0, frontlimit) + "..." + serial.slice(-rearLimit);
     } else {
-      trailedText = serial
+      trailedText = serial;
     }
-    return trailedText
+    return trailedText;
   },
   displayData: function (
     data,
@@ -154,46 +154,46 @@ var utils = objectAssign({}, EventEmitter.prototype, {
     uomConversionFactor = 1,
     uomDisplayUnit = ""
   ) {
-    product_info_locale = {}
-    image_url = {}
-    var language_locale = sessionStorage.getItem("localeData")
-    var locale
+    product_info_locale = {};
+    image_url = {};
+    var language_locale = sessionStorage.getItem("localeData");
+    var locale;
     if (language_locale == "null" || language_locale == null) {
-      locale = "en-US"
+      locale = "en-US";
     } else {
-      locale = JSON.parse(language_locale)["data"]["locale"]
+      locale = JSON.parse(language_locale)["data"]["locale"];
     }
     data.map(function (value, index) {
-      var keyValue = ""
-      var imageKey
+      var keyValue = "";
+      var imageKey;
       for (var key in value[0]) {
         if (key === "product_dimensions") {
-          var dimension = value[0][key]
+          var dimension = value[0][key];
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
               keyValue =
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + "";
             } else {
               keyValue =
                 keyValue +
                 " X " +
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10;
             }
           }
           uomDisplayUnit !== ""
             ? (keyValue =
-                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
-            : (keyValue = keyValue)
+              keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
+            : (keyValue = keyValue);
         } else if (key != "display_data" && key != "product_local_image_url") {
-          keyValue = value[0][key] + " "
+          keyValue = value[0][key] + " ";
         } else if (key != "display_data" && key == "product_local_image_url") {
-          imageKey = value[0][key]
+          imageKey = value[0][key];
         }
       }
       value[0].display_data.map(function (data_locale, index1) {
         if (data_locale.locale == locale) {
           if (data_locale.display_name != "product_local_image_url") {
-            product_info_locale[data_locale.display_name] = keyValue
+            product_info_locale[data_locale.display_name] = keyValue;
           }
         }
         if (data_locale.display_name == "product_local_image_url") {
@@ -203,22 +203,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             imageKey === "outer_inner"
           ) {
             product_info_locale[data_locale.display_name] =
-              "assets/images/" + imageKey + ".gif"
+              "assets/images/" + imageKey + ".gif";
           } else if (imageKey === "outer" || imageKey === "inner") {
             product_info_locale[data_locale.display_name] =
-              "assets/images/" + imageKey + ".png"
-          } else product_info_locale[data_locale.display_name] = imageKey
+              "assets/images/" + imageKey + ".png";
+          } else product_info_locale[data_locale.display_name] = imageKey;
         }
-      })
-    })
+      });
+    });
     if (serial) {
-      product_info_locale[_("Serial")] = serial
+      product_info_locale[_("Serial")] = serial;
     }
-    return product_info_locale
+    return product_info_locale;
   },
 
   checkSessionStorage: function () {
-    var sessionData = JSON.parse(sessionStorage.getItem("sessionData"))
+    var sessionData = JSON.parse(sessionStorage.getItem("sessionData"));
     if (sessionData === null) {
     } else {
       var webSocketData = {
@@ -227,21 +227,21 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           "auth-token": sessionData.data["auth-token"],
           seat_name: sessionData.data.seat_name,
         },
-      }
-      utils.postDataToWebsockets(webSocketData)
+      };
+      utils.postDataToWebsockets(webSocketData);
     }
   },
   postDataToWebsockets: function (data) {
-    console.log(JSON.stringify(data))
-    ws.send(JSON.stringify(data))
-    setTimeout(CommonActions.operatorSeat, 0, true)
+    console.log(JSON.stringify(data));
+    ws.send(JSON.stringify(data));
+    setTimeout(CommonActions.operatorSeat, 0, true);
   },
   storeSession: function (data) {
     // Put the object into storage
-    sessionStorage.setItem("sessionData", JSON.stringify(data))
+    sessionStorage.setItem("sessionData", JSON.stringify(data));
   },
   getAuthToken: function (data) {
-    sessionStorage.setItem("sessionData", null)
+    sessionStorage.setItem("sessionData", null);
 
     if (data.data.barcode) {
       // if barcode key is present its login via scanner mode
@@ -256,7 +256,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           barcode: data.data.barcode,
           app_name: "boi_ui",
         },
-      }
+      };
     } else {
       var loginData = {
         username: data.data.username,
@@ -268,7 +268,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           entity_id: "1",
           app_name: "boi_ui",
         },
-      }
+      };
     }
     $.ajax({
       type: "POST",
@@ -291,18 +291,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             "auth-token": response.auth_token,
             seat_name: data.data.seat_name,
           },
-        }
-        utils.storeSession(webSocketData)
-        utils.postDataToWebsockets(webSocketData)
+        };
+        utils.storeSession(webSocketData);
+        utils.postDataToWebsockets(webSocketData);
       })
       .fail(function (data, jqXHR, textStatus, errorThrown) {
-        CommonActions.showErrorMessage(data.responseJSON.error)
-      })
+        CommonActions.showErrorMessage(data.responseJSON.error);
+      });
   },
 
   sessionLogout: function (data) {
-    sessionStorage.setItem("sessionData", null)
-    location.reload()
+    sessionStorage.setItem("sessionData", null);
+    location.reload();
     $.ajax({
       type: "GET",
       url:
@@ -320,16 +320,18 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       },
     })
       .done(function (response) {
-        sessionStorage.setItem("sessionData", null)
-        location.reload()
+        sessionStorage.setItem("sessionData", null);
+        location.reload();
       })
       .fail(function (data, jqXHR, textStatus, errorThrown) {
-        alert("Logout Failed")
-      })
+        alert("Logout Failed");
+      });
   },
   postDataToTower: function (data) {
-    var retrieved_token = sessionStorage.getItem("sessionData")
-    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
+    var retrieved_token = sessionStorage.getItem("sessionData");
+    var authentication_token = JSON.parse(retrieved_token)["data"][
+      "auth-token"
+    ];
     $.ajax({
       type: "POST",
       url: configConstants.INTERFACE_IP + "/tower/api/v1/mle/pps-call",
@@ -342,18 +344,20 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       },
     })
       .done(function (response) {
-        alert("Your call ticket was submitted successfully")
-        CommonActions.hideSpinner()
+        alert("Your call ticket was submitted successfully");
+        CommonActions.hideSpinner();
       })
       .fail(function (jqXhr) {
-        console.log(jqXhr)
-        alert("There was a problem in submitting your call ticket.")
-        CommonActions.hideSpinner()
-      })
+        console.log(jqXhr);
+        alert("There was a problem in submitting your call ticket.");
+        CommonActions.hideSpinner();
+      });
   },
   postDataToInterface: function (data, seat_name) {
-    var retrieved_token = sessionStorage.getItem("sessionData")
-    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
+    var retrieved_token = sessionStorage.getItem("sessionData");
+    var authentication_token = JSON.parse(retrieved_token)["data"][
+      "auth-token"
+    ];
     $.ajax({
       type: "POST",
       url:
@@ -371,32 +375,34 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       },
     })
       .done(function (response) {
-        CommonActions.hideSpinner()
+        CommonActions.hideSpinner();
       })
       .fail(function (jqXhr) {
-        console.log(jqXhr)
-        CommonActions.hideSpinner()
+        console.log(jqXhr);
+        CommonActions.hideSpinner();
         if (jqXhr.status == 401 || jqXhr.status == 403) {
           var msgCode =
-            jqXhr.status == 401 ? "CLIENTCODE_401" : "CLIENTCODE_403"
-          CommonActions.showErrorMessage(serverMessages[msgCode])
-          sessionStorage.setItem("sessionData", null)
-          CommonActions.loginSeat(false)
-          utils.enableKeyboard()
+            jqXhr.status == 401 ? "CLIENTCODE_401" : "CLIENTCODE_403";
+          CommonActions.showErrorMessage(serverMessages[msgCode]);
+          sessionStorage.setItem("sessionData", null);
+          CommonActions.loginSeat(false);
+          utils.enableKeyboard();
         }
-      })
+      });
   },
   generateSessionId: function () {
-    var text = ""
+    var text = "";
     var possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (var i = 0; i < 50; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length))
-    localStorage.setItem("session", text)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    localStorage.setItem("session", text);
   },
   getPeripheralData: function (type, seat_name, status, method) {
-    var retrieved_token = sessionStorage.getItem("sessionData")
-    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
+    var retrieved_token = sessionStorage.getItem("sessionData");
+    var authentication_token = JSON.parse(retrieved_token)["data"][
+      "auth-token"
+    ];
     $.ajax({
       type: "GET",
       url:
@@ -416,15 +422,17 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       },
     })
       .done(function (response) {
-        CommonActions.updateSeatData(response.data, type, status, method)
+        CommonActions.updateSeatData(response.data, type, status, method);
       })
-      .fail(function (jqXhr) {})
+      .fail(function (jqXhr) { });
   },
   ///itemsearch
   getOrphanItemData: function (data, seat_name) {
-    var dataToSent = "?" + "barcode=" + data + "&" + "ppsId=" + seat_name
-    var retrieved_token = sessionStorage.getItem("sessionData")
-    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
+    var dataToSent = "?" + "barcode=" + data + "&" + "ppsId=" + seat_name;
+    var retrieved_token = sessionStorage.getItem("sessionData");
+    var authentication_token = JSON.parse(retrieved_token)["data"][
+      "auth-token"
+    ];
     $.ajax({
       type: "GET",
       url:
@@ -444,11 +452,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       },
     })
       .done(function (response) {
-        CommonActions.updateSeatData(response.data, "orphanSearch")
+        CommonActions.updateSeatData(response.data, "orphanSearch");
       })
       .fail(function (jqXhr) {
-        CommonActions.updateSeatData([], "orphanSearch")
-      })
+        CommonActions.updateSeatData([], "orphanSearch");
+      });
   },
   getBOIConfig: function () {
     $.ajax({
@@ -456,17 +464,19 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       url: configConstants.BOI_CONFIG,
     })
       .done(function (response) {
-        CommonActions.updateSeatData(response, "BOI_CONFIG")
+        CommonActions.updateSeatData(response, "BOI_CONFIG");
       })
       .fail(function (jqXhr) {
-        CommonActions.updateSeatData(null, "BOI_CONFIG")
-      })
+        CommonActions.updateSeatData(null, "BOI_CONFIG");
+      });
   },
   updatePeripherals: function (data, method, seat_name) {
-    var retrieved_token = sessionStorage.getItem("sessionData")
-    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
-    var url
-    var method = method
+    var retrieved_token = sessionStorage.getItem("sessionData");
+    var authentication_token = JSON.parse(retrieved_token)["data"][
+      "auth-token"
+    ];
+    var url;
+    var method = method;
     if (method == "POST") {
       url =
         configConstants.INTERFACE_IP +
@@ -475,7 +485,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         seat_name +
         "/" +
         appConstants.PERIPHERALS +
-        appConstants.ADD
+        appConstants.ADD;
     } else {
       url =
         configConstants.INTERFACE_IP +
@@ -485,7 +495,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         "/" +
         data.peripheral_type +
         "/" +
-        encodeURIComponent(data.peripheral_id) /*.replace(/\//g, "%2F")*/
+        encodeURIComponent(data.peripheral_id); /*.replace(/\//g, "%2F")*/
     }
     $.ajax({
       type: method,
@@ -511,7 +521,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           seat_name,
           "success",
           method
-        )
+        );
         // CommonActions.updateSeatData(response.data, data.peripheral_type);
       })
       .fail(function (jqXhr) {
@@ -521,42 +531,42 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             seat_name,
             "409",
             method
-          )
+          );
         else if (jqXhr.status == 400)
           utils.getPeripheralData(
             data.peripheral_type,
             seat_name,
             "400",
             method
-          )
+          );
         else
           utils.getPeripheralData(
             data.peripheral_type,
             seat_name,
             "fail",
             method
-          )
-      })
+          );
+      });
   },
   createLogData: function (message, type) {
-    var data = {}
-    data["message"] = message
-    data["type"] = type
-    data["session"] = localStorage.getItem("session")
-    return data
+    var data = {};
+    data["message"] = message;
+    data["type"] = type;
+    data["session"] = localStorage.getItem("session");
+    return data;
   },
 
   frntStringTransform: function (messgCode, stringArg, arg) {
-    var message_args = []
+    var message_args = [];
     if (stringArg.length < 1 || arg === appConstants.INVOICE_REQUIRED) {
-      message_args = stringArg ? stringArg : []
+      message_args = stringArg ? stringArg : [];
     } else {
-      message_args = stringArg ? [String([stringArg]).toUpperCase(), 20] : [] // 20 is max length...fixed from backend
+      message_args = stringArg ? [String([stringArg]).toUpperCase(), 20] : []; // 20 is max length...fixed from backend
     }
     message_args.unshift(
       serverMessages[messgCode] ? serverMessages[messgCode] : ""
-    )
-    return _.apply(null, message_args)
+    );
+    return _.apply(null, message_args);
   },
   logError: function (data) {
     $.ajax({
@@ -565,39 +575,38 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       data: data,
       dataType: "json",
     }).success(function (response) {
-      console.log("Error logged Successfully")
-      console.log("Log Details :")
-      console.log(JSON.stringify(data))
-    })
+      console.log("Error logged Successfully");
+      console.log("Log Details :");
+      console.log(JSON.stringify(data));
+    });
   },
-})
+});
 
 var putSeatData = function (data) {
-  console.log(data)
-
+  console.log(data);
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:
-      CommonActions.setPutBackData(data.state_data)
-      break
+      CommonActions.setPutBackData(data.state_data);
+      break;
     case appConstants.PUT_FRONT:
-      CommonActions.setPutFrontData(data.state_data)
-      break
+      CommonActions.setPutFrontData(data.state_data);
+      break;
     case appConstants.PICK_BACK:
-      CommonActions.setPickBackData(data.state_data)
-      break
+      CommonActions.setPickBackData(data.state_data);
+      break;
     case appConstants.PICK_FRONT:
-      CommonActions.setPickFrontData(data.state_data)
-      break
+      CommonActions.setPickFrontData(data.state_data);
+      break;
     case appConstants.AUDIT:
-      CommonActions.setAuditData(data.state_data)
-      break
+      CommonActions.setAuditData(data.state_data);
+      break;
     case appConstants.SEARCH:
-      CommonActions.setSearchData(data.state_data)
-      break
+      CommonActions.setSearchData(data.state_data);
+      break;
 
     default:
-      return true
+      return true;
   }
-}
+};
 
-module.exports = utils
+module.exports = utils;

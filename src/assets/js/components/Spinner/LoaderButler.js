@@ -3,7 +3,7 @@ var SpinnerButler = require("./SpinnerButler")
 var mainstore = require("../../stores/mainstore")
 
 var LoaderButler = React.createClass({
-  formatTime: function(arg) {
+  formatTime: function (arg) {
     var result
     if (typeof arg === "object" && arg.constructor !== Array) {
       result = _("MSU busy at PPS") + " " + arg.pps_id
@@ -17,14 +17,14 @@ var LoaderButler = React.createClass({
       result["hrs"] = hrs
       result["min"] = min
       result["seconds"] = seconds
-    } else if (Number(arg)  === NaN) {
+    } else if (Number(arg) === NaN) {
       result = _("Estimated time for MSU arrival is") + " " + _("unknown")
     } else {
       result = ""
     }
     return result
   },
-  render: function() {
+  render: function () {
     var eta = mainstore._getMsuEstimatedArrival()
     var formattedEta = this.formatTime(eta)
     if (typeof formattedEta === "object") {
@@ -39,8 +39,8 @@ var LoaderButler = React.createClass({
               </span>
             </span>
           ) : (
-            ""
-          )}
+              ""
+            )}
           {formattedEta.min > 0 ? (
             <span>
               <span style={{ fontWeight: "bold" }}>
@@ -49,8 +49,8 @@ var LoaderButler = React.createClass({
               <span>{_("min")}</span>
             </span>
           ) : (
-            ""
-          )}
+              ""
+            )}
           {formattedEta.seconds > 0 ? (
             <span>
               <span style={{ fontWeight: "bold" }}>
@@ -59,15 +59,15 @@ var LoaderButler = React.createClass({
               <span>{_("sec")}</span>
             </span>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </span>
       )
     }
     return (
       <div className="loaderButler">
         <div>
-          <SpinnerButler />
+          <SpinnerButler needZoomout={this.props.needZoomout} />
         </div>
         <div
           style={{

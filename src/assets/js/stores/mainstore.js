@@ -43,6 +43,7 @@ var _seatData,
   popupVisible = false,
   _showSpinner = true,
   _goodQuantity = 0,
+  _goodQuantity_udp = 0,
   _pickQuantity = 0,
   _damagedQuantity = 0,
   _putFrontExceptionScreen = "good",
@@ -1899,7 +1900,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
           }
           data["tableRows"].push([
             new self.tableCol(
-              value.pps_bin_id,
+              (value.pps_bin_id === "0" ? "Master PPTL" : value.pps_bin_id),
               "enabled",
               false,
               "small",
@@ -3843,20 +3844,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
   setCurrentSeat: function (data) {
     //showModal = false;
-    _action = undefined
-    _binId = undefined
-    _enableException = false
-    _putFrontExceptionScreen = "good"
-    _goodQuantity = 0
-    _pickQuantity = 0
-    _putQuantity = 0
-    _damagedQuantity = 0
-    _unscannableQuantity = 0
-    _missingQuantity = 0
-    _activeException = null
-    _showSpinner = false
-    _enableException = false
-    _seatData = data
+    _action = undefined;
+    _binId = undefined;
+    _enableException = false;
+    _putFrontExceptionScreen = 'good';
+    _goodQuantity = 0;
+    _pickQuantity = 0;
+    _putQuantity = 0;
+    _damagedQuantity = 0;
+    _unscannableQuantity = 0;
+    _missingQuantity = 0;
+    _activeException = null;
+    _showSpinner = false;
+    _enableException = false;
+    _seatData = data;
     if (
       _seatData.screen_id !== appConstants.PICK_FRONT_MORE_ITEM_SCAN &&
       _seatData.screen_id !== appConstants.PICK_FRONT_PPTL_PRESS &&
@@ -4093,7 +4094,8 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _damagedQuantity
   },
   setGoodQuanity: function (data) {
-    _goodQuantity = data
+    _goodQuantity = data;
+    _goodQuantity_udp = data;
   },
   setPickedQuantity: function (data) {
     _pickQuantity = data
@@ -4707,6 +4709,186 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return data
   },
+  _getUdpDamagedItemsData: function () {
+    var data = {}
+    data["header"] = []
+    data["footer"] = []
+    data["header"].push(
+      new this.tableCol(
+        _("Type"),
+        "header",
+        false,
+        "small",
+        false,
+        true,
+        true,
+        false
+      )
+    )
+    data["header"].push(
+      new this.tableCol(
+        _("SKU"),
+        "header",
+        false,
+        "small",
+        false,
+        true,
+        true,
+        false
+      )
+    )
+    data["header"].push(
+      new this.tableCol(
+        _("Serial"),
+        "header",
+        false,
+        "small",
+        false,
+        true,
+        true,
+        false
+      )
+    )
+    data["header"].push(
+      new this.tableCol(
+        _("Quantity"),
+        "header",
+        false,
+        "small",
+        false,
+        true,
+        true,
+        false
+      )
+    )
+    data["footer"].push(
+      new this.tableCol(
+        _(""),
+        "header",
+        false,
+        "small",
+        false,
+        true,
+        true,
+        false
+      )
+    )
+    data["tableRows"] = []
+    data["image_url"] = null
+    var self = this
+    if (
+      _seatData.damaged_items &&
+      Object.keys(_seatData.damaged_items).length > 0
+    ) {
+      var product_details,
+        product_sku,
+        quantity,
+        type,
+        serial,
+        total_excess = 0
+      _seatData.damaged_items.map(function (value, index) {
+        value.product_info.map(function (product_details, index) {
+          if (product_details[0].product_sku) {
+            product_sku = product_details[0].product_sku
+            quantity = value.qty;
+            type = value.type;
+            serial = value.serial.length === 0 ? "--" : value.serial;
+            total_excess += quantity
+            data["tableRows"].push([
+              new self.tableCol(
+                type,
+                "enabled",
+                false,
+                "small",
+                false,
+                true,
+                false,
+                false
+              ),
+              new self.tableCol(
+                product_sku,
+                "enabled",
+                false,
+                "small",
+                false,
+                true,
+                false,
+                false
+              ),
+              new self.tableCol(
+                serial,
+                "enabled",
+                false,
+                "small",
+                false,
+                true,
+                false,
+                false
+              ),
+              new self.tableCol(
+                quantity,
+                "enabled",
+                false,
+                "small",
+                false,
+                true,
+                false,
+                false
+              ),
+            ])
+          }
+        })
+      })
+      data["footer"].push(
+        new this.tableCol(
+          _("Total: ") + total_excess + _(" items"),
+          "header",
+          false,
+          "small",
+          false,
+          true,
+          true,
+          false
+        )
+      )
+    } else {
+      data["tableRows"].push([
+        new self.tableCol(
+          _("--"),
+          "enabled",
+          false,
+          "small",
+          false,
+          true,
+          false,
+          false
+        ),
+        new self.tableCol(
+          "-",
+          "enabled",
+          false,
+          "small",
+          false,
+          true,
+          false,
+          false
+        ),
+      ])
+      data["footer"].push(
+        new this.tableCol(
+          _("Total: "),
+          "header",
+          false,
+          "small",
+          false,
+          true,
+          true,
+          false
+        )
+      )
+    }
+    return data
+  },
   _getDamagedItemsDataForAudit: function () {
     var _damagedQuantity = 0
     var data = {}
@@ -4983,6 +5165,15 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     }
     return true
   },
+  _getUdpDamagedExceptionFlag: function () {
+    if (
+      _seatData.damaged_items != undefined &&
+      Object.keys(_seatData.damaged_items).length > 0
+    ) {
+      return false
+    }
+    return true
+  },
   _getWareHouseExceptionFlag: function () {
     if (_seatData.exception_type === "warehousefull_exception") {
       return false
@@ -5064,17 +5255,19 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       _seatData.screen_id ==
       appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY
     ) {
-      if (_goodQuantity == _seatData.put_quantity) {
+      console.log("====> _goodQuantity_udp" + _goodQuantity_udp);
+      if (_goodQuantity_udp == _seatData.put_quantity) {
         flag = type = true
       } else {
         flag =
-          _goodQuantity +
+          _goodQuantity_udp +
           _missingQuantity +
           _damagedQuantity +
           _unscannableQuantity !=
           _seatData.put_quantity
         details = _seatData.put_quantity
       }
+      _goodQuantity = _goodQuantity_udp;
     } else if (
       _seatData.screen_id == appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
       _seatData.screen_id == appConstants.PICK_FRONT_PPTL_PRESS ||
@@ -5967,6 +6160,17 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         data["bindata"] = this.getBinData()
         break
+
+      case appConstants.UDP_PUT_FRONT_DAMAGED_EXCEPTION:
+        data["PutFrontNavData"] = this.getNavData()
+        data["PutFrontServerNavData"] = this.getServerNavData()
+        data["PutFrontScreenId"] = this.getScreenId()
+        data["PutFrontExceptionData"] = this.getExceptionData()
+        data["PutFrontNotification"] = this.getNotificationData()
+        data["PutFrontExcessItems"] = this._getUdpDamagedItemsData()
+        data["PutFrontDamagedExceptionFlag"] = this._getUdpDamagedExceptionFlag()
+        break
+
       case appConstants.PUT_FRONT_WAITING_UNDOCK:
         data["PutFrontNavData"] = this.getNavData()
         data["PutFrontServerNavData"] = this.getServerNavData()
@@ -6298,6 +6502,20 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontCancelScan"] = this.cancelScanDetails()
         data["PickFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
         break
+
+      case appConstants.PICK_FRONT_SLOT_EMPTY_CONFIRM:
+        data["PickFrontNavData"] = this.getNavData()
+        data["PickFrontServerNavData"] = this.getServerNavData()
+        data["PickFrontScreenId"] = this.getScreenId()
+        data["PickFrontRackDetails"] = this.getRackDetails()
+        data["isDrawer"] = this.getDrawerFlag()
+        data["SlotType"] = this.getSlotType()
+        data["PickFrontExceptionData"] = this.getExceptionData()
+        data["PickFrontNotification"] = this.getNotificationData()
+        data["PickFrontExceptionStatus"] = this.getExceptionStatus()
+        data["PickFrontRackTypeMPU"] = this.getRackType()
+        break
+
 
       case appConstants.PICK_FRONT_CHECKLIST:
         data["PickFrontNavData"] = this.getNavData()

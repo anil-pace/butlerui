@@ -314,6 +314,11 @@ var Button1 = React.createClass({
             data["event_name"] = appConstants.CANCEL_SCAN_ALL
             ActionCreators.postDataToInterface(data)
             break
+          
+          case appConstants.REPRINT_LABEL:
+            data["event_name"] = appConstants.TEMP_SKU_REPRINT_REQUEST
+            ActionCreators.postDataToInterface(data)
+            break
 
           case appConstants.CANCEL_SCAN_SEND_TO_SERVER_MODAL:
             data["event_name"] = appConstants.CANCEL_SCAN_ALL

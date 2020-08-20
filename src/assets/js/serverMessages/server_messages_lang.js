@@ -835,4 +835,5 @@ function server_messages_list() {
   _("Same product with different tag found in scanned slot. Please scan another slot")
   _("Switched to Bin {0}")
   _("introduced folder for mitsubishi client")
+  _("testing with devops")
 }

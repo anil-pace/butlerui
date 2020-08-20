@@ -836,4 +836,5 @@ function server_messages_list() {
   _("Switched to Bin {0}")
   _("introduced folder for mitsubishi client")
   _("testing with devops_1")
+  _("testing with devops_2")
 }

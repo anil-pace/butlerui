@@ -329,7 +329,7 @@ var PickFront = React.createClass({
         var reprintLabelButton = PickFrontReprintLabel ? ( 
           <div className = "reprintLabelWrapper">
                 <Button1
-                  src={"./assets/images/Printer.gif"}
+                  src={"./assets/images/printerIcon.svg"}
                   imgheight="30px"
                   imgwidth="30px"
                   disabled={false}
@@ -451,7 +451,7 @@ var PickFront = React.createClass({
           var reprintLabelButton = PickFrontReprintLabel ? ( 
             <div className = "reprintLabelWrapper">
                   <Button1
-                    src={"./assets/images/Printer.gif"}
+                    src={"./assets/images/printerIcon.svg"}
                     imgheight="30px"
                     imgwidth="30px"
                     disabled={false}
@@ -694,7 +694,7 @@ var PickFront = React.createClass({
           var reprintLabelButton = PickFrontReprintLabel ? ( 
             <div className = "reprintLabelWrapper">
                   <Button1
-                    src={"./assets/images/Printer.gif"}
+                    src={"./assets/images/printerIcon.svg"}
                     imgheight="30px"
                     imgwidth="30px"
                     disabled={false}
@@ -1015,7 +1015,7 @@ var PickFront = React.createClass({
         var reprintLabelButton = PickFrontReprintLabel ? ( 
         <div className="reprintLabelWrapper">
               <Button1
-                src={"./assets/images/Printer.gif"}
+                src={"./assets/images/printerIcon.svg"}
                 imgheight="30px"
                 imgwidth="30px"
                 disabled={false}
@@ -2152,9 +2152,9 @@ var PickFront = React.createClass({
           var reprintLabelButton = PickFrontReprintLabel ? ( 
           <div className = "reprintLabelWrapper">
                 <Button1
-                  src={"./assets/images/Printer.gif"}
-                  imgheight="70px"
-                  imgwidth="70px"
+                  src={"./assets/images/printerIcon.svg"}
+                  imgheight="30px"
+                  imgwidth="30px"
                   disabled={false}
                   text={_("Reprint label")}
                   module={appConstants.PICK_FRONT}

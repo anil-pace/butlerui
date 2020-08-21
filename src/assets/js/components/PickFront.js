@@ -309,7 +309,6 @@ var PickFront = React.createClass({
         var rackType = "";
         let isHeavyItem = this.state.PickFrontHeavyItemsFlag;
         var { PickFrontReprintLabel } = this.state;
-        
         if (cancelScanFlag) {
           cancelButton = (
             <div>
@@ -330,6 +329,9 @@ var PickFront = React.createClass({
         var reprintLabelButton = PickFrontReprintLabel ? ( 
           <div className = "reprintLabelWrapper">
                 <Button1
+                  src={"./assets/images/Printer.gif"}
+                  imgheight="30px"
+                  imgwidth="30px"
                   disabled={false}
                   text={_("Reprint label")}
                   module={appConstants.PICK_FRONT}
@@ -449,6 +451,9 @@ var PickFront = React.createClass({
           var reprintLabelButton = PickFrontReprintLabel ? ( 
             <div className = "reprintLabelWrapper">
                   <Button1
+                    src={"./assets/images/Printer.gif"}
+                    imgheight="30px"
+                    imgwidth="30px"
                     disabled={false}
                     text={_("Reprint label")}
                     module={appConstants.PICK_FRONT}
@@ -689,6 +694,9 @@ var PickFront = React.createClass({
           var reprintLabelButton = PickFrontReprintLabel ? ( 
             <div className = "reprintLabelWrapper">
                   <Button1
+                    src={"./assets/images/Printer.gif"}
+                    imgheight="30px"
+                    imgwidth="30px"
                     disabled={false}
                     text={_("Reprint label")}
                     module={appConstants.PICK_FRONT}
@@ -1005,8 +1013,11 @@ var PickFront = React.createClass({
 
         // Reprint Label Button added as per BSS-26656
         var reprintLabelButton = PickFrontReprintLabel ? ( 
-        <div>
+        <div className="reprintLabelWrapper">
               <Button1
+                src={"./assets/images/Printer.gif"}
+                imgheight="30px"
+                imgwidth="30px"
                 disabled={false}
                 text={_("Reprint label")}
                 module={appConstants.PICK_FRONT}
@@ -2141,6 +2152,9 @@ var PickFront = React.createClass({
           var reprintLabelButton = PickFrontReprintLabel ? ( 
           <div className = "reprintLabelWrapper">
                 <Button1
+                  src={"./assets/images/Printer.gif"}
+                  imgheight="70px"
+                  imgwidth="70px"
                   disabled={false}
                   text={_("Reprint label")}
                   module={appConstants.PICK_FRONT}

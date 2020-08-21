@@ -843,8 +843,15 @@ var Button1 = React.createClass({
             this.props.action
           )}
         >
-          {" "}
-          {this.props.text}{" "}
+          {this.props.src ? 
+            <img src={this.props.src}
+                alt={this.props.text}
+                height={this.props.imgheight}
+                weight={this.props.imgwidth}
+                style = {{marginRight: '12px'}}
+                /> : ''
+                }
+          {this.props.text}
         </a>
       )
     else

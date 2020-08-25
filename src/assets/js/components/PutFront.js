@@ -279,7 +279,7 @@ var PutFront = React.createClass({
                     mapDetails={this.state.BinMapDetails}
                     selectedGroup={this.state.BinMapGroupDetails}
                     screenClass="putFrontFlow"
-                  />
+                    />
                 )
                 : ""}
               {binComponent}

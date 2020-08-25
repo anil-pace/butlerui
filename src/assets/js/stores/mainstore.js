@@ -1719,6 +1719,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   isReprintPopUpEnabled: function () {
     return _seatData.reprint_popup_enabled
   },
+  isReprintLabelEnabled: function () {
+    return _seatData.temp_sku_reprint_enabled ? _seatData.temp_sku_reprint_enabled : false
+  },
   getHeavyItemsFlag: function () {
     return _seatData.is_heavy ? _seatData.is_heavy : false
   },
@@ -6487,6 +6490,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontRackDetails"] = this.getRackDetails()
         data["PickFrontProductDetails"] = this.productDetails()
         data["undockAwaited"] = this._getUndockAwaitedGroup()
+        data["PickFrontReprintLabel"] = this.isReprintLabelEnabled()
         break
 
       case appConstants.PICK_FRONT_SLOT_SCAN:
@@ -6536,6 +6540,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontRackTypeMPU"] = this.getRackType()
         data["PickFrontCancelScan"] = this.cancelScanDetails()
         data["PickFrontHeavyItemsFlag"] = this.getHeavyItemsFlag()
+        data["PickFrontReprintLabel"] = this.isReprintLabelEnabled()
         break
 
       case appConstants.PICK_FRONT_SLOT_EMPTY_CONFIRM:
@@ -6592,6 +6597,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data[
           "PickFrontChecklistOverlayStatus"
         ] = this.getChecklistOverlayStatus()
+        data["PickFrontReprintLabel"] = this.isReprintLabelEnabled()
         break
       case appConstants.PICK_FRONT_PACKING_ITEM_SCAN:
         data["PickFrontPackingButtonType"] = this.getPickFrontButtonType()
@@ -6634,6 +6640,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickFrontReprintPopUp"] = this.isReprintPopUpEnabled()
         data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
         data["bindata"] = this.getBinData()
+        data["PickFrontReprintLabel"] = this.isReprintLabelEnabled()
         break
 
       case appConstants.PICK_FRONT_PACKING_BOX:
@@ -6740,6 +6747,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["isPrinterVisible"] = this.getPrinterVisibility()
         data["bindata"] = this.getBinData()
         data["pickFrontSelectedBin"] = this.getCurrentSelectedBin()
+        data["PickFrontReprintLabel"] = this.isReprintLabelEnabled()
         break
       case appConstants.ITEM_SEARCH:
         data["PickFrontScreenId"] = this.getScreenId()

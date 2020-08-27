@@ -398,6 +398,7 @@ var serverMessages = {
   PtB006: "{0} Unscannable",
   PtF001: "Issues with entity",
   PtF005: "Entity Missing",
+  PtF004: "Bigger Slot Needed",
   PtF002: "Space Not Available",
   PtF003: "Excess quantity",
   PkF001: "Issues with {0}",

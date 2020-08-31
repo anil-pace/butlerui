@@ -270,6 +270,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         }
       }
     }
+
     $.ajax({
       type: "POST",
       url:

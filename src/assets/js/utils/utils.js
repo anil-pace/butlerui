@@ -1,14 +1,14 @@
-var objectAssign = require("react/lib/Object.assign");
-var EventEmitter = require("events").EventEmitter;
-var configConstants = require("../constants/configConstants");
-var resourceConstants = require("../constants/resourceConstants");
-var appConstants = require("../constants/appConstants");
-var CommonActions = require("../actions/CommonActions");
-var serverMessages = require("../serverMessages/server_messages");
-var ws, self;
+var objectAssign = require("react/lib/Object.assign")
+var EventEmitter = require("events").EventEmitter
+var configConstants = require("../constants/configConstants")
+var resourceConstants = require("../constants/resourceConstants")
+var appConstants = require("../constants/appConstants")
+var CommonActions = require("../actions/CommonActions")
+var serverMessages = require("../serverMessages/server_messages")
+var ws, self
 
 var utils = objectAssign({}, EventEmitter.prototype, {
-  enableKeyboard: function () {
+  enableKeyboard: function() {
     virtualKeyBoard_login = $("#username, #password").keyboard({
       layout: "custom",
       customLayout: {
@@ -19,7 +19,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           "a s d f g h j k l",
           "{shift} z x c v b n m . {shift}",
           "{space}",
-          "{a} {c}",
+          "{a} {c}"
         ],
         shift: [
           "( ) { } [ ] = ~ ` -",
@@ -28,52 +28,52 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           "A S D F G H J K L",
           "{shift} Z X C V B N M . {shift}",
           "{space}",
-          "{a} {c}",
-        ],
+          "{a} {c}"
+        ]
       },
       css: {
         container:
-          "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad",
+          "ui-widget-content ui-widget ui-corner-all ui-helper-clearfix custom-keypad"
       },
       reposition: true,
       alwaysOpen: false,
       initialFocus: true,
-      visible: function (e, keypressed, el) {
-        el.value = "";
+      visible: function(e, keypressed, el) {
+        el.value = ""
         //$(".authNotify").css("display","none");
       },
 
-      accepted: function (e, keypressed, el) {
-        var usernameValue = document.getElementById("username").value;
-        var passwordValue = document.getElementById("password").value;
+      accepted: function(e, keypressed, el) {
+        var usernameValue = document.getElementById("username").value
+        var passwordValue = document.getElementById("password").value
         if (
           usernameValue != null &&
           usernameValue != "" &&
           passwordValue != null &&
           passwordValue != ""
         ) {
-          $("#loginBtn").prop("disabled", false);
+          $("#loginBtn").prop("disabled", false)
         } else {
-          $("#loginBtn").prop("disabled", true);
+          $("#loginBtn").prop("disabled", true)
         }
-      },
-    });
+      }
+    })
   },
-  connectToWebSocket: function (data) {
+  connectToWebSocket: function(data) {
     if (ws && data !== undefined) {
-      ws.send(JSON.stringify(data));
-      return;
+      ws.send(JSON.stringify(data))
+      return
     }
-    self = this;
-    ws = new WebSocket(configConstants.WEBSOCKET_IP);
+    self = this
+    ws = new WebSocket(configConstants.WEBSOCKET_IP)
     if ("WebSocket" in window) {
-      ws.onopen = function () {
-        $("#username, #password").prop("disabled", false);
-        console.log("connected");
-        utils.checkSessionStorage();
-        clearTimeout(utils.connectToWebSocket);
-      };
-      ws.onmessage = function (evt) {
+      ws.onopen = function() {
+        $("#username, #password").prop("disabled", false)
+        console.log("connected")
+        utils.checkSessionStorage()
+        clearTimeout(utils.connectToWebSocket)
+      }
+      ws.onmessage = function(evt) {
         if (
           evt.data == "CLIENTCODE_409" ||
           evt.data == "CLIENTCODE_412" ||
@@ -82,35 +82,35 @@ var utils = objectAssign({}, EventEmitter.prototype, {
           evt.data == "CLIENTCODE_503" ||
           evt.data == "CLIENTCODE_403"
         ) {
-          var msgCode = evt.data;
-          CommonActions.showErrorMessage(serverMessages[msgCode]);
-          sessionStorage.setItem("sessionData", null);
-          CommonActions.loginSeat(false);
-          utils.enableKeyboard();
+          var msgCode = evt.data
+          CommonActions.showErrorMessage(serverMessages[msgCode])
+          sessionStorage.setItem("sessionData", null)
+          CommonActions.loginSeat(false)
+          utils.enableKeyboard()
         } else if (evt.data === resourceConstants.CLIENTCODE_MODE_CHANGED) {
-          utils.sessionLogout();
-          return false;
+          utils.sessionLogout()
+          return false
         } else {
-          var received_msg = evt.data;
-          var data;
+          var received_msg = evt.data
+          var data
           try {
-            data = JSON.parse(evt.data);
+            data = JSON.parse(evt.data)
             if (data.hasOwnProperty("data")) {
               if (data.data == "disconnect") {
-                utils.sessionLogout();
-                return false;
+                utils.sessionLogout()
+                return false
               }
             }
-            putSeatData(data);
-            CommonActions.setCurrentSeat(data.state_data);
+            putSeatData(data)
+            CommonActions.setCurrentSeat(data.state_data)
           } catch (err) {
             //intentionally left blank
           }
 
-          CommonActions.setServerMessages();
+          CommonActions.setServerMessages()
         }
-      };
-      ws.onclose = function () {
+      }
+      ws.onclose = function() {
         //serverMessages.CLIENTCODE_003;
         /* alert(JSON.stringify(evt));
                  if(evt == "CLIENTCODE_409" || evt == "CLIENTCODE_503"){
@@ -121,79 +121,79 @@ var utils = objectAssign({}, EventEmitter.prototype, {
                  }*/
         //$("#username, #password").prop('disabled', true);
         //alert("Connection is closed...");
-        setTimeout(utils.connectToWebSocket, 100);
-      };
+        setTimeout(utils.connectToWebSocket, 100)
+      }
     } else {
-      alert("WebSocket NOT supported by your Browser!");
+      alert("WebSocket NOT supported by your Browser!")
     }
   },
-  getCurrentLang: function () {
+  getCurrentLang: function() {
     var localeStr = window.sessionStorage.getItem("localeData"),
       localeObj = localeStr ? JSON.parse(localeStr) : {},
-      localeLang = localeObj && localeObj.data ? localeObj.data.locale : null;
-    return localeLang;
+      localeLang = localeObj && localeObj.data ? localeObj.data.locale : null
+    return localeLang
   },
-  get3dotTrailedText: function (
+  get3dotTrailedText: function(
     serial,
     frontlimit = 5,
     rearLimit = 5,
     stringLength
   ) {
-    let trailedText = "";
+    let trailedText = ""
     if (serial.length > stringLength) {
       trailedText =
-        serial.slice(0, frontlimit) + "..." + serial.slice(-rearLimit);
+        serial.slice(0, frontlimit) + "..." + serial.slice(-rearLimit)
     } else {
-      trailedText = serial;
+      trailedText = serial
     }
-    return trailedText;
+    return trailedText
   },
-  displayData: function (
+  displayData: function(
     data,
     serial,
     uomConversionFactor = 1,
     uomDisplayUnit = ""
   ) {
-    product_info_locale = {};
-    image_url = {};
-    var language_locale = sessionStorage.getItem("localeData");
-    var locale;
+    product_info_locale = {}
+    image_url = {}
+    var language_locale = sessionStorage.getItem("localeData")
+    var locale
     if (language_locale == "null" || language_locale == null) {
-      locale = "en-US";
+      locale = "en-US"
     } else {
-      locale = JSON.parse(language_locale)["data"]["locale"];
+      locale = JSON.parse(language_locale)["data"]["locale"]
     }
-    data.map(function (value, index) {
-      var keyValue = "";
-      var imageKey;
+    data.map(function(value, index) {
+      var keyValue = ""
+      var imageKey
       for (var key in value[0]) {
         if (key === "product_dimensions") {
-          var dimension = value[0][key];
+          var dimension = value[0][key]
           for (var i = 0; i < dimension.length; i++) {
             if (i === 0) {
               keyValue =
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + "";
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10 + ""
             } else {
               keyValue =
                 keyValue +
                 " X " +
-                Math.round(dimension[i] * uomConversionFactor * 10) / 10;
+                Math.round(dimension[i] * uomConversionFactor * 10) / 10
             }
           }
           uomDisplayUnit !== ""
             ? (keyValue =
-              keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
-            : (keyValue = keyValue);
+                keyValue + " (" + appConstants.IN + uomDisplayUnit + ")")
+            : (keyValue = keyValue)
         } else if (key != "display_data" && key != "product_local_image_url") {
-          keyValue = value[0][key] + " ";
+          keyValue = value[0][key] + " "
         } else if (key != "display_data" && key == "product_local_image_url") {
-          imageKey = value[0][key];
+          imageKey = value[0][key]
         }
       }
-      value[0].display_data.map(function (data_locale, index1) {
+      value[0].display_data.map(function(data_locale, index1) {
         if (data_locale.locale == locale) {
           if (data_locale.display_name != "product_local_image_url") {
-            product_info_locale[data_locale.display_name] = keyValue;
+            product_info_locale[data_locale.display_name] = keyValue
           }
         }
         if (data_locale.display_name == "product_local_image_url") {
@@ -203,45 +203,45 @@ var utils = objectAssign({}, EventEmitter.prototype, {
             imageKey === "outer_inner"
           ) {
             product_info_locale[data_locale.display_name] =
-              "assets/images/" + imageKey + ".gif";
+              "assets/images/" + imageKey + ".gif"
           } else if (imageKey === "outer" || imageKey === "inner") {
             product_info_locale[data_locale.display_name] =
-              "assets/images/" + imageKey + ".png";
-          } else product_info_locale[data_locale.display_name] = imageKey;
+              "assets/images/" + imageKey + ".png"
+          } else product_info_locale[data_locale.display_name] = imageKey
         }
-      });
-    });
+      })
+    })
     if (serial) {
-      product_info_locale[_("Serial")] = serial;
+      product_info_locale[_("Serial")] = serial
     }
-    return product_info_locale;
+    return product_info_locale
   },
 
-  checkSessionStorage: function () {
-    var sessionData = JSON.parse(sessionStorage.getItem("sessionData"));
+  checkSessionStorage: function() {
+    var sessionData = JSON.parse(sessionStorage.getItem("sessionData"))
     if (sessionData === null) {
     } else {
       var webSocketData = {
         data_type: "auth",
         data: {
           "auth-token": sessionData.data["auth-token"],
-          seat_name: sessionData.data.seat_name,
-        },
-      };
-      utils.postDataToWebsockets(webSocketData);
+          seat_name: sessionData.data.seat_name
+        }
+      }
+      utils.postDataToWebsockets(webSocketData)
     }
   },
-  postDataToWebsockets: function (data) {
-    console.log(JSON.stringify(data));
-    ws.send(JSON.stringify(data));
-    setTimeout(CommonActions.operatorSeat, 0, true);
+  postDataToWebsockets: function(data) {
+    console.log(JSON.stringify(data))
+    ws.send(JSON.stringify(data))
+    setTimeout(CommonActions.operatorSeat, 0, true)
   },
-  storeSession: function (data) {
+  storeSession: function(data) {
     // Put the object into storage
-    sessionStorage.setItem("sessionData", JSON.stringify(data));
+    sessionStorage.setItem("sessionData", JSON.stringify(data))
   },
-  getAuthToken: function (data) {
-    sessionStorage.setItem("sessionData", null);
+  getAuthToken: function(data) {
+    sessionStorage.setItem("sessionData", null)
 
     if (data.data.barcode) {
       // if barcode key is present its login via scanner mode
@@ -252,11 +252,11 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         action: "LOGIN",
         role: [data.data.role],
         context: {
-          entity_id: "1",
+          entity_id: data.data.seat_name,
           barcode: data.data.barcode,
-          app_name: "boi_ui",
-        },
-      };
+          app_name: "boi_ui"
+        }
+      }
     } else {
       var loginData = {
         username: data.data.username,
@@ -265,10 +265,10 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         role: [data.data.role],
         action: "LOGIN",
         context: {
-          entity_id: "1",
-          app_name: "boi_ui",
-        },
-      };
+          entity_id: data.data.seat_name,
+          app_name: "boi_ui"
+        }
+      }
     }
     $.ajax({
       type: "POST",
@@ -281,28 +281,28 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       dataType: "json",
       headers: {
         "content-type": "application/json",
-        accept: "application/json",
-      },
+        accept: "application/json"
+      }
     })
-      .done(function (response) {
+      .done(function(response) {
         var webSocketData = {
           data_type: "auth",
           data: {
             "auth-token": response.auth_token,
-            seat_name: data.data.seat_name,
-          },
-        };
-        utils.storeSession(webSocketData);
-        utils.postDataToWebsockets(webSocketData);
+            seat_name: data.data.seat_name
+          }
+        }
+        utils.storeSession(webSocketData)
+        utils.postDataToWebsockets(webSocketData)
       })
-      .fail(function (data, jqXHR, textStatus, errorThrown) {
-        CommonActions.showErrorMessage(data.responseJSON.error);
-      });
+      .fail(function(data, jqXHR, textStatus, errorThrown) {
+        CommonActions.showErrorMessage(data.responseJSON.error)
+      })
   },
 
-  sessionLogout: function (data) {
-    sessionStorage.setItem("sessionData", null);
-    location.reload();
+  sessionLogout: function(data) {
+    sessionStorage.setItem("sessionData", null)
+    location.reload()
     $.ajax({
       type: "GET",
       url:
@@ -316,22 +316,20 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         accept: "application/json",
         "Authentication-Token": JSON.parse(
           sessionStorage.getItem("sessionData")
-        )["data"]["auth-token"],
-      },
+        )["data"]["auth-token"]
+      }
     })
-      .done(function (response) {
-        sessionStorage.setItem("sessionData", null);
-        location.reload();
+      .done(function(response) {
+        sessionStorage.setItem("sessionData", null)
+        location.reload()
       })
-      .fail(function (data, jqXHR, textStatus, errorThrown) {
-        alert("Logout Failed");
-      });
+      .fail(function(data, jqXHR, textStatus, errorThrown) {
+        alert("Logout Failed")
+      })
   },
-  postDataToTower: function (data) {
-    var retrieved_token = sessionStorage.getItem("sessionData");
-    var authentication_token = JSON.parse(retrieved_token)["data"][
-      "auth-token"
-    ];
+  postDataToTower: function(data) {
+    var retrieved_token = sessionStorage.getItem("sessionData")
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
     $.ajax({
       type: "POST",
       url: configConstants.INTERFACE_IP + "/tower/api/v1/mle/pps-call",
@@ -340,24 +338,22 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        "Authentication-Token": authentication_token,
-      },
+        "Authentication-Token": authentication_token
+      }
     })
-      .done(function (response) {
-        alert("Your call ticket was submitted successfully");
-        CommonActions.hideSpinner();
+      .done(function(response) {
+        alert("Your call ticket was submitted successfully")
+        CommonActions.hideSpinner()
       })
-      .fail(function (jqXhr) {
-        console.log(jqXhr);
-        alert("There was a problem in submitting your call ticket.");
-        CommonActions.hideSpinner();
-      });
+      .fail(function(jqXhr) {
+        console.log(jqXhr)
+        alert("There was a problem in submitting your call ticket.")
+        CommonActions.hideSpinner()
+      })
   },
-  postDataToInterface: function (data, seat_name) {
-    var retrieved_token = sessionStorage.getItem("sessionData");
-    var authentication_token = JSON.parse(retrieved_token)["data"][
-      "auth-token"
-    ];
+  postDataToInterface: function(data, seat_name) {
+    var retrieved_token = sessionStorage.getItem("sessionData")
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
     $.ajax({
       type: "POST",
       url:
@@ -371,38 +367,36 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        "Authentication-Token": authentication_token,
-      },
+        "Authentication-Token": authentication_token
+      }
     })
-      .done(function (response) {
-        CommonActions.hideSpinner();
+      .done(function(response) {
+        CommonActions.hideSpinner()
       })
-      .fail(function (jqXhr) {
-        console.log(jqXhr);
-        CommonActions.hideSpinner();
+      .fail(function(jqXhr) {
+        console.log(jqXhr)
+        CommonActions.hideSpinner()
         if (jqXhr.status == 401 || jqXhr.status == 403) {
           var msgCode =
-            jqXhr.status == 401 ? "CLIENTCODE_401" : "CLIENTCODE_403";
-          CommonActions.showErrorMessage(serverMessages[msgCode]);
-          sessionStorage.setItem("sessionData", null);
-          CommonActions.loginSeat(false);
-          utils.enableKeyboard();
+            jqXhr.status == 401 ? "CLIENTCODE_401" : "CLIENTCODE_403"
+          CommonActions.showErrorMessage(serverMessages[msgCode])
+          sessionStorage.setItem("sessionData", null)
+          CommonActions.loginSeat(false)
+          utils.enableKeyboard()
         }
-      });
+      })
   },
-  generateSessionId: function () {
-    var text = "";
+  generateSessionId: function() {
+    var text = ""
     var possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     for (var i = 0; i < 50; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    localStorage.setItem("session", text);
+      text += possible.charAt(Math.floor(Math.random() * possible.length))
+    localStorage.setItem("session", text)
   },
-  getPeripheralData: function (type, seat_name, status, method) {
-    var retrieved_token = sessionStorage.getItem("sessionData");
-    var authentication_token = JSON.parse(retrieved_token)["data"][
-      "auth-token"
-    ];
+  getPeripheralData: function(type, seat_name, status, method) {
+    var retrieved_token = sessionStorage.getItem("sessionData")
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
     $.ajax({
       type: "GET",
       url:
@@ -418,21 +412,19 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        "Authentication-Token": authentication_token,
-      },
+        "Authentication-Token": authentication_token
+      }
     })
-      .done(function (response) {
-        CommonActions.updateSeatData(response.data, type, status, method);
+      .done(function(response) {
+        CommonActions.updateSeatData(response.data, type, status, method)
       })
-      .fail(function (jqXhr) { });
+      .fail(function(jqXhr) {})
   },
   ///itemsearch
-  getOrphanItemData: function (data, seat_name) {
-    var dataToSent = "?" + "barcode=" + data + "&" + "ppsId=" + seat_name;
-    var retrieved_token = sessionStorage.getItem("sessionData");
-    var authentication_token = JSON.parse(retrieved_token)["data"][
-      "auth-token"
-    ];
+  getOrphanItemData: function(data, seat_name) {
+    var dataToSent = "?" + "barcode=" + data + "&" + "ppsId=" + seat_name
+    var retrieved_token = sessionStorage.getItem("sessionData")
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
     $.ajax({
       type: "GET",
       url:
@@ -448,35 +440,33 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        "Authentication-Token": authentication_token,
-      },
+        "Authentication-Token": authentication_token
+      }
     })
-      .done(function (response) {
-        CommonActions.updateSeatData(response.data, "orphanSearch");
+      .done(function(response) {
+        CommonActions.updateSeatData(response.data, "orphanSearch")
       })
-      .fail(function (jqXhr) {
-        CommonActions.updateSeatData([], "orphanSearch");
-      });
+      .fail(function(jqXhr) {
+        CommonActions.updateSeatData([], "orphanSearch")
+      })
   },
-  getBOIConfig: function () {
+  getBOIConfig: function() {
     $.ajax({
       type: "GET",
-      url: configConstants.BOI_CONFIG,
+      url: configConstants.BOI_CONFIG
     })
-      .done(function (response) {
-        CommonActions.updateSeatData(response, "BOI_CONFIG");
+      .done(function(response) {
+        CommonActions.updateSeatData(response, "BOI_CONFIG")
       })
-      .fail(function (jqXhr) {
-        CommonActions.updateSeatData(null, "BOI_CONFIG");
-      });
+      .fail(function(jqXhr) {
+        CommonActions.updateSeatData(null, "BOI_CONFIG")
+      })
   },
-  updatePeripherals: function (data, method, seat_name) {
-    var retrieved_token = sessionStorage.getItem("sessionData");
-    var authentication_token = JSON.parse(retrieved_token)["data"][
-      "auth-token"
-    ];
-    var url;
-    var method = method;
+  updatePeripherals: function(data, method, seat_name) {
+    var retrieved_token = sessionStorage.getItem("sessionData")
+    var authentication_token = JSON.parse(retrieved_token)["data"]["auth-token"]
+    var url
+    var method = method
     if (method == "POST") {
       url =
         configConstants.INTERFACE_IP +
@@ -485,7 +475,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         seat_name +
         "/" +
         appConstants.PERIPHERALS +
-        appConstants.ADD;
+        appConstants.ADD
     } else {
       url =
         configConstants.INTERFACE_IP +
@@ -495,7 +485,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         "/" +
         data.peripheral_type +
         "/" +
-        encodeURIComponent(data.peripheral_id); /*.replace(/\//g, "%2F")*/
+        encodeURIComponent(data.peripheral_id) /*.replace(/\//g, "%2F")*/
     }
     $.ajax({
       type: method,
@@ -505,8 +495,8 @@ var utils = objectAssign({}, EventEmitter.prototype, {
       headers: {
         "content-type": "application/json",
         accept: "application/json",
-        "Authentication-Token": authentication_token,
-      },
+        "Authentication-Token": authentication_token
+      }
       /*complete:function(xhr,textStatus) {
                 if(xhr.status == 409)
                     utils.getPeripheralData(data.peripheral_type, seat_name , '409', method)
@@ -515,98 +505,97 @@ var utils = objectAssign({}, EventEmitter.prototype, {
            // CommonActions.updateSeatData(response.data, data.peripheral_type); 
        }*/
     })
-      .done(function (response, statusText, xhr) {
+      .done(function(response, statusText, xhr) {
         utils.getPeripheralData(
           data.peripheral_type,
           seat_name,
           "success",
           method
-        );
+        )
         // CommonActions.updateSeatData(response.data, data.peripheral_type);
       })
-      .fail(function (jqXhr) {
+      .fail(function(jqXhr) {
         if (jqXhr.status == 409)
           utils.getPeripheralData(
             data.peripheral_type,
             seat_name,
             "409",
             method
-          );
+          )
         else if (jqXhr.status == 400)
           utils.getPeripheralData(
             data.peripheral_type,
             seat_name,
             "400",
             method
-          );
+          )
         else
           utils.getPeripheralData(
             data.peripheral_type,
             seat_name,
             "fail",
             method
-          );
-      });
+          )
+      })
   },
-  createLogData: function (message, type) {
-    var data = {};
-    data["message"] = message;
-    data["type"] = type;
-    data["session"] = localStorage.getItem("session");
-    return data;
+  createLogData: function(message, type) {
+    var data = {}
+    data["message"] = message
+    data["type"] = type
+    data["session"] = localStorage.getItem("session")
+    return data
   },
 
-  frntStringTransform: function (messgCode, stringArg, arg) {
-    var message_args = [];
+  frntStringTransform: function(messgCode, stringArg, arg) {
+    var message_args = []
     if (stringArg.length < 1 || arg === appConstants.INVOICE_REQUIRED) {
-      message_args = stringArg ? stringArg : [];
+      message_args = stringArg ? stringArg : []
     } else {
-      message_args = stringArg ? [String([stringArg]).toUpperCase(), 20] : []; // 20 is max length...fixed from backend
+      message_args = stringArg ? [String([stringArg]).toUpperCase(), 20] : [] // 20 is max length...fixed from backend
     }
     message_args.unshift(
       serverMessages[messgCode] ? serverMessages[messgCode] : ""
-    );
-    return _.apply(null, message_args);
+    )
+    return _.apply(null, message_args)
   },
-  logError: function (data) {
+  logError: function(data) {
     $.ajax({
       type: "POST",
       url: "http://192.168.3.93:300/api/log",
       data: data,
-      dataType: "json",
-    }).success(function (response) {
-      console.log("Error logged Successfully");
-      console.log("Log Details :");
-      console.log(JSON.stringify(data));
-    });
-  },
-});
+      dataType: "json"
+    }).success(function(response) {
+      console.log("Error logged Successfully")
+      console.log("Log Details :")
+      console.log(JSON.stringify(data))
+    })
+  }
+})
 
-var putSeatData = function (data) {
-  console.log(data);
+var putSeatData = function(data) {
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:
-      CommonActions.setPutBackData(data.state_data);
-      break;
+      CommonActions.setPutBackData(data.state_data)
+      break
     case appConstants.PUT_FRONT:
-      CommonActions.setPutFrontData(data.state_data);
-      break;
+      CommonActions.setPutFrontData(data.state_data)
+      break
     case appConstants.PICK_BACK:
-      CommonActions.setPickBackData(data.state_data);
-      break;
+      CommonActions.setPickBackData(data.state_data)
+      break
     case appConstants.PICK_FRONT:
-      CommonActions.setPickFrontData(data.state_data);
-      break;
+      CommonActions.setPickFrontData(data.state_data)
+      break
     case appConstants.AUDIT:
-      CommonActions.setAuditData(data.state_data);
-      break;
+      CommonActions.setAuditData(data.state_data)
+      break
     case appConstants.SEARCH:
-      CommonActions.setSearchData(data.state_data);
-      break;
+      CommonActions.setSearchData(data.state_data)
+      break
 
     default:
-      return true;
+      return true
   }
-};
+}
 
-module.exports = utils;
+module.exports = utils

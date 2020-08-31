@@ -248,7 +248,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         action: "LOGIN",
         role: [data.data.role],
         context: {
-          entity_id: "1",
+          entity_id: data.data.seat_name,
           barcode: data.data.barcode,
           app_name: "boi_ui"
         }
@@ -261,7 +261,7 @@ var utils = objectAssign({}, EventEmitter.prototype, {
         role: [data.data.role],
         action: "LOGIN",
         context: {
-          entity_id: "1",
+          entity_id: data.data.seat_name,
           app_name: "boi_ui"
         }
       }
@@ -569,8 +569,6 @@ var utils = objectAssign({}, EventEmitter.prototype, {
 })
 
 var putSeatData = function(data) {
-  
-  console.log(data)
   switch (data.state_data.mode + "_" + data.state_data.seat_type) {
     case appConstants.PUT_BACK:
       CommonActions.setPutBackData(data.state_data)

@@ -6329,6 +6329,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontKQQuantity"] = this.getScanDetails()
         data["PutFrontExceptionScreen"] = this.getPutFrontExceptionScreen()
         break
+
+      case appConstants.PUT_FRONT_BIGGER_SLOT_NEEDED:
+        data["PutFrontScreenId"] = this.getScreenId()
+        data["PutFrontExceptionData"] = this.getExceptionData()
+        break
+        
       case appConstants.PUT_FRONT_EXCEPTION_DAMAGED_ENTITY:
         data["PutFrontScreenId"] = this.getScreenId()
         data["PutFrontDamagedQuantity"] = this.getPhysicallyDamagedScanDetails()

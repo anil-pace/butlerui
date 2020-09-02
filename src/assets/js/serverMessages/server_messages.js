@@ -392,6 +392,8 @@ var serverMessages = {
   "PtF.I.008": "Physically Damaged entity reported.",
   "PtF.I.009": "Entity entry successful",
   "PtF.I.010": "Bin scan successful",
+  "PtF.I.011": "Entity not fitting recorded",
+
   PtB002: "Entity Oversized",
   PtB003: "Entity Unscannable",
   PtB004: "Extra Entities in Bin",

@@ -272,16 +272,18 @@ var PutFront = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal />
-              {this.state.binPlotting === true
-                ? this.state.SplitScreenFlag && (
-                  <BinMap
-                    orientation={this.state.groupOrientation}
-                    mapDetails={this.state.BinMapDetails}
-                    selectedGroup={this.state.BinMapGroupDetails}
-                    screenClass="putFrontFlow"
-                  />
-                )
-                : ""}
+              <div style={{ position: "absolute", top: "0%", left: "0em" }}>
+                {this.state.BinPlotting ?
+                  this.state.SplitScreenFlag && (
+                    <BinMap
+                      orientation={this.state.groupOrientation}
+                      mapDetails={this.state.BinMapDetails}
+                      selectedGroup={this.state.BinMapGroupDetails}
+                      screenClass="PutFrontFlowScan"
+                      bindata={this.state.bindata}
+                    />
+                  ) : ""}
+              </div>
               {binComponent}
             </div>
           );
@@ -316,7 +318,7 @@ var PutFront = React.createClass({
               navData={this.state.PutFrontNavData}
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
-              subMessage = {this.state.isSlotEmpty ? allresourceConstants.EMPTY_SLOT_MESSAGE : null}
+              subMessage={this.state.isSlotEmpty ? allresourceConstants.EMPTY_SLOT_MESSAGE : null}
             />
           );
           //need to check this case, if we need flexible bins here?
@@ -912,38 +914,38 @@ var PutFront = React.createClass({
 
       case appConstants.PUT_FRONT_BIGGER_SLOT_NEEDED:
         this._component = (
-            <div className="grid-container exception">
-              <Modal />
-              <Exception data={this.state.PutFrontExceptionData} />
-              <div className="exception-right">
-                <div className="main-container exception2">
-                  <div className="kq-exception">
-                    <div className="kq-header">
-                      {_("System will bring next bigger slot")}
-                    </div>
+          <div className="grid-container exception">
+            <Modal />
+            <Exception data={this.state.PutFrontExceptionData} />
+            <div className="exception-right">
+              <div className="main-container exception2">
+                <div className="kq-exception">
+                  <div className="kq-header">
+                    {_("System will bring next bigger slot")}
                   </div>
                 </div>
-                <div className="finish-damaged-barcode">
-                  <Button1
-                    disabled={false}
-                    text={_("Confirm")}
-                    color={"orange"}
-                    module={appConstants.PUT_FRONT}
-                    action={appConstants.BIGGER_SLOT_NEEDED}
-                  />
-                </div>
               </div>
-              <div className="cancel-scan">
+              <div className="finish-damaged-barcode">
                 <Button1
                   disabled={false}
-                  text={_("Cancel Exception")}
+                  text={_("Confirm")}
+                  color={"orange"}
                   module={appConstants.PUT_FRONT}
-                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
-                  color={"black"}
+                  action={appConstants.BIGGER_SLOT_NEEDED}
                 />
               </div>
             </div>
-          );
+            <div className="cancel-scan">
+              <Button1
+                disabled={false}
+                text={_("Cancel Exception")}
+                module={appConstants.PUT_FRONT}
+                action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                color={"black"}
+              />
+            </div>
+          </div>
+        );
         break;
 
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:

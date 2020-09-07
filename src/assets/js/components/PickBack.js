@@ -201,12 +201,12 @@ var PickBack = React.createClass({
           this._component = this.getExceptionComponent()
         }
         break;
-      
+
       case appConstants.PICK_BACK_SCAN:
       case appConstants.PICK_BACK_REPRINT_BINS:
         var cancelButton = "";
         var reprintButton = '';
-        var cancelScanDisabled =this.state.pickBackCancelButtonData
+        var cancelScanDisabled = this.state.pickBackCancelButtonData
         var PickBackReprintEnabled = this.state.PickBackReprintEnabled;
         let printer_visible = false
         let printer_border_color = 'yellow'
@@ -275,6 +275,16 @@ var PickBack = React.createClass({
                 {reprintButton}
                 {cancelButton}
               </div>
+              {this.state.PreviousPickBackDetails &&
+                this.state.PreviousPickBackDetails.length > 0 && (
+                  <PreviousDetails
+                    previousDetails={this.state.PreviousPickBackDetails}
+                    customizeClass={"customize_WaitingForMsu"}
+                    typeToShow={_("Curent Pick Details")}
+                    type="pick"
+                    previousLocationFlag="disable"
+                  />
+                )}
             </div>
           );
         } else {
@@ -413,8 +423,8 @@ var PickBack = React.createClass({
                     checklistIndex={this.state.dockChecklistIndex}
                   />
                 ) : (
-                  <div style={{ display: "none" }} />
-                )}
+                    <div style={{ display: "none" }} />
+                  )}
 
                 <CheckList
                   checklistHeader={this.state.undockHeader}
@@ -622,11 +632,11 @@ var PickBack = React.createClass({
                     <span className="textValue">
                       {this.state.BoxBarcode.CurrentBoxBarcode
                         ? utils.get3dotTrailedText(
-                            this.state.BoxBarcode.CurrentBoxBarcode,
-                            5,
-                            5,
-                            15
-                          )
+                          this.state.BoxBarcode.CurrentBoxBarcode,
+                          5,
+                          5,
+                          15
+                        )
                         : "--"}
                     </span>
                   </div>
@@ -635,11 +645,11 @@ var PickBack = React.createClass({
                     <span className="textValue">
                       {this.state.BoxBarcode.NewBoxBarcode
                         ? utils.get3dotTrailedText(
-                            this.state.BoxBarcode.NewBoxBarcode,
-                            5,
-                            5,
-                            15
-                          )
+                          this.state.BoxBarcode.NewBoxBarcode,
+                          5,
+                          5,
+                          15
+                        )
                         : "--"}
                     </span>
                   </div>
@@ -862,11 +872,11 @@ var PickBack = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className="itemSearchfooter">

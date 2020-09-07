@@ -205,7 +205,7 @@ var serverMessages = {
   "Common.E.009": "Unknown barcode.",
   "Common.E.010": "Wrong Scan. Unrecognized barcode.",
   "Common.E.011": "Wrong Scan. IRT bin scan expected",
-  "Common.E.012": "{0} unexpected. {0} in use in another location",
+  "Common.E.012": "Tote unexpected.Tote is use in another location",
   "Common.E.013": "{0} unexpected. Service request not present in {1}.",
   "Common.E.014": "Invalid resource.",
   "Common.E.015": "{0} unexpected. Service request not in correct state.",

@@ -203,9 +203,13 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   },
 
   enableButton: function () {
-    var currentState = this.getEnableButton()
-    this.setEnableButtonIntialState()
-    return currentState
+    var flag = true;
+    if (_seatData.hasOwnProperty("ppsbin_list")) {
+      _seatData["ppsbin_list"].map(function (value, index) {
+        if (value["selected_for_staging"]) flag = false;
+      })
+      return flag
+    }
   },
 
   getScreenEvent: function () {

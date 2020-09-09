@@ -160,7 +160,8 @@ var Header = React.createClass({
       screenId === appConstants.PICK_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
       screenId === appConstants.PICK_FRONT_IRT_BIN_CONFIRM ||
       screenId === appConstants.PUT_FRONT_MISSING_DAMAGED_UNSCANNABLE_ENTITY ||
-      screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN
+      screenId === appConstants.PUT_FRONT_ITEMS_TO_IRT_BIN ||
+      screenId === appConstants.PUT_FRONT_BIGGER_SLOT_NEEDED
     )
       this.exceptionMenu = ""
     else if (mainstore.getExceptionAllowed().length > 0)

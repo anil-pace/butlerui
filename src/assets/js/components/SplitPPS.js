@@ -51,15 +51,15 @@ var SplitPPS = React.createClass({
     }
 
     maxBlockCount =
-      maxCenterCount > 0
+      maxCenterCount > 1
         ? maxCenterCount
         : maxLeftCount > maxRightCount
           ? maxLeftCount
           : maxRightCount
 
     maxBlockHeight =
-      maxCenterCount > 0 ? 75 / maxBlockCount : 50 / maxBlockCount
-    maxWidth = ((maxBlockHeight / 100) * 360).toFixed(3)
+      maxCenterCount > 0 ? 75 / maxBlockCount : 50 / maxBlockCount;
+    maxWidth = ((maxBlockHeight / 100) * 360).toFixed(3);
 
     style = {
       height: (maxBlockHeight >= 50 ? 25 : maxBlockHeight) + "%",

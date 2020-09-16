@@ -801,7 +801,11 @@ function server_messages_list() {
   _("Unexpected entity")
   _("Waiting for {0} to be docked")
   _("Estimated time for MSU arrival is")
-  _("MSU busy at PPS")
+  _("MSU busy at PPS");
+  _("Estimated time for MSU arrival is {0} sec")
+  _("Estimated time for MSU arrival is {0} min {1} sec")
+  _("Estimated time for MSU arrival is unknown")
+  _("MSU busy at PPS {0}")
   _("hr")
   _("min")
   _("sec")

@@ -171,8 +171,11 @@ var PutFront = React.createClass({
                     docked={this.state.DockedGroup}
                   />
                 ) : (
-                  <Spinner />
-                )}
+                    <Spinner
+                      serverNavData={this.state.msuEta}
+                      navMessagesJson={this.props.navMessagesJson}
+                    />
+                  )}
               </div>
             </div>
           )
@@ -703,16 +706,16 @@ var PutFront = React.createClass({
           kqHeadMessage =
             remainingEntitiesToBeScanned !== 0
               ? (function () {
-                  if (navMessagesJson != undefined) {
-                    message_args.unshift(navMessagesJson[msgCode])
-                    if (message_args[0] == undefined) {
-                      return server_message
-                    } else {
-                      var header_message = _.apply(null, message_args)
-                      return header_message
-                    }
+                if (navMessagesJson != undefined) {
+                  message_args.unshift(navMessagesJson[msgCode])
+                  if (message_args[0] == undefined) {
+                    return server_message
+                  } else {
+                    var header_message = _.apply(null, message_args)
+                    return header_message
                   }
-                })()
+                }
+              })()
               : _("No more entities to be scanned")
         }
         this._component = (
@@ -1171,11 +1174,11 @@ var PutFront = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className="itemSearchfooter">
@@ -1541,8 +1544,8 @@ var PutFront = React.createClass({
                           itemUid={this.state.itemUid}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   </span>
                   <div

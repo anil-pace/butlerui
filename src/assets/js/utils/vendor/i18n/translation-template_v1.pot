@@ -2031,14 +2031,10 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:351
 #: src/assets/js/serverMessages/server_messages_lang.js:356
 #: src/assets/js/serverMessages/server_messages_lang.js:365
-<<<<<<< HEAD
-#: src/assets/js/serverMessages/server_messages_lang.js:811
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:812
 #: src/assets/js/serverMessages/server_messages_lang.js:813
 #: src/assets/js/serverMessages/server_messages_lang.js:816
 #: src/assets/js/serverMessages/server_messages_lang.js:817
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "Scan Tote"
 msgstr ""
 
@@ -4488,90 +4484,62 @@ msgid "Excess quantity detected, remove '{0}' quantity and confirm again"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:803
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:804
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 #: src/assets/js/serverMessages/var React = require("react").js:32
 #: src/assets/js/serverMessages/var React = require("react").js:32
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "Estimated time for MSU arrival is"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:804
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 #: src/assets/js/serverMessages/server_messages_lang.js:806
 #: src/assets/js/serverMessages/var React = require("react").js:20
 #: src/assets/js/serverMessages/var React = require("react").js:20
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "MSU busy at PPS"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:805
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:806
 #: src/assets/js/serverMessages/server_messages_lang.js:807
 #: src/assets/js/serverMessages/server_messages_lang.js:810
 #: src/assets/js/serverMessages/server_messages_lang.js:811
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "hr"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:806
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:807
 #: src/assets/js/serverMessages/server_messages_lang.js:808
 #: src/assets/js/serverMessages/server_messages_lang.js:811
 #: src/assets/js/serverMessages/server_messages_lang.js:812
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "min"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:807
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:808
 #: src/assets/js/serverMessages/server_messages_lang.js:809
 #: src/assets/js/serverMessages/server_messages_lang.js:812
 #: src/assets/js/serverMessages/server_messages_lang.js:813
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "sec"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:808
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:809
 #: src/assets/js/serverMessages/server_messages_lang.js:810
 #: src/assets/js/serverMessages/server_messages_lang.js:813
 #: src/assets/js/serverMessages/server_messages_lang.js:814
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "Exit LPN"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:809
-<<<<<<< HEAD
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:810
 #: src/assets/js/serverMessages/server_messages_lang.js:811
 #: src/assets/js/serverMessages/server_messages_lang.js:814
 #: src/assets/js/serverMessages/server_messages_lang.js:815
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgid "Call for Help"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:810
-<<<<<<< HEAD
-msgid "{0} unexpected. Scanned {1} does not exist."
-msgstr ""
-
-#: src/assets/js/serverMessages/server_messages_lang.js:812
-msgid "unknown"
-=======
 #: src/assets/js/serverMessages/server_messages_lang.js:811
 #: src/assets/js/serverMessages/server_messages_lang.js:812
 #: src/assets/js/serverMessages/server_messages_lang.js:815
@@ -4695,7 +4663,6 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:839
 #: src/assets/js/serverMessages/server_messages_lang.js:840
 msgid "Switched to Bin {0}"
->>>>>>> 9645fdb53... BSS-27791: new msg
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:807

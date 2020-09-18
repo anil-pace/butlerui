@@ -1,33 +1,33 @@
-var React = require("react")
-var AuditStore = require("../stores/AuditStore")
-var mainstore = require("../stores/mainstore")
-var Header = require("./Header")
-var Navigation = require("./Navigation/Navigation.react")
-var Exception = require("./Exception/Exception")
-var SystemIdle = require("./SystemIdle")
-var Notification = require("./Notification/Notification")
-var Button1 = require("./Button/Button")
-var appConstants = require("../constants/appConstants")
-var Modal = require("./Modal/Modal")
-var TabularData = require("./TabularData")
-var Button1 = require("./Button/Button.js")
-var Img = require("./PrdtDetails/ProductImage.js")
-var Rack = require("./Rack/MsuRack.js")
-var Spinner = require("./Spinner/LoaderButler")
-var Reconcile = require("./Reconcile")
-var utils = require("../utils/utils.js")
-var ActionCreators = require("../actions/CommonActions")
-var KQ = require("./ProductDetails/KQ.js")
-var CurrentSlot = require("./CurrentSlot")
-var Modal = require("./Modal/Modal")
-var ExceptionHeader = require("./ExceptionHeader")
-var Pallet = require("./Pallet/pallet")
-var GorTabs = require("./gor-tabs/tabs")
-var Tab = require("./gor-tabs/tabContent")
-var ReactModal = require("./Modal/ReactModal")
-var GorSelect = require("./gor-select/gor-select")
-var TextEditor = require("./ProductDetails/textEditor")
-var ItemTable = require("./itemTable")
+var React = require("react");
+var AuditStore = require("../stores/AuditStore");
+var mainstore = require("../stores/mainstore");
+var Header = require("./Header");
+var Navigation = require("./Navigation/Navigation.react");
+var Exception = require("./Exception/Exception");
+var SystemIdle = require("./SystemIdle");
+var Notification = require("./Notification/Notification");
+var Button1 = require("./Button/Button");
+var appConstants = require("../constants/appConstants");
+var Modal = require("./Modal/Modal");
+var TabularData = require("./TabularData");
+var Button1 = require("./Button/Button.js");
+var Img = require("./PrdtDetails/ProductImage.js");
+var Rack = require("./Rack/MsuRack.js");
+var Spinner = require("./Spinner/LoaderButler");
+var Reconcile = require("./Reconcile");
+var utils = require("../utils/utils.js");
+var ActionCreators = require("../actions/CommonActions");
+var KQ = require("./ProductDetails/KQ.js");
+var CurrentSlot = require("./CurrentSlot");
+var Modal = require("./Modal/Modal");
+var ExceptionHeader = require("./ExceptionHeader");
+var Pallet = require("./Pallet/pallet");
+var GorTabs = require("./gor-tabs/tabs");
+var Tab = require("./gor-tabs/tabContent");
+var ReactModal = require("./Modal/ReactModal");
+var GorSelect = require("./gor-select/gor-select");
+var TextEditor = require("./ProductDetails/textEditor");
+var ItemTable = require("./itemTable");
 
 var Audit = React.createClass({
   _component: "",
@@ -37,7 +37,7 @@ var Audit = React.createClass({
   _currentBox: "",
   _looseItems: "",
   _navigation: "",
-  showModal: function() {
+  showModal: function () {
     if (
       this.state.AuditScreenId != appConstants.AUDIT_RECONCILE &&
       this.state.AuditScreenId !=
@@ -60,27 +60,27 @@ var Audit = React.createClass({
         this.state.AuditShowModal["showModal"] ==
           true /*&& !$('.modal').hasClass('in')*/
       ) {
-        var self = this
-        this.state.AuditShowModal["showModal"] = false
-        var r = self.state.AuditShowModal.message
-        setTimeout(function() {
+        var self = this;
+        this.state.AuditShowModal["showModal"] = false;
+        var r = self.state.AuditShowModal.message;
+        setTimeout(function () {
           ActionCreators.showModal({
             data: {
-              message: r
+              message: r,
             },
-            type: "message"
-          })
-          $(".modal").modal("show")
+            type: "message",
+          });
+          $(".modal").modal("show");
           //return false;
-        }, 0)
+        }, 0);
       }
     }
   },
-  getInitialState: function() {
-    return this.getStateData()
+  getInitialState: function () {
+    return this.getStateData();
   },
-  getStateData: function() {
-    var screenData = mainstore.getScreenData()
+  getStateData: function () {
+    var screenData = mainstore.getScreenData();
     var localState = {
       allInfoModalStatus: this.state ? this.state.allInfoModalStatus : false,
       selectedTab: this.state ? this.state.selectedTab : 0,
@@ -89,28 +89,28 @@ var Audit = React.createClass({
       isAddlInfoPresent: mainstore.isAddlInfoPresent(),
       selectedUOM: mainstore.getSelectedUOM() || null,
       isChangeUOMApplicable: mainstore.isChangeUOMApplicable(),
-      kQstatus: mainstore.kQstatus()
-    }
-    return Object.assign({}, screenData, localState)
+      kQstatus: mainstore.kQstatus(),
+    };
+    return Object.assign({}, screenData, localState);
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     //this.showModal();
-    mainstore.addChangeListener(this.onChange)
+    mainstore.addChangeListener(this.onChange);
   },
-  componentWillUnmount: function() {
-    mainstore.removeChangeListener(this.onChange)
+  componentWillUnmount: function () {
+    mainstore.removeChangeListener(this.onChange);
   },
-  componentDidMount: function() {
-    this.showModal()
-    AuditStore.addChangeListener(this.onChange)
+  componentDidMount: function () {
+    this.showModal();
+    AuditStore.addChangeListener(this.onChange);
   },
-  onChange: function() {
-    this.setState(this.getStateData())
-    this.showModal()
+  onChange: function () {
+    this.setState(this.getStateData());
+    this.showModal();
   },
-  getExceptionComponent: function() {
-    var _rightComponent = ""
-    this._navigation = ""
+  getExceptionComponent: function () {
+    var _rightComponent = "";
+    this._navigation = "";
     return (
       <div className="grid-container exception">
         <Modal />
@@ -126,43 +126,43 @@ var Audit = React.createClass({
           />
         </div>
       </div>
-    )
+    );
   },
-  callAPItoGetData: function(data) {
-    ActionCreators.getOrphanItemData(data)
+  callAPItoGetData: function (data) {
+    ActionCreators.getOrphanItemData(data);
   },
-  _onTabClick: function(selectedIndex) {
+  _onTabClick: function (selectedIndex) {
     this.setState({
-      selectedTab: selectedIndex
-    })
+      selectedTab: selectedIndex,
+    });
   },
-  _openAddlInfoModal: function(status) {
+  _openAddlInfoModal: function (status) {
     this.setState({
-      allInfoModalStatus: status
-    })
+      allInfoModalStatus: status,
+    });
   },
-  _onSelect: function(val, txt) {
+  _onSelect: function (val, txt) {
     var data = {
       event_name: "audit_change_uom",
       event_data: {
-        container_level: val
-      }
-    }
-    ActionCreators.postDataToInterface(data)
+        container_level: val,
+      },
+    };
+    ActionCreators.postDataToInterface(data);
   },
-  getUOMDropdownValues: function() {
+  getUOMDropdownValues: function () {
     var customContainerNames = this.state.customContainerNames,
-      options = []
+      options = [];
     for (var k in customContainerNames) {
       options.push({
         value: k,
-        text: customContainerNames[k]
-      })
+        text: customContainerNames[k],
+      });
     }
-    return options
+    return options;
   },
-  getAddlInfoData: function() {
-    var AuditAddlInfoData = {}
+  getAddlInfoData: function () {
+    var AuditAddlInfoData = {};
     var infoButtonData = this.state.infoButtonData,
       customContainerNames = this.state.customContainerNames,
       header = [
@@ -195,16 +195,16 @@ var Audit = React.createClass({
           true,
           true,
           false
-        )
-      ]
+        ),
+      ];
     for (var k in infoButtonData) {
       var rowData = infoButtonData[k],
-        name = customContainerNames ? customContainerNames[k] : k
-      AuditAddlInfoData[name] = {}
-      AuditAddlInfoData[name]["header"] = header
-      AuditAddlInfoData[name]["tableRows"] = []
+        name = customContainerNames ? customContainerNames[k] : k;
+      AuditAddlInfoData[name] = {};
+      AuditAddlInfoData[name]["header"] = header;
+      AuditAddlInfoData[name]["tableRows"] = [];
       for (var i = 0, len = rowData.length; i < len; i++) {
-        AuditAddlInfoData[name]["tableRows"].push([])
+        AuditAddlInfoData[name]["tableRows"].push([]);
         AuditAddlInfoData[name]["tableRows"][i].push(
           new mainstore.tableCol(
             rowData[i].sku,
@@ -216,7 +216,7 @@ var Audit = React.createClass({
             false,
             false
           )
-        )
+        );
         AuditAddlInfoData[name]["tableRows"][i].push(
           new mainstore.tableCol(
             rowData[i].serial,
@@ -228,7 +228,7 @@ var Audit = React.createClass({
             false,
             false
           )
-        )
+        );
         AuditAddlInfoData[name]["tableRows"][i].push(
           new mainstore.tableCol(
             rowData[i].quantity,
@@ -240,7 +240,7 @@ var Audit = React.createClass({
             false,
             false
           )
-        )
+        );
       }
       AuditAddlInfoData[name]["footer"] = [
         new mainstore.tableCol(
@@ -252,16 +252,16 @@ var Audit = React.createClass({
           true,
           true,
           false
-        )
-      ]
+        ),
+      ];
     }
 
-    return AuditAddlInfoData
+    return AuditAddlInfoData;
   },
-  getLooseItemsData: function() {
-    var KDeepLooseItemsData = this.state.AuditKDeepLooseItemsData
+  getLooseItemsData: function () {
+    var KDeepLooseItemsData = this.state.AuditKDeepLooseItemsData;
     if (KDeepLooseItemsData) {
-      var looseItemsData = {}
+      var looseItemsData = {};
       var header = [
         new mainstore.tableCol(
           _("Each"),
@@ -282,12 +282,12 @@ var Audit = React.createClass({
           true,
           true,
           false
-        )
-      ]
-      looseItemsData["header"] = header
-      looseItemsData["tableRows"] = []
+        ),
+      ];
+      looseItemsData["header"] = header;
+      looseItemsData["tableRows"] = [];
       for (var i = 0; i < KDeepLooseItemsData.length; i++) {
-        looseItemsData["tableRows"].push([])
+        looseItemsData["tableRows"].push([]);
         looseItemsData["tableRows"][i].push(
           new mainstore.tableCol(
             KDeepLooseItemsData[i].Sku,
@@ -299,7 +299,7 @@ var Audit = React.createClass({
             false,
             false
           )
-        )
+        );
         looseItemsData["tableRows"][i].push(
           new mainstore.tableCol(
             KDeepLooseItemsData[i].Actual_qty,
@@ -311,7 +311,7 @@ var Audit = React.createClass({
             false,
             false
           )
-        )
+        );
       }
       looseItemsData["footer"] = [
         new mainstore.tableCol(
@@ -323,13 +323,13 @@ var Audit = React.createClass({
           true,
           true,
           false
-        )
-      ]
-      return looseItemsData["tableRows"].length > 0 ? looseItemsData : null
+        ),
+      ];
+      return looseItemsData["tableRows"].length > 0 ? looseItemsData : null;
     }
-    return null
+    return null;
   },
-  getScreenComponent: function(screen_id) {
+  getScreenComponent: function (screen_id) {
     switch (screen_id) {
       case appConstants.AUDIT_WAITING_FOR_MSU:
         if (this.state.AuditExceptionStatus == false) {
@@ -339,7 +339,7 @@ var Audit = React.createClass({
               serverNavData={this.state.AuditServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
@@ -347,16 +347,16 @@ var Audit = React.createClass({
                 <Spinner />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.AUDIT_LOCATION_SCAN:
-        var rackType = ""
+        var rackType = "";
         if (this.state.AuditRackTypeMPU) {
-          rackType = <Pallet />
+          rackType = <Pallet />;
         } else {
           rackType = (
             <Rack
@@ -365,7 +365,7 @@ var Audit = React.createClass({
               rackData={this.state.AuditRackDetails}
               putDirection={this.state.AuditPickDirection}
             />
-          )
+          );
         }
         if (this.state.AuditSRStatus) {
           this._navigation = (
@@ -374,13 +374,13 @@ var Audit = React.createClass({
               serverNavData={this.state.AuditServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           this._component = (
             <div className="grid-container">
               <Modal />
               <div className="main-container">{rackType}</div>
             </div>
-          )
+          );
         } else {
           if (this.state.AuditExceptionStatus == false) {
             this._navigation = (
@@ -389,19 +389,19 @@ var Audit = React.createClass({
                 serverNavData={this.state.AuditServerNavData}
                 navMessagesJson={this.props.navMessagesJson}
               />
-            )
+            );
             this._component = (
               <div className="grid-container">
                 <Modal />
                 <div className="main-container">{rackType}</div>
               </div>
-            )
+            );
           } else {
-            this._component = this.getExceptionComponent()
+            this._component = this.getExceptionComponent();
           }
         }
 
-        break
+        break;
 
       case appConstants.AUDIT_SCAN:
         if (this.state.AuditExceptionStatus == false) {
@@ -411,7 +411,7 @@ var Audit = React.createClass({
               serverNavData={this.state.AuditServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (this.state.AuditCancelScanStatus == true) {
             this._cancelStatus = (
               <div className="cancel-scan">
@@ -423,23 +423,23 @@ var Audit = React.createClass({
                   color={"black"}
                 />
               </div>
-            )
+            );
           } else {
-            this._cancelStatus = ""
+            this._cancelStatus = "";
           }
           if (this.state.AuditBoxSerialData["tableRows"].length > 0) {
             this._boxSerial = (
               <TabularData data={this.state.AuditBoxSerialData} />
-            )
+            );
           } else {
-            this._boxSerial = ""
+            this._boxSerial = "";
           }
           if (this.state.AuditLooseItemsData["tableRows"].length > 0) {
             this._looseItems = (
               <TabularData data={this.state.AuditLooseItemsData} />
-            )
+            );
           } else {
-            this._looseItems = ""
+            this._looseItems = "";
           }
 
           this._component = (
@@ -470,22 +470,22 @@ var Audit = React.createClass({
               </div>
               {this._cancelStatus}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
 
-        break
+        break;
       //SR Audit
 
       case appConstants.AUDIT_SCAN_SR:
         if (this.state.AuditExceptionStatus == false) {
-          var uomOptions = this.getUOMDropdownValues()
-          var looseItemsData = this.getLooseItemsData()
-          var isAddlInfoPresent = this.state.isAddlInfoPresent
-          var kqDisabled = !this.state.kQstatus
+          var uomOptions = this.getUOMDropdownValues();
+          var looseItemsData = this.getLooseItemsData();
+          var isAddlInfoPresent = this.state.isAddlInfoPresent;
+          var kqDisabled = !this.state.kQstatus;
           if (isAddlInfoPresent) {
-            var AuditAddlInfoData = this.getAddlInfoData()
+            var AuditAddlInfoData = this.getAddlInfoData();
           }
           this._navigation = (
             <Navigation
@@ -493,7 +493,7 @@ var Audit = React.createClass({
               serverNavData={this.state.AuditServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
+          );
           if (this.state.AuditCancelScanStatus == true) {
             this._cancelStatus = (
               <div className="cancel-scan">
@@ -505,9 +505,9 @@ var Audit = React.createClass({
                   color={"black"}
                 />
               </div>
-            )
+            );
           } else {
-            this._cancelStatus = ""
+            this._cancelStatus = "";
           }
           if (this.state.AuditPackData["tableRows"].length > 0) {
             this._packData = (
@@ -517,8 +517,8 @@ var Audit = React.createClass({
                     <p className="a-info-wrap">
                       <span
                         className="audit-uom-info-icon"
-                        onClick={function() {
-                          this._openAddlInfoModal(true)
+                        onClick={function () {
+                          this._openAddlInfoModal(true);
                         }.bind(this)}
                       >
                         <i>i</i>
@@ -530,9 +530,9 @@ var Audit = React.createClass({
                   className="audit_scan"
                 />
               </div>
-            )
+            );
           } else {
-            this._packData = ""
+            this._packData = "";
           }
           if (this.state.AuditSubPackData["tableRows"].length > 0) {
             this._subPackData = (
@@ -542,8 +542,8 @@ var Audit = React.createClass({
                     <p className="a-info-wrap">
                       <span
                         className="audit-uom-info-icon"
-                        onClick={function() {
-                          this._openAddlInfoModal(true)
+                        onClick={function () {
+                          this._openAddlInfoModal(true);
                         }.bind(this)}
                       >
                         <i>i</i>
@@ -555,9 +555,9 @@ var Audit = React.createClass({
                   className="audit_scan"
                 />
               </div>
-            )
+            );
           } else {
-            this._subPackData = ""
+            this._subPackData = "";
           }
           if (looseItemsData) {
             this._looseItemData = (
@@ -566,8 +566,8 @@ var Audit = React.createClass({
                   <p className="a-info-wrap">
                     <span
                       className="audit-uom-info-icon"
-                      onClick={function() {
-                        this._openAddlInfoModal(true)
+                      onClick={function () {
+                        this._openAddlInfoModal(true);
                       }.bind(this)}
                     >
                       <i>i</i>
@@ -576,9 +576,9 @@ var Audit = React.createClass({
                 )}
                 <TabularData data={looseItemsData} className="audit_scan" />
               </div>
-            )
+            );
           } else {
-            this._looseItemData = ""
+            this._looseItemData = "";
           }
           if (
             this.state.AuditLooseItemsData &&
@@ -591,8 +591,8 @@ var Audit = React.createClass({
                     <p className="a-info-wrap">
                       <span
                         className="audit-uom-info-icon"
-                        onClick={function() {
-                          this._openAddlInfoModal(true)
+                        onClick={function () {
+                          this._openAddlInfoModal(true);
                         }.bind(this)}
                       >
                         <i>i</i>
@@ -604,15 +604,17 @@ var Audit = React.createClass({
                   className="audit_scan"
                 />
               </div>
-            )
+            );
           } else {
-            this._looseItems = ""
+            this._looseItems = "";
           }
 
           this._component = (
             <div className="grid-container">
               <Modal />
-
+              <div style={{ position: "absolute", left: "0px", top: "0px", height:"515px" }}>
+                <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+              </div>
               <div className="main-container space-left">
                 <div className="audit-scan-left">
                   {this._looseItemData}
@@ -630,7 +632,7 @@ var Audit = React.createClass({
                       defaultActiveTabIndex={this.state.selectedTab}
                       tabClass={"tabs-audit"}
                     >
-                      {Object.keys(AuditAddlInfoData).map(function(
+                      {Object.keys(AuditAddlInfoData).map(function (
                         value,
                         index
                       ) {
@@ -644,7 +646,7 @@ var Audit = React.createClass({
                               <TabularData data={AuditAddlInfoData[value]} />
                             </div>
                           </Tab>
-                        )
+                        );
                       })}
                     </GorTabs>
                     <div className="modal-footer removeBorder">
@@ -653,8 +655,8 @@ var Audit = React.createClass({
                           <div className="col-md-1 pull-right">
                             <button
                               className={"close-info custom-button black"}
-                              onClick={function() {
-                                this._openAddlInfoModal(false)
+                              onClick={function () {
+                                this._openAddlInfoModal(false);
                               }.bind(this)}
                             >
                               {_("Close")}
@@ -680,15 +682,15 @@ var Audit = React.createClass({
                           ] || _("Select Value")
                         }
                       >
-                        {function(_this) {
-                          var options = []
-                          uomOptions.map(function(el, idx) {
+                        {function (_this) {
+                          var options = [];
+                          uomOptions.map(function (el, idx) {
                             options.push(
                               <span
                                 className="gor-dropdown-option"
                                 key={el.value}
-                                onClick={function() {
-                                  _this._onSelect(el.value, el.text)
+                                onClick={function () {
+                                  _this._onSelect(el.value, el.text);
                                 }}
                               >
                                 <section>
@@ -711,9 +713,9 @@ var Audit = React.createClass({
                                   />
                                 </section>
                               </span>
-                            )
-                          })
-                          return options
+                            );
+                          });
+                          return options;
                         }}
                       </GorSelect>
                     </div>
@@ -737,12 +739,12 @@ var Audit = React.createClass({
               </div>
               {this._cancelStatus}
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
 
-        break
+        break;
       case appConstants.AUDIT_RECONCILE:
         if (this.state.AuditExceptionStatus == false) {
           this._navigation = (
@@ -751,34 +753,34 @@ var Audit = React.createClass({
               serverNavData={this.state.AuditServerNavData}
               navMessagesJson={this.props.navMessagesJson}
             />
-          )
-          var subComponent = ""
-          var messageType = "large"
-          var BoxSerialData = ""
-          var ItemInBoxData = ""
-          var LooseItemsData = ""
-          var AuditMessage = ""
-          var PackData = ""
-          var SubPackData = ""
-          var DamageData = ""
-          var FinalDamageData = ""
-          var Slot = ""
-          var displayStyle
+          );
+          var subComponent = "";
+          var messageType = "large";
+          var BoxSerialData = "";
+          var ItemInBoxData = "";
+          var LooseItemsData = "";
+          var AuditMessage = "";
+          var PackData = "";
+          var SubPackData = "";
+          var DamageData = "";
+          var FinalDamageData = "";
+          var Slot = "";
+          var displayStyle;
           var auditPossibleContainerNames = this.state
-            .AuditPossibleContainerNames
+            .AuditPossibleContainerNames;
           var mm = {
             details: [],
             code: "Audit.A.012",
             description: "No Items To Reconcile",
-            level: "info"
-          }
+            level: "info",
+          };
 
           var SRmessage = {
             details: [],
             code: "AdF.B.004",
             description: "No entities to reconcile",
-            level: "info"
-          }
+            level: "info",
+          };
           if (
             this.state.AuditReconcileBoxSerialData["tableRows"].length == 0 &&
             this.state.AuditReconcileItemInBoxData["tableRows"].length == 0 &&
@@ -790,7 +792,7 @@ var Audit = React.createClass({
                 navMessagesJson={this.props.navMessagesJson}
                 message={mm}
               />
-            )
+            );
           if (
             this.state.AuditReconcilePackData["tableRows"].length == 0 &&
             this.state.AuditReconcileSubPackData["tableRows"].length == 0 &&
@@ -802,49 +804,58 @@ var Audit = React.createClass({
                 navMessagesJson={this.props.navMessagesJson}
                 message={SRmessage}
               />
-            )
+            );
+          if (
+            this.state.AuditReconcileBoxSerialData["tableRows"].length !== 0 ||
+            this.state.AuditReconcileItemInBoxData["tableRows"].length !== 0 ||
+            this.state.AuditReconcileLooseItemsData["tableRows"].length !== 0 ||
+            this.state.AuditReconcilePackData["tableRows"].length !== 0 ||
+            this.state.AuditReconcileSubPackData["tableRows"].length !== 0 ||
+            this.state.DamageReconcileData["tableRows"].length !== 0 ||
+            this.state.FinalDamageReconcileData["tableRows"].length !== 0
+          ) {
+            AuditMessage = <div></div>;
+          }
           if (this.state.AuditReconcileBoxSerialData["tableRows"].length != 0)
             BoxSerialData = (
               <TabularData data={this.state.AuditReconcileBoxSerialData} />
-            )
+            );
           if (this.state.AuditReconcileItemInBoxData["tableRows"].length != 0)
             ItemInBoxData = (
               <TabularData data={this.state.AuditReconcileItemInBoxData} />
-            )
+            );
           if (this.state.AuditReconcileLooseItemsData["tableRows"].length != 0)
             LooseItemsData = (
               <TabularData data={this.state.AuditReconcileLooseItemsData} />
-            )
+            );
           if (this.state.AuditReconcilePackData["tableRows"].length != 0)
             PackData = (
               <TabularData
                 className="srTable"
                 data={this.state.AuditReconcilePackData}
               />
-            )
+            );
           if (this.state.AuditReconcileSubPackData["tableRows"].length != 0)
             SubPackData = (
               <TabularData
                 className="srTable"
                 data={this.state.AuditReconcileSubPackData}
               />
-            )
+            );
           if (this.state.DamageReconcileData["tableRows"].length != 0)
             DamageData = (
               <TabularData
                 className="srTable"
                 data={this.state.DamageReconcileData}
               />
-            )
+            );
           if (this.state.FinalDamageReconcileData["tableRows"].length != 0)
             FinalDamageData = (
               <TabularData
                 className="srTable"
                 data={this.state.FinalDamageReconcileData}
               />
-            )
-          if (!this.state.AuditSRStatus)
-            Slot = <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+            );
           subComponent = (
             <div className="main-container">
               <div className="audit-reconcile-left">
@@ -858,8 +869,8 @@ var Audit = React.createClass({
                 {FinalDamageData}
               </div>
             </div>
-          )
-          messageType = "small"
+          );
+          messageType = "small";
           this._component = (
             <div
               className={
@@ -869,7 +880,9 @@ var Audit = React.createClass({
               }
             >
               <Modal />
-              {Slot}
+              <div style={{ position: "absolute", left: "0px", top: "0px", height: "515px"}}>
+                <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
+              </div>
               {subComponent}
               <div className="staging-action">
                 <Button1
@@ -888,43 +901,43 @@ var Audit = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
-          this._component = this.getExceptionComponent()
+          this._component = this.getExceptionComponent();
         }
-        break
+        break;
 
       case appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION:
-        this._navigation = ""
+        this._navigation = "";
         for (
           var i = 0;
           i < this.state.AuditDamagedItems.tableRows.length;
           i++
         ) {
           var staticCountFlag = this.state.AuditDamagedItems.tableRows[i][3]
-            .buttonStatus
+            .buttonStatus;
           if (staticCountFlag === true) {
-            var dynamicCount = mainstore.getDamagedQuantity()
+            var dynamicCount = mainstore.getDamagedQuantity();
             if (dynamicCount <= 0) {
-              var dynamicCountFlag = false
+              var dynamicCountFlag = false;
             } else {
-              var dynamicCountFlag = true
+              var dynamicCountFlag = true;
             }
-            this._disableNext = !(staticCountFlag && dynamicCountFlag)
+            this._disableNext = !(staticCountFlag && dynamicCountFlag);
           } else {
-            this._disableNext = !staticCountFlag
+            this._disableNext = !staticCountFlag;
           }
           // Serialised flow specific sceanrio
           let isDamagedQuantityOne =
             this.state.AuditDamagedCount.length &&
             this.state.AuditDamagedCount[0].damaged_qty === 1
               ? true
-              : false
+              : false;
           let isKQDisabled = this.state.AuditDamagedCount.length
             ? !this.state.AuditDamagedCount[0].enable_kq_row
-            : false
+            : false;
           if (isDamagedQuantityOne && isKQDisabled) {
-            this._disableNext = false
+            this._disableNext = false;
           }
         }
 
@@ -958,12 +971,12 @@ var Audit = React.createClass({
               />
             </div>
           </div>
-        )
+        );
 
-        break
+        break;
 
       case appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM:
-        var selected_screen
+        var selected_screen;
         if (!this.state.GetIRTScanStatus) {
           selected_screen = (
             <div className="gor-exception-align">
@@ -982,7 +995,7 @@ var Audit = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else {
           selected_screen = (
             <div className="gor-exception-align">
@@ -990,7 +1003,7 @@ var Audit = React.createClass({
                 {_("Please put exception entities in IRT bin and scan the bin")}
               </div>
             </div>
-          )
+          );
         }
         this._component = (
           <div className="grid-container exception">
@@ -1007,8 +1020,8 @@ var Audit = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       case appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE:
       case appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION:
@@ -1016,14 +1029,14 @@ var Audit = React.createClass({
       case appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION:
       case appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION:
       case appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION:
-        this._navigation = ""
+        this._navigation = "";
         if (this.state.AuditExceptionScreen == "first_screen") {
           /**
            * T2803: Next button disable issue in Audit
            */
           this._disableNext = this.state.AuditKQDetails.current_qty
             ? false
-            : true
+            : true;
           this._component = (
             <div className="grid-container exception">
               <Modal />
@@ -1051,7 +1064,7 @@ var Audit = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         } else if (this.state.AuditExceptionScreen == "second_screen") {
           this._component = (
             <div className="grid-container exception">
@@ -1085,9 +1098,9 @@ var Audit = React.createClass({
                 />
               </div>
             </div>
-          )
+          );
         }
-        break
+        break;
 
       case appConstants.PPTL_MANAGEMENT:
       case appConstants.SCANNER_MANAGEMENT:
@@ -1097,8 +1110,8 @@ var Audit = React.createClass({
             serverNavData={this.state.AuditServerNavData}
             navMessagesJson={this.props.navMessagesJson}
           />
-        )
-        var _button
+        );
+        var _button;
         if (this.state.AuditScreenId == appConstants.SCANNER_MANAGEMENT) {
           _button = (
             <div className="staging-action">
@@ -1119,7 +1132,7 @@ var Audit = React.createClass({
                 color={"orange"}
               />
             </div>
-          )
+          );
         } else {
           _button = (
             <div className="staging-action">
@@ -1132,7 +1145,7 @@ var Audit = React.createClass({
                 color={"black"}
               />
             </div>
-          )
+          );
         }
         this._component = (
           <div className="grid-container audit-reconcilation">
@@ -1154,10 +1167,10 @@ var Audit = React.createClass({
             <TabularData data={this.state.utility} />
             {_button}
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.ITEM_SEARCH:
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -1182,10 +1195,10 @@ var Audit = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
       case appConstants.ITEM_SEARCH_RESULT:
-        this._navigation = ""
+        this._navigation = "";
         this._component = (
           <div>
             <div className="outerWrapperItemSearch">
@@ -1214,55 +1227,51 @@ var Audit = React.createClass({
               />
             </div>
           </div>
-        )
-        break
+        );
+        break;
 
       default:
-        return true
+        return true;
     }
   },
-  getNotificationComponent: function() {
+  getNotificationComponent: function () {
     if (this.state.AuditNotification != undefined) {
       this._notification = (
         <Notification
           notification={this.state.AuditNotification}
           navMessagesJson={this.props.navMessagesJson}
         />
-      )
+      );
     } else {
       if ($(".modal.notification-error").is(":visible")) {
-        setTimeout(function() {
+        setTimeout(function () {
           $(".modal.notification-error").data(
             "bs.modal"
-          ).options.backdrop = true
-          $(".modal-backdrop").remove()
-          $(".modal.notification-error").modal("hide")
-          $(".modal").removeClass("notification-error")
-        }, 0)
+          ).options.backdrop = true;
+          $(".modal-backdrop").remove();
+          $(".modal.notification-error").modal("hide");
+          $(".modal").removeClass("notification-error");
+        }, 0);
 
-        return null
+        return null;
       } else if ($(".modal.in").is(":visible")) {
-        setTimeout(function() {
-          if (
-            $(".modal.in")
-              .find("div")
-              .hasClass("modal-footer")
-          ) {
+        setTimeout(function () {
+          if ($(".modal.in").find("div").hasClass("modal-footer")) {
             //check when errorcode is true and modal has buttons
-            $(".modal.in").data("bs.modal").options.backdrop = "static"
+            $(".modal.in").data("bs.modal").options.backdrop = "static";
           } else {
             //check when errorcode is true and modal has NO buttons
-            $(".modal.in").data("bs.modal").options.backdrop = true
+            $(".modal.in").data("bs.modal").options.backdrop = true;
           }
-        }, 0)
-        return null
+        }, 0);
+        return null;
       }
-      this._notification = ""
+      this._notification = "";
     }
   },
-  render: function(data) {
-    this.getNotificationComponent()
-    this.getScreenComponent(this.state.AuditScreenId)
+  render: function (data) {
+    this.getNotificationComponent();
+    this.getScreenComponent(this.state.AuditScreenId);
     return (
       <div className="main">
         <Header />
@@ -1270,8 +1279,8 @@ var Audit = React.createClass({
         {this._component}
         {this._notification}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-module.exports = Audit
+module.exports = Audit;

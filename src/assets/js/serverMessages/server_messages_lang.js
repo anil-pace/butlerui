@@ -809,5 +809,20 @@ function server_messages_list() {
   _("Call for Help")
   _("{0} unexpected. Scanned {1} does not exist.")
   _("Scan Tote")
-  _("unknown")
+  _("No space currently available for this SKU")
+  _(
+    "No space currently available for this SKU, Remove all entities from bin number and press PPTL"
+  )
+  _(
+    "No space currently available for this SKU, Remove all entities from bin & press PPTL"
+  )
+  _("Warehouse Full! Remove all entities from bin number and press PPTL.")
+  _("Operation paused")
+  _("Butler operations have been halted.")
+  _(
+    "Please wait for the operation to resume or contact your supervisor for further steps."
+  )
+  _("Reprinting for bin-{0}")
+  _("Select Bin for reprinting the label")
+  _("Scan entities again to confirm")
 }

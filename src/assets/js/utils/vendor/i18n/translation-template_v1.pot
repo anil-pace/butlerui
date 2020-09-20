@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-19 09:13+0000\n"
+"POT-Creation-Date: 2020-09-20 18:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4514,4 +4514,50 @@ msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:812
 msgid "unknown"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:812
+msgid "No space currently available for this SKU"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:814
+msgid ""
+"No space currently available for this SKU, Remove all entities from bin "
+"number and press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:817
+msgid ""
+"No space currently available for this SKU, Remove all entities from bin & "
+"press PPTL"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:819
+msgid "Warehouse Full! Remove all entities from bin number and press PPTL."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:820
+msgid "Operation paused"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:821
+msgid "Butler operations have been halted."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:823
+msgid ""
+"Please wait for the operation to resume or contact your supervisor for "
+"further steps."
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:825
+msgid "Reprinting for bin-{0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:826
+msgid "Select Bin for reprinting the label"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:827
+msgid "Scan entities again to confirm"
 msgstr ""

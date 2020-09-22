@@ -41,24 +41,24 @@ var Audit = React.createClass({
     if (
       this.state.AuditScreenId != appConstants.AUDIT_RECONCILE &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
+      appConstants.AUDIT_EXCEPTION_BOX_DAMAGED_BARCODE &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
+      appConstants.AUDIT_EXCEPTION_LOOSE_ITEMS_DAMAGED_EXCEPTION &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
+      appConstants.AUDIT_EXCEPTION_ITEM_IN_BOX_EXCEPTION &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
+      appConstants.AUDIT_SUB_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId !=
-        appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
+      appConstants.AUDIT_PACK_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId != appConstants.AUDIT_DAMAGED_ENTITY_EXCEPTION &&
       this.state.AuditScreenId !==
-        appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION &&
+      appConstants.AUDIT_EACH_UNSCANNABLE_EXCEPTION &&
       this.state.AuditScreenId !== appConstants.AUDIT_FRONT_IRT_BIN_CONFIRM
     ) {
       if (
         this.state.AuditShowModal["showModal"] != undefined &&
         this.state.AuditShowModal["showModal"] ==
-          true /*&& !$('.modal').hasClass('in')*/
+        true /*&& !$('.modal').hasClass('in')*/
       ) {
         var self = this;
         this.state.AuditShowModal["showModal"] = false;
@@ -612,7 +612,14 @@ var Audit = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal />
-              <div style={{ position: "absolute", left: "0px", top: "0px", height:"515px" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: "0px",
+                  top: "0px",
+                  height: "515px",
+                }}
+              >
                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
               </div>
               <div className="main-container space-left">
@@ -678,7 +685,7 @@ var Audit = React.createClass({
                         onSelectHandler={this._onSelect}
                         placeholder={
                           this.state.customContainerNames[
-                            this.state.selectedUOM
+                          this.state.selectedUOM
                           ] || _("Select Value")
                         }
                       >
@@ -764,6 +771,7 @@ var Audit = React.createClass({
           var SubPackData = "";
           var DamageData = "";
           var FinalDamageData = "";
+          var actionableButtons = "";
           var Slot = "";
           var displayStyle;
           var auditPossibleContainerNames = this.state
@@ -800,11 +808,26 @@ var Audit = React.createClass({
             this.state.AuditSRStatus
           )
             AuditMessage = (
-              <Reconcile
-                navMessagesJson={this.props.navMessagesJson}
-                message={SRmessage}
-              />
+              <div
+                style={{ marginTop: "10vh", fontSize: "18px", width: "100%" }}
+              >
+                <Reconcile
+                  navMessagesJson={this.props.navMessagesJson}
+                  message={SRmessage}
+                />
+              </div>
             );
+          actionableButtons = (
+            <div className="staging-action">
+              <Button1
+                disabled={false}
+                text={_("OK")}
+                module={appConstants.AUDIT}
+                action={appConstants.FINISH_CURRENT_AUDIT}
+                color={"orange"}
+              />
+            </div>
+          );
           if (
             this.state.AuditReconcileBoxSerialData["tableRows"].length !== 0 ||
             this.state.AuditReconcileItemInBoxData["tableRows"].length !== 0 ||
@@ -815,6 +838,24 @@ var Audit = React.createClass({
             this.state.FinalDamageReconcileData["tableRows"].length !== 0
           ) {
             AuditMessage = <div></div>;
+            actionableButtons = (
+              <div className="staging-action">
+                <Button1
+                  disabled={false}
+                  text={_("Back")}
+                  module={appConstants.AUDIT}
+                  action={appConstants.CANCEL_FINISH_AUDIT}
+                  color={"black"}
+                />
+                <Button1
+                  disabled={false}
+                  text={_("OK")}
+                  module={appConstants.AUDIT}
+                  action={appConstants.FINISH_CURRENT_AUDIT}
+                  color={"orange"}
+                />
+              </div>
+            );
           }
           if (this.state.AuditReconcileBoxSerialData["tableRows"].length != 0)
             BoxSerialData = (
@@ -880,26 +921,18 @@ var Audit = React.createClass({
               }
             >
               <Modal />
-              <div style={{ position: "absolute", left: "0px", top: "0px", height: "515px"}}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: "0px",
+                  top: "0px",
+                  height: "515px",
+                }}
+              >
                 <CurrentSlot slotDetails={this.state.AuditSlotDetails} />
               </div>
               {subComponent}
-              <div className="staging-action">
-                <Button1
-                  disabled={false}
-                  text={_("Back")}
-                  module={appConstants.AUDIT}
-                  action={appConstants.CANCEL_FINISH_AUDIT}
-                  color={"black"}
-                />
-                <Button1
-                  disabled={false}
-                  text={_("OK")}
-                  module={appConstants.AUDIT}
-                  action={appConstants.FINISH_CURRENT_AUDIT}
-                  color={"orange"}
-                />
-              </div>
+              {actionableButtons}
             </div>
           );
         } else {
@@ -930,7 +963,7 @@ var Audit = React.createClass({
           // Serialised flow specific sceanrio
           let isDamagedQuantityOne =
             this.state.AuditDamagedCount.length &&
-            this.state.AuditDamagedCount[0].damaged_qty === 1
+              this.state.AuditDamagedCount[0].damaged_qty === 1
               ? true
               : false;
           let isKQDisabled = this.state.AuditDamagedCount.length
@@ -1209,11 +1242,11 @@ var Audit = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className="itemSearchfooter">

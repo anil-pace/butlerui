@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-22 06:25+0000\n"
+"POT-Creation-Date: 2020-09-17 11:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2040,6 +2040,8 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:365
 #: src/assets/js/serverMessages/server_messages_lang.js:812
 #: src/assets/js/serverMessages/server_messages_lang.js:813
+#: src/assets/js/serverMessages/server_messages_lang.js:816
+#: src/assets/js/serverMessages/server_messages_lang.js:817
 msgid "Scan Tote"
 msgstr ""
 
@@ -4860,48 +4862,64 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:803
 #: src/assets/js/serverMessages/server_messages_lang.js:804
 #: src/assets/js/serverMessages/server_messages_lang.js:805
+#: src/assets/js/serverMessages/var React = require("react").js:32
+#: src/assets/js/serverMessages/var React = require("react").js:32
 msgid "Estimated time for MSU arrival is"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:804
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 #: src/assets/js/serverMessages/server_messages_lang.js:806
+#: src/assets/js/serverMessages/var React = require("react").js:20
+#: src/assets/js/serverMessages/var React = require("react").js:20
 msgid "MSU busy at PPS"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 #: src/assets/js/serverMessages/server_messages_lang.js:806
 #: src/assets/js/serverMessages/server_messages_lang.js:807
+#: src/assets/js/serverMessages/server_messages_lang.js:810
+#: src/assets/js/serverMessages/server_messages_lang.js:811
 msgid "hr"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:806
 #: src/assets/js/serverMessages/server_messages_lang.js:807
 #: src/assets/js/serverMessages/server_messages_lang.js:808
+#: src/assets/js/serverMessages/server_messages_lang.js:811
+#: src/assets/js/serverMessages/server_messages_lang.js:812
 msgid "min"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:807
 #: src/assets/js/serverMessages/server_messages_lang.js:808
 #: src/assets/js/serverMessages/server_messages_lang.js:809
+#: src/assets/js/serverMessages/server_messages_lang.js:812
+#: src/assets/js/serverMessages/server_messages_lang.js:813
 msgid "sec"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:808
 #: src/assets/js/serverMessages/server_messages_lang.js:809
 #: src/assets/js/serverMessages/server_messages_lang.js:810
+#: src/assets/js/serverMessages/server_messages_lang.js:813
+#: src/assets/js/serverMessages/server_messages_lang.js:814
 msgid "Exit LPN"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:809
 #: src/assets/js/serverMessages/server_messages_lang.js:810
 #: src/assets/js/serverMessages/server_messages_lang.js:811
+#: src/assets/js/serverMessages/server_messages_lang.js:814
+#: src/assets/js/serverMessages/server_messages_lang.js:815
 msgid "Call for Help"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:810
 #: src/assets/js/serverMessages/server_messages_lang.js:811
 #: src/assets/js/serverMessages/server_messages_lang.js:812
+#: src/assets/js/serverMessages/server_messages_lang.js:815
+#: src/assets/js/serverMessages/server_messages_lang.js:816
 msgid "{0} unexpected. Scanned {1} does not exist."
 msgstr ""
 
@@ -4914,77 +4932,142 @@ msgid "Current Pick Details"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:814
+#: src/assets/js/serverMessages/server_messages_lang.js:817
+#: src/assets/js/serverMessages/server_messages_lang.js:818
 msgid "No space currently available for this SKU"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:816
+#: src/assets/js/serverMessages/server_messages_lang.js:819
+#: src/assets/js/serverMessages/server_messages_lang.js:820
 msgid ""
 "No space currently available for this SKU, Remove all entities from bin "
 "number and press PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:819
+#: src/assets/js/serverMessages/server_messages_lang.js:822
+#: src/assets/js/serverMessages/server_messages_lang.js:823
 msgid ""
 "No space currently available for this SKU, Remove all entities from bin & "
 "press PPTL"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:821
+#: src/assets/js/serverMessages/server_messages_lang.js:824
+#: src/assets/js/serverMessages/server_messages_lang.js:825
 msgid "Warehouse Full! Remove all entities from bin number and press PPTL."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:822
+#: src/assets/js/serverMessages/server_messages_lang.js:825
+#: src/assets/js/serverMessages/server_messages_lang.js:826
 msgid "Operation paused"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:823
+#: src/assets/js/serverMessages/server_messages_lang.js:826
+#: src/assets/js/serverMessages/server_messages_lang.js:827
 msgid "Butler operations have been halted."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:825
+#: src/assets/js/serverMessages/server_messages_lang.js:828
+#: src/assets/js/serverMessages/server_messages_lang.js:829
 msgid ""
 "Please wait for the operation to resume or contact your supervisor for "
 "further steps."
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:827
+#: src/assets/js/serverMessages/server_messages_lang.js:830
+#: src/assets/js/serverMessages/server_messages_lang.js:831
 msgid "Reprinting for bin-{0}"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:828
+#: src/assets/js/serverMessages/server_messages_lang.js:831
+#: src/assets/js/serverMessages/server_messages_lang.js:832
 msgid "Select Bin for reprinting the label"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:829
+#: src/assets/js/serverMessages/server_messages_lang.js:832
+#: src/assets/js/serverMessages/server_messages_lang.js:833
 msgid "Scan entities again to confirm"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:830
+#: src/assets/js/serverMessages/server_messages_lang.js:833
+#: src/assets/js/serverMessages/server_messages_lang.js:834
 msgid "Fill"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:831
+#: src/assets/js/serverMessages/server_messages_lang.js:834
+#: src/assets/js/serverMessages/server_messages_lang.js:835
 msgid "Empty"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:832
+#: src/assets/js/serverMessages/server_messages_lang.js:835
+#: src/assets/js/serverMessages/server_messages_lang.js:836
 msgid "Is MSU Slot Empty?"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:833
+#: src/assets/js/serverMessages/server_messages_lang.js:836
+#: src/assets/js/serverMessages/server_messages_lang.js:837
 msgid "Scan PpsBin or Dock Tote"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:834
+#: src/assets/js/serverMessages/server_messages_lang.js:837
+#: src/assets/js/serverMessages/server_messages_lang.js:838
 msgid "Invalid Tote. More than one type of entities found"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:835
+#: src/assets/js/serverMessages/server_messages_lang.js:838
+#: src/assets/js/serverMessages/server_messages_lang.js:839
 msgid ""
 "Same product with different tag found in scanned slot. Please scan another "
 "slot"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:836
+#: src/assets/js/serverMessages/server_messages_lang.js:839
+#: src/assets/js/serverMessages/server_messages_lang.js:840
 msgid "Switched to Bin {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:807
+msgid "Estimated time for MSU arrival is { 0 }"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:808
+#: src/assets/js/serverMessages/server_messages_lang.js:809
+msgid "Estimated time for MSU arrival is unknown"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:809
+#: src/assets/js/serverMessages/server_messages_lang.js:810
+msgid "MSU busy at PPS {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/var React = require("react").js:32
+#: src/assets/js/serverMessages/var React = require("react").js:32
+msgid "unknown"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:807
+msgid "Estimated time for MSU arrival is {0}"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:807
+msgid "Estimated time for MSU arrival is {0} sec"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:808
+msgid "Estimated time for MSU arrival is {0} min {1} sec"
 msgstr ""

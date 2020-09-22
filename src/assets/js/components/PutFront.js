@@ -175,7 +175,10 @@ var PutFront = React.createClass({
                     docked={this.state.DockedGroup}
                   />
                 ) : (
-                    <Spinner />
+                    <Spinner
+                      serverNavData={this.state.msuEta}
+                      navMessagesJson={this.props.navMessagesJson}
+                    />
                   )}
               </div>
             </div>

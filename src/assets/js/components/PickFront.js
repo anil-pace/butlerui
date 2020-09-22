@@ -223,7 +223,9 @@ var PickFront = React.createClass({
         break;
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         var previousPickDetails = "";
-        var loader = <Spinner />;
+        var loader = <Spinner
+          serverNavData={this.state.msuEta}
+          navMessagesJson={this.props.navMessagesJson} />;
         if (this.state.PreviousDetails) {
           previousPickDetails = (
             <PreviousDetails

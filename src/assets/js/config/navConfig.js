@@ -669,13 +669,32 @@ var navData = {
                 "level": 2,
                 "type": 'passive'
             },
-            , {
+            {
                 "screen_id": "audit_reconcile",
                 "code": "Common.000",
                 "image": null,
                 "message": "Status",
                 "showImage": true,
                 "level": 3,
+                "type": 'passive'
+            }],
+        [
+            {
+                "screen_id": "audit_front_waiting_for_location_scan",
+                "code": "Common.001",
+                "image": svgConstants.scan,
+                "message": "Scan slot",
+                "showImage": true,
+                "level": 1,
+                "type": 'passive'
+            },
+            {
+                "screen_id": "audit_scan_sr",
+                "code": "Common.001",
+                "image": svgConstants.scan,
+                "message": "Scan entities",
+                "showImage": true,
+                "level": 2,
                 "type": 'passive'
             }]
     ],

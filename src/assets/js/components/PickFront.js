@@ -326,20 +326,19 @@ var PickFront = React.createClass({
         }
 
         // Reprint Label Button added as per BSS-26656
-        var reprintLabelButton = PickFrontReprintLabel ? ( 
+        var reprintLabelButton = 
           <div className = "reprintLabelWrapper">
                 <Button1
                   src={"./assets/images/printerIcon.svg"}
                   imgheight="30px"
                   imgwidth="30px"
-                  disabled={false}
+                  disabled={PickFrontReprintLabel}
                   text={_("Reprint label")}
                   module={appConstants.PICK_FRONT}
                   action={appConstants.REPRINT_LABEL}
                   color={"black"}
                 />
-              </div> 
-              ): '';
+              </div>;
 
         if (this.state.PickFrontExceptionStatus == false) {
           this._navigation = (

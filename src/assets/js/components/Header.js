@@ -8,6 +8,10 @@ var virtualKeyBoard_header = null
 var UPHIndicator = require("./UPHIndicator")
 var appConstants = require("../constants/appConstants")
 var EmergencyModal = require('./Modal/EmergencyModal')
+var FeedbackModal = require("./Modal/FeedbackModal")
+var Modal = require("./Modal/Modal")
+var ActionCreators = require("../actions/CommonActions");
+var loginstore = require('../stores/loginstore');
 
 
 function getState() {
@@ -29,10 +33,12 @@ var Header = React.createClass({
   virtualKeyBoard: "",
   exceptionMenu: "",
   searchMenu: "",
-  getInitialState: function() {
+
+  getInitialState: function () {
     return getState()
   },
-  openKeyboard: function() {
+
+  openKeyboard: function () {
     $("#actionMenu").hide()
     $(".form-control").blur()
     virtualKeyBoard_header = $("#barcode").keyboard({
@@ -69,10 +75,10 @@ var Header = React.createClass({
         my: "center top",
         at: "center top"
       },
-      visible: function(e, keypressed, el) {
+      visible: function (e, keypressed, el) {
         el.value = ""
       },
-      accepted: function(e, keypressed, el) {
+      accepted: function (e, keypressed, el) {
         if (e.target.value === "") {
         } else {
           var data = {
@@ -90,19 +96,9 @@ var Header = React.createClass({
       .data("keyboard")
       .reveal()
   },
-  logoutSession: function() {
-    $("#actionMenu").hide()
-    if (
-      mainstore.getLogoutState() === "false" ||
-      mainstore.getLogoutState() === false
-    ) {
-      return false
-    } else {
-      CommonActions.logoutSession(true)
-    }
-  },
-  componentDidMount: function() {},
-  enableException: function() {
+
+  componentDidMount: function () { },
+  enableException: function () {
     CommonActions.enableException(true)
     var data = {}
     data["code"] = null
@@ -110,27 +106,40 @@ var Header = React.createClass({
     CommonActions.generateNotification(data)
     $("#actionMenu").hide()
   },
-  enableSearch: function() {
+  enableSearch: function () {
     CommonActions.updateSeatData([], "itemSearch")
     $("#actionMenu").hide()
   },
-  showMenu: function() {
-    $("#actionMenu").toggle()
-    $(".subMenu").hide()
+
+  showModal: function (data, type, e) {
+    CommonActions.setFeedback(true);
+    $("#actionMenu").hide();
+
+    ActionCreators.showModal({
+      data: data,
+      type: type,
+    });
+    e.stopPropagation();
+    return false;
   },
-  refresh: function() {
-    location.reload()
+
+  showMenu: function () {
+    $("#actionMenu").toggle();
+    $(".subMenu").hide();
   },
-  componentWillMount: function() {
+  refresh: function () {
+    location.reload();
+  },
+  componentWillMount: function () {
     mainstore.addChangeListener(this.onChange)
   },
-  onChange: function() {
+  onChange: function () {
     if (virtualKeyBoard_header != null) {
       virtualKeyBoard_header.getkeyboard().close()
     }
     this.setState(getState())
   },
-  getExceptionMenu: function() {
+  getExceptionMenu: function () {
     var x = "",
       screenId = mainstore.getScreenId()
     for (var prop in appConstants) {
@@ -164,7 +173,7 @@ var Header = React.createClass({
         <div className="actionItem disable">{_("Exception")}</div>
       )
   },
-  getSearchItemMenu: function() {
+  getSearchItemMenu: function () {
     if (mainstore.orphanSearchAllowed()) {
       this.searchMenu = (
         <div className="actionItem" onClick={this.enableSearch}>
@@ -174,24 +183,25 @@ var Header = React.createClass({
     }
   },
 
-  peripheralData: function(type) {
+  peripheralData: function (type) {
     CommonActions.getPeriPheralData(type)
     $("#actionMenu").hide()
   },
-  utilityMenu: function() {
+  utilityMenu: function () {
     $(".subMenu").toggle()
     //CommonActions.displayperipheralMenu();
   },
-  notifyTower: function() {
+  notifyTower: function () {
     var data = {
       pps_id: this.state.ppsId
     }
     CommonActions.postDataToTower(data)
   },
-  render: function() {
+  render: function () {
     var logoutClass
     var cssClass
     var disableScanClass
+    var feedbackModal = loginstore.getFeedback();
     var invoiceFlow =
       mainstore.getScreenId() === appConstants.PUT_BACK_INVOICE ? true : false
     this.getExceptionMenu()
@@ -217,6 +227,14 @@ var Header = React.createClass({
     var isFrontScreen = this.state.frontScreen === appConstants.FRONT
     const { uphThreshold, uphCount, ppsMode } = this.state
     const isAuditMode = ppsMode.toUpperCase() === "AUDIT" ? true : false
+    if (this.state.ppsRequestedStatus !== "undefined") {
+      ppsRequestedStatus = (<div className="ppsMode">
+        PPS Requested Status : {this.state.ppsRequestedStatus}
+      </div>)
+
+
+
+    }
 
     return (
       <div>
@@ -238,36 +256,38 @@ var Header = React.createClass({
               upperThreshold={uphThreshold && uphThreshold.upper_threshold}
             />
           ) : (
-            ""
-          )}
-          {mainstore.getSystemEmergency() && 
-              <EmergencyModal 
+              ""
+            )}
+          {mainstore.getSystemEmergency() &&
+            <EmergencyModal
               title="Operation paused"
               bodyContent="Butler operations have been halted."
               bodySubcontent="Please wait for the operation to resume or contact your supervisor for further steps."
-          />}
-          {mainstore.getSystemAuditError() === true && 
-            <EmergencyModal 
-                title="System Error"
-                bodyContent="There is a problem with the transaction you are working on."
-                bodySubcontent="Please place any items you may have in your hand back in the slot."
-                bodyAction="Support has been informed, "
-                msgAction = "Tap OK to move to another transaction."
-                actionTobetaken = {true}
-                module = {appConstants.SYSTEM_ERROR}
-                action = {appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
-          />}
-        {mainstore.getSystemPickError() === true && 
-            <EmergencyModal 
-                title="System Error"
-                bodyContent="There is a problem with the transaction you are working on."
-                bodySubcontent= {"Please place any items you may have in your hand back in bin-"+ mainstore.getBinToSideline() + " ."}
-                bodyAction="Support has been informed, "
-                msgAction = "Tap OK to move to another transaction."
-                actionTobetaken = {true}
-                module = {appConstants.SYSTEM_ERROR}
-                action = {appConstants.AUTO_SIDELINE_CONFIRM}
-          />}
+            />}
+          {mainstore.getSystemAuditError() === true &&
+            <EmergencyModal
+              title="System Error"
+              bodyContent="There is a problem with the transaction you are working on."
+              bodySubcontent="Please place any items you may have in your hand back in the slot."
+              bodyAction="Support has been informed, "
+              msgAction="Tap OK to move to another transaction."
+              actionTobetaken={true}
+              module={appConstants.SYSTEM_ERROR}
+              action={appConstants.AUDIT_SIDELINE_ACKNOWLEDGED}
+            />}
+          {mainstore.getSystemPickError() === true &&
+            <EmergencyModal
+              title="System Error"
+              bodyContent="There is a problem with the transaction you are working on."
+              bodySubcontent={"Please place any items you may have in your hand back in bin-" + mainstore.getBinToSideline() + " ."}
+              bodyAction="Support has been informed, "
+              msgAction="Tap OK to move to another transaction."
+              actionTobetaken={true}
+              module={appConstants.SYSTEM_ERROR}
+              action={appConstants.AUTO_SIDELINE_CONFIRM}
+            />}
+
+          {feedbackModal && <FeedbackModal />}
 
           <div className={cssClass} onClick={this.openKeyboard}>
             <img
@@ -301,7 +321,13 @@ var Header = React.createClass({
           <div className={logoutClass} onClick={this.notifyTower}>
             {_("Call for Help")}
           </div>
-          <div className={logoutClass} onClick={this.logoutSession}>
+          <div className={logoutClass}
+            onClick={this.showModal.bind(
+              this,
+              null,
+              appConstants.FEEDBACK_MODAL
+            )}
+          >
             {_("Logout")}
           </div>
         </div>

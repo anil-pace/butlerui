@@ -12,6 +12,7 @@ var flag = false;
 var currentSeat = [];
 var currentLang = '';
 var _errMsg = null;
+var _feedbackModal =false;
 
 function getParameterByName(){
     var l = document.createElement("a");
@@ -114,6 +115,12 @@ var loginstore = objectAssign({}, EventEmitter.prototype, {
   },
   getCurrentLang : function(){
     return getCurrentLang();
+  },
+  getFeedback: function(data){
+    return _feedbackModal;
+  },
+  setFeedback: function(data){
+    _feedbackModal = data;
   }
 });
 
@@ -137,6 +144,12 @@ AppDispatcher.register(function(payload){
       loginstore.sessionLogout(action.data);
       loginstore.emit(CHANGE_EVENT);
       break;
+
+    case appConstants.FEEDBACK_MODAL:
+      loginstore.setFeedback(action.data);
+      loginstore.emit(CHANGE_EVENT);
+      break;
+
     case appConstants.OPERATOR_SEAT: 
       showBox(action.data);
       loginstore.emit(CHANGE_EVENT);

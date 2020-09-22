@@ -194,6 +194,12 @@ var commonActions = {
       data: data
     });
   },
+  setFeedback: function(data){
+    AppDispatcher.handleAction({
+      actionType: appConstants.FEEDBACK_MODAL,
+      data: data
+    });
+  },
   setActiveException: function(data) {
     AppDispatcher.handleAction({
       actionType: appConstants.SET_ACTIVE_EXCEPTION,

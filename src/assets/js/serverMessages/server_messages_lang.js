@@ -825,4 +825,8 @@ function server_messages_list() {
   _("Reprinting for bin-{0}")
   _("Select Bin for reprinting the label")
   _("Scan entities again to confirm")
+  _("Estimated time for MSU arrival is {0} sec")
+  _("Estimated time for MSU arrival is {0} min {1} sec")
+  _("Estimated time for MSU arrival is unknown")
+  _("MSU busy at PPS {0}")
 }

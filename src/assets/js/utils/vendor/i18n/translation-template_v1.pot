@@ -4561,3 +4561,19 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:827
 msgid "Scan entities again to confirm"
 msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:828
+msgid "Estimated time for MSU arrival is {0} sec"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:829
+msgid "Estimated time for MSU arrival is {0} min {1} sec"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:830
+msgid "Estimated time for MSU arrival is unknown"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:831
+msgid "MSU busy at PPS {0}"
+msgstr ""

@@ -37,7 +37,7 @@ var PreviousDetails = require('./PreviousDetails')
 var TextEditor = require('./ProductDetails/textEditor')
 var ItemTable = require('./itemTable')
 var CurrentBin = require('./CurrentBin')
-var CurrentActiveBin= require('./CurrentActiveBin');
+var CurrentActiveBin = require('./CurrentActiveBin');
 var Footer = require('./Footer');
 var checkListOpen = false
 
@@ -58,10 +58,10 @@ var PickFront = React.createClass({
   _notification: "",
   _component: "",
   _navigation: "",
-  getInitialState: function() {
+  getInitialState: function () {
     return getStateData()
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     if (
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_PPTL_PRESS ||
@@ -74,10 +74,10 @@ var PickFront = React.createClass({
     }
     mainstore.addChangeListener(this.onChange)
   },
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     mainstore.removeChangeListener(this.onChange)
   },
-  onChange: function() {
+  onChange: function () {
     this.setState(getStateData())
     if (
       this.state.PickFrontScreenId === appConstants.PICK_FRONT_MORE_ITEM_SCAN ||
@@ -91,18 +91,18 @@ var PickFront = React.createClass({
     }
   },
 
-  getNotificationComponent: function(footer) {
+  getNotificationComponent: function (footer) {
     if (this.state.PickFrontNotification != undefined) {
-        this._notification = (
-          <Notification
-            notification={this.state.PickFrontNotification}
-            navMessagesJson={this.props.navMessagesJson}
-            withFooter = {footer !== "" ? true :false}
-          />
-        )
+      this._notification = (
+        <Notification
+          notification={this.state.PickFrontNotification}
+          navMessagesJson={this.props.navMessagesJson}
+          withFooter={footer !== "" ? true : false}
+        />
+      )
     } else {
       if ($(".modal.notification-error").is(":visible")) {
-        setTimeout(function() {
+        setTimeout(function () {
           $(".modal.notification-error").data(
             "bs.modal"
           ).options.backdrop = true
@@ -113,7 +113,7 @@ var PickFront = React.createClass({
 
         return null
       } else if ($(".modal.in").is(":visible")) {
-        setTimeout(function() {
+        setTimeout(function () {
           if (
             $(".modal.in")
               .find("div")
@@ -131,7 +131,7 @@ var PickFront = React.createClass({
       this._notification = ""
     }
   },
-  showModal: function(data, index, manual) {
+  showModal: function (data, index, manual) {
     if (manual == true) checkListOpen = false
     var data = {
       checklist_data: data,
@@ -144,7 +144,7 @@ var PickFront = React.createClass({
       checkListOpen == false
     ) {
       checkListOpen = true
-      setTimeout(function() {
+      setTimeout(function () {
         CommonActions.showModal({
           data: data,
           type: "pick_checklist"
@@ -158,7 +158,7 @@ var PickFront = React.createClass({
       this.state.PickFrontChecklistOverlayStatus === false &&
       checkListOpen == true
     ) {
-      setTimeout(function() {
+      setTimeout(function () {
         $(".modal").modal("hide")
 
         $(".modal")
@@ -170,9 +170,9 @@ var PickFront = React.createClass({
       checkListOpen = false
     }
   },
-  getExceptionComponent: function(footer) {
+  getExceptionComponent: function (footer) {
     var exceptionCancelScanClass = "cancel-scan";
-    if(footer !== ""){
+    if (footer !== "") {
       exceptionCancelScanClass = "cancel-scan cancel-scan-with-footer";
     }
     var _rightComponent = ""
@@ -194,17 +194,17 @@ var PickFront = React.createClass({
       </div>
     )
   },
-  callAPItoGetData: function(data) {
+  callAPItoGetData: function (data) {
     CommonActions.getOrphanItemData(data)
   },
 
-  getScreenComponent: function(screen_id, footer) {
+  getScreenComponent: function (screen_id, footer) {
     var actionClass = "actions";
     var binsFlexClass = "binsFlexWrapperContainer";
     var mainContainerClass = "main-container";
     var exceptionCancelScanClass = "cancel-scan";
     var itemSearchfooterClass = "itemSearchfooter";
-    if(footer !== ""){
+    if (footer !== "") {
       binsFlexClass = "binsFlexWrapperContainer-with-footer";
       actionClass = "actions actions-with-footer";
       mainContainerClass = "main-container main-container-with-footer";
@@ -229,7 +229,9 @@ var PickFront = React.createClass({
         break
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         var previousPickDetails = ""
-        var loader = <Spinner />
+        var loader = <Spinner
+          serverNavData={this.state.msuEta}
+          navMessagesJson={this.props.navMessagesJson} />;
         if (this.state.PreviousDetails) {
           previousPickDetails = (
             <PreviousDetails
@@ -573,8 +575,8 @@ var PickFront = React.createClass({
               color={"black"}
             />
           ) : (
-            ""
-          )
+              ""
+            )
           var binComponent = ""
 
           if (screen_id == appConstants.PICK_FRONT_WORKING_TABLE) {
@@ -609,7 +611,7 @@ var PickFront = React.createClass({
                     binsData={this.state.PickFrontBinData}
                     screenId={screen_id}
                     seatType={this.state.SeatType}
-                    withFooter = {footer !== "" ? true :false}
+                    withFooter={footer !== "" ? true : false}
                   />
                   <WrapperSplitRoll
                     scanDetails={this.state.PickFrontScanDetails}
@@ -651,18 +653,18 @@ var PickFront = React.createClass({
             <div className="grid-container">
               <Modal cancelClicked={cancelClicked} />
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-               <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass='frontFlow'
-                  bindata = {this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
-                />
+              <BinMap
+                orientation={this.state.groupOrientation}
+                mapDetails={this.state.BinMapDetails}
+                selectedGroup={this.state.BinMapGroupDetails}
+                screenClass='frontFlow'
+                bindata={this.state.bindata}
+                pickFrontSelectedBin={this.state.pickFrontSelectedBin}
+              />
               <div className="single-bin udp-flow">
-               {this.state.currentBinWidget  && 
-                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-               }
+                {this.state.currentBinWidget &&
+                  <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
+                }
               </div>
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
@@ -687,8 +689,8 @@ var PickFront = React.createClass({
 
                 {this.state.PickFrontScreenId !==
                   appConstants.PICK_FRONT_WORKING_TABLE &&
-                this.state.PickFrontButtonStatus == true &&
-                this.state.PickFrontButtonType == "bin_full"
+                  this.state.PickFrontButtonStatus == true &&
+                  this.state.PickFrontButtonType == "bin_full"
                   ? BinFull
                   : ""}
               </div>
@@ -824,11 +826,11 @@ var PickFront = React.createClass({
                     <Spinner />
                   </div>
                 ) : (
-                  <ItemTable
-                    data={this.state.ItemSearchData}
-                    rowconfig={this.state.rowconfig}
-                  />
-                )}
+                    <ItemTable
+                      data={this.state.ItemSearchData}
+                      rowconfig={this.state.rowconfig}
+                    />
+                  )}
               </div>
             </div>
             <div className={itemSearchfooterClass}>
@@ -924,8 +926,8 @@ var PickFront = React.createClass({
               color={"black"}
             />
           ) : (
-            ""
-          )
+              ""
+            )
           var binComponent = ""
           if (this.state.OrigBinUse) {
             binComponent = (
@@ -933,7 +935,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
-                withFooter = {footer !== "" ? true :false}
+                withFooter={footer !== "" ? true : false}
               />
             )
           } else {
@@ -951,18 +953,18 @@ var PickFront = React.createClass({
               <Modal cancelClicked={cancelClicked} />
 
               <CurrentSlot slotDetails={this.state.PickFrontSlotDetails} />
-                <BinMap
-                  orientation={this.state.groupOrientation}
-                  mapDetails={this.state.BinMapDetails}
-                  selectedGroup={this.state.BinMapGroupDetails}
-                  screenClass="frontFlow"
-                  bindata ={this.state.bindata}
-                  pickFrontSelectedBin ={this.state.pickFrontSelectedBin}
-                />
-                <div className="single-bin udp-flow">
-               {this.state.currentBinWidget  && 
-                <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
-               }
+              <BinMap
+                orientation={this.state.groupOrientation}
+                mapDetails={this.state.BinMapDetails}
+                selectedGroup={this.state.BinMapGroupDetails}
+                screenClass="frontFlow"
+                bindata={this.state.bindata}
+                pickFrontSelectedBin={this.state.pickFrontSelectedBin}
+              />
+              <div className="single-bin udp-flow">
+                {this.state.currentBinWidget &&
+                  <CurrentActiveBin selected={true} details={this.state.PutFrontCurrentBinCount} />
+                }
               </div>
               {printer_visible && (
                 <div className="reprintIcon" style={reprintIconStyle}>
@@ -978,7 +980,7 @@ var PickFront = React.createClass({
                 {cancelButton}
                 {reprintButton}
                 {this.state.PickFrontButtonStatus == true &&
-                this.state.PickFrontButtonType == "bin_full"
+                  this.state.PickFrontButtonType == "bin_full"
                   ? BinFull
                   : ""}
               </div>
@@ -1027,8 +1029,8 @@ var PickFront = React.createClass({
                     displayBinId={true}
                   />
                 ) : (
-                  <Spinner />
-                )}
+                    <Spinner />
+                  )}
               </div>
               <div className="btn-actions-skip-docking">
                 {skipDockingButton}
@@ -1083,10 +1085,10 @@ var PickFront = React.createClass({
                   <div className="kq-header">
                     {remainingEntitiesToBeScanned !== 0
                       ? utils.frntStringTransform(
-                          headerDataToShow,
-                          [remainingEntitiesToBeScanned],
-                          appConstants.INVOICE_REQUIRED
-                        )
+                        headerDataToShow,
+                        [remainingEntitiesToBeScanned],
+                        appConstants.INVOICE_REQUIRED
+                      )
                       : _("No more entities to be scanned")}
                   </div>
                   <TabularData
@@ -1771,7 +1773,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={appConstants.PICK_FRONT_PPTL_PRESS}
                 seatType={this.state.SeatType}
-                withFooter = {footer !== "" ? true :false}
+                withFooter={footer !== "" ? true : false}
               />
             )
           } else {
@@ -1841,7 +1843,7 @@ var PickFront = React.createClass({
                 binsData={this.state.PickFrontBinData}
                 screenId={screen_id}
                 seatType={this.state.SeatType}
-                withFooter = {footer !== "" ? true :false}
+                withFooter={footer !== "" ? true : false}
               />
             )
           } else {
@@ -1856,17 +1858,17 @@ var PickFront = React.createClass({
           }
           reprintButton =
             this.state.PickFrontScreenId ===
-            appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT ? (
-              <Button1
-                disabled={false}
-                text={_("Reprint")}
-                module={appConstants.PICK_FRONT}
-                action={appConstants.REPRINT}
-                color={"black"}
-              />
-            ) : (
-              ""
-            )
+              appConstants.PICK_FRONT_ROLLCAGE_PRINTOUT ? (
+                <Button1
+                  disabled={false}
+                  text={_("Reprint")}
+                  module={appConstants.PICK_FRONT}
+                  action={appConstants.REPRINT}
+                  color={"black"}
+                />
+              ) : (
+                ""
+              )
 
           this._navigation = (
             <Navigation
@@ -2117,7 +2119,7 @@ var PickFront = React.createClass({
     }
   },
 
-  render: function(data) {
+  render: function (data) {
     var footer = mainstore.getGamificationUrl() ? <Footer /> : ""
     this.getNotificationComponent(footer)
     this.getScreenComponent(this.state.PickFrontScreenId, footer)

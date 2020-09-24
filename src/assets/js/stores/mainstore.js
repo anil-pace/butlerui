@@ -4388,7 +4388,12 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
     return _seatData && _seatData.release_mtu ? true : false
   },
   _getMsuEstimatedArrival: function () {
-    return _seatData && _seatData.msu_eta
+    if (_seatData.msu_eta.length > 0) {
+      _serverNavData = _seatData.msu_eta[0]
+      return _serverNavData
+    } else {
+      return null
+    }
   },
   _getDamagedItemsData: function () {
     var data = {}
@@ -6139,6 +6144,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PutFrontNavData"] = this.getNavData()
         data["PutFrontServerNavData"] = this.getServerNavData()
         data["PutFrontScreenId"] = this.getScreenId()
+        data["msuEta"] = this._getMsuEstimatedArrival();
         data["MobileFlag"] = this._getMobileFlag()
         data["DockedGroup"] = this._getDockedGroup()
         data["UndockAwaited"] = this._getUndockAwaitedGroup()
@@ -6367,6 +6373,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         data["PickFrontNavData"] = this.getNavData()
         data["PickFrontServerNavData"] = this.getServerNavData()
+        data["msuEta"] = this._getMsuEstimatedArrival();
         data["PickFrontScreenId"] = this.getScreenId()
         data["PickFrontExceptionData"] = this.getExceptionData()
         data["PickFrontNotification"] = this.getNotificationData()

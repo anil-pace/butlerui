@@ -4988,3 +4988,19 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:836
 msgid "Switched to Bin {0}"
 msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:837
+msgid "Estimated time for MSU arrival is {0} sec"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:838
+msgid "Estimated time for MSU arrival is {0} min {1} sec"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:839
+msgid "Estimated time for MSU arrival is unknown"
+msgstr ""
+
+#: src/assets/js/serverMessages/server_messages_lang.js:840
+msgid "MSU busy at PPS {0}"
+msgstr ""

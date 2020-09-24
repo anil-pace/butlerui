@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-17 11:33+0000\n"
+"POT-Creation-Date: 2020-09-24 08:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4863,14 +4863,12 @@ msgstr ""
 #: src/assets/js/serverMessages/server_messages_lang.js:804
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 #: src/assets/js/serverMessages/var React = require("react").js:32
-#: src/assets/js/serverMessages/var React = require("react").js:32
 msgid "Estimated time for MSU arrival is"
 msgstr ""
 
 #: src/assets/js/serverMessages/server_messages_lang.js:804
 #: src/assets/js/serverMessages/server_messages_lang.js:805
 #: src/assets/js/serverMessages/server_messages_lang.js:806
-#: src/assets/js/serverMessages/var React = require("react").js:20
 #: src/assets/js/serverMessages/var React = require("react").js:20
 msgid "MSU busy at PPS"
 msgstr ""
@@ -5055,7 +5053,6 @@ msgstr ""
 msgid "MSU busy at PPS {0}"
 msgstr ""
 
-#: src/assets/js/serverMessages/var React = require("react").js:32
 #: src/assets/js/serverMessages/var React = require("react").js:32
 msgid "unknown"
 msgstr ""

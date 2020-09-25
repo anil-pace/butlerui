@@ -175,7 +175,10 @@ var PutFront = React.createClass({
                     docked={this.state.DockedGroup}
                   />
                 ) : (
-                    <Spinner />
+                    <Spinner
+                      serverNavData={this.state.msuEta}
+                      navMessagesJson={this.props.navMessagesJson}
+                    />
                   )}
               </div>
             </div>
@@ -272,16 +275,18 @@ var PutFront = React.createClass({
           this._component = (
             <div className="grid-container">
               <Modal />
-              {this.state.binPlotting === true
-                ? this.state.SplitScreenFlag && (
-                  <BinMap
-                    orientation={this.state.groupOrientation}
-                    mapDetails={this.state.BinMapDetails}
-                    selectedGroup={this.state.BinMapGroupDetails}
-                    screenClass="putFrontFlow"
+              <div style={{ position: "absolute", top: "0%", left: "0em" }}>
+                {this.state.BinPlotting ?
+                  this.state.SplitScreenFlag && (
+                    <BinMap
+                      orientation={this.state.groupOrientation}
+                      mapDetails={this.state.BinMapDetails}
+                      selectedGroup={this.state.BinMapGroupDetails}
+                      screenClass="PutFrontFlowScan"
+                      bindata={this.state.bindata}
                     />
-                )
-                : ""}
+                  ) : ""}
+              </div>
               {binComponent}
             </div>
           );

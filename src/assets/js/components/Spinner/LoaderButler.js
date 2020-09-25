@@ -2,67 +2,26 @@ var React = require("react")
 var SpinnerButler = require("./SpinnerButler")
 var mainstore = require("../../stores/mainstore")
 
-var LoaderButler = React.createClass({
-  formatTime: function (arg) {
-    var result
-    if (typeof arg === "object" && arg.constructor !== Array) {
-      result = _("MSU busy at PPS") + " " + arg.pps_id
-    } else if (typeof arg === "number") {
-      result = {}
-      var hrs = Math.floor(arg / 3600)
-      var min = Math.floor((arg - hrs * 3600) / 60)
-      var seconds = arg - hrs * 3600 - min * 60
-      seconds = Math.round(seconds * 100) / 100
+function getState() {
+  return {
+    navMessages: mainstore.getServerMessages()
+  }
+}
 
-      result["hrs"] = hrs
-      result["min"] = min
-      result["seconds"] = seconds
-    } else if (Number(arg) === NaN) {
-      result = _("Estimated time for MSU arrival is") + " " + _("unknown")
-    } else {
-      result = ""
-    }
-    return result
+var LoaderButler = React.createClass({
+  getInitialState: function () {
+    return getState();
   },
+
   render: function () {
-    var eta = mainstore._getMsuEstimatedArrival()
-    var formattedEta = this.formatTime(eta)
-    if (typeof formattedEta === "object") {
-      formattedEta = (
-        <span style={{ fontSize: "4rem", fontWeight: "normal" }}>
-          <span> {_("Estimated time for MSU arrival is")} </span>
-          {formattedEta.hrs > 0 ? (
-            <span>
-              <span style={{ fontWeight: "bold" }}>
-                {" " + formattedEta.hrs + " "}
-                <span>{_("hr")}</span>
-              </span>
-            </span>
-          ) : (
-              ""
-            )}
-          {formattedEta.min > 0 ? (
-            <span>
-              <span style={{ fontWeight: "bold" }}>
-                {" " + formattedEta.min + " "}
-              </span>
-              <span>{_("min")}</span>
-            </span>
-          ) : (
-              ""
-            )}
-          {formattedEta.seconds > 0 ? (
-            <span>
-              <span style={{ fontWeight: "bold" }}>
-                {" " + formattedEta.seconds + " "}
-              </span>
-              <span>{_("sec")}</span>
-            </span>
-          ) : (
-              ""
-            )}
-        </span>
-      )
+    if (this.props.navMessagesJson) {
+      var navMessagesJson = JSON.parse(JSON.stringify(this.props.navMessagesJson));
+    }
+    if (this.props.serverNavData) {
+      var data = JSON.parse(JSON.stringify(this.props.serverNavData));
+      var server_message = data.description;
+      var errorCode = data.code;
+      var message_args = data.details.slice(0); //msu_eta data
     }
     return (
       <div className="loaderButler">
@@ -78,7 +37,18 @@ var LoaderButler = React.createClass({
             color: "#F36F36"
           }}
         >
-          {formattedEta}
+          {(function () {
+            if (navMessagesJson != undefined) {
+              message_args.unshift(navMessagesJson[errorCode]);
+              if (message_args[0] == undefined) {
+                return server_message;
+              } else {
+                var header_message = _.apply(null, message_args);
+                return header_message;
+              }
+            }
+          }
+          )()}
         </div>
       </div>
     )

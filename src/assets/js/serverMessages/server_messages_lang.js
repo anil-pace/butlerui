@@ -834,4 +834,8 @@ function server_messages_list() {
   _("Invalid Tote. More than one type of entities found")
   _("Same product with different tag found in scanned slot. Please scan another slot")
   _("Switched to Bin {0}")
+  _("Estimated time for MSU arrival is {0} sec")
+  _("Estimated time for MSU arrival is {0} min {1} sec")
+  _("Estimated time for MSU arrival is unknown")
+  _("MSU busy at PPS {0}")
 }

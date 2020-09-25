@@ -223,7 +223,9 @@ var PickFront = React.createClass({
         break;
       case appConstants.PICK_FRONT_WAITING_FOR_MSU:
         var previousPickDetails = "";
-        var loader = <Spinner />;
+        var loader = <Spinner
+          serverNavData={this.state.msuEta}
+          navMessagesJson={this.props.navMessagesJson} />;
         if (this.state.PreviousDetails) {
           previousPickDetails = (
             <PreviousDetails
@@ -673,7 +675,7 @@ var PickFront = React.createClass({
               );
             }
           }
-          var topPosition = this.state.SplitScreenFlag ? "320px" : "140px";
+          var topPosition = this.state.SplitScreenFlag ? "360px" : "140px";
 
           let printer_visible = false;
           let printer_border_color = "yellow";
@@ -926,7 +928,7 @@ var PickFront = React.createClass({
           printer_visible = this.state.printerInfo.printer_visible;
           printer_border_color = this.state.printerInfo.printer_border_color;
         }
-        var topPosition = this.state.SplitScreenFlag ? "320px" : "140px";
+        var topPosition = this.state.SplitScreenFlag ? "360px" : "140px";
         var reprintIconStyle = {
           top: topPosition,
           borderColor: appConstants.BIN_LIGHT_COLOR[printer_border_color],

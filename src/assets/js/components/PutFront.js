@@ -76,6 +76,7 @@ var PutFront = React.createClass({
       ToteId: mainstore.getToteId(),
       selectedPPSBin: mainstore._getSelectedPpsBin(),
       PutFrontItemUid: mainstore.getItemUid(),
+      isSlotEmpty: mainstore.getSlotEmpty(),
       PutFrontIsCrossDockEnabled: mainstore.IsCrossDockEnabled(),
     };
 
@@ -320,6 +321,7 @@ var PutFront = React.createClass({
               navData={this.state.PutFrontNavData}
               serverNavData={this.state.PutFrontServerNavData}
               navMessagesJson={this.props.navMessagesJson}
+              subMessage = {this.state.isSlotEmpty ? allresourceConstants.EMPTY_SLOT_MESSAGE : null}
             />
           );
           //need to check this case, if we need flexible bins here?
@@ -911,6 +913,42 @@ var PutFront = React.createClass({
             </div>
           </div>
         );
+        break;
+
+      case appConstants.PUT_FRONT_BIGGER_SLOT_NEEDED:
+        this._component = (
+            <div className="grid-container exception">
+              <Modal />
+              <Exception data={this.state.PutFrontExceptionData} />
+              <div className="exception-right">
+                <div className="main-container exception2">
+                  <div className="kq-exception">
+                    <div className="kq-header">
+                      {_("System will bring next bigger slot")}
+                    </div>
+                  </div>
+                </div>
+                <div className="finish-damaged-barcode">
+                  <Button1
+                    disabled={false}
+                    text={_("Confirm")}
+                    color={"orange"}
+                    module={appConstants.PUT_FRONT}
+                    action={appConstants.BIGGER_SLOT_NEEDED}
+                  />
+                </div>
+              </div>
+              <div className="cancel-scan">
+                <Button1
+                  disabled={false}
+                  text={_("Cancel Exception")}
+                  module={appConstants.PUT_FRONT}
+                  action={appConstants.CANCEL_EXCEPTION_TO_SERVER}
+                  color={"black"}
+                />
+              </div>
+            </div>
+          );
         break;
 
       case appConstants.PUT_FRONT_EXCEPTION_SPACE_NOT_AVAILABLE:

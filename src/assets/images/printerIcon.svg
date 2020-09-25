@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>BF58BB02-8F20-4E33-A000-AF80FCA6E6BB</title>
+    <defs>
+        <path d="M28.5,12 L7.5,12 C5.01,12 3,14.01 3,16.5 L3,25.5 L9,25.5 L9,31.5 L27,31.5 L27,25.5 L33,25.5 L33,16.5 C33,14.01 30.99,12 28.5,12 L28.5,12 Z M24,28.5 L12,28.5 L12,21 L24,21 L24,28.5 L24,28.5 Z M28.5,18 C27.675,18 27,17.325 27,16.5 C27,15.675 27.675,15 28.5,15 C29.325,15 30,15.675 30,16.5 C30,17.325 29.325,18 28.5,18 L28.5,18 Z M27,4.5 L9,4.5 L9,10.5 L27,10.5 L27,4.5 L27,4.5 Z" id="path-1"></path>
+        <rect id="path-3" x="0" y="0" width="75" height="75"></rect>
+    </defs>
+    <g id="Pick-operator" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.2" transform="translate(-265.000000, -1029.000000)">
+            <g id="Reprint-button" transform="translate(241.000000, 1014.000000)">
+                <g id="ic_print" transform="translate(24.000000, 15.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask"></g>
+                    <g id="Group" mask="url(#mask-2)">
+                        <g transform="translate(-19.500000, -19.500000)" id="🎨-Color">
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <use id="White" fill="#FFFFFF" xlink:href="#path-3"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

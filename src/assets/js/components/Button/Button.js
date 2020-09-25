@@ -224,6 +224,13 @@ var Button1 = React.createClass({
           case appConstants.GET_REVISED_QUANTITY:
             ActionCreators.changePutFrontExceptionScreen("revised_quantity")
             break
+          case appConstants.BIGGER_SLOT_NEEDED:
+            data["event_name"] = "put_front_exception"
+            data["event_data"]["action"] = "confirm_quantity_update"
+            data["event_data"]["event"] = mainstore.getExceptionType()
+            data["event_data"]["quantity"] = 0
+            ActionCreators.postDataToInterface(data)
+            break
           case appConstants.MOVE_TO_DAMAGED_CONFIRM:
             ActionCreators.changePutFrontExceptionScreen(
               "damaged_or_missing_confirm"
@@ -312,6 +319,11 @@ var Button1 = React.createClass({
         switch (action) {
           case appConstants.CANCEL_SCAN:
             data["event_name"] = appConstants.CANCEL_SCAN_ALL
+            ActionCreators.postDataToInterface(data)
+            break
+          
+          case appConstants.REPRINT_LABEL:
+            data["event_name"] = appConstants.TEMP_SKU_REPRINT_REQUEST
             ActionCreators.postDataToInterface(data)
             break
 
@@ -838,8 +850,15 @@ var Button1 = React.createClass({
             this.props.action
           )}
         >
-          {" "}
-          {this.props.text}{" "}
+          {this.props.src ? 
+            <img src={this.props.src}
+                alt={this.props.text}
+                height={this.props.imgheight}
+                weight={this.props.imgwidth}
+                style = {{marginRight: '12px'}}
+                /> : ''
+                }
+          {this.props.text}
         </a>
       )
     else

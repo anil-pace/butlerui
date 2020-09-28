@@ -633,6 +633,10 @@ var Button1 = React.createClass({
               data["event_name"] = "cancel_scan_all";
               ActionCreators.postDataToInterface(data)
               break
+          case appConstants.CONFIRM_MULTIPLE_REPRINT:
+                data["event_name"] = "reprint_done";
+                ActionCreators.postDataToInterface(data)
+                break
           case appConstants.CANCEL_SCAN_TOTE:
             data["event_name"] = "cancel_tote_scan"
             data["event_data"]["barcode"] = mainstore.getToteDeatils()

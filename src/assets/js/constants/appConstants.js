@@ -345,6 +345,7 @@ var appConstants = {
   BIN_FULL_RAISED_FRONT: "bin_full_raised_front",
   PRESS_PPTL_TO_CLEAR_BIN: "press_pptl_to_clear_bin",
   CANCEL_SCAN_TOTE: "CANCEL_SCAN_TOTE",
+  CONFIRM_MULTIPLE_REPRINT: "CONFIRM_MULTIPLE_REPRINT",
   PICK_BACK_NO_SCAN: "pick_back_no_scan",
   SET_CANCEL_BUTTON_STATUS: "SET_CANCEL_BUTTON_STATUS",
   /*Constants for UDP*/

@@ -149,6 +149,9 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
   getKQEnabled: function () {
     return _seatData.enable_kq
   },
+  isMultipleReprintEnabled: function() {
+    return _seatData.multiple_reprints_enabled ? _seatData.multiple_reprints_enabled : false;
+  },
   toggleBinSelection: function (bin_id) {
     var flag = false
     _seatData["ppsbin_list"].map(function (value, index) {
@@ -6913,6 +6916,7 @@ var mainstore = objectAssign({}, EventEmitter.prototype, {
         data["PickBackReprintEnabled"] = this.isReprintEnabled()
         data["printerInfo"] = this.getPrinterInfo()
         data["isPrinterVisible"] = this.getPrinterVisibility()
+        data["PickBackMultipleReprint"] = this.isMultipleReprintEnabled()
         break
 
       case appConstants.PICK_BACK_EXCEPTION_REPRINT:

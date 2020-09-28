@@ -208,6 +208,7 @@ var PickBack = React.createClass({
         var reprintButton = '';
         var cancelScanDisabled = this.state.pickBackCancelButtonData
         var PickBackReprintEnabled = this.state.PickBackReprintEnabled;
+        var { PickBackMultipleReprint } = this.state;
         let printer_visible = false
         let printer_border_color = 'yellow'
         if (this.state.printerInfo) {
@@ -236,6 +237,16 @@ var PickBack = React.createClass({
           cancelButton = <div />
         }
 
+        var doneButton = PickBackMultipleReprint ? (
+          <Button1
+            disabled={false}
+            text={_("Done")}
+            module={appConstants.PICK_BACK}
+            action={appConstants.CONFIRM_MULTIPLE_REPRINT}
+            color={"orange"}
+          />
+        ): '';
+
         reprintButton = PickBackReprintEnabled ? (
           <Button1
             disabled={false}
@@ -247,6 +258,7 @@ var PickBack = React.createClass({
         ) : (
             ''
           )
+
 
         if (this.state.PickBackExceptionStatus == false) {
           this._navigation = (<Navigation navData={this.state.PickBackNavData} serverNavData={this.state.PickBackServerNavData} navMessagesJson={this.props.navMessagesJson} />);
@@ -285,6 +297,9 @@ var PickBack = React.createClass({
                     previousLocationFlag="disable"
                   />
                 )}
+                <div class="done-btn-wrapper" style={{marginTop: '20px'}}>
+                  {doneButton}
+                  </div>
             </div>
           );
         } else {
